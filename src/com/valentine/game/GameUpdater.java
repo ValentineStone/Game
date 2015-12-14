@@ -12,11 +12,12 @@ public final class GameUpdater{
 		
 		lastUpdateNanos = System.nanoTime();
 		
-		thread = new Thread(new Runnable(){
+		thread = new Thread(new Runnable() {
 			public void run() {
 				while (true) {
 					if (isRunning) {
 						lastUpdateNanos = System.nanoTime();
+						GamePainter.interpolate();
 						GameWorld.instance().update();
 					}
 					

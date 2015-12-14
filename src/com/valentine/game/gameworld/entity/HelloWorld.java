@@ -7,6 +7,8 @@ import com.valentine.game.gameworld.*;
 public class HelloWorld implements Entity {
 	double x;
 	double y;
+	double height = 12;
+	double width = 75;
 	double dx;
 	double dy;
 	String text;
@@ -31,8 +33,8 @@ public class HelloWorld implements Entity {
 		x += dx;
 		y += dy;
 		
-		if (x > GameWorld.getDimension().width) {
-			x = GameWorld.getDimension().width;
+		if (x + width > GameWorld.getDimension().width) {
+			x = GameWorld.getDimension().width - width;
 			dx = -dx;
 		}
 		
@@ -46,8 +48,8 @@ public class HelloWorld implements Entity {
 			dy = -dy;
 		}
 		
-		if (y < 0) {
-			y = 0;
+		if (y - height< 0) {
+			y = height;
 			dy = -dy;
 		}
 
