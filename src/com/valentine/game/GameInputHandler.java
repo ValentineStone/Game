@@ -2,7 +2,7 @@ package com.valentine.game;
 
 import java.awt.event.*;
 
-public class GameInputHandler implements KeyListener, MouseListener, WindowListener, ComponentListener, MouseMotionListener {
+public class GameInputHandler implements KeyListener, MouseListener, ComponentListener, MouseMotionListener {
 	
 	private static GameInputHandler gameInputHandler = new GameInputHandler();
 	
@@ -46,42 +46,20 @@ public class GameInputHandler implements KeyListener, MouseListener, WindowListe
 		GameWorld.instance().mouseReleased(_mouseEvent);
 	}
 
-	public void windowActivated(WindowEvent arg0) {
+	public void windowActivated(WindowEvent _componentEvent) {
 		
 	}
 
-	public void windowClosed(WindowEvent arg0) {
+	public void componentHidden(ComponentEvent _componentEvent) {
 		
 	}
 
-	public void windowClosing(WindowEvent arg0) {
-		
-	}
-
-	public void windowDeactivated(WindowEvent arg0) {
-		
-	}
-
-	public void windowDeiconified(WindowEvent arg0) {
-		
-	}
-
-	public void windowIconified(WindowEvent arg0) {
-		
-	}
-
-	public void windowOpened(WindowEvent arg0) {
-	}
-
-	public void componentHidden(ComponentEvent arg0) {
-		
-	}
-
-	public void componentMoved(ComponentEvent arg0) {
+	public void componentMoved(ComponentEvent _componentEvent) {
 		
 	}
 
 	public void componentResized(ComponentEvent _componentEvent) {
+		GameWorld.setDimension(GameInterface.getDimension());
 		if (GameInterface.getDimension().height == 0 || GameWorld.isReady()) return;
 		GameWorld.init();
 		GameWorld.instance().assemble();
@@ -89,7 +67,7 @@ public class GameInputHandler implements KeyListener, MouseListener, WindowListe
 		GamePainter.start();
 	}
 
-	public void componentShown(ComponentEvent arg0) {
+	public void componentShown(ComponentEvent _componentEvent) {
 
 	}
 

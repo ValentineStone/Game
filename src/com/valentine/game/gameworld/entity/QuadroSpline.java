@@ -5,9 +5,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import com.valentine.game.GameWorld;
-import com.valentine.game.gameworld.Entity;
+import com.valentine.game.gameworld.OldEntity;
 
-public class QuadroSpline implements Entity {
+public class QuadroSpline implements OldEntity {
 	Color color;
 	double r;
 	

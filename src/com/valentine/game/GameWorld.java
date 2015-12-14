@@ -4,11 +4,11 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import com.valentine.game.gameworld.Entity;
+import com.valentine.game.gameworld.OldEntity;
 import com.valentine.game.gameworld.GameInputListener;
 import com.valentine.game.gameworld.GameWorldImpl_BallsAndWorlds;
 
-public abstract class GameWorld implements GameInputListener, Entity {
+public abstract class GameWorld implements GameInputListener, OldEntity {
 	
 	protected static Dimension dimension;
 	protected static boolean ready = false;
@@ -16,7 +16,6 @@ public abstract class GameWorld implements GameInputListener, Entity {
 	private static GameWorld gameWorld;
 	
 	public static void init() {
-		dimension = GameInterface.getDimension();
 		
 		gameWorld = new GameWorldImpl_BallsAndWorlds();
 		
@@ -29,6 +28,10 @@ public abstract class GameWorld implements GameInputListener, Entity {
 	
 	public static Dimension getDimension() {
 		return dimension;
+	}
+	
+	public static void setDimension(Dimension _dimension) {
+		dimension = _dimension;
 	}
 	
 	public static GameWorld instance() {

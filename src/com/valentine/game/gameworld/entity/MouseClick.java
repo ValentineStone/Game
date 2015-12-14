@@ -3,9 +3,9 @@ package com.valentine.game.gameworld.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.valentine.game.gameworld.Entity;
+import com.valentine.game.gameworld.OldEntity;
 
-public class MouseClick implements Entity {
+public class MouseClick implements OldEntity {
 	int x;
 	int y;
 	Color color;

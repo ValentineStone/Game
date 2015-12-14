@@ -7,9 +7,10 @@ public class GameInterface {
 	private static JFrame jframe;
 	private static JPanel jpanel;
 	
-	private static boolean isFullscreen = true;
+	private static boolean isFullscreen = false;
 	
-	private static final Dimension defaultDimensions = new Dimension(1280, 720);
+	//private static final Dimension defaultDimensions = new Dimension(1280, 720);
+	private static final Dimension defaultDimensions = new Dimension(400, 400);
 	private static final Color defaultColor = new Color(0, 0, 20);
 	
 	public static void init() {
@@ -32,8 +33,8 @@ public class GameInterface {
 		
 		jframe.add(jpanel);
 		
-		jframe.addWindowListener(GameInputHandler.instance());
-		jframe.addKeyListener(GameInputHandler.instance());
+		jpanel.addComponentListener(GameInputHandler.instance());
+		jpanel.addKeyListener(GameInputHandler.instance());
 		jpanel.addMouseListener(GameInputHandler.instance());
 		jpanel.addMouseMotionListener(GameInputHandler.instance());
 		jpanel.addComponentListener(GameInputHandler.instance());
