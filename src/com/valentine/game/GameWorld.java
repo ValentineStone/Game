@@ -4,9 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import com.valentine.game.gameworld.OldEntity;
-import com.valentine.game.gameworld.GameInputListener;
-import com.valentine.game.gameworld.GameWorldImpl_BallsAndWorlds;
+import com.valentine.game.gameworld.*;
 
 public abstract class GameWorld implements GameInputListener, OldEntity {
 	
@@ -17,7 +15,7 @@ public abstract class GameWorld implements GameInputListener, OldEntity {
 	
 	public static void init() {
 		
-		gameWorld = new GameWorldImpl_BallsAndWorlds();
+		gameWorld = new GameWorldImpl_EntityOverhaul();
 		
 		System.err.println("[GameWorld]");
 	}
