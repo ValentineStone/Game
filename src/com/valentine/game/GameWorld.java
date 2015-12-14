@@ -6,44 +6,36 @@ import java.awt.event.MouseEvent;
 
 import com.valentine.game.gameworld.Entity;
 import com.valentine.game.gameworld.GameInputListener;
+import com.valentine.game.gameworld.GameWorldImpl_BallsAndWorlds;
 
 public abstract class GameWorld implements GameInputListener, Entity {
 	
-	protected Dimension dimension;
-	protected boolean ready;
-	protected double interpolation;
+	protected static Dimension dimension;
+	protected static boolean ready = false;
 	
-	{
+	private static GameWorld gameWorld;
+	
+	public static void init() {
+		dimension = GameInterface.getDimension();
+		
+		gameWorld = new GameWorldImpl_BallsAndWorlds();
+		
 		System.err.println("[GameWorld]");
-		dimension = new Dimension(0,0);
-		ready = false;
-		interpolation = 1;
+	}
+
+	public static boolean isReady() {
+		return ready;
+	}
+	
+	public static Dimension getDimension() {
+		return dimension;
+	}
+	
+	public static GameWorld instance() {
+		return gameWorld;
 	}
 	
 	public abstract void assemble();
-	
-	public Dimension getDimension() {
-		return dimension;
-		
-	}
-
-	public double getInterpolation() {
-		return interpolation;
-	}
-
-	public void setDimension(Dimension _dimension) {
-		dimension = _dimension;
-		
-	}
-
-	public void setInterpolation(double _interpolation) {
-		interpolation = _interpolation;
-		
-	}
-
-	public boolean isReady() {
-		return ready;
-	}
 
 	// Keyboard events
 	

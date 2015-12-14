@@ -3,7 +3,8 @@ package com.valentine.game.gameworld.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.valentine.game.Game;
+import com.valentine.game.GamePainter;
+import com.valentine.game.GameWorld;
 import com.valentine.game.gameworld.Entity;
 
 public class Circle implements Entity {
@@ -15,8 +16,8 @@ public class Circle implements Entity {
 	public Color color;
 	
 	public Circle() {
-		x = Math.random() * Game.myGameWorld.getDimension().width;
-		y = Math.random() * Game.myGameWorld.getDimension().height;
+		x = Math.random() * GameWorld.getDimension().width;
+		y = Math.random() * GameWorld.getDimension().height;
 		r = Math.random() * 5 + 3;
 		dx = (Math.random() > 0.5 ? -1 : 1) * ((Math.random() * 4) + 3);
 		dy = (Math.random() > 0.5 ? -1 : 1) * ((Math.random() * 4) + 3);
@@ -28,8 +29,8 @@ public class Circle implements Entity {
 		x += dx;
 		y += dy;
 		
-		if (x+r > Game.myGameWorld.getDimension().width) {
-			x = Game.myGameWorld.getDimension().width - r;
+		if (x+r > GameWorld.getDimension().width) {
+			x = GameWorld.getDimension().width - r;
 			dx = -dx;
 		}
 		
@@ -38,8 +39,8 @@ public class Circle implements Entity {
 			dx = -dx;
 		}
 		
-		if (y+r > Game.myGameWorld.getDimension().height) {
-			y = Game.myGameWorld.getDimension().height - r;
+		if (y+r > GameWorld.getDimension().height) {
+			y = GameWorld.getDimension().height - r;
 			dy = -dy;
 		}
 		
@@ -51,7 +52,7 @@ public class Circle implements Entity {
 
 	public void paint(Graphics _graphics) {
 		_graphics.setColor(color);
-		_graphics.drawOval((int)(x + dx * Game.myGameWorld.getInterpolation() + .5 - r), (int)(y + dy * Game.myGameWorld.getInterpolation() + .5 - r), (int)r*2, (int)r*2);
+		_graphics.drawOval((int)(x + dx * GamePainter.getInterpolation() + .5 - r), (int)(y + dy * GamePainter.getInterpolation() + .5 - r), (int)r*2, (int)r*2);
 	}
 
 }

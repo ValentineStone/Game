@@ -13,8 +13,8 @@ public class HelloWorld implements Entity {
 	Color color;
 	
 	public HelloWorld() {
-		x = Math.random() * Game.myGameWorld.getDimension().width;
-		y = Math.random() * Game.myGameWorld.getDimension().height;
+		x = Math.random() * GameWorld.getDimension().width;
+		y = Math.random() * GameWorld.getDimension().height;
 		dx = (Math.random() > 0.5 ? -1 : 1) * ((Math.random()) + 1);
 		dy = (Math.random() > 0.5 ? -1 : 1) * ((Math.random()) + 1);
 		text = "Hello world!";
@@ -31,8 +31,8 @@ public class HelloWorld implements Entity {
 		x += dx;
 		y += dy;
 		
-		if (x > Game.myGameWorld.getDimension().width) {
-			x = Game.myGameWorld.getDimension().width;
+		if (x > GameWorld.getDimension().width) {
+			x = GameWorld.getDimension().width;
 			dx = -dx;
 		}
 		
@@ -41,8 +41,8 @@ public class HelloWorld implements Entity {
 			dx = -dx;
 		}
 		
-		if (y > Game.myGameWorld.getDimension().height) {
-			y = Game.myGameWorld.getDimension().height;
+		if (y > GameWorld.getDimension().height) {
+			y = GameWorld.getDimension().height;
 			dy = -dy;
 		}
 		
@@ -55,6 +55,6 @@ public class HelloWorld implements Entity {
 
 	public void paint(Graphics _graphics) {
 		_graphics.setColor(color);
-		_graphics.drawString(text, (int)(x + dx * Game.myGameWorld.getInterpolation() + .5), (int)(y + dy * Game.myGameWorld.getInterpolation() + .5));
+		_graphics.drawString(text, (int)(x + dx * GamePainter.getInterpolation() + .5), (int)(y + dy * GamePainter.getInterpolation() + .5));
 	}
 }

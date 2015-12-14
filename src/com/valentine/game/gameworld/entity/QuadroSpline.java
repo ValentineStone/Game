@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import com.valentine.game.Game;
+import com.valentine.game.GameWorld;
 import com.valentine.game.gameworld.Entity;
 
 public class QuadroSpline implements Entity {
@@ -33,7 +33,7 @@ public class QuadroSpline implements Entity {
 		addDot((int)(Math.random() * 220), (int)(Math.random() * 220));
 		int imax = 3;
 		for (int i = 0; i < imax; i++) {
-			addDot((int)(Math.random() * Game.myGameWorld.getDimension().width/(imax*2.) + Game.myGameWorld.getDimension().width/(imax*2.)) + dots.get(i).x, (int)(Math.random() * Game.myGameWorld.getDimension().height));
+			addDot((int)(Math.random() * GameWorld.getDimension().width/(imax*2.) + GameWorld.getDimension().width/(imax*2.)) + dots.get(i).x, (int)(Math.random() * GameWorld.getDimension().height));
 		}
 	}
 	

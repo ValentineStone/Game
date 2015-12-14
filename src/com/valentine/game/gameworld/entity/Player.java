@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
-import com.valentine.game.Game;
+import com.valentine.game.GamePainter;
 import com.valentine.game.gameworld.Entity;
 
 public class Player implements Entity {
@@ -30,7 +30,7 @@ public class Player implements Entity {
 	}
 
 	public void paint(Graphics _graphics) {
-		_graphics.drawImage(image, (int)(x + (down_dx - up_dx) * Game.myGameWorld.getInterpolation() + .5), (int)(y + (down_dy - up_dy) * Game.myGameWorld.getInterpolation() + .5), null);
+		_graphics.drawImage(image, (int)(x + (down_dx - up_dx) * GamePainter.getInterpolation() + .5), (int)(y + (down_dy - up_dy) * GamePainter.getInterpolation() + .5), null);
 	}
 	
 	public void takeAction(KeyEvent _arg0) {

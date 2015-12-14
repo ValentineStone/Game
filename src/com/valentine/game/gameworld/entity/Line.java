@@ -50,7 +50,7 @@ public abstract class Line implements Entity {
 		
 		add((int)(Math.random() * 220), (int)(Math.random() * 220));
 		for (int i = 0; i < _n; i++) {
-			add((int)(Math.random() * Game.myGameWorld.getDimension().width/(_n*2.) + Game.myGameWorld.getDimension().width/(_n*2.)) + dots.get(i).x, (int)(Math.random() * Game.myGameWorld.getDimension().height));
+			add((int)(Math.random() * GameWorld.getDimension().width/(_n*2.) + GameWorld.getDimension().width/(_n*2.)) + dots.get(i).x, (int)(Math.random() * GameWorld.getDimension().height));
 		}
 		
 	}
@@ -78,8 +78,8 @@ public abstract class Line implements Entity {
 		randColor();
 		
 		for (Dot dot : dots) {
-			dot.x = Game.myGameWorld.getDimension().width * Math.random();
-			dot.y = Game.myGameWorld.getDimension().height * Math.random();
+			dot.x = GameWorld.getDimension().width * Math.random();
+			dot.y = GameWorld.getDimension().height * Math.random();
 		}
 	}
 	

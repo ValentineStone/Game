@@ -4,21 +4,15 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import com.valentine.game.Game;
 import com.valentine.game.GameWorld;
 import com.valentine.game.gameworld.entity.*;
 
 public class GameWorldImpl_Line extends GameWorld{
 	private Line line;
-	
-	{
-		ready = false;
-	}
 
 	public void assemble() {
-		dimension = Game.myGameInterface.getMyJPanel().getSize();
-		line = new LagrangeLine(5, 10);
 		
+		line = new LagrangeLine(5, 10);
 		ready = true;
 	}
 

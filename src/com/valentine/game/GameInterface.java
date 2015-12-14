@@ -4,42 +4,39 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GameInterface {
-	JFrame jframe;
-	private JPanel jpanel;
-	boolean isFullscreen;
-	final Dimension defaultDimensions;
-	final Color defaultColor;
+	private static JFrame jframe;
+	private static JPanel jpanel;
 	
-	{
+	private static boolean isFullscreen = true;
+	
+	private static final Dimension defaultDimensions = new Dimension(1280, 720);
+	private static final Color defaultColor = new Color(0, 0, 20);
+	
+	public static void init() {
+		
 		jframe = new JFrame();
-		setMyJPanel(new JPanel(){
+		jpanel = new JPanel() {
 			private static final long serialVersionUID = 124515635493300032L;
 
 			public void paintComponent(Graphics _graphics) {	
 				super.paintComponent(_graphics);
-				Game.myGamePainter.paint(_graphics);
+				GamePainter.paint(_graphics);
 			}
-		});
+		};
 		
-		isFullscreen = true;
-		defaultDimensions = new Dimension(1280, 720);
-		defaultColor = new Color(0, 0, 20);
-	}
-	
-	public GameInterface() {
 		jframe.setTitle("Dead Space");
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		
 		jframe.setBackground(defaultColor);
-		getMyJPanel().setBackground(defaultColor);
+		jpanel.setBackground(defaultColor);
 		
-		jframe.add(getMyJPanel());
+		jframe.add(jpanel);
 		
-		jframe.addKeyListener(Game.myGameInputHandler);
-		getMyJPanel().addMouseListener(Game.myGameInputHandler);
-		getMyJPanel().addMouseMotionListener(Game.myGameInputHandler);
-		jframe.addWindowListener(Game.myGameInputHandler);
-		getMyJPanel().addComponentListener(Game.myGameInputHandler);
+		jframe.addWindowListener(GameInputHandler.instance());
+		jframe.addKeyListener(GameInputHandler.instance());
+		jpanel.addMouseListener(GameInputHandler.instance());
+		jpanel.addMouseMotionListener(GameInputHandler.instance());
+		jpanel.addComponentListener(GameInputHandler.instance());
 		
 		if (isFullscreen) {
 			jframe.setUndecorated(true);
@@ -47,7 +44,7 @@ public class GameInterface {
 			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jframe);
 		}
 		else {
-			getMyJPanel().setPreferredSize(defaultDimensions);
+			jpanel.setPreferredSize(defaultDimensions);
 			jframe.pack();
 		}
 		
@@ -56,11 +53,12 @@ public class GameInterface {
 		System.err.println("[Interface]");
 	}
 
-	public JPanel getMyJPanel() {
-		return jpanel;
-	}
 
-	public void setMyJPanel(JPanel _myJPanel) {
-		jpanel = _myJPanel;
+	public static Dimension getDimension() {
+		return jpanel.getSize();
+	}
+	
+	public static void repaint() {
+		jframe.repaint();
 	}
 }

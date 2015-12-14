@@ -1,23 +1,15 @@
 package com.valentine.game;
 
-import com.valentine.game.gameworld.*;
-
 public abstract class Game {
 
-	public static GameUpdater myGameUpdater;
-	public static GamePainter myGamePainter;
-	public static GameInputHandler myGameInputHandler;
-	public static GameInterface myGameInterface;
-	public static GameWorld myGameWorld;
+	public static GameWorld gameWorld;
 	
 	static {	
-		myGameUpdater = new GameUpdater();
-		myGamePainter = new GamePainter();
-		myGameInputHandler = new GameInputHandler();
-		myGameInterface = new GameInterface();
-		myGameWorld = new GameWorldImpl_Line();
+		GameUpdater.init();
+		GamePainter.init();
+		GameInputHandler.init();
+		GameInterface.init();
 
-		
 		System.err.println("[Game]");
 	}
 	
