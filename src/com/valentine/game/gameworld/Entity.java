@@ -30,7 +30,7 @@ public class Entity implements OldEntity
 		a = Math.random() * Math.PI * 2;
 		rx = Math.random() * 20 + 10;
 		ry = Math.random() * 20 + 10;
-		ds = ((Math.random() * 5) + 3);
+		ds = ((Math.random() * 30) + 1);
 		da = 0; //Math.random() * 0.05 + 0.05;
 		color = new Color(((int)(Math.random() * 255) + 0),((int)(Math.random() * 255) + 0),((int)(Math.random() * 255) + 0));
 	}
@@ -70,8 +70,12 @@ public class Entity implements OldEntity
 	public void paint(Graphics _graphics)
 	{
 		_graphics.setColor(color);
+		
 		_graphics.drawRect((int)(x - rx + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
-		_graphics.drawString(id + "", (int)(x + rx + 0.5), (int)(y - ry + 0.5));
+		
+		_graphics.drawString(id + "", (int)(x + rx + ds * Math.cos(a) * GamePainter.getInterpolation() + 3.5), (int)(y - ry + ds * Math.sin(a) * GamePainter.getInterpolation() - 2.5));
+
+		_graphics.drawLine((int)(x + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(x + ds * Math.cos(a) + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y + ds * Math.sin(a) + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5));
 	}
 	
 	public void rotate(double _da)
@@ -81,15 +85,24 @@ public class Entity implements OldEntity
 	
 	public boolean collide(Entity _entity)
 	{
-		double oldx = x;
-		double oldy = y;
-		double olda = a;
-		double _oldx = _entity.x;
-		double _oldy = _entity.y;
-		double _olda = _entity.a;
 
 		if ( (Math.abs(x - _entity.x) < rx + _entity.rx) && (Math.abs(y - _entity.y) < ry + _entity.ry) )
 		{
+			double oldds = ds;
+			double olda = a;
+			double _oldds = _entity.ds;
+			double _olda = _entity.a;
+			
+			a = _olda;
+			_entity.a = olda;
+			
+			ds = _oldds;
+			_entity.ds = oldds;
+			
+			update();
+			_entity.update();
+			
+			/*
 			System.err.println(id + " with " + _entity.id);
 			
 			if (rx + _entity.rx - Math.abs(x - _entity.x) < ry + _entity.ry - Math.abs(y - _entity.y))
@@ -114,6 +127,7 @@ public class Entity implements OldEntity
 					System.err.println("/\\/\\/\\");
 				}
 			}
+			*/
 			return true;
 		}
 

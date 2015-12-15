@@ -7,10 +7,10 @@ public class GameInterface {
 	private static JFrame jframe;
 	private static JPanel jpanel;
 	
-	private static boolean isFullscreen = false;
+	private static boolean isFullscreen = true;
 	
-	//private static final Dimension defaultDimensions = new Dimension(1280, 720);
-	private static final Dimension defaultDimensions = new Dimension(700, 700);
+	private static final Dimension defaultDimensions = new Dimension(1280, 720);
+	//private static final Dimension defaultDimensions = new Dimension(700, 700);
 	private static final Color defaultColor = new Color(0, 0, 20);
 	
 	public static void init() {
