@@ -30,9 +30,9 @@ public class Entity implements OldEntity
 		a = Math.random() * Math.PI * 2;
 		rx = Math.random() * 20 + 10;
 		ry = Math.random() * 20 + 10;
-		ds = ((Math.random() * 30) + 1);
-		da = 0; //Math.random() * 0.05 + 0.05;
-		color = new Color(((int)(Math.random() * 255) + 0),((int)(Math.random() * 255) + 0),((int)(Math.random() * 255) + 0));
+		ds = ((Math.random() * 5) + 4);
+		da = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
+		color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
 	}
 	
 	public void update()
@@ -80,7 +80,10 @@ public class Entity implements OldEntity
 	
 	public void rotate(double _da)
 	{
-		a = a + _da >= Math.PI * 2 ? a + _da - Math.PI * 2 : a + _da;
+		if ( da > 0)
+			a = a + _da > Math.PI * 2 ? a + _da - Math.PI * 2 : a + _da;
+		else
+			a = a + _da < 0 ? Math.PI * 2 + (a + _da) : a + _da;
 	}
 	
 	public boolean collide(Entity _entity)
@@ -98,6 +101,9 @@ public class Entity implements OldEntity
 			
 			ds = _oldds;
 			_entity.ds = oldds;
+			
+			color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
+			_entity.color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
 			
 			update();
 			_entity.update();

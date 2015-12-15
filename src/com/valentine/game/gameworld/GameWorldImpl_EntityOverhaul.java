@@ -11,7 +11,7 @@ public class GameWorldImpl_EntityOverhaul extends GameWorld
 {
 	private ArrayList<Entity> entities;
 	
-	private int n = 300;
+	private int n = 30;
 
 	public void assemble()
 	{
