@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import com.valentine.game.GamePainter;
 import com.valentine.game.GameWorld;
 
-public class Colliding implements Entity
+public class Collider implements Entity
 {	
 	protected double x;
 	protected double y;
@@ -22,7 +22,7 @@ public class Colliding implements Entity
 	
 	protected boolean visibleHitbox = true;
 	
-	public Colliding(int _id)
+	public Collider(int _id)
 	{
 		id = _id;
 		x = Math.random() * GameWorld.getDimension().width;
@@ -69,6 +69,10 @@ public class Colliding implements Entity
 
 	public void paint(Graphics _graphics)
 	{
+		_graphics.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 50));
+		
+		_graphics.fillRect((int)(x - rx + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
+		
 		_graphics.setColor(color);
 		
 		_graphics.drawRect((int)(x - rx + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
@@ -91,7 +95,7 @@ public class Colliding implements Entity
 			a = a + _da < 0 ? Math.PI * 2 + (a + _da) : a + _da;
 	}
 	
-	public boolean collide(Colliding _entity)
+	public boolean collide(Collider _entity)
 	{
 
 		if ( (Math.abs(x - _entity.x) < rx + _entity.rx) && (Math.abs(y - _entity.y) < ry + _entity.ry) )

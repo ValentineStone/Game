@@ -6,23 +6,27 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import com.valentine.game.GameWorld;
+import com.valentine.game.gameworld.entity.Circle;
+import com.valentine.game.gameworld.entity.HelloWorld;
 
 public class GameWorldImpl_EntityOverhaul extends GameWorld
 {
-	private ArrayList<Colliding> entities;
+	private ArrayList<Entity> entities;
 	
-	private int n = 30;
+	private int n = 70;
 
 	public void assemble()
 	{
-		entities = new ArrayList<Colliding>();
-		for (int i = 0; i < n; i++) entities.add(new Colliding(i));
+		entities = new ArrayList<Entity>();
+		
+		for (int i = 0; i < n; i++) entities.add(Math.random() > 0.666 ? new Collider(i) : (Math.random() > 0.5 ? new Circle() : new HelloWorld()));
+		
 		ready = true;
 	}
 
 	public void paint(Graphics _graphics)
 	{
-		for (Colliding entity : entities)
+		for (Entity entity : entities)
 			entity.paint(_graphics);
 		
 	}
@@ -32,8 +36,16 @@ public class GameWorldImpl_EntityOverhaul extends GameWorld
 		for (int i = 0; i < n; i++)
 		{
 			entities.get(i).update();
-			for (int j = i + 1; j < n; j++) {
-				entities.get(i).collide(entities.get(j));
+			
+			if (entities.get(i) instanceof Collider)
+				{
+				for (int j = i + 1; j < n; j++)
+				{
+					if (entities.get(j) instanceof Collider)
+					{
+						((Collider)(entities.get(i))).collide((Collider)(entities.get(j)));
+					}
+				}
 			}
 		}
 			
