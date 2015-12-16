@@ -5,9 +5,9 @@ import java.awt.Graphics;
 
 import com.valentine.game.GamePainter;
 import com.valentine.game.GameWorld;
-import com.valentine.game.gameworld.OldEntity;
+import com.valentine.game.gameworld.Entity;
 
-public class Circle implements OldEntity {
+public class Circle implements Entity {
 	public double x;
 	public double y;
 	public double r;

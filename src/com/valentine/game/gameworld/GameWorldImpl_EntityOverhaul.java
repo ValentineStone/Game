@@ -9,20 +9,20 @@ import com.valentine.game.GameWorld;
 
 public class GameWorldImpl_EntityOverhaul extends GameWorld
 {
-	private ArrayList<Entity> entities;
+	private ArrayList<Colliding> entities;
 	
 	private int n = 30;
 
 	public void assemble()
 	{
-		entities = new ArrayList<Entity>();
-		for (int i = 0; i < n; i++) entities.add(new Entity(i));
+		entities = new ArrayList<Colliding>();
+		for (int i = 0; i < n; i++) entities.add(new Colliding(i));
 		ready = true;
 	}
 
 	public void paint(Graphics _graphics)
 	{
-		for (Entity entity : entities)
+		for (Colliding entity : entities)
 			entity.paint(_graphics);
 		
 	}

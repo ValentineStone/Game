@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 
 import com.valentine.game.gameworld.*;
 
-public abstract class GameWorld implements GameInputListener, OldEntity {
+public abstract class GameWorld implements GameInputListener, Entity {
 	
 	protected static Dimension dimension;
 	protected static boolean ready = false;

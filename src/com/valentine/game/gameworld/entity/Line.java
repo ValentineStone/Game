@@ -5,9 +5,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import com.valentine.game.*;
-import com.valentine.game.gameworld.OldEntity;
+import com.valentine.game.gameworld.Entity;
 
-public abstract class Line implements OldEntity {
+public abstract class Line implements Entity {
 	
 	
 	

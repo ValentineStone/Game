@@ -4,7 +4,7 @@ import java.awt.*;
 import com.valentine.game.*;
 import com.valentine.game.gameworld.*;
 
-public class HelloWorld implements OldEntity {
+public class HelloWorld implements Entity {
 	double x;
 	double y;
 	double height = 12;

@@ -7,9 +7,9 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 import com.valentine.game.GamePainter;
-import com.valentine.game.gameworld.OldEntity;
+import com.valentine.game.gameworld.Entity;
 
-public class Player implements OldEntity {
+public class Player implements Entity {
 	Image image;
 	public double x;
 	public double y;

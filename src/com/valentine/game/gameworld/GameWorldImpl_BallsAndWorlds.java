@@ -12,28 +12,28 @@ import com.valentine.game.gameworld.entity.Player;
 
 public class GameWorldImpl_BallsAndWorlds extends GameWorld {
 
-	private ArrayList<OldEntity> entities;
+	private ArrayList<Entity> entities;
 	private Player player;
 
 	public void update() {
-		for (OldEntity entity : entities)
+		for (Entity entity : entities)
 			entity.update();
 	}
 
 	public void paint(Graphics _graphics) {
-		for (OldEntity entity : entities)
+		for (Entity entity : entities)
 			entity.paint(_graphics);
 	}
 
 	public void assemble() {
 		player = new Player();
-		entities = new ArrayList<OldEntity>(Arrays.asList(genRandEntities(100)));
+		entities = new ArrayList<Entity>(Arrays.asList(genRandEntities(100)));
 		entities.add(player);
 		ready = true;
 	}
 	
-	static public OldEntity[] genRandEntities(int _n) {
-		OldEntity[] entities = new OldEntity[_n];
+	static public Entity[] genRandEntities(int _n) {
+		Entity[] entities = new Entity[_n];
 		for (int i = 0; i < _n; i++) {
 			entities[i] = Math.random() > 0.5 ? new Circle() : new HelloWorld();
 		}
