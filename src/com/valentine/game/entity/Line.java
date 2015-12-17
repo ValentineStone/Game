@@ -1,13 +1,12 @@
-package com.valentine.game.gameworld.entity;
+package com.valentine.game.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
 import com.valentine.game.*;
-import com.valentine.game.gameworld.Entity;
 
-public abstract class Line implements Entity {
+public class Line implements Entity {
 	
 	
 	
@@ -33,7 +32,7 @@ public abstract class Line implements Entity {
 	protected ArrayList<Dot> dots;
 	
 	
-	protected abstract void makeT();
+	protected void makeT() {}
 	
 	
 	public Line(int _n, double _r) {		

@@ -1,4 +1,4 @@
-package com.valentine.game.gameworld.entity;
+package com.valentine.game.entity;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 
-import com.valentine.game.gameworld.Entity;
 import com.valentine.game.utils.Painter;
 
 public class Player implements Entity {

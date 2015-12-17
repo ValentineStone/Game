@@ -3,8 +3,9 @@ package com.valentine.game.utils;
 import java.awt.event.*;
 
 import com.valentine.game.GameWorld;
+import com.valentine.game.listener.InputListener;
 
-public class InputHandler implements KeyListener, MouseListener, ComponentListener, MouseMotionListener {
+public class InputHandler implements InputListener, ComponentListener {
 	
 	private static InputHandler inputHandler = new InputHandler();
 	
@@ -66,7 +67,7 @@ public class InputHandler implements KeyListener, MouseListener, ComponentListen
 		GameWorld.init();
 		GameWorld.instance().assemble();
 		Updater.start();
-		Painter.start();
+		Painter.start();System.err.println("Key down");
 	}
 
 	public void componentShown(ComponentEvent _componentEvent) {

@@ -32,11 +32,11 @@ public class Interface {
 		
 		jframe.add(jpanel);
 		
+		jframe.addKeyListener(InputHandler.instance());
+		
 		jpanel.addComponentListener(InputHandler.instance());
-		jpanel.addKeyListener(InputHandler.instance());
 		jpanel.addMouseListener(InputHandler.instance());
 		jpanel.addMouseMotionListener(InputHandler.instance());
-		jpanel.addComponentListener(InputHandler.instance());
 		
 		if (isFullscreen) {
 			jframe.setUndecorated(true);

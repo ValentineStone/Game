@@ -1,18 +1,21 @@
-package com.valentine.game.gameworld;
+package com.valentine.game.world;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import com.valentine.game.GameWorld;
-import com.valentine.game.gameworld.entity.*;
+import com.valentine.game.entity.*;
+import com.valentine.game.entity.line.BezierLine;
+import com.valentine.game.entity.line.LagrangeLine;
 
 public class GameWorldImpl_Line extends GameWorld{
 	private Line line;
 
 	public void assemble() {
 		
-		line = new LagrangeLine(5, 10);
+		line = new Line(5, 10);
+		
 		ready = true;
 	}
 
@@ -31,8 +34,9 @@ public class GameWorldImpl_Line extends GameWorld{
 		else if (_event.getKeyCode() == KeyEvent.VK_C) line.randColor();
 		else if (_event.getKeyCode() == KeyEvent.VK_D) line.setMode(-1);
 		else if (_event.getKeyCode() == KeyEvent.VK_A) line.setMode(1);
-		else if (_event.getKeyCode() == KeyEvent.VK_L) { if (line instanceof BezierLine) line = new LagrangeLine(line); }
-		else if (_event.getKeyCode() == KeyEvent.VK_B) { if (line instanceof LagrangeLine) line = new BezierLine(line); }
+		else if (_event.getKeyCode() == KeyEvent.VK_L) line = new LagrangeLine(line);
+		else if (_event.getKeyCode() == KeyEvent.VK_B) line = new BezierLine(line);
+		else if (_event.getKeyCode() == KeyEvent.VK_P) line = new Line(line);
 	}
 	
 	public void keyReleased(KeyEvent _event) {

@@ -1,10 +1,9 @@
-package com.valentine.game.gameworld.entity;
+package com.valentine.game.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
 import com.valentine.game.GameWorld;
-import com.valentine.game.gameworld.Entity;
 import com.valentine.game.utils.Painter;
 
 public class Collider implements Entity

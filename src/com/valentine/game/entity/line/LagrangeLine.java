@@ -1,32 +1,26 @@
-package com.valentine.game.gameworld.entity;
+package com.valentine.game.entity.line;
 
 import java.awt.Graphics;
 
+import com.valentine.game.entity.Line;
 
-
-public class BezierLine extends Line {
-
+public class LagrangeLine extends Line {
 	
-	public BezierLine(int _n, double _r) {
+	public LagrangeLine(int _n, double _r) {
 		super(_n, _r);
 	}
 	
-	
-	public BezierLine(Line _line) {
+	public LagrangeLine(Line _line) {
 		super(_line);
 	}
-	
-	private long factorial(int _n) {
-		long factorial = 1;
-		for (int i = 2; i <= _n; i++)
-			factorial *= i;
-		return factorial;
-	}
+
+	double dt;
 	
 	protected void makeT() {
 		int n = dots.size();
+		dt = 1/(n-1.);
 		for (int i = 0; i < n; i++) {
-			get(i).t = factorial(n-1) / (double)(factorial(i) * factorial(n-1-i));
+			get(i).t = dt * i;
 		}
 	}
 	
@@ -42,7 +36,7 @@ public class BezierLine extends Line {
 		
 		double x;
 		double y;
-		double coeficent;
+		double omega;
 		
 		double x_old = get(0).x;
 		double y_old = get(0).y;
@@ -53,9 +47,18 @@ public class BezierLine extends Line {
 			y = 0;
 			
 			for (int i = 0; i < n; i++) {
-				coeficent = get(i).t * Math.pow(t, i) * Math.pow((1-t), (n-1)-i);
-				x +=  coeficent * get(i).x;
-				y +=  coeficent * get(i).y;
+				omega = 1;
+				
+				for (int j = 0; j < i; j++) {
+					omega *= ((t - get(j).t)/(get(i).t - get(j).t));
+				}
+				for (int j = i+1; j < n; j++) {
+					omega *= ((t - get(j).t)/(get(i).t - get(j).t));
+				}
+				
+				x += omega * get(i).x;
+				y += omega * get(i).y;
+				
 			}
 			
 			_graphics.drawLine((int)x_old, (int)y_old, (int)x, (int)y);
@@ -64,11 +67,11 @@ public class BezierLine extends Line {
 			y_old = y;
 		}
 		
-		
 		for (int i = 0; i < dots.size(); i++) {
 			_graphics.drawOval((int)(get(i).x - r), (int)(get(i).y - r), (int)(2 * r), (int)(2 * r));
 			_graphics.drawString(i + "", (int)(get(i).x + r), (int)(get(i).y - r));
 		}
 		
 	}
+
 }

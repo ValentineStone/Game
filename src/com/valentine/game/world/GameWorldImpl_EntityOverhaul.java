@@ -1,4 +1,4 @@
-package com.valentine.game.gameworld;
+package com.valentine.game.world;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -6,9 +6,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import com.valentine.game.GameWorld;
-import com.valentine.game.gameworld.entity.Circle;
-import com.valentine.game.gameworld.entity.Collider;
-import com.valentine.game.gameworld.entity.HelloWorld;
+import com.valentine.game.entity.Circle;
+import com.valentine.game.entity.Collider;
+import com.valentine.game.entity.Entity;
+import com.valentine.game.entity.HelloWorld;
 
 public class GameWorldImpl_EntityOverhaul extends GameWorld
 {
