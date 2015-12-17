@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.valentine.game.GameWorld;
 import com.valentine.game.gameworld.entity.Circle;
+import com.valentine.game.gameworld.entity.Collider;
 import com.valentine.game.gameworld.entity.HelloWorld;
 
 public class GameWorldImpl_EntityOverhaul extends GameWorld

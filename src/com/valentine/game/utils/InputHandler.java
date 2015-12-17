@@ -1,17 +1,19 @@
-package com.valentine.game;
+package com.valentine.game.utils;
 
 import java.awt.event.*;
 
-public class GameInputHandler implements KeyListener, MouseListener, ComponentListener, MouseMotionListener {
+import com.valentine.game.GameWorld;
+
+public class InputHandler implements KeyListener, MouseListener, ComponentListener, MouseMotionListener {
 	
-	private static GameInputHandler gameInputHandler = new GameInputHandler();
+	private static InputHandler inputHandler = new InputHandler();
 	
 	public static void init() {
 		System.err.println("[InputHandler]");
 	}
 	
-	public static GameInputHandler instance() {
-		return gameInputHandler;
+	public static InputHandler instance() {
+		return inputHandler;
 	}
 
 	public void keyPressed(KeyEvent _keyEvent) {
@@ -59,12 +61,12 @@ public class GameInputHandler implements KeyListener, MouseListener, ComponentLi
 	}
 
 	public void componentResized(ComponentEvent _componentEvent) {
-		GameWorld.setDimension(GameInterface.getDimension());
-		if (GameInterface.getDimension().height == 0 || GameWorld.isReady()) return;
+		GameWorld.setDimension(Interface.getDimension());
+		if (Interface.getDimension().height == 0 || GameWorld.isReady()) return;
 		GameWorld.init();
 		GameWorld.instance().assemble();
-		GameUpdater.start();
-		GamePainter.start();
+		Updater.start();
+		Painter.start();
 	}
 
 	public void componentShown(ComponentEvent _componentEvent) {

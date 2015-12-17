@@ -3,9 +3,9 @@ package com.valentine.game.gameworld.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.valentine.game.GamePainter;
 import com.valentine.game.GameWorld;
 import com.valentine.game.gameworld.Entity;
+import com.valentine.game.utils.Painter;
 
 public class Circle implements Entity {
 	public double x;
@@ -52,7 +52,7 @@ public class Circle implements Entity {
 
 	public void paint(Graphics _graphics) {
 		_graphics.setColor(color);
-		_graphics.drawOval((int)(x + dx * GamePainter.getInterpolation() + .5 - r), (int)(y + dy * GamePainter.getInterpolation() + .5 - r), (int)r*2, (int)r*2);
+		_graphics.drawOval((int)(x + dx * Painter.getInterpolation() + .5 - r), (int)(y + dy * Painter.getInterpolation() + .5 - r), (int)r*2, (int)r*2);
 	}
 
 }

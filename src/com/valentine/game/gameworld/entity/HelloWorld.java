@@ -3,6 +3,7 @@ package com.valentine.game.gameworld.entity;
 import java.awt.*;
 import com.valentine.game.*;
 import com.valentine.game.gameworld.*;
+import com.valentine.game.utils.Painter;
 
 public class HelloWorld implements Entity {
 	double x;
@@ -57,6 +58,6 @@ public class HelloWorld implements Entity {
 
 	public void paint(Graphics _graphics) {
 		_graphics.setColor(color);
-		_graphics.drawString(text, (int)(x + dx * GamePainter.getInterpolation() + .5), (int)(y + dy * GamePainter.getInterpolation() + .5));
+		_graphics.drawString(text, (int)(x + dx * Painter.getInterpolation() + .5), (int)(y + dy * Painter.getInterpolation() + .5));
 	}
 }

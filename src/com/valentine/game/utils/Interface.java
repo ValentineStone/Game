@@ -1,9 +1,9 @@
-package com.valentine.game;
+package com.valentine.game.utils;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class GameInterface {
+public class Interface {
 	private static JFrame jframe;
 	private static JPanel jpanel;
 	
@@ -20,7 +20,7 @@ public class GameInterface {
 
 			public void paintComponent(Graphics _graphics) {	
 				super.paintComponent(_graphics);
-				GamePainter.paint(_graphics);
+				Painter.paint(_graphics);
 			}
 		};
 		
@@ -32,11 +32,11 @@ public class GameInterface {
 		
 		jframe.add(jpanel);
 		
-		jpanel.addComponentListener(GameInputHandler.instance());
-		jpanel.addKeyListener(GameInputHandler.instance());
-		jpanel.addMouseListener(GameInputHandler.instance());
-		jpanel.addMouseMotionListener(GameInputHandler.instance());
-		jpanel.addComponentListener(GameInputHandler.instance());
+		jpanel.addComponentListener(InputHandler.instance());
+		jpanel.addKeyListener(InputHandler.instance());
+		jpanel.addMouseListener(InputHandler.instance());
+		jpanel.addMouseMotionListener(InputHandler.instance());
+		jpanel.addComponentListener(InputHandler.instance());
 		
 		if (isFullscreen) {
 			jframe.setUndecorated(true);

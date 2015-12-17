@@ -1,8 +1,10 @@
-package com.valentine.game;
+package com.valentine.game.utils;
 
 import java.awt.*;
 
-public final class GamePainter {
+import com.valentine.game.GameWorld;
+
+public final class Painter {
 	private static Thread thread;	
 	private static boolean isRunning = false;
 	private static int delay = 5;
@@ -15,7 +17,7 @@ public final class GamePainter {
 				while (true) {
 					if (isRunning) {
 						interpolate();
-						GameInterface.repaint();
+						Interface.repaint();
 					}
 					
 					try {
@@ -48,7 +50,7 @@ public final class GamePainter {
 	}
 	
 	public static synchronized void interpolate() {
-		interpolation = (System.nanoTime() - GameUpdater.lastUpdateNanos) / (double)GameUpdater.delayNanos;
+		interpolation = (System.nanoTime() - Updater.lastUpdateNanos) / (double)Updater.delayNanos;
 	}
 	
 	public static double getInterpolation() {

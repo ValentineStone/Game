@@ -1,10 +1,11 @@
-package com.valentine.game.gameworld;
+package com.valentine.game.gameworld.entity;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.valentine.game.GamePainter;
 import com.valentine.game.GameWorld;
+import com.valentine.game.gameworld.Entity;
+import com.valentine.game.utils.Painter;
 
 public class Collider implements Entity
 {	
@@ -24,14 +25,23 @@ public class Collider implements Entity
 	
 	public Collider(int _id)
 	{
+		boolean isHuge = Math.random() < 0.01;
 		id = _id;
 		x = Math.random() * GameWorld.getDimension().width;
 		y = Math.random() * GameWorld.getDimension().height;
 		a = Math.random() * Math.PI * 2;
-		rx = Math.random() * 20 + 10;
-		ry = Math.random() * 20 + 10;
+		if (isHuge)
+		{
+			rx = Math.random() * 50 + 100;
+			ry = Math.random() * 50 + 100;	
+			da = 0;
+		} else
+		{
+			rx = Math.random() * 20 + 10;
+			ry = Math.random() * 20 + 10;
+			da = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
+		}
 		ds = ((Math.random() * 5) + 4);
-		da = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
 		color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
 	}
 	
@@ -71,20 +81,20 @@ public class Collider implements Entity
 	{
 		_graphics.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 50));
 		
-		_graphics.fillRect((int)(x - rx + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
+		_graphics.fillRect((int)(x - rx + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
 		
 		_graphics.setColor(color);
 		
-		_graphics.drawRect((int)(x - rx + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
+		_graphics.drawRect((int)(x - rx + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
 		
-		_graphics.drawString(id + "", (int)(x + rx + ds * Math.cos(a) * GamePainter.getInterpolation() + 3.5), (int)(y - ry + ds * Math.sin(a) * GamePainter.getInterpolation() - 2.5));
+		_graphics.drawString(id + "", (int)(x + rx + ds * Math.cos(a) * Painter.getInterpolation() + 3.5), (int)(y - ry + ds * Math.sin(a) * Painter.getInterpolation() - 2.5));
 
-		_graphics.drawLine((int)(x + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(x + ds * Math.cos(a) + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y + ds * Math.sin(a) + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5));
+		_graphics.drawLine((int)(x + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(x + ds * Math.cos(a) + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y + ds * Math.sin(a) + ds * Math.sin(a) * Painter.getInterpolation() + 0.5));
 		
 		if (rx < ry) 
-			_graphics.drawOval((int)(x - rx + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y - rx + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * rx + 0.5));
+			_graphics.drawOval((int)(x - rx + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y - rx + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * rx + 0.5));
 		else
-			_graphics.drawOval((int)(x - ry + ds * Math.cos(a) * GamePainter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * GamePainter.getInterpolation() + 0.5), (int)(2 * ry + 0.5), (int)(2 * ry + 0.5));
+			_graphics.drawOval((int)(x - ry + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(2 * ry + 0.5), (int)(2 * ry + 0.5));
 	}
 	
 	public void rotate(double _da)

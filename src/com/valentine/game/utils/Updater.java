@@ -1,6 +1,8 @@
-package com.valentine.game;
+package com.valentine.game.utils;
 
-public final class GameUpdater{
+import com.valentine.game.GameWorld;
+
+public final class Updater{
 	private static Thread thread;
 	private static boolean isRunning;
 	private static int delay = 40;
@@ -17,7 +19,7 @@ public final class GameUpdater{
 				while (true) {
 					if (isRunning) {
 						lastUpdateNanos = System.nanoTime();
-						GamePainter.interpolate();
+						Painter.interpolate();
 						GameWorld.instance().update();
 					}
 					
