@@ -3,7 +3,8 @@ package com.valentine.game.utils;
 import java.awt.*;
 import javax.swing.*;
 
-public class Interface {
+public class Display
+{
 	private static JFrame jframe;
 	private static JPanel jpanel;
 	
@@ -12,15 +13,18 @@ public class Interface {
 	private static final Dimension defaultDimensions = new Dimension(1280, 720);
 	private static final Color defaultColor = new Color(0, 0, 20);
 	
-	public static void init() {
+	public static void init()
+	{
 		
 		jframe = new JFrame();
-		jpanel = new JPanel() {
+		jpanel = new JPanel()
+		{
 			private static final long serialVersionUID = 124515635493300032L;
 
 			public void paintComponent(Graphics _graphics) {	
 				super.paintComponent(_graphics);
-				Painter.paint(_graphics);
+				Canvas.setGraphics(_graphics);
+				Painter.paint();
 			}
 		};
 		
@@ -54,11 +58,13 @@ public class Interface {
 	}
 
 
-	public static Dimension getDimension() {
+	public static Dimension getDimension()
+	{
 		return jpanel.getSize();
 	}
 	
-	public static void repaint() {
+	public static void repaint()
+	{
 		jframe.repaint();
 	}
 }

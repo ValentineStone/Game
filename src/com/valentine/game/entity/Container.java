@@ -1,73 +1,39 @@
 package com.valentine.game.entity;
 
-import java.awt.Graphics;
 import java.util.LinkedList;
 
-public abstract class Container implements Entity
+public class Container implements Entity
 {
-	protected double x = 7;
-	protected double y = 7;
-	protected double width = 100;
-	protected double height = 100;
+
+	protected LinkedList<Entity> entities = new LinkedList<Entity>();
 	
-	LinkedList<Entity> entities = new LinkedList<Entity>();
-	
-	public Container()
-	{
-		make();
+	public void add(Entity _entity) {
+		entities.add(_entity);
 	}
 	
-	public abstract void make();
+	public Entity get(int _i)
+	{
+		return entities.get(_i);
+	}
 	
-	public void paint(Graphics _graphics)
+	public synchronized void remove(int _i)
+	{
+		entities.remove(_i);
+	}
+	
+	public void paint()
 	{
 		for (Entity entity : entities)
 		{
-			if (entity instanceof Container)
-			{
-				_graphics.translate((int)((Container)entity).getX(), (int)((Container)entity).getY());
-				
-				
-				
-				_graphics.translate(-(int)((Container)entity).getX(), -(int)((Container)entity).getY());
-			}
+			entity.paint();
 		}
 	}
 
-	public void update() {
-
+	public void update()
+	{
+		for (Entity entity : entities)
+		{
+			entity.update();
+		}
 	}
-	
-	public double getX() {
-		return x;
-	}
-
-	public void setX(double _x) {
-		x = _x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public void setY(double _y) {
-		y = _y;
-	}
-
-	public double getWidth() {
-		return width;
-	}
-
-	public void setWidth(double _width) {
-		width = _width;
-	}
-
-	public double getHeight() {
-		return height;
-	}
-
-	public void setHeight(double _height) {
-		height = _height;
-	}
-
 }

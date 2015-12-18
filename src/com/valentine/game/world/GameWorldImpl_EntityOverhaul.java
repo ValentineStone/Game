@@ -20,11 +20,11 @@ public class GameWorldImpl_EntityOverhaul extends GameWorld
 		
 		//for (int i = 0; i < n; i++) entities.add(Math.random() > 0.666 ? new Collider(i) : (Math.random() > 0.5 ? new Circle() : new HelloWorld()));
 		
-		entities.add(new Container(){
+		entities.add(new Layer(){
 			public void make()
 			{
 				entities.add(new Circle());
-				entities.add(new Container(){
+				entities.add(new Layer(){
 					public void make()
 					{
 						x = 60;

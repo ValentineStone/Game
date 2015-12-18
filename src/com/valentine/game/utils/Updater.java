@@ -1,8 +1,9 @@
 package com.valentine.game.utils;
 
-import com.valentine.game.GameWorld;
+import com.valentine.game.Game;
 
-public final class Updater{
+public final class Updater
+{
 	private static Thread thread;
 	private static boolean isRunning;
 	private static int delay = 40;
@@ -10,27 +11,38 @@ public final class Updater{
 	public static long delayNanos = delay * 1000000;
 	
 	
-	public static void init() {
+	public static void init()
+	{
 		
 		lastUpdateNanos = System.nanoTime();
 		
-		thread = new Thread(new Runnable() {
-			public void run() {
-				while (true) {
-					if (isRunning) {
-						lastUpdateNanos = System.nanoTime();
-						Painter.interpolate();
-						GameWorld.instance().update();
-					}
-					
-					try {
-						Thread.sleep(delay);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					
-				}
-			}});
+		thread = new Thread(
+							new Runnable()
+							{
+								public void run()
+								{
+									while (true)
+									{
+										if (isRunning)
+										{
+											lastUpdateNanos = System.nanoTime();
+											Painter.interpolate();
+											Game.instance().update();
+										}
+										
+										try
+										{
+											Thread.sleep(delay);
+										}
+										catch (InterruptedException e)
+										{
+											e.printStackTrace();
+										}
+										
+									}
+								}
+							}
+							);
 		
 		pause();
 		thread.start();
@@ -38,12 +50,14 @@ public final class Updater{
 		System.err.println("[Updater]");
 	}
 	
-	public static void start() {
+	public static void start()
+	{
 		System.err.println("[Updater].start()");
 		isRunning = true;
 	}
 	
-	public static void pause() {
+	public static void pause()
+	{
 		System.err.println("[Updater].pause()");
 		isRunning = false;
 	}
