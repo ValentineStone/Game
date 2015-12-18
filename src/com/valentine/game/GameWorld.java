@@ -17,7 +17,7 @@ public abstract class GameWorld implements InputListener, Entity {
 	
 	public static void init() {
 		
-		gameWorld = new GameWorldImpl_Line();
+		gameWorld = new GameWorldImpl_EntityOverhaul();
 		
 		System.err.println("[GameWorld]");
 	}

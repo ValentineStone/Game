@@ -1,15 +1,12 @@
 package com.valentine.game.world;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import com.valentine.game.GameWorld;
-import com.valentine.game.entity.Circle;
-import com.valentine.game.entity.Collider;
-import com.valentine.game.entity.Entity;
-import com.valentine.game.entity.HelloWorld;
+import com.valentine.game.entity.*;
 
 public class GameWorldImpl_EntityOverhaul extends GameWorld
 {
@@ -21,7 +18,22 @@ public class GameWorldImpl_EntityOverhaul extends GameWorld
 	{
 		entities = new ArrayList<Entity>();
 		
-		for (int i = 0; i < n; i++) entities.add(Math.random() > 0.666 ? new Collider(i) : (Math.random() > 0.5 ? new Circle() : new HelloWorld()));
+		//for (int i = 0; i < n; i++) entities.add(Math.random() > 0.666 ? new Collider(i) : (Math.random() > 0.5 ? new Circle() : new HelloWorld()));
+		
+		entities.add(new Container(){
+			public void make()
+			{
+				entities.add(new Circle());
+				entities.add(new Container(){
+					public void make()
+					{
+						x = 60;
+						y = 500;
+						entities.add(new HelloWorld());
+					}
+				});
+			}
+		});
 		
 		ready = true;
 	}

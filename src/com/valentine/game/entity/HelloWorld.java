@@ -2,8 +2,7 @@ package com.valentine.game.entity;
 
 import java.awt.*;
 import com.valentine.game.*;
-import com.valentine.game.utils.Painter;
-import com.valentine.game.world.*;
+import com.valentine.game.utils.*;
 
 public class HelloWorld implements Entity {
 	double x;
