@@ -10,8 +10,6 @@ import java.awt.Shape;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
-import com.valentine.game.entity.Layer;
-
 public class Canvas
 {
 	private static Graphics graphics;
@@ -27,29 +25,34 @@ public class Canvas
 		graphics = _graphics;
 	}
 	
-	public static void localize(Layer _layer)
+	public static void localize(double _x, double _y)
 	{
-		translate(_layer.getX(), _layer.getY());
+		translate(_x, _y);
 	}
 	
-	public static void delocalize(Layer _layer)
+	public static void delocalize(double _x, double _y)
 	{
-		translate(-_layer.getX(), -_layer.getY());
+		translate(-_x, -_y);
+	}
+	
+	private static int round(double _value)
+	{
+		return (int)(_value + 0.5);
 	}
 
 	public static void clearRect(double _x, double _y, double _width, double _height)
 	{
-		graphics.clearRect((int)_x, (int)_y, (int)_width, (int)_height);
+		graphics.clearRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
 	}
 
 	public static void clipRect(double _x, double _y, double _width, double _height)
 	{
-		graphics.clipRect((int)_x, (int)_y, (int)_width, (int)_height);
+		graphics.clipRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
 	}
 
 	public static void copyArea(double _x, double _y, double _width, double _height, double _dx, double _dy)
 	{
-		graphics.copyArea((int)_x, (int)_y, (int)_width, (int)_height, (int)_dx, (int)_dy);
+		graphics.copyArea((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_dx), (int)round(_dy));
 	}
 
 	public static void dispose()
@@ -59,82 +62,87 @@ public class Canvas
 
 	public static void drawArc(double _x, double _y, double _width, double _height, double _startAngle, double _arcAngle)
 	{	
-		graphics.drawArc((int)_x, (int)_y, (int)_width, (int)_height, (int)_startAngle, (int)_arcAngle);
+		graphics.drawArc((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_startAngle), (int)round(_arcAngle));
 	}
 
 	public static boolean drawImage(Image _img, double _x, double _y, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)_x, (int)_y, _observer);
+		return graphics.drawImage(_img, (int)round(_x), (int)round(_y), _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _x, double _y, Color _bgcolor, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)_x, (int)_y, _bgcolor, _observer);
+		return graphics.drawImage(_img, (int)round(_x), (int)round(_y), _bgcolor, _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _x, double _y, double _width, double _height, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)_x, (int)_y, (int)_width, (int)_height, _observer);
+		return graphics.drawImage(_img, (int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _x, double _y, double _width, double _height, Color _bgcolor, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)_x, (int)_y, (int)_width, (int)_height, _bgcolor, _observer);
+		return graphics.drawImage(_img, (int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), _bgcolor, _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _dx1, double _dy1, double _dx2, double _dy2, double _sx1, double _sy1, double _sx2, double _sy2, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)_dx1, (int)_dy1, (int)_dx2, (int)_dy2, (int)_sx1, (int)_sy1, (int)_sx2, (int)_sy2, _observer);
+		return graphics.drawImage(_img, (int)round(_dx1), (int)round(_dy1), (int)round(_dx2), (int)round(_dy2), (int)round(_sx1), (int)round(_sy1), (int)round(_sx2), (int)round(_sy2), _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _dx1, double _dy1, double _dx2, double _dy2, double _sx1, double _sy1, double _sx2, double _sy2, Color _bgcolor, ImageObserver _observer)
 	{
-		return graphics.drawImage( _img, (int)_dx1, (int)_dy1, (int)_dx2, (int)_dy2, (int)_sx1, (int)_sy1, (int)_sx2, (int)_sy2, _bgcolor, _observer);
+		return graphics.drawImage( _img, (int)round(_dx1), (int)round(_dy1), (int)round(_dx2), (int)round(_dy2), (int)round(_sx1), (int)round(_sy1), (int)round(_sx2), (int)round(_sy2), _bgcolor, _observer);
 	}
 
 	public static void drawLine(double _x1, double _y1, double _x2, double _y2)
 	{
-		drawLine((int)_x1, (int)_y1, (int)_x2, (int)_y2);
+		graphics.drawLine((int)round(_x1), (int)round(_y1), (int)round(_x2), (int)round(_y2));
 	}
 
 	public static void drawOval(double _x, double _y, double _width, double _height)
 	{
-		graphics.drawOval((int)_x, (int)_y, (int)_width, (int)_height);
+		graphics.drawOval((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
 	}
 
 	public static void drawRoundRect(double _x, double _y, double _width, double _height, double _arcWidth, double _arcHeight)
 	{
-		graphics.drawRoundRect((int)_x, (int)_y, (int)_width, (int)_height, (int)_arcWidth, (int)_arcHeight);
+		graphics.drawRoundRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_arcWidth), (int)round(_arcHeight));
+	}
+	
+	public static void drawRect(double _x, double _y, double _width, double _height)
+	{
+		graphics.drawRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
 	}
 
 	public static void drawString(String _str, double _x, double _y)
 	{
-		graphics.drawString(_str, (int)_x, (int)_y);
+		graphics.drawString(_str, (int)round(_x), (int)round(_y));
 	}
 
 	public static void drawString(AttributedCharacterIterator _iterator, double _x, double _y)
 	{
-		graphics.drawString(_iterator, (int)_x, (int)_y);
+		graphics.drawString(_iterator, (int)round(_x), (int)round(_y));
 	}
 
 	public static void fillArc(double _x, double _y, double _width, double _height, double _startAngle, double _arcAngle)
 	{
-		graphics.fillArc((int)_x, (int)_y, (int)_width, (int)_height, (int)_startAngle, (int)_arcAngle);
+		graphics.fillArc((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_startAngle), (int)round(_arcAngle));
 	}
 
 	public static void fillOval(double _x, double _y, double _width, double _height)
 	{
-		graphics.fillOval((int)_x, (int)_y, (int)_width, (int)_height);
+		graphics.fillOval((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
 	}
 
 	public static void fillRect(double _x, double _y, double _width, double _height)
 	{
-		graphics.fillRect((int)_x, (int)_y, (int)_width, (int)_height);
+		graphics.fillRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
 	}
 
 	public static void fillRoundRect(double _x, double _y, double _width, double _height, double _arcWidth, double _arcHeight)
 	{
-		graphics.fillRoundRect((int)_x, (int)_y, (int)_width, (int)_height, (int)_arcWidth, (int)_arcHeight);
+		graphics.fillRoundRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_arcWidth), (int)round(_arcHeight));
 	}
 
 	public static Shape getClip()
@@ -169,7 +177,7 @@ public class Canvas
 
 	public static void setClip(double _x, double _y, double _width, double _height)
 	{
-		graphics.setClip((int)_x, (int)_y, (int)_width, (int)_height);
+		graphics.setClip((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
 	}
 
 	public static void setColor(Color _c)
@@ -194,7 +202,7 @@ public class Canvas
 
 	public static void translate(double _x, double _y)
 	{
-		graphics.translate((int)_x, (int)_y);
+		graphics.translate((int)round(_x), (int)round(_y));
 	}
 	
 	

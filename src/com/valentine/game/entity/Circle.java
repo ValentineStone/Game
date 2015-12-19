@@ -2,9 +2,8 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
-import com.valentine.game.Game;
 import com.valentine.game.utils.Canvas;
-import com.valentine.game.utils.Painter;
+import com.valentine.game.utils.Interpolation;
 
 public class Circle implements Entity {
 	public int id;
@@ -15,10 +14,13 @@ public class Circle implements Entity {
 	public double dy;
 	public Color color;
 	
-	public Circle(int _id) {
+	Box box;
+	
+	public Circle(int _id, Box _box) {
 		id = _id;
-		x = Math.random() * Game.getDimension().width;
-		y = Math.random() * Game.getDimension().height;
+		box = _box;
+		x = Math.random() * box.getWidth();
+		y = Math.random() * box.getHeight();
 		r = Math.random() * 5 + 3;
 		dx = (Math.random() > 0.5 ? -1 : 1) * ((Math.random() * 6) + 1);
 		dy = (Math.random() > 0.5 ? -1 : 1) * ((Math.random() * 6) + 1);
@@ -30,8 +32,8 @@ public class Circle implements Entity {
 		x += dx;
 		y += dy;
 		
-		if (x+r > Game.getDimension().width) {
-			x = Game.getDimension().width - r;
+		if (x+r > box.getWidth()) {
+			x = box.getWidth() - r;
 			dx = -dx;
 		}
 		
@@ -40,8 +42,8 @@ public class Circle implements Entity {
 			dx = -dx;
 		}
 		
-		if (y+r > Game.getDimension().height) {
-			y = Game.getDimension().height - r;
+		if (y+r > box.getHeight()) {
+			y = box.getHeight() - r;
 			dy = -dy;
 		}
 		
@@ -53,7 +55,7 @@ public class Circle implements Entity {
 
 	public void paint() {
 		Canvas.setColor(color);
-		Canvas.drawOval(x + dx * Painter.getInterpolation() + .5 - r, y + dy * Painter.getInterpolation() + .5 - r, r*2, r*2);
+		Canvas.drawOval(Interpolation.make(x,dx) - r, Interpolation.make(y,dy) - r, r*2, r*2);
 	}
 
 }

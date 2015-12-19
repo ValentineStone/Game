@@ -5,11 +5,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import com.valentine.game.GameWorld;
 import com.valentine.game.entity.*;
 
-public class GameWorldImpl_EntityOverhaul extends GameWorld
+public class GameWorldImpl_EntityOverhaul// extends GameWorld
 {
+/*
 	private ArrayList<Entity> entities;
 	
 	private int n = 70;
@@ -20,11 +20,11 @@ public class GameWorldImpl_EntityOverhaul extends GameWorld
 		
 		//for (int i = 0; i < n; i++) entities.add(Math.random() > 0.666 ? new Collider(i) : (Math.random() > 0.5 ? new Circle() : new HelloWorld()));
 		
-		entities.add(new Layer(){
+		entities.add(new Box(){
 			public void make()
 			{
 				entities.add(new Circle());
-				entities.add(new Layer(){
+				entities.add(new Box(){
 					public void make()
 					{
 						x = 60;
@@ -74,5 +74,5 @@ public class GameWorldImpl_EntityOverhaul extends GameWorld
 	public void mouseReleased(MouseEvent _mouseEvent) {}
 
 	public void mouseDragged(MouseEvent _e) {}	
-
+*/
 }

@@ -1,7 +1,7 @@
 package com.valentine.game.entity;
 
-import java.awt.*;
-import com.valentine.game.*;
+import java.awt.Color;
+
 import com.valentine.game.utils.*;
 
 public class HelloWorld implements Entity {
@@ -13,10 +13,12 @@ public class HelloWorld implements Entity {
 	double dy;
 	String text;
 	Color color;
+	Box box;
 	
-	public HelloWorld() {
-		x = Math.random() * GameWorld.getDimension().width;
-		y = Math.random() * GameWorld.getDimension().height;
+	public HelloWorld(Box _box) {
+		box = _box;
+		x = Math.random() * box.getWidth();
+		y = Math.random() * box.getHeight();
 		dx = (Math.random() > 0.5 ? -1 : 1) * ((Math.random()) + 1);
 		dy = (Math.random() > 0.5 ? -1 : 1) * ((Math.random()) + 1);
 		text = "Hello world!";
@@ -33,8 +35,8 @@ public class HelloWorld implements Entity {
 		x += dx;
 		y += dy;
 		
-		if (x + width > GameWorld.getDimension().width) {
-			x = GameWorld.getDimension().width - width;
+		if (x + width > box.getWidth()) {
+			x = box.getWidth() - width;
 			dx = -dx;
 		}
 		
@@ -43,8 +45,8 @@ public class HelloWorld implements Entity {
 			dx = -dx;
 		}
 		
-		if (y > GameWorld.getDimension().height) {
-			y = GameWorld.getDimension().height;
+		if (y > box.getHeight()) {
+			y = box.getHeight();
 			dy = -dy;
 		}
 		
@@ -55,8 +57,8 @@ public class HelloWorld implements Entity {
 
 	}
 
-	public void paint(Graphics _graphics) {
-		_graphics.setColor(color);
-		_graphics.drawString(text, (int)(x + dx * Painter.getInterpolation() + .5), (int)(y + dy * Painter.getInterpolation() + .5));
+	public void paint() {
+		Canvas.setColor(color);
+		Canvas.drawString(text, Interpolation.make(x,dx), Interpolation.make(y,dy));
 	}
 }

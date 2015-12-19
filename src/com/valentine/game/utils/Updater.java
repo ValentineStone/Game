@@ -1,20 +1,18 @@
 package com.valentine.game.utils;
 
-import com.valentine.game.Game;
-
 public final class Updater
 {
 	private static Thread thread;
 	private static boolean isRunning;
-	private static int delay = 40;
-	public static long lastUpdateNanos;
-	public static long delayNanos = delay * 1000000;
 	
+	private static long periodMs = 40;
+	private static long periodNs = periodMs * 1000000;
+	
+	private static long lastTickNs;
 	
 	public static void init()
 	{
-		
-		lastUpdateNanos = System.nanoTime();
+		lastTickNs = System.nanoTime();
 		
 		thread = new Thread(
 							new Runnable()
@@ -25,14 +23,14 @@ public final class Updater
 									{
 										if (isRunning)
 										{
-											lastUpdateNanos = System.nanoTime();
-											Painter.interpolate();
+											lastTickNs = System.nanoTime();
+											//Interpolation.set();
 											Game.instance().update();
 										}
 										
 										try
 										{
-											Thread.sleep(delay);
+											Thread.sleep(periodMs);
 										}
 										catch (InterruptedException e)
 										{
@@ -60,6 +58,16 @@ public final class Updater
 	{
 		System.err.println("[Updater].pause()");
 		isRunning = false;
+	}
+	
+	public synchronized static long getLastTickNs()
+	{
+		return lastTickNs;
+	}
+	
+	public static long getPeriodNs()
+	{
+		return periodNs;
 	}
 
 

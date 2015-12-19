@@ -1,15 +1,16 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.line;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import com.valentine.game.*;
+import com.valentine.game.entity.Box;
+import com.valentine.game.entity.Entity;
+import com.valentine.game.listener.InputListener;
+import com.valentine.game.utils.Canvas;
 
-public class Line implements Entity {
-	
-	
-	
+public class Line implements Entity, InputListener{
 	
 	protected class Dot {
 		public double x;
@@ -31,11 +32,15 @@ public class Line implements Entity {
 	
 	protected ArrayList<Dot> dots;
 	
+	protected Box box;
+	
 	
 	protected void makeT() {}
 	
 	
-	public Line(int _n, double _r) {		
+	public Line(Box _box, int _n, double _r)
+	{
+		box = _box;
 		
 		randColor();
 		
@@ -47,9 +52,8 @@ public class Line implements Entity {
 		
 		dots = new ArrayList<Dot>();
 		
-		add((int)(Math.random() * 220), (int)(Math.random() * 220));
 		for (int i = 0; i < _n; i++) {
-			add((int)(Math.random() * GameWorld.getDimension().width/(_n*2.) + GameWorld.getDimension().width/(_n*2.)) + dots.get(i).x, (int)(Math.random() * GameWorld.getDimension().height));
+			add(Math.random() * box.getWidth()/_n + i * box.getWidth()/(_n), Math.random() * box.getHeight());
 		}
 		
 	}
@@ -77,8 +81,8 @@ public class Line implements Entity {
 		randColor();
 		
 		for (Dot dot : dots) {
-			dot.x = GameWorld.getDimension().width * Math.random();
-			dot.y = GameWorld.getDimension().height * Math.random();
+			dot.x = box.getWidth() * Math.random();
+			dot.y = box.getHeight() * Math.random();
 		}
 	}
 	
@@ -131,15 +135,16 @@ public class Line implements Entity {
 	
 	
 
-	public void paint(Graphics _graphics) {
-		_graphics.setColor(color);
+	public void paint()
+	{
+		Canvas.setColor(color);
 		
 		for (int i = 1; i < size(); i++) {
-			_graphics.drawLine((int)get(i-1).x, (int)get(i-1).y, (int)get(i).x, (int)get(i).y);
+			Canvas.drawLine(get(i-1).x, get(i-1).y, get(i).x, get(i).y);
 		}
 		
 		for (int i = 0; i < size(); i++) {
-			_graphics.drawOval((int)(get(i).x - r), (int)(get(i).y - r), (int)(r + r), (int)(r + r));
+			Canvas.drawOval((get(i).x - r), (get(i).y - r), (r + r), (r + r));
 		}
 	}
 	
@@ -181,6 +186,48 @@ public class Line implements Entity {
 	public int getMode() {
 		return mode;
 	}
+
+	public void keyPressed(KeyEvent _keyEvent)
+	{
+		if (_keyEvent.getKeyCode() == KeyEvent.VK_R) madMake();
+		else if (_keyEvent.getKeyCode() == KeyEvent.VK_C) randColor();
+		else if (_keyEvent.getKeyCode() == KeyEvent.VK_D) setMode(-1);
+		else if (_keyEvent.getKeyCode() == KeyEvent.VK_A) setMode(1);
+	}
+
+	public void keyReleased(KeyEvent _keyEvent)
+	{
+		setMode(0);
+	}
+
+	public void keyTyped(KeyEvent _keyEvent) {}
+
+	public void mouseClicked(MouseEvent _mouseEvent) {}
+
+	public void mouseEntered(MouseEvent _mouseEvent) {}
+
+	public void mouseExited(MouseEvent _mouseEvent) {}
+
+	public void mousePressed(MouseEvent _mouseEvent)
+	{
+		if (getMode() == -1) { if (select(_mouseEvent.getX(), _mouseEvent.getY()) != -1) deleteSelected(); }
+		else {
+			if (getMode() == 1) add(_mouseEvent.getX(), _mouseEvent.getY());
+			else if (select(_mouseEvent.getX(), _mouseEvent.getY()) != -1) setMode(2);
+		}
+	}
+
+	public void mouseReleased(MouseEvent _mouseEvent)
+	{
+		setMode(0);
+	}
+
+	public void mouseDragged(MouseEvent _e)
+	{
+		if (getMode() == 2) dragSelected(_e.getX(), _e.getY());
+	}
+
+	public void mouseMoved(MouseEvent _mouseEvent) {}
 	
 	
 

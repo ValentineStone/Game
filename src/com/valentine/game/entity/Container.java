@@ -7,8 +7,9 @@ public class Container implements Entity
 
 	protected LinkedList<Entity> entities = new LinkedList<Entity>();
 	
-	public void add(Entity _entity) {
+	public Entity add(Entity _entity) {
 		entities.add(_entity);
+		return _entity;
 	}
 	
 	public Entity get(int _i)
@@ -19,6 +20,11 @@ public class Container implements Entity
 	public synchronized void remove(int _i)
 	{
 		entities.remove(_i);
+	}
+	
+	public int size()
+	{
+		return entities.size();
 	}
 	
 	public void paint()

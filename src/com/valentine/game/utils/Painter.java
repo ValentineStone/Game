@@ -1,16 +1,18 @@
 package com.valentine.game.utils;
 
-import com.valentine.game.Game;
-
 public final class Painter
 {
 	private static Thread thread;	
 	private static boolean isRunning = false;
-	private static int delay = 5;
-	private static Double interpolation = new Double(1);
+	
+	private static long periodMs = 5;
+	
+	
+	private static long lastTickNs;
 	
 	public static void init()
 	{
+		lastTickNs = System.nanoTime();
 		
 		thread = new Thread(
 							new Runnable()
@@ -21,13 +23,14 @@ public final class Painter
 									{
 										if (isRunning)
 										{
-											interpolate();
+											lastTickNs = System.nanoTime();
+											Interpolation.set();
 											Display.repaint();
 										}
 										
 										try
 										{
-											Thread.sleep(delay);
+											Thread.sleep(periodMs);
 										}
 										catch (InterruptedException e)
 										{
@@ -41,7 +44,6 @@ public final class Painter
 		thread.start();
 		
 		System.err.println("[Painter]");
-		
 	}
 	
 	public static void start()
@@ -61,14 +63,9 @@ public final class Painter
 		Game.instance().paint();
 	}
 	
-	public static synchronized void interpolate()
+	public static long getLastTickNs()
 	{
-		interpolation = (System.nanoTime() - Updater.lastUpdateNanos) / (double)Updater.delayNanos;
-	}
-	
-	public static double getInterpolation()
-	{
-		return interpolation;
+		return lastTickNs;
 	}
 
 }

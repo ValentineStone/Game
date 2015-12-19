@@ -1,24 +1,19 @@
-package com.valentine.game;
+package com.valentine.game.utils;
 
 import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
+import com.valentine.game.Somegame;
+import com.valentine.game.entity.Box;
 import com.valentine.game.entity.Container;
-import com.valentine.game.utils.Display;
-import com.valentine.game.utils.InputHandler;
-import com.valentine.game.utils.Painter;
-import com.valentine.game.utils.Updater;
 
-public abstract class Game extends Container implements ComponentListener{
+public abstract class Game extends Box implements ComponentListener
+{
 	
 	// Current instance of Game
 	
 	private static Game game;
-	
-	// Dimensions of the on screen game
-	
-	protected static Dimension dimension;
 	
 	// selfexplanitory state switch
 	
@@ -26,6 +21,8 @@ public abstract class Game extends Container implements ComponentListener{
 	
 	public Game()
 	{
+		super(0,0,0,0);
+		
 		InputHandler.addComponentListener(this);
 	}
 
@@ -45,11 +42,6 @@ public abstract class Game extends Container implements ComponentListener{
 		System.err.println("[Game].assemble()");
 		Painter.start();
 		Updater.start();
-	}
-	
-	public static Dimension getDimension()
-	{
-		return dimension;
 	}
 	
 	public static boolean isReady() {
@@ -77,7 +69,8 @@ public abstract class Game extends Container implements ComponentListener{
 	public void componentResized(ComponentEvent _componentEvent)
 	{
 		
-		dimension = Display.getDimension();
+		setWidth(Display.getDimension().getWidth());
+		setHeight(Display.getDimension().getHeight());
 		
 		if (isReady()) return;
 		

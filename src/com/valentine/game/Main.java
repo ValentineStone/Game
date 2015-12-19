@@ -1,6 +1,7 @@
 package com.valentine.game;
 
 import com.valentine.game.utils.Display;
+import com.valentine.game.utils.Game;
 import com.valentine.game.utils.InputHandler;
 import com.valentine.game.utils.Painter;
 import com.valentine.game.utils.Updater;

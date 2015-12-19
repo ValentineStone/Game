@@ -5,13 +5,14 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.valentine.game.GameWorld;
 import com.valentine.game.entity.Circle;
 import com.valentine.game.entity.Entity;
 import com.valentine.game.entity.HelloWorld;
 import com.valentine.game.entity.Player;
 
-public class GameWorldImpl_BallsAndWorlds extends GameWorld {
+public class GameWorldImpl_BallsAndWorlds// extends GameWorld
+{
+/*
 
 	private ArrayList<Entity> entities;
 	private Player player;
@@ -44,4 +45,5 @@ public class GameWorldImpl_BallsAndWorlds extends GameWorld {
 	public void keyPressed(KeyEvent _event) { player.takeAction(_event);}
 	public void keyReleased(KeyEvent _event) { player.takeAction(_event);}
 
+*/
 }

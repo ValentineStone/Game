@@ -1,4 +1,4 @@
-package com.valentine.game;
+package com.valentine.game.world;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -8,7 +8,9 @@ import com.valentine.game.entity.Entity;
 import com.valentine.game.listener.InputListener;
 import com.valentine.game.world.*;
 
-public abstract class GameWorld implements InputListener, Entity {
+public abstract class GameWorld //implements InputListener, Entity
+{
+/*
 	
 	protected static Dimension dimension;
 	protected static boolean ready = false;
@@ -63,4 +65,6 @@ public abstract class GameWorld implements InputListener, Entity {
 	public void mouseDragged(MouseEvent _event) {}
 
 	public void mouseMoved(MouseEvent _event) {}
+
+*/
 }

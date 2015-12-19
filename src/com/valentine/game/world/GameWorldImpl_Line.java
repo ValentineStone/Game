@@ -4,12 +4,14 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import com.valentine.game.GameWorld;
 import com.valentine.game.entity.*;
 import com.valentine.game.entity.line.BezierLine;
 import com.valentine.game.entity.line.LagrangeLine;
 
-public class GameWorldImpl_Line extends GameWorld{
+public class GameWorldImpl_Line// extends GameWorld
+{
+/*
+	
 	private Line line;
 
 	public void assemble() {
@@ -58,5 +60,5 @@ public class GameWorldImpl_Line extends GameWorld{
 	public void mouseDragged(MouseEvent _e) {
 		if (line.getMode() == 2) line.dragSelected(_e.getX(), _e.getY());
 	}	
-
+*/
 }

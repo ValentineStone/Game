@@ -1,10 +1,8 @@
 package com.valentine.game.entity;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
-import com.valentine.game.GameWorld;
-import com.valentine.game.utils.Painter;
+import com.valentine.game.utils.*;
 
 public class Collider implements Entity
 {	
@@ -20,14 +18,17 @@ public class Collider implements Entity
 	
 	protected Color color;
 	
+	protected Box box;
+	
 	protected boolean visibleHitbox = true;
 	
-	public Collider(int _id)
+	public Collider(int _id, Box _box)
 	{
+		box = _box;
 		boolean isHuge = Math.random() < 0.01;
 		id = _id;
-		x = Math.random() * GameWorld.getDimension().width;
-		y = Math.random() * GameWorld.getDimension().height;
+		x = Math.random() * box.getWidth();
+		y = Math.random() * box.getHeight();
 		a = Math.random() * Math.PI * 2;
 		if (isHuge)
 		{
@@ -64,36 +65,48 @@ public class Collider implements Entity
 			y = ry;
 			a = 2 * Math.PI - a;
 		}
-		if (x + rx > GameWorld.getDimension().width)
+		if (x + rx > box.getWidth())
 		{
-			x = GameWorld.getDimension().width - rx;
+			x = box.getWidth() - rx;
 			a = Math.PI - a;
 		}
-		if (y + ry > GameWorld.getDimension().height)
+		if (y + ry > box.getHeight())
 		{
-			y = GameWorld.getDimension().height - ry;
+			y = box.getHeight() - ry;
 			a = 2 * Math.PI - a;
 		}
+		
+		for (int i = 0; i < box.size(); i++)
+		{
+			if (box.get(i) instanceof Collider)
+				if ( ((Collider)(box.get(i))).getId() > getId() )
+					collide((Collider)(box.get(i)));
+		}
 	}
+	
+	public void paint()
+	{	
+		Canvas.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 50));
+		
+		Canvas.fillRect(x - rx + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * ry);
+		
+		Canvas.setColor(color);
+		
+		Canvas.drawRect(x - rx + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * ry);
+		
+		Canvas.drawString(id + "", x + rx + Interpolation.make(ds * Math.cos(a)) + 3, y - ry + Interpolation.make(ds * Math.sin(a)) - 3);
 
-	public void paint(Graphics _graphics)
-	{
-		_graphics.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 50));
-		
-		_graphics.fillRect((int)(x - rx + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
-		
-		_graphics.setColor(color);
-		
-		_graphics.drawRect((int)(x - rx + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * ry + 0.5));
-		
-		_graphics.drawString(id + "", (int)(x + rx + ds * Math.cos(a) * Painter.getInterpolation() + 3.5), (int)(y - ry + ds * Math.sin(a) * Painter.getInterpolation() - 2.5));
-
-		_graphics.drawLine((int)(x + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(x + ds * Math.cos(a) + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y + ds * Math.sin(a) + ds * Math.sin(a) * Painter.getInterpolation() + 0.5));
+		Canvas.drawLine(
+						x + Interpolation.make(ds * Math.cos(a)),
+						y + ds * Interpolation.make(Math.sin(a)),
+						x + ds * Math.cos(a) + Interpolation.make(ds * Math.cos(a)),
+						y + ds * Math.sin(a) + Interpolation.make(ds * Math.sin(a))
+						);
 		
 		if (rx < ry) 
-			_graphics.drawOval((int)(x - rx + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y - rx + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(2 * rx + 0.5), (int)(2 * rx + 0.5));
+			Canvas.drawOval(x - rx + Interpolation.make(ds * Math.cos(a)), y - rx + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * rx );
 		else
-			_graphics.drawOval((int)(x - ry + ds * Math.cos(a) * Painter.getInterpolation() + 0.5), (int)(y - ry + ds * Math.sin(a) * Painter.getInterpolation() + 0.5), (int)(2 * ry + 0.5), (int)(2 * ry + 0.5));
+			Canvas.drawOval(x - ry + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * ry , 2 * ry );
 	}
 	
 	public void rotate(double _da)
@@ -123,38 +136,16 @@ public class Collider implements Entity
 			color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
 			_entity.color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
 			
-			update();
-			_entity.update();
-			
-			/*
-			System.err.println(id + " with " + _entity.id);
-			
-			if (rx + _entity.rx - Math.abs(x - _entity.x) < ry + _entity.ry - Math.abs(y - _entity.y))
-			{
-				if (x + rx > _entity.x - _entity.rx)
-				{
-					System.err.println(">>>");
-				}
-				else if (x - rx < _entity.x + _entity.rx)
-				{
-					System.err.println("<<<");
-				}
-			}
-			else
-			{
-				if (y + ry > _entity.y - _entity.ry)
-				{
-					System.err.println("\\/\\/\\/");
-				}
-				else if (y - ry < _entity.y + _entity.ry)
-				{
-					System.err.println("/\\/\\/\\");
-				}
-			}
-			*/
+			x += ds * Math.cos(a);
+			y += ds * Math.sin(a);
 			return true;
 		}
 
 		return false;
+	}
+	
+	public int getId()
+	{
+		return id;
 	}
 }
