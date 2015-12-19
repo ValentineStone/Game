@@ -1,16 +1,14 @@
-package com.valentine.game.gameworld.entity;
+package com.valentine.game.entity.line;
 
-import java.awt.Graphics;
-
-
+import com.valentine.game.entity.Box;
+import com.valentine.game.utils.Canvas;
 
 public class BezierLine extends Line {
-
 	
-	public BezierLine(int _n, double _r) {
-		super(_n, _r);
+	public BezierLine(Box _box, int _n, double _r)
+	{
+		super(_box, _n, _r);
 	}
-	
 	
 	public BezierLine(Line _line) {
 		super(_line);
@@ -34,9 +32,9 @@ public class BezierLine extends Line {
 		
 	}
 
-	public void paint(Graphics _graphics) {		
+	public void paint() {		
 		
-		_graphics.setColor(color);
+		Canvas.setColor(color);
 		
 		int n = dots.size();
 		
@@ -58,7 +56,7 @@ public class BezierLine extends Line {
 				y +=  coeficent * get(i).y;
 			}
 			
-			_graphics.drawLine((int)x_old, (int)y_old, (int)x, (int)y);
+			Canvas.drawLine(x_old, y_old, x, y);
 			
 			x_old = x;
 			y_old = y;
@@ -66,8 +64,8 @@ public class BezierLine extends Line {
 		
 		
 		for (int i = 0; i < dots.size(); i++) {
-			_graphics.drawOval((int)(get(i).x - r), (int)(get(i).y - r), (int)(2 * r), (int)(2 * r));
-			_graphics.drawString(i + "", (int)(get(i).x + r), (int)(get(i).y - r));
+			Canvas.drawOval((get(i).x - r), (get(i).y - r), (2 * r), (2 * r));
+			Canvas.drawString(i + "", (get(i).x + r), (get(i).y - r));
 		}
 		
 	}

@@ -1,9 +1,10 @@
-package com.valentine.game;
+package com.valentine.game.utils;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class GameInterface {
+public class Display
+{
 	private static JFrame jframe;
 	private static JPanel jpanel;
 	
@@ -12,15 +13,18 @@ public class GameInterface {
 	private static final Dimension defaultDimensions = new Dimension(1280, 720);
 	private static final Color defaultColor = new Color(0, 0, 20);
 	
-	public static void init() {
+	public static void init()
+	{
 		
 		jframe = new JFrame();
-		jpanel = new JPanel() {
+		jpanel = new JPanel()
+		{
 			private static final long serialVersionUID = 124515635493300032L;
 
 			public void paintComponent(Graphics _graphics) {	
 				super.paintComponent(_graphics);
-				GamePainter.paint(_graphics);
+				Canvas.setGraphics(_graphics);
+				Painter.paint();
 			}
 		};
 		
@@ -32,11 +36,11 @@ public class GameInterface {
 		
 		jframe.add(jpanel);
 		
-		jpanel.addComponentListener(GameInputHandler.instance());
-		jpanel.addKeyListener(GameInputHandler.instance());
-		jpanel.addMouseListener(GameInputHandler.instance());
-		jpanel.addMouseMotionListener(GameInputHandler.instance());
-		jpanel.addComponentListener(GameInputHandler.instance());
+		jframe.addKeyListener(InputHandler.instance());
+		
+		jpanel.addComponentListener(InputHandler.instance());
+		jpanel.addMouseListener(InputHandler.instance());
+		jpanel.addMouseMotionListener(InputHandler.instance());
 		
 		if (isFullscreen) {
 			jframe.setUndecorated(true);
@@ -54,11 +58,13 @@ public class GameInterface {
 	}
 
 
-	public static Dimension getDimension() {
+	public static Dimension getDimension()
+	{
 		return jpanel.getSize();
 	}
 	
-	public static void repaint() {
+	public static void repaint()
+	{
 		jframe.repaint();
 	}
 }
