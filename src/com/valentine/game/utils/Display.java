@@ -24,7 +24,7 @@ public class Display
 			public void paintComponent(Graphics _graphics) {	
 				super.paintComponent(_graphics);
 				Canvas.setGraphics(_graphics);
-				Painter.paint();
+				Game.instance().paint();
 			}
 		};
 		

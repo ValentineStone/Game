@@ -38,8 +38,7 @@ public abstract class Game extends Box implements ComponentListener
 	public void assemble()
 	{
 		System.err.println("[Game].assemble()");
-		Painter.start();
-		Updater.start();
+		Looper.play();
 	}
 	
 	public static boolean isReady() {

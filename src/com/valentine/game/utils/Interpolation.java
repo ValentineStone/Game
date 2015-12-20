@@ -4,17 +4,9 @@ public class Interpolation
 {
 	private static double interpolation = 1.;
 	
-	private static long updaterLastTickNs;
-	private static long painterLastTickNs;
-	
-	public static synchronized void set()
-	{
-		updaterLastTickNs = Updater.getLastTickNs();
-		painterLastTickNs = Painter.getLastTickNs();
-		
-		if (painterLastTickNs < updaterLastTickNs || (painterLastTickNs - updaterLastTickNs) > Updater.getPeriodNs()) return;
-		
-		interpolation = (painterLastTickNs - updaterLastTickNs) / (double)Updater.getPeriodNs();
+	public static void set(long _paintTickNs, long _updateTickNs, long _updatePeriod)
+	{				
+		interpolation = (_paintTickNs - _updateTickNs) / (double)_updatePeriod;
 	}
 	
 	public static double get()
