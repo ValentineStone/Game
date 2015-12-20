@@ -11,8 +11,8 @@ import com.valentine.game.utils.*;
 
 public class Player implements Entity, InputListener {
 	Image image;
-	public double x = 0;
-	public double y = 0;
+	public double x;
+	public double y;
 	public double width = 64;
 	public double height = 64;
 	public double up_dx;
@@ -23,8 +23,12 @@ public class Player implements Entity, InputListener {
 	Box box;
 	
 	public Player(Box _box)
-	{
+	{	
 		box = _box;
+		
+		x = box.getWidth()/2 - width/2;
+		y = box.getHeight()/2 - height/2;
+		
 		image = new ImageIcon("player.png").getImage();
 			
 	}

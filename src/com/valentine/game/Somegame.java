@@ -13,7 +13,8 @@ public class Somegame extends Game {
 	LivingBox box2;
 	LivingBox box3;
 	LivingBox box4;
-	Player player;
+	Player player1;
+	Player player2;
 	
 	public void assemble()
 	{
@@ -27,7 +28,7 @@ public class Somegame extends Game {
 		
 		for (int i = 0; i < 40; i++) add(new Collider(i, this));
 		
-		box1 = new LivingBox(this, 20,20,200,200, new Color(100,100,255));
+		box1 = new LivingBox(this, 20,20,200,200, new Color(100,100,255), new Color(0,0,20,100));
 		add(box1);
 		for (int i = 0; i < 10; i++) box1.add(new Circle(i, box1));
 		box1.add(new Collider(1, box1));
@@ -52,9 +53,13 @@ public class Somegame extends Game {
 		box2.add(box4);
 		for (int i = 0; i < 10; i++) box4.add(new Circle(i, box4));
 		
-		player = new Player(this);
-		add(player);
-		InputHandler.addInputListener(player);
+		player1 = new Player(box2);
+		box2.add(player1);
+		InputHandler.addInputListener(player1);
+		
+		player2 = new Player(this);
+		add(player2);
+		InputHandler.addInputListener(player2);
 		
 		setReady(true);
 		super.assemble();
