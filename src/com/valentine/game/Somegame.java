@@ -21,12 +21,12 @@ public class Somegame extends Game {
 		InputHandler.addInputListener((LagrangeLine)add(new LagrangeLine(this, 5, 10)));
 		add(new BezierLine(this, 5, 10));
 		add(new Line(this, 4, 10));
-		
+	
 		for (int i = 0; i < 40; i++) add(new HelloWorld(this));
 		
 		for (int i = 0; i < 100; i++) add(new Circle(i, this));
 		
-		for (int i = 0; i < 40; i++) add(new Collider(i, this));
+		//for (int i = 0; i < 40; i++) add(new Collider(i, this));
 		
 		box1 = new LivingBox(this, 20,20,200,200, new Color(100,100,255), new Color(0,0,20,100));
 		add(box1);
@@ -53,9 +53,11 @@ public class Somegame extends Game {
 		box2.add(box4);
 		for (int i = 0; i < 10; i++) box4.add(new Circle(i, box4));
 		
+		/*
 		player1 = new Player(box2);
 		box2.add(player1);
 		InputHandler.addInputListener(player1);
+		*/
 		
 		player2 = new Player(this);
 		add(player2);

@@ -1,11 +1,12 @@
 package com.valentine.game.entity;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+//import java.util.LinkedList;
 
 public class Container implements Entity
 {
 
-	protected LinkedList<Entity> entities = new LinkedList<Entity>();
+	protected ArrayList<Entity> entities = new ArrayList<Entity>();
 	
 	public Entity add(Entity _entity) {
 		entities.add(_entity);

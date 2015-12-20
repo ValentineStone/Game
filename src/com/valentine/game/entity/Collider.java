@@ -45,6 +45,29 @@ public class Collider implements Entity
 		color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
 	}
 	
+	public Collider(int _id, Box _box, double _x, double _y)
+	{
+		box = _box;
+		boolean isHuge = Math.random() < 0.01;
+		id = _id;
+		x = _x;
+		y = _y;
+		a = Math.random() * Math.PI * 2;
+		if (isHuge)
+		{
+			rx = Math.random() * 50 + 100;
+			ry = Math.random() * 50 + 100;	
+			da = 0;
+		} else
+		{
+			rx = Math.random() * 20 + 10;
+			ry = Math.random() * 20 + 10;
+			da = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
+		}
+		ds = ((Math.random() * 5) + 4);
+		color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
+	}
+	
 	public void update()
 	{
 		// Move it

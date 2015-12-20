@@ -22,6 +22,8 @@ public class Player implements Entity, InputListener {
 	public double speed = 10;
 	Box box;
 	
+	int colliderID = 41;
+	
 	public Player(Box _box)
 	{	
 		box = _box;
@@ -60,10 +62,10 @@ public class Player implements Entity, InputListener {
 		Canvas.drawImage(image, x + Interpolation.make(down_dx - up_dx), y + Interpolation.make(down_dy - up_dy), null);
 	}
 	
-	public void takeAction(KeyEvent _arg0) {
-		switch (_arg0.getID()) {
+	public void takeAction(KeyEvent _keyEvent) {
+		switch (_keyEvent.getID()) {
 			case KeyEvent.KEY_PRESSED: {
-				switch (_arg0.getKeyCode()) {
+				switch (_keyEvent.getKeyCode()) {
 					case KeyEvent.VK_DOWN: down_dy = speed; break;
 					case KeyEvent.VK_UP: up_dy = speed; break;
 					case KeyEvent.VK_LEFT: up_dx = speed; break;
@@ -71,7 +73,7 @@ public class Player implements Entity, InputListener {
 				}
 			} break;
 			case KeyEvent.KEY_RELEASED: {
-				switch (_arg0.getKeyCode()) {
+				switch (_keyEvent.getKeyCode()) {
 					case KeyEvent.VK_DOWN: down_dy = 0; break;
 					case KeyEvent.VK_UP: up_dy = 0; break;
 					case KeyEvent.VK_LEFT: up_dx = 0; break;
@@ -79,6 +81,15 @@ public class Player implements Entity, InputListener {
 				}
 			} break;
 		}
+		
+		if (_keyEvent.getID() == KeyEvent.KEY_PRESSED)
+		{
+			if (_keyEvent.getKeyCode() == KeyEvent.VK_C)
+			{
+				box.add(new Collider(colliderID++,box, x+width/2, y+height/2));
+			}
+		}
+				
 	}
 
 	public void keyPressed(KeyEvent _keyEvent) { takeAction(_keyEvent);}
