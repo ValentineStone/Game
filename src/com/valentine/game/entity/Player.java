@@ -59,7 +59,7 @@ public class Player implements Entity, InputListener {
 	}
 
 	public void paint() {
-		Canvas.drawImage(image, x + Interpolation.make(down_dx - up_dx), y + Interpolation.make(down_dy - up_dy), null);
+		Screen.drawImage(image, x + Interpolation.make(down_dx - up_dx), y + Interpolation.make(down_dy - up_dy), null);
 	}
 	
 	public void takeAction(KeyEvent _keyEvent) {

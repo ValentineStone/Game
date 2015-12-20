@@ -1,5 +1,6 @@
 package com.valentine.game.utils;
 
+import java.awt.Color;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -16,6 +17,8 @@ public abstract class Game extends Box implements ComponentListener
 	// selfexplanitory state switch
 	
 	private static boolean ready = false;
+	
+	Color defaultColorBg = new Color(0,0,20);
 	
 	public Game()
 	{
@@ -53,6 +56,10 @@ public abstract class Game extends Box implements ComponentListener
 	public void paint()
 	{
 		if (isReady() == false) return;
+		
+		
+		Screen.setColor(defaultColorBg);
+		Screen.fillRect(0, 0, width, height);
 		
 		super.paint();
 	}

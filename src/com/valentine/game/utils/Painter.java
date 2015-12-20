@@ -1,5 +1,8 @@
 package com.valentine.game.utils;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferStrategy;
+
 public final class Painter
 {
 	private static Thread thread;	
@@ -25,7 +28,21 @@ public final class Painter
 										{
 											lastTickNs = System.nanoTime();
 											Interpolation.set();
-											Display.repaint();
+											
+											BufferStrategy b = Display.getCanvas().getBufferStrategy();
+											if (b == null)
+											{
+												Display.getCanvas().createBufferStrategy(3);
+												b = Display.getCanvas().getBufferStrategy();
+											}
+											Graphics2D g = (Graphics2D) b.getDrawGraphics();
+											
+											Screen.setGraphics(g);
+											Game.instance().paint();
+											
+											g.dispose();
+											b.show();
+											
 										}
 										
 										try
@@ -56,11 +73,6 @@ public final class Painter
 	{
 		System.err.println("[Painter].pause()");
 		isRunning = false;
-	}
-	
-	public static void paint()
-	{
-		Game.instance().paint();
 	}
 	
 	public static long getLastTickNs()

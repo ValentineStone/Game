@@ -6,7 +6,7 @@ import javax.swing.*;
 public class Display
 {
 	private static JFrame jframe;
-	private static JPanel jpanel;
+	private static Canvas canvas;
 	
 	private static boolean isFullscreen = true;
 	
@@ -17,30 +17,21 @@ public class Display
 	{
 		
 		jframe = new JFrame();
-		jpanel = new JPanel()
-		{
-			private static final long serialVersionUID = 124515635493300032L;
-
-			public void paintComponent(Graphics _graphics) {	
-				super.paintComponent(_graphics);
-				Canvas.setGraphics(_graphics);
-				Painter.paint();
-			}
-		};
+		canvas = new Canvas();
 		
 		jframe.setTitle("Dead Space");
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		
 		jframe.setBackground(defaultColor);
-		jpanel.setBackground(defaultColor);
+		canvas.setBackground(defaultColor);
 		
-		jframe.add(jpanel);
+		jframe.add(canvas);
 		
 		jframe.addKeyListener(InputHandler.instance());
 		
-		jpanel.addComponentListener(InputHandler.instance());
-		jpanel.addMouseListener(InputHandler.instance());
-		jpanel.addMouseMotionListener(InputHandler.instance());
+		canvas.addComponentListener(InputHandler.instance());
+		canvas.addMouseListener(InputHandler.instance());
+		canvas.addMouseMotionListener(InputHandler.instance());
 		
 		if (isFullscreen) {
 			jframe.setUndecorated(true);
@@ -48,7 +39,7 @@ public class Display
 			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jframe);
 		}
 		else {
-			jpanel.setPreferredSize(defaultDimensions);
+			canvas.setPreferredSize(defaultDimensions);
 			jframe.pack();
 		}
 		
@@ -60,11 +51,11 @@ public class Display
 
 	public static Dimension getDimension()
 	{
-		return jpanel.getSize();
+		return canvas.getSize();
 	}
 	
-	public static void repaint()
+	public static Canvas getCanvas()
 	{
-		jframe.repaint();
+		return canvas;
 	}
 }

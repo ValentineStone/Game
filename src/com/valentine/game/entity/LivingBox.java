@@ -40,23 +40,23 @@ public class LivingBox extends Box implements Entity
 		double DX = Interpolation.make(getX(),getDx());
 		double DY = Interpolation.make(getY(),getDy());
 		
-		Canvas.localize(
+		Screen.localize(
 						DX,
 						DY
 						);
 		
-		Canvas.setColor(getFillColor());
+		Screen.setColor(getFillColor());
 		
-		Canvas.fillRect(
+		Screen.fillRect(
 						0,
 						0,
 						getWidth(),
 						getHeight()
 						);
 		
-		Canvas.setColor(getBorderColor());
+		Screen.setColor(getBorderColor());
 		
-		Canvas.drawRect(
+		Screen.drawRect(
 						0,
 						0,
 						getWidth(),
@@ -65,7 +65,7 @@ public class LivingBox extends Box implements Entity
 		
 		super.paint();
 		
-		Canvas.delocalize(
+		Screen.delocalize(
 						  DX,
 						  DY
 						  );
