@@ -1,12 +1,10 @@
 package com.valentine.game.utils;
 
-import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import com.valentine.game.Somegame;
 import com.valentine.game.entity.Box;
-import com.valentine.game.entity.Container;
 
 public abstract class Game extends Box implements ComponentListener
 {

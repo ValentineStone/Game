@@ -31,6 +31,7 @@ public class Somegame extends Game {
 		add(box1);
 		for (int i = 0; i < 10; i++) box1.add(new Circle(i, box1));
 		box1.add(new Collider(1, box1));
+		box1.add(new Collider(2, box1));
 		
 		box2 = new LivingBox(this, 270,50,400,300, Color.GREEN, new Color(0,0,25,240));
 		add(box2);
