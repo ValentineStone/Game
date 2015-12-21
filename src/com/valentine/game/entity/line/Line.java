@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import com.valentine.game.entity.Box;
 import com.valentine.game.entity.Entity;
 import com.valentine.game.listener.InputListener;
-import com.valentine.game.utils.Canvas;
+import com.valentine.game.utils.Screen;
 
 public class Line implements Entity, InputListener{
 	
@@ -137,14 +137,14 @@ public class Line implements Entity, InputListener{
 
 	public void paint()
 	{
-		Canvas.setColor(color);
+		Screen.setColor(color);
 		
 		for (int i = 1; i < size(); i++) {
-			Canvas.drawLine(get(i-1).x, get(i-1).y, get(i).x, get(i).y);
+			Screen.drawLine(get(i-1).x, get(i-1).y, get(i).x, get(i).y);
 		}
 		
 		for (int i = 0; i < size(); i++) {
-			Canvas.drawOval((get(i).x - r), (get(i).y - r), (r + r), (r + r));
+			Screen.drawOval((get(i).x - r), (get(i).y - r), (r + r), (r + r));
 		}
 	}
 	

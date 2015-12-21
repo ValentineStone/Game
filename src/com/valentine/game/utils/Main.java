@@ -7,8 +7,8 @@ public abstract class Main
 	{
 		Game.init();
 		Looper.init();
-		InputHandler.init();
-		Display.init();
+		Input.init();
+		Window.init();
 		
 		System.err.println("[Game]");
 

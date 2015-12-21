@@ -1,28 +1,32 @@
 package com.valentine.game.utils;
 
-import java.awt.event.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.valentine.game.listener.InputListener;
 
-public class InputHandler implements InputListener, ComponentListener
+public class Input implements InputListener, ComponentListener
 {
 	
-	private static InputHandler inputHandler;
+	private static Input input;
 	
-	private static ArrayList<InputListener> inputListeners = new ArrayList<InputListener>();
-	private static ArrayList<ComponentListener> componentListeners = new ArrayList<ComponentListener>();
+	private static List<InputListener> inputListeners = new ArrayList<InputListener>();
+	private static List<ComponentListener> componentListeners = new ArrayList<ComponentListener>();
 	
 	public static void init()
 	{
-		inputHandler = new InputHandler();
+		input = new Input();
 		
-		System.err.println("[InputHandler]");
+		System.err.println("[Input]");
 	}
 	
-	public static InputHandler instance()
+	public static Input instance()
 	{
-		return inputHandler;
+		return input;
 	}
 	
 	

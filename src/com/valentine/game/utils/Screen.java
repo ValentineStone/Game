@@ -3,16 +3,16 @@ package com.valentine.game.utils;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
-public class Canvas
+public class Screen
 {
-	private static Graphics graphics;
+	private static Graphics2D graphics;
 	
 	public static void init()
 	
@@ -20,7 +20,7 @@ public class Canvas
 		System.err.println("[Canvas]");
 	}
 	
-	public static void setGraphics(Graphics _graphics)
+	public static void setGraphics(Graphics2D _graphics)
 	{
 		graphics = _graphics;
 	}

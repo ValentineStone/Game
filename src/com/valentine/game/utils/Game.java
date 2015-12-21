@@ -21,7 +21,7 @@ public abstract class Game extends Box implements ComponentListener
 	{
 		super(0,0,0,0);
 		
-		InputHandler.addComponentListener(this);
+		Input.addComponentListener(this);
 	}
 
 	public static void init()
@@ -37,6 +37,7 @@ public abstract class Game extends Box implements ComponentListener
 	
 	public void assemble()
 	{
+		setReady(true);
 		System.err.println("[Game].assemble()");
 		Looper.play();
 	}
@@ -66,8 +67,8 @@ public abstract class Game extends Box implements ComponentListener
 	public void componentResized(ComponentEvent _componentEvent)
 	{
 		
-		setWidth(Display.getDimension().getWidth());
-		setHeight(Display.getDimension().getHeight());
+		setWidth(Window.getDimension().getWidth());
+		setHeight(Window.getDimension().getHeight());
 		
 		if (isReady()) return;
 		

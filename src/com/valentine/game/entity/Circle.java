@@ -2,7 +2,7 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
-import com.valentine.game.utils.Canvas;
+import com.valentine.game.utils.Screen;
 import com.valentine.game.utils.Interpolation;
 
 public class Circle implements Entity {
@@ -54,8 +54,8 @@ public class Circle implements Entity {
 	}
 
 	public void paint() {
-		Canvas.setColor(color);
-		Canvas.drawOval(Interpolation.make(x,dx) - r, Interpolation.make(y,dy) - r, r*2, r*2);
+		Screen.setColor(color);
+		Screen.drawOval(Interpolation.make(x,dx) - r, Interpolation.make(y,dy) - r, r*2, r*2);
 	}
 
 }

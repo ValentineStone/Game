@@ -1,7 +1,7 @@
 package com.valentine.game.entity.line;
 
 import com.valentine.game.entity.Box;
-import com.valentine.game.utils.Canvas;
+import com.valentine.game.utils.Screen;
 
 public class LagrangeLine extends Line {
 	
@@ -30,7 +30,7 @@ public class LagrangeLine extends Line {
 
 	public void paint() {		
 		
-		Canvas.setColor(color);
+		Screen.setColor(color);
 		
 		int n = dots.size();
 		
@@ -61,15 +61,15 @@ public class LagrangeLine extends Line {
 				
 			}
 			
-			Canvas.drawLine(x_old, y_old, x, y);
+			Screen.drawLine(x_old, y_old, x, y);
 			
 			x_old = x;
 			y_old = y;
 		}
 		
 		for (int i = 0; i < dots.size(); i++) {
-			Canvas.drawOval((get(i).x - r), (get(i).y - r), (2 * r), (2 * r));
-			Canvas.drawString(i + "", (get(i).x + r), (get(i).y - r));
+			Screen.drawOval((get(i).x - r), (get(i).y - r), (2 * r), (2 * r));
+			Screen.drawString(i + "", (get(i).x + r), (get(i).y - r));
 		}
 		
 	}

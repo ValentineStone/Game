@@ -58,7 +58,7 @@ public class HelloWorld implements Entity {
 	}
 
 	public void paint() {
-		Canvas.setColor(color);
-		Canvas.drawString(text, Interpolation.make(x,dx), Interpolation.make(y,dy));
+		Screen.setColor(color);
+		Screen.drawString(text, Interpolation.make(x,dx), Interpolation.make(y,dy));
 	}
 }

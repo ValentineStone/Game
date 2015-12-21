@@ -109,17 +109,17 @@ public class Collider implements Entity
 	
 	public void paint()
 	{	
-		Canvas.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 50));
+		Screen.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 50));
 		
-		Canvas.fillRect(x - rx + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * ry);
+		Screen.fillRect(x - rx + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * ry);
 		
-		Canvas.setColor(color);
+		Screen.setColor(color);
 		
-		Canvas.drawRect(x - rx + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * ry);
+		Screen.drawRect(x - rx + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * ry);
 		
-		Canvas.drawString(id + "", x + rx + Interpolation.make(ds * Math.cos(a)) + 3, y - ry + Interpolation.make(ds * Math.sin(a)) - 3);
+		Screen.drawString(id + "", x + rx + Interpolation.make(ds * Math.cos(a)) + 3, y - ry + Interpolation.make(ds * Math.sin(a)) - 3);
 
-		Canvas.drawLine(
+		Screen.drawLine(
 						x + Interpolation.make(ds * Math.cos(a)),
 						y + ds * Interpolation.make(Math.sin(a)),
 						x + ds * Math.cos(a) + Interpolation.make(ds * Math.cos(a)),
@@ -127,9 +127,9 @@ public class Collider implements Entity
 						);
 		
 		if (rx < ry) 
-			Canvas.drawOval(x - rx + Interpolation.make(ds * Math.cos(a)), y - rx + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * rx );
+			Screen.drawOval(x - rx + Interpolation.make(ds * Math.cos(a)), y - rx + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * rx );
 		else
-			Canvas.drawOval(x - ry + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * ry , 2 * ry );
+			Screen.drawOval(x - ry + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * ry , 2 * ry );
 	}
 	
 	public void rotate(double _da)
