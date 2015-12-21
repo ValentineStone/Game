@@ -4,22 +4,15 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import com.valentine.game.Somegame;
-import com.valentine.game.entity.Box;
+import com.valentine.game.entity.Container;
 
-public abstract class Game extends Box implements ComponentListener
-{
-	
-	// Current instance of Game
-	
+public abstract class Game extends Container implements ComponentListener
+{	
 	private static Game game;
-	
-	// selfexplanitory state switch
-	
-	private static boolean ready = false;
 	
 	public Game()
 	{
-		super(0,0,0,0);
+		super(null, 0, 0, 0, 0);
 		
 		Input.addComponentListener(this);
 	}
@@ -37,42 +30,24 @@ public abstract class Game extends Box implements ComponentListener
 	
 	public void assemble()
 	{
-		setReady(true);
 		System.err.println("[Game].assemble()");
 		Looper.play();
-	}
-	
-	public static boolean isReady() {
-		return ready;
-	}
-
-	protected static void setReady(boolean _ready) {
-		ready = _ready;
 	}
 
 	public void paint()
 	{
-		if (isReady() == false) return;
-		
 		super.paint();
 	}
 	
 	public void update()
 	{
-		if (isReady() == false) return;
-		
 		super.update();
 	}
 
 	public void componentResized(ComponentEvent _componentEvent)
 	{
-		
 		setWidth(Window.getDimension().getWidth());
 		setHeight(Window.getDimension().getHeight());
-		
-		if (isReady()) return;
-		
-		instance().assemble();
 	}
 	
 	public void componentHidden(ComponentEvent _componentEvent)

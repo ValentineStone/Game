@@ -26,24 +26,27 @@ public class Window
 		canvas = new Canvas()
 		{
 			private static final long serialVersionUID = 124515635493300032L;
+			
+			BufferStrategy bufferStrategy;
+			Graphics2D graphics2D;
 
 			public void repaint()
 			{
-				BufferStrategy b = canvas.getBufferStrategy();
-				while (b == null)
-				{
-					canvas.createBufferStrategy(3);
-					b = canvas.getBufferStrategy();
-					System.err.println("[Window]:Created buffer strategy.");
-				}
+				bufferStrategy = canvas.getBufferStrategy();
 				
-				Graphics2D g = (Graphics2D)b.getDrawGraphics();
-				Screen.setGraphics(g);
+				graphics2D = (Graphics2D)bufferStrategy.getDrawGraphics();
+				
+				Screen.setGraphics(graphics2D);
+				
 				Game.instance().paint();
-				b.show();
-				g.dispose();
+				
+				bufferStrategy.show();
+				
+				graphics2D.dispose();
 			}
 		};
+		
+		canvas.createBufferStrategy(30);
 		
 		jframe.setTitle("Dead Space");
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	

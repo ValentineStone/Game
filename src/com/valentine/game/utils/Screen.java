@@ -14,6 +14,11 @@ public class Screen
 {
 	private static Graphics2D graphics;
 	
+	public static class COLORS
+	{
+		public final static Color TRANSPARENT = new Color(0,0,0,0);
+	}
+	
 	public static void init()
 	
 	{

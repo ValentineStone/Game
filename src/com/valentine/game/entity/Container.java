@@ -1,28 +1,46 @@
 package com.valentine.game.entity;
 
+import java.awt.Color;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-public class Container extends Entity implements List<Entity>
+import com.valentine.game.utils.Screen;
+
+public class Container extends Entity implements Set<Entity>
 {
-
-	Container(Container _container)
+	protected Set<Entity> entities;
+	
+	protected Color backgroundColor;
+	protected Color borderColor;
+	
+	
+	public Container(Container _entitiesontainer, double _x, double _y, double _width, double _height)
 	{
-		super(_container);
+		super(_entitiesontainer, _x, _y, 0, 0, _width, _height, true, true);
+		backgroundColor = Screen.COLORS.TRANSPARENT;
+		borderColor = Screen.COLORS.TRANSPARENT;
+		entities = new LinkedHashSet<Entity>();
 	}
-
-	protected List<Entity> entities = new LinkedList<Entity>();
-
 	
 	public void paint()
 	{
+		
+		Screen.setColor(backgroundColor);
+		Screen.fillRect(x, y, width, height);
+		
+		Screen.localize(x, y);
+		
 		for (Entity entity : entities)
 		{
 			entity.paint();
 		}
+		
+		Screen.delocalize(x, y);
+		
+		Screen.setColor(borderColor);
+		Screen.fillRect(x, y, width, height);
 	}
 
 	public void update()
@@ -33,24 +51,34 @@ public class Container extends Entity implements List<Entity>
 		}
 	}
 
-	public boolean add(Entity _e)
+	public Color getBackgroundColor()
 	{
-		return entities.add(_e);
+		return backgroundColor;
 	}
 
-	public void add(int _index, Entity _element)
+	public void setBackgroundColor(Color _backgroundColor)
 	{
-		entities.add(_index, _element);
+		backgroundColor = _backgroundColor;
 	}
 
-	public boolean addAll(Collection<? extends Entity> _c)
+	public Color getBorderColor()
 	{
-		return entities.addAll(_c);
+		return borderColor;
 	}
 
-	public boolean addAll(int _index, Collection<? extends Entity> _c)
+	public void setBorderColor(Color _borderColor)
 	{
-		return entities.addAll(_index, _c);
+		borderColor = _borderColor;
+	}
+
+	public boolean add(Entity _entity)
+	{
+		return entities.add(_entity);
+	}
+
+	public boolean addAll(Collection<? extends Entity> _entities)
+	{
+		return entities.addAll(_entities);
 	}
 
 	public void clear()
@@ -58,24 +86,14 @@ public class Container extends Entity implements List<Entity>
 		entities.clear();
 	}
 
-	public boolean contains(Object _o)
+	public boolean contains(Object _object)
 	{
-		return entities.contains(_o);
+		return entities.contains(_object);
 	}
 
-	public boolean containsAll(Collection<?> _c)
+	public boolean containsAll(Collection<?> _objects)
 	{
-		return entities.containsAll(_c);
-	}
-
-	public Entity get(int _index)
-	{
-		return entities.get(_index);
-	}
-
-	public int indexOf(Object _o)
-	{
-		return entities.indexOf(_o);
+		return entities.containsAll(_objects);
 	}
 
 	public boolean isEmpty()
@@ -88,44 +106,19 @@ public class Container extends Entity implements List<Entity>
 		return entities.iterator();
 	}
 
-	public int lastIndexOf(Object _o)
+	public boolean remove(Object _object)
 	{
-		return entities.lastIndexOf(_o);
+		return entities.remove(_object);
 	}
 
-	public ListIterator<Entity> listIterator()
+	public boolean removeAll(Collection<?> _objects)
 	{
-		return entities.listIterator();
+		return entities.removeAll(_objects);
 	}
 
-	public ListIterator<Entity> listIterator(int _index)
+	public boolean retainAll(Collection<?> _objects)
 	{
-		return entities.listIterator(_index);
-	}
-
-	public boolean remove(Object _o)
-	{
-		return entities.remove(_o);
-	}
-
-	public Entity remove(int _index)
-	{
-		return entities.remove(_index);
-	}
-
-	public boolean removeAll(Collection<?> _c)
-	{
-		return entities.removeAll(_c);
-	}
-
-	public boolean retainAll(Collection<?> _c)
-	{
-		return entities.retainAll(_c);
-	}
-
-	public Entity set(int _index, Entity _element)
-	{
-		return entities.set(_index, _element);
+		return entities.retainAll(_objects);
 	}
 
 	public int size()
@@ -133,19 +126,13 @@ public class Container extends Entity implements List<Entity>
 		return entities.size();
 	}
 
-	public List<Entity> subList(int _fromIndex, int _toIndex)
-	{
-		return entities.subList(_fromIndex, _toIndex);
-	}
-
 	public Object[] toArray()
 	{
 		return entities.toArray();
 	}
 
-	public <T> T[] toArray(T[] _a)
+	public <T> T[] toArray(T[] _array)
 	{
-		return entities.toArray(_a);
+		return entities.toArray(_array);
 	}
-
 }

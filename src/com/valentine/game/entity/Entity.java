@@ -11,12 +11,40 @@ public abstract class Entity
 	
 	protected int id;
 	
-	Entity(Container _container)
+	protected double x;
+	protected double y;
+	protected double rotation;
+	
+	protected double velocity;
+	
+	protected double width;
+	protected double height;
+	
+	
+	Entity
+	(
+		Container _container,
+		double _x,
+		double _y,
+		double _rotation,
+		double _velocity,
+		double _width,
+		double _height,
+		boolean _paintable,
+		boolean _updatable
+	)
 	{
-		container = _container;
 		id = idGlobal++;
-		paintable = true;
-		updatable = true;
+		
+		container = _container;
+		x = _y;
+		y = _y;
+		rotation = _rotation;
+		velocity = _velocity;
+		width = _width;
+		height = _height;
+		paintable = _paintable;
+		updatable = _updatable;
 	}
 	
 	public void paint()
@@ -67,6 +95,68 @@ public abstract class Entity
 	}
 	
 	
+	public double getX()
+	{
+		return x;
+	}
+
+	public void setX(double _x)
+	{
+		x = _x;
+	}
+
+	public double getY()
+	{
+		return y;
+	}
+
+	public void setY(double _y)
+	{
+		y = _y;
+	}
+
+	public double getRotation()
+	{
+		return rotation;
+	}
+
+	public void setRotation(double _rotation)
+	{
+		rotation = _rotation;
+	}
+
+	public double getVelocity()
+	{
+		return velocity;
+	}
+
+	public void setVelocity(double _velocity)
+	{
+		velocity = _velocity;
+	}
+
+	public double getWidth()
+	{
+		return width;
+	}
+
+	public void setWidth(double _width)
+	{
+		width = _width;
+	}
+
+	public double getHeight()
+	{
+		return height;
+	}
+
+	public void setHeight(double _height)
+	{
+		height = _height;
+	}
+	
+	
+
 	public int hashCode()
 	{
 		return id;
