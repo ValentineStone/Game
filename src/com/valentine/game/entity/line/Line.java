@@ -2,21 +2,26 @@ package com.valentine.game.entity.line;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-import com.valentine.game.entity.Box;
+import com.valentine.game.entity.Container;
 import com.valentine.game.entity.Entity;
-import com.valentine.game.listener.InputListener;
 import com.valentine.game.utils.Screen;
 
-public class Line implements Entity, InputListener{
+public class Line extends Entity implements MouseListener, MouseMotionListener, KeyListener
+{
 	
-	protected class Dot {
+	protected class Dot
+	{
 		public double x;
 		public double y;
 		public double t;
-		public Dot(double _x, double _y) {
+		public Dot(double _x, double _y)
+		{
 			x = _x;
 			y = _y;
 		}
@@ -32,15 +37,15 @@ public class Line implements Entity, InputListener{
 	
 	protected ArrayList<Dot> dots;
 	
-	protected Box box;
+	protected Container container;
 	
 	
 	protected void makeT() {}
 	
 	
-	public Line(Box _box, int _n, double _r)
+	public Line(Container _container, int _n, double _r)
 	{
-		box = _box;
+		container = _container;
 		
 		randColor();
 		
@@ -53,7 +58,7 @@ public class Line implements Entity, InputListener{
 		dots = new ArrayList<Dot>();
 		
 		for (int i = 0; i < _n; i++) {
-			add(Math.random() * box.getWidth()/_n + i * box.getWidth()/(_n), Math.random() * box.getHeight());
+			add(Math.random() * container.getWidth()/_n + i * container.getWidth()/(_n), Math.random() * container.getHeight());
 		}
 		
 	}
@@ -81,8 +86,8 @@ public class Line implements Entity, InputListener{
 		randColor();
 		
 		for (Dot dot : dots) {
-			dot.x = box.getWidth() * Math.random();
-			dot.y = box.getHeight() * Math.random();
+			dot.x = container.getWidth() * Math.random();
+			dot.y = container.getHeight() * Math.random();
 		}
 	}
 	

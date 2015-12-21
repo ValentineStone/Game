@@ -2,8 +2,9 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.valentine.game.utils.Screen;
@@ -16,12 +17,12 @@ public class Container extends Entity implements Set<Entity>
 	protected Color borderColor;
 	
 	
-	public Container(Container _entitiesontainer, double _x, double _y, double _width, double _height)
+	public Container(Container _entities, double _x, double _y, double _width, double _height)
 	{
-		super(_entitiesontainer, _x, _y, 0, 0, _width, _height, true, true);
+		super(_entities, _x, _y, 0, 0, _width, _height, true, true);
 		backgroundColor = Screen.COLORS.TRANSPARENT;
 		borderColor = Screen.COLORS.TRANSPARENT;
-		entities = new LinkedHashSet<Entity>();
+		entities = new HashSet<Entity>();
 	}
 	
 	public void paint()
@@ -32,23 +33,31 @@ public class Container extends Entity implements Set<Entity>
 		
 		Screen.localize(x, y);
 		
-		for (Entity entity : entities)
+		try
 		{
-			entity.paint();
+			for (Entity entity : this)
+			{
+				entity.paint();
+			}
 		}
+		catch (ConcurrentModificationException _exception) {}
 		
 		Screen.delocalize(x, y);
 		
 		Screen.setColor(borderColor);
-		Screen.fillRect(x, y, width, height);
+		Screen.drawRect(x, y, width, height);
 	}
 
 	public void update()
 	{
-		for (Entity entity : entities)
+		try
 		{
-			entity.update();
+			for (Entity entity : this)
+			{
+				entity.update();
+			}
 		}
+		catch (ConcurrentModificationException _exception) {}
 	}
 
 	public Color getBackgroundColor()

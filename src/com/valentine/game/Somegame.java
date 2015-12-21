@@ -1,12 +1,28 @@
 package com.valentine.game;
 
-import com.valentine.game.utils.Game;
+import java.awt.Color;
+
+import com.valentine.game.entity.*;
+import com.valentine.game.utils.*;
 
 public class Somegame extends Game
 {
-	
 	public void assemble()
 	{
-		super.assemble();
+		setBackgroundColor(new Color(0,0,20));
+		
+		Container ballContainer = new Container(this, 500, 30, 400, 400);
+		ballContainer.setBorderColor(Color.MAGENTA);
+		add(ballContainer);
+		for (int i = 0; i < 30; i++) ballContainer.add(new Circle(ballContainer));
+		
+		Container colliderContainer = new Container(this, 10, 10, 200, 200);
+		colliderContainer.setBorderColor(Color.CYAN);
+		add(colliderContainer);
+		for (int i = 0; i < 2; i++) colliderContainer.add(new Collider(colliderContainer));
+		
+		Player player = new Player(this);
+		add(player);
+		Input.addKeyListener(player);
 	}
 }

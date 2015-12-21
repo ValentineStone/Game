@@ -15,6 +15,20 @@ public abstract class Game extends Container implements ComponentListener
 		super(null, 0, 0, 0, 0);
 		
 		Input.addComponentListener(this);
+		
+		Input.addComponentListener(new ComponentListener()
+		{
+			public void componentShown(ComponentEvent _componentEvent) {}
+			public void componentHidden(ComponentEvent _componentEvent) {}
+			public void componentMoved(ComponentEvent _componentEvent) {}
+			public void componentResized(ComponentEvent _componentEvent)
+			{
+				Input.removeComponentListener(this);
+				instance().componentResized(_componentEvent);
+				instance().assemble();
+				Looper.play();
+			}
+		});
 	}
 
 	public static void init()
@@ -28,11 +42,7 @@ public abstract class Game extends Container implements ComponentListener
 		return game;
 	}
 	
-	public void assemble()
-	{
-		System.err.println("[Game].assemble()");
-		Looper.play();
-	}
+	public abstract void assemble();
 
 	public void paint()
 	{

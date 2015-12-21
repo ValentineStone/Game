@@ -16,8 +16,8 @@ public class Window
 	
 	private static boolean isFullscreen = true;
 	
-	private static final Dimension defaultDimensions = new Dimension(1280, 720);
-	private static final Color defaultColor = new Color(0, 0, 20);
+	public static final Dimension DEFAULT_DIMESION = new Dimension(1280, 720);
+	public static final Color DEFAULT_COLOR = new Color(0, 0, 20);
 	
 	public static void init()
 	{
@@ -34,6 +34,12 @@ public class Window
 			{
 				bufferStrategy = canvas.getBufferStrategy();
 				
+				if (bufferStrategy == null)
+				{
+					createBufferStrategy(3);
+					bufferStrategy = canvas.getBufferStrategy();
+				}
+				
 				graphics2D = (Graphics2D)bufferStrategy.getDrawGraphics();
 				
 				Screen.setGraphics(graphics2D);
@@ -46,13 +52,11 @@ public class Window
 			}
 		};
 		
-		canvas.createBufferStrategy(30);
-		
 		jframe.setTitle("Dead Space");
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		
-		jframe.setBackground(defaultColor);
-		canvas.setBackground(defaultColor);
+		jframe.setBackground(DEFAULT_COLOR);
+		canvas.setBackground(DEFAULT_COLOR);
 		
 		jframe.add(canvas);
 		
@@ -68,7 +72,7 @@ public class Window
 			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jframe);
 		}
 		else {
-			canvas.setPreferredSize(defaultDimensions);
+			canvas.setPreferredSize(DEFAULT_DIMESION);
 			jframe.pack();
 		}
 		

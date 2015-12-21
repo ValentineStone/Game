@@ -5,22 +5,19 @@ import java.awt.Color;
 import com.valentine.game.utils.Screen;
 import com.valentine.game.utils.Interpolation;
 
-public class Circle implements Entity {
-	public int id;
-	public double x;
-	public double y;
+public class Circle extends Entity {
 	public double r;
 	public double dx;
 	public double dy;
 	public Color color;
 	
-	Box box;
+	Container container;
 	
-	public Circle(int _id, Box _box) {
-		id = _id;
-		box = _box;
-		x = Math.random() * box.getWidth();
-		y = Math.random() * box.getHeight();
+	public Circle(Container _container)
+	{
+		container = _container;
+		x = Math.random() * container.getWidth();
+		y = Math.random() * container.getHeight();
 		r = Math.random() * 5 + 3;
 		dx = (Math.random() > 0.5 ? -1 : 1) * ((Math.random() * 6) + 1);
 		dy = (Math.random() > 0.5 ? -1 : 1) * ((Math.random() * 6) + 1);
@@ -28,32 +25,38 @@ public class Circle implements Entity {
 	}
 
 	
-	public void update() {
+	public void update()
+	{
 		x += dx;
 		y += dy;
 		
-		if (x+r > box.getWidth()) {
-			x = box.getWidth() - r;
+		if (x+r > container.getWidth())
+		{
+			x = container.getWidth() - r;
 			dx = -dx;
 		}
 		
-		if (x-r < 0) {
+		if (x-r < 0)
+		{
 			x = r;
 			dx = -dx;
 		}
 		
-		if (y+r > box.getHeight()) {
-			y = box.getHeight() - r;
+		if (y+r > container.getHeight())
+		{
+			y = container.getHeight() - r;
 			dy = -dy;
 		}
 		
-		if (y-r < 0) {
+		if (y-r < 0)
+		{
 			y = r;
 			dy = -dy;
 		}
 	}
 
-	public void paint() {
+	public void paint()
+	{
 		Screen.setColor(color);
 		Screen.drawOval(Interpolation.make(x,dx) - r, Interpolation.make(y,dy) - r, r*2, r*2);
 	}

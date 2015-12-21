@@ -14,10 +14,7 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 {
 	
 	
-	
 	private static Input input;
-	
-	
 	
 	
 	private static Set<MouseListener> mouseListeners = new HashSet<MouseListener>();
@@ -66,6 +63,11 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	public static void addComponentListener(ComponentListener _componentListener)
 	{
 		componentListeners.add(_componentListener);
+	}
+	
+	public static void removeComponentListener(ComponentListener _componentListener)
+	{
+		componentListeners.remove(_componentListener);
 	}
 	
 	
@@ -121,8 +123,9 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	}
 
 	public void mouseReleased(MouseEvent _mouseEvent)
-	for (MouseListener mouseListener : mouseListeners)
-		mouseListener.mouseReleased(_mouseEvent);
+	{
+		for (MouseListener mouseListener : mouseListeners)
+			mouseListener.mouseReleased(_mouseEvent);
 	}
 	
 	

@@ -1,11 +1,11 @@
 package com.valentine.game.entity.line;
 
-import com.valentine.game.entity.Box;
+import com.valentine.game.entity.Container;
 import com.valentine.game.utils.Screen;
 
 public class BezierLine extends Line {
 	
-	public BezierLine(Box _box, int _n, double _r)
+	public BezierLine(Container _box, int _n, double _r)
 	{
 		super(_box, _n, _r);
 	}

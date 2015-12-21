@@ -20,8 +20,12 @@ public abstract class Entity
 	protected double width;
 	protected double height;
 	
+	public Entity()
+	{
+		id = idGlobal++;
+	}
 	
-	Entity
+	public Entity
 	(
 		Container _container,
 		double _x,
@@ -37,7 +41,7 @@ public abstract class Entity
 		id = idGlobal++;
 		
 		container = _container;
-		x = _y;
+		x = _x;
 		y = _y;
 		rotation = _rotation;
 		velocity = _velocity;
@@ -58,6 +62,16 @@ public abstract class Entity
 		if (updatable);
 		else return;
 	}
+	
+	
+	public boolean hit(double _x, double _y)
+	{
+		if (_x > x && _x < (x + width) && _y > y && _y < (y + height)) return true;
+		return false;
+	}
+	
+	
+	
 	
 	public Container getContainer()
 	{

@@ -2,23 +2,23 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
-import com.valentine.game.utils.*;
+import com.valentine.game.utils.Interpolation;
+import com.valentine.game.utils.Screen;
 
-public class HelloWorld implements Entity {
-	double x;
-	double y;
-	double height = 12;
-	double width = 75;
+public class HelloWorld extends Entity
+{
 	double dx;
 	double dy;
 	String text;
 	Color color;
-	Box box;
 	
-	public HelloWorld(Box _box) {
-		box = _box;
-		x = Math.random() * box.getWidth();
-		y = Math.random() * box.getHeight();
+	public HelloWorld(Container _container)
+	{
+		container = _container;
+		x = Math.random() * container.getWidth();
+		y = Math.random() * container.getHeight();
+		height = 12;
+		width = 75;
 		dx = (Math.random() > 0.5 ? -1 : 1) * ((Math.random()) + 1);
 		dy = (Math.random() > 0.5 ? -1 : 1) * ((Math.random()) + 1);
 		text = "Hello world!";
@@ -35,8 +35,8 @@ public class HelloWorld implements Entity {
 		x += dx;
 		y += dy;
 		
-		if (x + width > box.getWidth()) {
-			x = box.getWidth() - width;
+		if (x + width > container.getWidth()) {
+			x = container.getWidth() - width;
 			dx = -dx;
 		}
 		
@@ -45,8 +45,8 @@ public class HelloWorld implements Entity {
 			dx = -dx;
 		}
 		
-		if (y > box.getHeight()) {
-			y = box.getHeight();
+		if (y > container.getHeight()) {
+			y = container.getHeight();
 			dy = -dy;
 		}
 		

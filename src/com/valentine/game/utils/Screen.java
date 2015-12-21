@@ -30,6 +30,10 @@ public class Screen
 		graphics = _graphics;
 	}
 	
+	
+	
+	
+	
 	public static void localize(double _x, double _y)
 	{
 		translate(_x, _y);
@@ -40,10 +44,29 @@ public class Screen
 		translate(-_x, -_y);
 	}
 	
+	
+	
+	
+	
 	private static int round(double _value)
 	{
 		return (int)(_value + 0.5);
 	}
+	
+	
+	
+	
+	public static Color randomColor(int _min, int _max)
+	{
+		return new Color(
+					((int)(Math.random() * (_max - _min)) + _min),
+					((int)(Math.random() * (_max - _min)) + _min),
+					((int)(Math.random() * (_max - _min)) + _min)
+					);
+	}
+	
+	
+	
 
 	public static void clearRect(double _x, double _y, double _width, double _height)
 	{

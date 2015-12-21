@@ -1,11 +1,11 @@
 package com.valentine.game.entity.line;
 
-import com.valentine.game.entity.Box;
+import com.valentine.game.entity.Container;
 import com.valentine.game.utils.Screen;
 
 public class LagrangeLine extends Line {
 	
-	public LagrangeLine(Box _box, int _n, double _r)
+	public LagrangeLine(Container _box, int _n, double _r)
 	{
 		super(_box, _n, _r);
 	}
