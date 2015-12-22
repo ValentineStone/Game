@@ -27,6 +27,8 @@ public class Circle extends Entity {
 	
 	public void update()
 	{
+		super.update();
+		
 		x += dx;
 		y += dy;
 		
@@ -57,6 +59,8 @@ public class Circle extends Entity {
 
 	public void paint()
 	{
+		super.paint();
+		
 		Screen.setColor(color);
 		Screen.drawOval(Interpolation.make(x,dx) - r, Interpolation.make(y,dy) - r, r*2, r*2);
 	}

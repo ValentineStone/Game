@@ -37,8 +37,6 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	protected ArrayList<Dot> dots;
 	
-	protected Container container;
-	
 	
 	protected void makeT() {}
 	
@@ -82,7 +80,8 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 	
-	public void madMake() {
+	public void madMake()
+	{
 		randColor();
 		
 		for (Dot dot : dots) {
@@ -94,14 +93,16 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 	
-	public void randColor() {
+	public void randColor()
+	{
 		color = new Color(((int)(Math.random() * 220) + 35),((int)(Math.random() * 220) + 35),((int)(Math.random() * 220) + 35));
 	}
 	
 	
 	
 	
-	public void add(double _x, double _y) {
+	public void add(double _x, double _y)
+	{
 		dots.add(new Dot(_x, _y));
 		makeT();
 	}
@@ -109,20 +110,23 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 	
-	private void delete(int _i) {
+	private void delete(int _i)
+	{
 		if (size() <= 2) return;
 		dots.remove(_i);
 		makeT();
 	}
 	
-	public void deleteSelected() {
+	public void deleteSelected()
+	{
 		delete(selected);
 	}
 	
 	
 	
 	
-	protected Dot get(int _i) {
+	protected Dot get(int _i)
+	{
 		return dots.get(_i);
 	}
 	
@@ -133,8 +137,9 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 	
-	public synchronized void update() {
-		
+	public void update() 
+	{
+		super.update();
 	}
 	
 	
@@ -142,13 +147,17 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 
 	public void paint()
 	{
+		super.paint();
+		
 		Screen.setColor(color);
 		
-		for (int i = 1; i < size(); i++) {
+		for (int i = 1; i < size(); i++)
+		{
 			Screen.drawLine(get(i-1).x, get(i-1).y, get(i).x, get(i).y);
 		}
 		
-		for (int i = 0; i < size(); i++) {
+		for (int i = 0; i < size(); i++)
+		{
 			Screen.drawOval((get(i).x - r), (get(i).y - r), (r + r), (r + r));
 		}
 	}
@@ -156,13 +165,16 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 	
-	public int select(int _x, int _y) {
+	public int select(int _x, int _y)
+	{
 		
-		for (int i = 0; i < size(); i++) {
+		for (int i = 0; i < size(); i++)
+		{
 			if (_x > dots.get(i).x - r &&
 				_x < dots.get(i).x + r &&
 				_y > dots.get(i).y - r &&
-				_y < dots.get(i).y + r ) {
+				_y < dots.get(i).y + r )
+			{
 				
 				selected = i;
 				return i;
@@ -174,7 +186,8 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 		
 	
-	public void dragSelected(int _x, int _y) {
+	public void dragSelected(int _x, int _y)
+	{
 		if (mode == 2){
 			get(selected).x = _x;
 			get(selected).y = _y;
@@ -183,12 +196,14 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 	
-	public void setMode(int _mode) {
+	public void setMode(int _mode)
+	{
 		mode = _mode;
 	}
 	
 	
-	public int getMode() {
+	public int getMode()
+	{
 		return mode;
 	}
 

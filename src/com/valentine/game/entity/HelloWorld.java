@@ -31,33 +31,43 @@ public class HelloWorld extends Entity
 				;
 	}
 
-	public void update() {
+	public void update()
+	{
+		super.update();
+		
 		x += dx;
 		y += dy;
 		
-		if (x + width > container.getWidth()) {
+		if (x + width > container.getWidth())
+		{
 			x = container.getWidth() - width;
 			dx = -dx;
 		}
 		
-		if (x < 0) {
+		if (x < 0)
+		{
 			x = 0;
 			dx = -dx;
 		}
 		
-		if (y > container.getHeight()) {
+		if (y > container.getHeight())
+		{
 			y = container.getHeight();
 			dy = -dy;
 		}
 		
-		if (y - height< 0) {
+		if (y - height< 0)
+		{
 			y = height;
 			dy = -dy;
 		}
 
 	}
 
-	public void paint() {
+	public void paint()
+	{
+		super.paint();
+		
 		Screen.setColor(color);
 		Screen.drawString(text, Interpolation.make(x,dx), Interpolation.make(y,dy));
 	}

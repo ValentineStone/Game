@@ -50,7 +50,7 @@ public class Screen
 	
 	private static int round(double _value)
 	{
-		return (int)(_value + 0.5);
+		return (int)Math.round(_value);
 	}
 	
 	

@@ -7,8 +7,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Input implements MouseListener, MouseMotionListener, KeyListener, ComponentListener
 {
@@ -17,13 +17,13 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	private static Input input;
 	
 	
-	private static Set<MouseListener> mouseListeners = new HashSet<MouseListener>();
+	private static List<MouseListener> mouseListeners = new ArrayList<MouseListener>();
 	
-	private static Set<MouseMotionListener> mouseMotionListeners = new HashSet<MouseMotionListener>();
+	private static List<MouseMotionListener> mouseMotionListeners = new ArrayList<MouseMotionListener>();
 	
-	private static Set<KeyListener> keyListeners = new HashSet<KeyListener>();
+	private static List<KeyListener> keyListeners = new ArrayList<KeyListener>();
 	
-	private static Set<ComponentListener> componentListeners = new HashSet<ComponentListener>();
+	private static List<ComponentListener> componentListeners = new ArrayList<ComponentListener>();
 	
 	
 	
@@ -69,6 +69,10 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	{
 		componentListeners.remove(_componentListener);
 	}
+	public static void removeKeyListener(KeyListener _keyListener)
+	{
+		keyListeners.remove(_keyListener);
+	}
 	
 	
 	
@@ -77,20 +81,20 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 
 	public void keyPressed(KeyEvent _keyEvent)
 	{
-		for (KeyListener keyListener : keyListeners)
-			keyListener.keyPressed(_keyEvent);
+		for (int i = 0; i < keyListeners.size(); i++)
+			keyListeners.get(i).keyPressed(_keyEvent);
 	}
 
 	public void keyReleased(KeyEvent _keyEvent)
 	{
-		for (KeyListener keyListener : keyListeners)
-			keyListener.keyReleased(_keyEvent);
+		for (int i = 0; i < keyListeners.size(); i++)
+			keyListeners.get(i).keyReleased(_keyEvent);
 	}
 
 	public void keyTyped(KeyEvent _keyEvent)
 	{
-		for (KeyListener keyListener : keyListeners)
-			keyListener.keyTyped(_keyEvent);
+		for (int i = 0; i < keyListeners.size(); i++)
+			keyListeners.get(i).keyTyped(_keyEvent);
 	}
 	
 	
@@ -100,32 +104,32 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 
 	public void mouseClicked(MouseEvent _mouseEvent)
 	{
-		for (MouseListener mouseListener : mouseListeners)
-			mouseListener.mouseClicked(_mouseEvent);
+		for (int i = 0; i < mouseListeners.size(); i++)
+			mouseListeners.get(i).mouseClicked(_mouseEvent);
 	}
 
 	public void mouseEntered(MouseEvent _mouseEvent)
 	{
-		for (MouseListener mouseListener : mouseListeners)
-			mouseListener.mouseEntered(_mouseEvent);
+		for (int i = 0; i < mouseListeners.size(); i++)
+			mouseListeners.get(i).mouseEntered(_mouseEvent);
 	}
 	
 	public void mouseExited(MouseEvent _mouseEvent)
 	{
-		for (MouseListener mouseListener : mouseListeners)
-			mouseListener.mouseExited(_mouseEvent);
+		for (int i = 0; i < mouseListeners.size(); i++)
+			mouseListeners.get(i).mouseExited(_mouseEvent);
 	}
 
 	public void mousePressed(MouseEvent _mouseEvent)
 	{
-		for (MouseListener mouseListener : mouseListeners)
-			mouseListener.mousePressed(_mouseEvent);
+		for (int i = 0; i < mouseListeners.size(); i++)
+			mouseListeners.get(i).mousePressed(_mouseEvent);
 	}
 
 	public void mouseReleased(MouseEvent _mouseEvent)
 	{
-		for (MouseListener mouseListener : mouseListeners)
-			mouseListener.mouseReleased(_mouseEvent);
+		for (int i = 0; i < mouseListeners.size(); i++)
+			mouseListeners.get(i).mouseReleased(_mouseEvent);
 	}
 	
 	
@@ -134,14 +138,14 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	
 	public void mouseDragged(MouseEvent _mouseEvent)
 	{
-		for (MouseMotionListener mouseMotionListener : mouseMotionListeners)
-			mouseMotionListener.mouseDragged(_mouseEvent);
+		for (int i = 0; i < mouseMotionListeners.size(); i++)
+			mouseMotionListeners.get(i).mouseDragged(_mouseEvent);
 	}
 
 	public void mouseMoved(MouseEvent _mouseEvent)
 	{
-		for (MouseMotionListener mouseMotionListener : mouseMotionListeners)
-			mouseMotionListener.mouseMoved(_mouseEvent);
+		for (int i = 0; i < mouseMotionListeners.size(); i++)
+			mouseMotionListeners.get(i).mouseMoved(_mouseEvent);
 	}
 
 	
@@ -151,25 +155,25 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	
 	public void componentHidden(ComponentEvent _componentEvent)
 	{
-		for (ComponentListener componentListener : componentListeners)
-			componentListener.componentHidden(_componentEvent);
+		for (int i = 0; i < componentListeners.size(); i++)
+			componentListeners.get(i).componentHidden(_componentEvent);
 	}
 
 	public void componentMoved(ComponentEvent _componentEvent)
 	{
-		for (ComponentListener componentListener : componentListeners)
-			componentListener.componentMoved(_componentEvent);
+		for (int i = 0; i < componentListeners.size(); i++)
+			componentListeners.get(i).componentMoved(_componentEvent);
 	}
 
 	public void componentResized(ComponentEvent _componentEvent)
 	{
-		for (ComponentListener componentListener : componentListeners)
-			componentListener.componentResized(_componentEvent);
+		for (int i = 0; i < componentListeners.size(); i++)
+			componentListeners.get(i).componentResized(_componentEvent);
 	}
 
 	public void componentShown(ComponentEvent _componentEvent)
 	{
-		for (ComponentListener componentListener : componentListeners)
-			componentListener.componentShown(_componentEvent);
+		for (int i = 0; i < componentListeners.size(); i++)
+			componentListeners.get(i).componentShown(_componentEvent);
 	}
 }

@@ -10,103 +10,272 @@ import com.valentine.game.utils.Interpolation;
 import com.valentine.game.utils.Screen;
 
 public class Player extends Entity implements KeyListener {
+
 	Image image;
-	public double up_dx;
-	public double down_dx;
-	public double up_dy;
-	public double down_dy;
-	Container container;
 	
-	int colliderID = 41;
+	private final double VELOCITY_MAX = 12;
+	private final double ACCELERATION = 1;
+	private final double FRICTION = 0.1;
+	
+	
+	private boolean MOVING, MOVING_SOUTH, MOVING_NORTH, MOVING_WEST, MOVING_EAST;
 	
 	public Player(Container _container)
 	{	
-		container = _container;
-		width = 64;
-		height = 64;
-		x = container.getWidth()/2 - width/2;
-		y = container.getHeight()/2 - height/2;
-		velocity = 10;
+		super(_container, 0, 0, 0, 0, 64, 64, true, true);
+		setPositionCentered();
 		
-		image = new ImageIcon("player.png").getImage();
-			
+		MOVING =
+		MOVING_SOUTH = 
+		MOVING_NORTH =
+		MOVING_WEST = 
+		MOVING_EAST = false;
+		
+		image = new ImageIcon("player.png").getImage();			
 	}
 
 	public void update()
 	{
-		x += (down_dx - up_dx);
-		y += (down_dy - up_dy);
+		super.update();
 		
-		if (x + width > container.getWidth())
+		movementFlagsToRotation();
+		
+		accelerate();
+		move();
+		keepContained();
+	}
+
+	public void paint()
+	{
+		super.paint();
+		
+		if (isMoving())
+			Screen.drawImage(image, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()), null);
+		else
+			Screen.drawImage(image, getX(), getY(), null);
+	}
+
+	
+	private void movementFlagsToRotation()
+	{
+		MOVING = true;
+		
+		if (MOVING_SOUTH)
 		{
-			x = container.getWidth() - width;
+			if (MOVING_NORTH)
+			{
+				if (MOVING_WEST)
+				{
+					if (MOVING_EAST)
+					{
+						MOVING = false;
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.WEST.getRotation());
+					}
+				}
+				else
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.EAST.getRotation());
+					}
+					else
+					{
+						MOVING = false;
+					}
+				}
+			}
+			else
+			{
+				if (MOVING_WEST)
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.SOUTH.getRotation());
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.SOUTHWEST.getRotation());
+					}
+				}
+				else
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.SOUTHEAST.getRotation());
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.SOUTH.getRotation());
+					}
+				}
+			}
 		}
-		if (x < 0)
+		else
 		{
-			x = 0;
+			if (MOVING_NORTH)
+			{
+				if (MOVING_WEST)
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.NORTH.getRotation());
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.NORTHWEST.getRotation());
+					}
+				}
+				else
+				{
+					if (MOVING_EAST)
+					{
+						setRotation( Entity.DIRECTION.NORTHEAST.getRotation());
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.NORTH.getRotation());
+					}
+				}
+			}
+			else
+			{
+				if (MOVING_WEST)
+				{
+					if (MOVING_EAST)
+					{
+						MOVING = false;
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.WEST.getRotation());
+					}
+				}
+				else
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.EAST.getRotation());
+					}
+					else
+					{
+						MOVING = false;
+					}
+				}
+			}
 		}
-		if (y + height > container.getHeight())
+	}
+	
+	public boolean isMoving()
+	{
+		if (MOVING_SOUTH || MOVING_NORTH || MOVING_WEST || MOVING_EAST) return true;
+		return false;
+	}
+	
+	private void accelerate()
+	{
+		if (MOVING)
 		{
-			y = container.getHeight() - height;
+			if (getVelocity() < VELOCITY_MAX)
+			{
+				setVelocity(getVelocity() + VELOCITY_MAX * ACCELERATION);
+				if (getVelocity() > VELOCITY_MAX) setVelocity(VELOCITY_MAX);
+			}
+			
 		}
-		if (y < 0)
+		else
 		{
-			y = 0;
+			if (getVelocity() > 0)
+			{
+				setVelocity(getVelocity() - VELOCITY_MAX * FRICTION);
+				if (getVelocity() < 0) setVelocity(0);
+			}
 		}
 	}
 
-	public void paint() {
-		Screen.drawImage(image, x - width/2. + Interpolation.make(down_dx - up_dx), y - height/2. + Interpolation.make(down_dy - up_dy), null);
-	}
-	
-	public void takeAction(KeyEvent _keyEvent) {
-		switch (_keyEvent.getID()) {
-			case KeyEvent.KEY_PRESSED: {
-				switch (_keyEvent.getKeyCode()) {
-					case KeyEvent.VK_DOWN: down_dy = velocity; break;
-					case KeyEvent.VK_UP: up_dy = velocity; break;
-					case KeyEvent.VK_LEFT: up_dx = velocity; break;
-					case KeyEvent.VK_RIGHT: down_dx = velocity; break;
-				}
-			} break;
-			case KeyEvent.KEY_RELEASED: {
-				switch (_keyEvent.getKeyCode()) {
-					case KeyEvent.VK_DOWN: down_dy = 0; break;
-					case KeyEvent.VK_UP: up_dy = 0; break;
-					case KeyEvent.VK_LEFT: up_dx = 0; break;
-					case KeyEvent.VK_RIGHT: down_dx = 0; break;
-				}
-			} break;
-		}
-		
-		if (_keyEvent.getID() == KeyEvent.KEY_PRESSED)
+	public void keyPressed(KeyEvent _keyEvent)
+	{
+		switch (_keyEvent.getKeyCode())
 		{
-			if (_keyEvent.getKeyCode() == KeyEvent.VK_C)
+			case KeyEvent.VK_DOWN:
 			{
-				container.add(new Collider(container, x+width/2, y+height/2));
+				MOVING_NORTH = true;
+				//System.err.println("begin NORTH");
+				break;
 			}
-			else if (_keyEvent.getKeyCode() == KeyEvent.VK_D)
+			case KeyEvent.VK_UP:
 			{
-				for (Entity entity : container)
+				MOVING_SOUTH = true;
+				//System.err.println("begin SOUTH");
+				break;
+			}
+			case KeyEvent.VK_LEFT:
+			{
+				MOVING_WEST = true;
+				//System.err.println("begin WEST");
+				break;
+			}
+			case KeyEvent.VK_RIGHT:
+			{
+				MOVING_EAST = true;
+				//System.err.println("begin EAST");
+				break;
+			}
+			case KeyEvent.VK_C:
+			{
+				getContainer().add(new Collider(getContainer(), getX()+getWidth()/2, getY()+getHeight()/2));
+				break;
+			}
+			case KeyEvent.VK_D:
+			{
+				for (int i = getContainer().size()-1; i >= 0; i--)
 				{
+					Entity entity = getContainer().get(i);
 					if (entity instanceof Collider)
 					{
-						if (entity.hit(x, y))
+						if (entity.hit(getX(), getY()))
 						{
-							container.remove(entity);
+							entity.kill();
 							break;
 						}
 					}
 				}
 			}
 		}
-				
 	}
 
-	public void keyPressed(KeyEvent _keyEvent) { takeAction(_keyEvent);}
-
-	public void keyReleased(KeyEvent _keyEvent) { takeAction(_keyEvent);}
+	public void keyReleased(KeyEvent _keyEvent)
+	{
+		switch (_keyEvent.getKeyCode())
+		{
+			case KeyEvent.VK_DOWN:
+			{
+				MOVING_NORTH = false;
+				//System.err.println("end NORTH");
+				break;
+			}
+			case KeyEvent.VK_UP:
+			{
+				MOVING_SOUTH = false;
+				//System.err.println("end SOUTH");
+				break;
+			}
+			case KeyEvent.VK_LEFT:
+			{
+				MOVING_WEST = false;
+				//System.err.println("end WEST");
+				break;
+			}
+			case KeyEvent.VK_RIGHT:
+			{
+				MOVING_EAST = false;
+				//System.err.println("end EAST");
+				break;
+			}
+		}
+	}
 
 	public void keyTyped(KeyEvent _keyEvent) {}
-
 }

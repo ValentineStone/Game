@@ -7,84 +7,62 @@ import com.valentine.game.utils.Screen;
 
 public class Collider extends Entity
 {	
+	private static boolean hugeExists = false;
+	
 	protected double rotationVelocity;
 	
-	protected Color color;
-	
-	
+	private Color drawColor;
+	private Color fillColor;
 	
 	public Collider(Container _container)
 	{
-		this(_container, 0, 0);
-		x = Math.random() * container.getWidth();
-		y = Math.random() * container.getHeight();
+		this(_container,0,0);
+		setPositionRandom();
 	}
 	
 	
 	
 	public Collider(Container _container, double _x, double _y)
 	{
-		container = _container;
-		boolean isHuge = Math.random() < 0.01;
-		x = _x;
-		y = _y;
-		rotation = Math.random() * Math.PI * 2;
-		if (isHuge)
+		super(_container, _x, _y, 0, 0, 0, 0, true, true);
+		setVelocityRandom(4, 5);
+		setRotationRandom();
+		
+		//boolean isHuge = Math.random() < 0.05;
+		if (!hugeExists)
 		{
-			width = Math.random() * 50 + 100;
-			height = Math.random() * 50 + 100;	
+			setWidth(Math.random() * 100 + 200);
+			setHeight(Math.random() * 100 + 200);	
 			rotationVelocity = 0;
-		} else
+			hugeExists = true;
+		}
+		else
 		{
-			width = Math.random() * 20 + 10;
-			height = Math.random() * 20 + 10;
+			setWidth(Math.random() * 40 + 20);
+			setHeight(Math.random() * 40 + 20);
 			rotationVelocity = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
 		}
-		velocity = ((Math.random() * 5) + 4);
-		color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
+		
+		drawColor = Screen.randomColor(0, 255);
+		fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
 	}
-	
-	
-	public boolean hit(double _x, double _y)
-	{
-		if (_x > (x - width) && _x < (x + width) && _y > (y - height) && _y < (y + height)) return true;
-		return false;
-	}
-	
 	
 	public void update()
 	{
-		// Move it
+		super.update();
 		
-		x += velocity * Math.cos(rotation);
-		y += velocity * Math.sin(rotation);
-		rotate(rotationVelocity);
+		setRotation(getRotation() + rotationVelocity);
 		
-		// Collide with walls
+		move();
+
+		keepContained();
 		
-		if (x - width < 0)
-		{
-			x = width;
-			rotation = Math.PI - rotation;
-		}
-		if (y - height < 0)
-		{
-			y = height;
-			rotation = 2 * Math.PI - rotation;
-		}
-		if (x + width > container.getWidth())
-		{
-			x = container.getWidth() - width;
-			rotation = Math.PI - rotation;
-		}
-		if (y + height > container.getHeight())
-		{
-			y = container.getHeight() - height;
-			rotation = 2 * Math.PI - rotation;
-		}
+		Entity entity;
 		
-		for (Entity entity : container)
+		for (int i = 0; i < getContainer().size(); i++)
 		{
+			entity = getContainer().get(i);
+			
 			if (entity instanceof Collider)
 				if (entity.getId() < getId())
 					collide((Collider)entity);
@@ -95,78 +73,80 @@ public class Collider extends Entity
 	
 	
 	public void paint()
-	{	
-		Screen.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 50));
-		
-		Screen.fillRect(x - width + Interpolation.make(velocity * Math.cos(rotation)), y - height + Interpolation.make(velocity * Math.sin(rotation)), 2 * width , 2 * height);
-		
-		Screen.setColor(color);
-		
-		Screen.drawRect(x - width + Interpolation.make(velocity * Math.cos(rotation)), y - height + Interpolation.make(velocity * Math.sin(rotation)), 2 * width , 2 * height);
-		
-		Screen.drawString(id + "", x + width + Interpolation.make(velocity * Math.cos(rotation)) + 3, y - height + Interpolation.make(velocity * Math.sin(rotation)) - 3);
-
-		Screen.drawLine(
-						x + Interpolation.make(velocity * Math.cos(rotation)),
-						y + velocity * Interpolation.make(Math.sin(rotation)),
-						x + velocity * Math.cos(rotation) + Interpolation.make(velocity * Math.cos(rotation)),
-						y + velocity * Math.sin(rotation) + Interpolation.make(velocity * Math.sin(rotation))
-						);
-		
-		if (width < height) 
-			Screen.drawOval(x - width + Interpolation.make(velocity * Math.cos(rotation)), y - width + Interpolation.make(velocity * Math.sin(rotation)), 2 * width , 2 * width );
-		else
-			Screen.drawOval(x - height + Interpolation.make(velocity * Math.cos(rotation)), y - height + Interpolation.make(velocity * Math.sin(rotation)), 2 * height , 2 * height );
-	}
-	
-	
-	
-	
-	
-	
-	
-	public void rotate(double _rotationVelocity)
 	{
-		if ( rotationVelocity > 0)
-			rotation = rotation + _rotationVelocity > Math.PI * 2 ? rotation + _rotationVelocity - Math.PI * 2 : rotation + _rotationVelocity;
+		super.paint();
+		
+		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		
+		Screen.setColor(fillColor);
+		
+		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		
+		Screen.setColor(drawColor);
+		
+		Screen.drawRect(getX(), getY(),  getWidth(), getHeight());
+		
+		Screen.drawString(String.valueOf(getId()), getX() + getWidth() + 3, getY() - 3);
+
+		Screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getVelocityX(), getCenterY() + getVelocityY());
+		
+		if (getWidth() < getHeight()) 
+			Screen.drawOval(getX(), getCenterY() - getWidth()/2, getWidth(), getWidth());
 		else
-			rotation = rotation + _rotationVelocity < 0 ? Math.PI * 2 + (rotation + _rotationVelocity) : rotation + _rotationVelocity;
+			Screen.drawOval(getCenterX() - getHeight()/2, getY(), getHeight(), getHeight());
+		
+		Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}
 	
-	
-	
-	
-	
+	private boolean isColliding(Collider _collider)
+	{
+		if
+		(
+				(Math.abs(getCenterX() - _collider.getCenterX()) < (getWidth() + _collider.getWidth())/2)
+				&&
+				(Math.abs(getCenterY() - _collider.getCenterY()) < (getHeight() + _collider.getHeight())/2)
+		) return true;
+		return false;
+	}
 	
 	public boolean collide(Collider _collider)
 	{
-		if ( (Math.abs(x - _collider.x) < width + _collider.width) && (Math.abs(y - _collider.y) < height + _collider.height) )
+		if (isColliding(_collider))
 		{
 			double tmp;
-			
-			tmp = rotation;
-			rotation = _collider.rotation;
-			_collider.rotation = tmp;
-			
-			tmp = velocity;
-			velocity = _collider.velocity;
-			_collider.velocity = tmp;
-			
-			color = Screen.randomColor(0,255);
-			_collider.color = Screen.randomColor(0,255);
-			
-			x += velocity * Math.cos(rotation);
-			
 			/*
-			if ( (width + _collider.width - Math.abs(x - _collider.x)) > (height + _collider.height - Math.abs(y - _collider.y)) )
+			tmp = getRotation();
+			setRotation(_collider.getRotation());
+			_collider.setRotation(tmp);
+			*/
+			
+			setRotation(rotationFlip(rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
+			_collider.setRotation(rotationFlip(getRotation()));
+			
+			tmp = getVelocity();
+			setVelocity(_collider.getVelocity());
+			_collider.setVelocity(tmp);
+			
+			drawColor = Screen.randomColor(0,255);
+			fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
+			_collider.drawColor = Screen.randomColor(0,255);
+			_collider.fillColor = new Color(_collider.drawColor.getRed(), _collider.drawColor.getGreen(), _collider.drawColor.getBlue(), 20);
+			
+			do
 			{
-				if (x - _collider.x > 0) x = _collider.x + _collider.width + width;
-				else x = _collider.x - _collider.width - width;
+				//move();
+				_collider.move();
+			} while(isColliding(_collider));	
+			/*
+			if ( (getWidth() + _collider.getWidth() - Math.abs(getX() - _collider.getX())) > (getHeight() + _collider.getHeight() - Math.abs(getY() - _collider.getY())) )
+			{
+				if (getX() - _collider.getX() > 0) getX() = _collider.getX() + _collider.getWidth() + getWidth();
+				else getX() = _collider.getX() - _collider.getWidth() - getWidth();
 			}
 			else
 			{
-				if (y - _collider.y > 0) y = _collider.y + _collider.height + height;
-				else y = _collider.y - _collider.height - height;
+				if (getY() - _collider.getY() > 0) getY() = _collider.getY() + _collider.getHeight() + getHeight();
+				else getY() = _collider.getY() - _collider.getHeight() - getHeight();
 			}
 			
 			*/

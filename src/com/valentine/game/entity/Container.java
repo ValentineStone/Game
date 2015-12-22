@@ -1,17 +1,14 @@
 package com.valentine.game.entity;
 
 import java.awt.Color;
-import java.util.Collection;
-import java.util.ConcurrentModificationException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.valentine.game.utils.Screen;
 
-public class Container extends Entity implements Set<Entity>
+public class Container extends Entity
 {
-	protected Set<Entity> entities;
+	protected List<Entity> entities;
 	
 	protected Color backgroundColor;
 	protected Color borderColor;
@@ -22,44 +19,39 @@ public class Container extends Entity implements Set<Entity>
 		super(_entities, _x, _y, 0, 0, _width, _height, true, true);
 		backgroundColor = Screen.COLORS.TRANSPARENT;
 		borderColor = Screen.COLORS.TRANSPARENT;
-		entities = new HashSet<Entity>();
+		entities = new ArrayList<Entity>();
 	}
 	
 	public void paint()
 	{
+		super.paint();
 		
 		Screen.setColor(backgroundColor);
-		Screen.fillRect(x, y, width, height);
+		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.localize(x, y);
+		Screen.localize(getX(), getY());
 		
-		try
+		for (int i = entities.size()-1; i >= 0; i--)
 		{
-			for (Entity entity : this)
-			{
-				entity.paint();
-			}
+			entities.get(i).paint();
 		}
-		catch (ConcurrentModificationException _exception) {}
 		
-		Screen.delocalize(x, y);
+		Screen.delocalize(getX(), getY());
 		
 		Screen.setColor(borderColor);
-		Screen.drawRect(x, y, width, height);
+		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
 	}
 
 	public void update()
 	{
-		try
+		super.update();
+		
+		for (int i = entities.size()-1; i >= 0; i--)
 		{
-			for (Entity entity : this)
-			{
-				entity.update();
-			}
+			entities.get(i).update();
 		}
-		catch (ConcurrentModificationException _exception) {}
 	}
-
+	
 	public Color getBackgroundColor()
 	{
 		return backgroundColor;
@@ -79,69 +71,29 @@ public class Container extends Entity implements Set<Entity>
 	{
 		borderColor = _borderColor;
 	}
-
+	
+	
+	
+	
+	
 	public boolean add(Entity _entity)
 	{
 		return entities.add(_entity);
 	}
-
-	public boolean addAll(Collection<? extends Entity> _entities)
+	
+	public Entity get(int _index)
 	{
-		return entities.addAll(_entities);
+		return entities.get(_index);
 	}
-
-	public void clear()
-	{
-		entities.clear();
-	}
-
-	public boolean contains(Object _object)
-	{
-		return entities.contains(_object);
-	}
-
-	public boolean containsAll(Collection<?> _objects)
-	{
-		return entities.containsAll(_objects);
-	}
-
-	public boolean isEmpty()
-	{
-		return entities.isEmpty();
-	}
-
-	public Iterator<Entity> iterator()
-	{
-		return entities.iterator();
-	}
-
-	public boolean remove(Object _object)
-	{
-		return entities.remove(_object);
-	}
-
-	public boolean removeAll(Collection<?> _objects)
-	{
-		return entities.removeAll(_objects);
-	}
-
-	public boolean retainAll(Collection<?> _objects)
-	{
-		return entities.retainAll(_objects);
-	}
-
+	
 	public int size()
 	{
 		return entities.size();
 	}
-
-	public Object[] toArray()
+	
+	public boolean remove(Entity _entity)
 	{
-		return entities.toArray();
+		return entities.remove(_entity);
 	}
 
-	public <T> T[] toArray(T[] _array)
-	{
-		return entities.toArray(_array);
-	}
 }
