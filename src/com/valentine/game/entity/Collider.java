@@ -7,6 +7,8 @@ import com.valentine.game.utils.Screen;
 
 public class Collider extends Entity
 {	
+	private static double VELOCITY_MAX = 5;
+	
 	private static boolean hugeExists = false;
 	
 	protected double rotationVelocity;
@@ -24,11 +26,10 @@ public class Collider extends Entity
 	
 	public Collider(Container _container, double _x, double _y)
 	{
-		super(_container, _x, _y, 0, 0, 0, 0, true, true);
-		setVelocityRandom(4, 5);
+		super(_container, _x, _y, 0, 0, VELOCITY_MAX, 0.1, 1, 0, 0, true, true, true);
+		setVelocityRandom(0, 5);
 		setRotationRandom();
 		
-		//boolean isHuge = Math.random() < 0.05;
 		if (!hugeExists)
 		{
 			setWidth(Math.random() * 100 + 200);
@@ -52,6 +53,8 @@ public class Collider extends Entity
 		super.update();
 		
 		setRotation(getRotation() + rotationVelocity);
+		
+		accelerate();
 		
 		move();
 
@@ -134,9 +137,14 @@ public class Collider extends Entity
 			
 			do
 			{
-				//move();
+				accelerate();
+				move();
+				_collider.accelerate();
 				_collider.move();
-			} while(isColliding(_collider));	
+			} while(isColliding(_collider));
+			
+			setVelocity(0);
+			_collider.setVelocity(0);
 			/*
 			if ( (getWidth() + _collider.getWidth() - Math.abs(getX() - _collider.getX())) > (getHeight() + _collider.getHeight() - Math.abs(getY() - _collider.getY())) )
 			{

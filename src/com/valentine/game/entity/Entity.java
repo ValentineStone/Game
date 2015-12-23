@@ -8,6 +8,7 @@ public abstract class Entity
 	
 	private boolean paintable = false;
 	private boolean updatable = false;
+	private boolean active = false;
 	private boolean dead = false;
 	
 	private int id;
@@ -17,6 +18,9 @@ public abstract class Entity
 	private double rotation;
 	
 	private double velocity;
+	private double velocityMax;
+	private double acceleration;
+	private double friction;
 	
 	private double width;
 	private double height;
@@ -28,10 +32,14 @@ public abstract class Entity
 		double _y,
 		double _rotation,
 		double _velocity,
+		double _velocityMax,
+		double _acceleration,
+		double _friction,
 		double _width,
 		double _height,
 		boolean _paintable,
-		boolean _updatable
+		boolean _updatable,
+		boolean _active
 	)
 	{
 		id = idGlobal++;
@@ -41,10 +49,14 @@ public abstract class Entity
 		y = _y;
 		rotation = _rotation;
 		velocity = _velocity;
+		velocityMax = _velocityMax;
+		acceleration = _acceleration;
+		friction = _friction;
 		width = _width;
 		height = _height;
 		paintable = _paintable;
 		updatable = _updatable;
+		active = _active;
 		dead = false;
 	}
 	
@@ -71,28 +83,34 @@ public abstract class Entity
 		return false;
 	}
 	
-	protected void keepContained()
+	protected boolean keepContained()
 	{
+		boolean impact = false;
 		if (getX() + getWidth() > getContainer().getWidth())
 		{
 			setX(getContainer().getWidth() - getWidth());
 			rotationFlipY();
+			impact = true;
 		}
 		if (getX() < 0)
 		{
 			setX(0);
 			rotationFlipY();
+			impact = true;
 		}
 		if (getY() + getHeight() > getContainer().getHeight())
 		{
 			setY(getContainer().getHeight() - getHeight());
 			rotationFlipX();
+			impact = true;
 		}
 		if (getY() < 0)
 		{
 			setY(0);
 			rotationFlipX();
+			impact = true;
 		}
+		return impact;
 	}
 	
 	protected void move()
@@ -101,9 +119,31 @@ public abstract class Entity
 		setY(getY() + getVelocityY());
 	}
 	
+	protected void accelerate()
+	{
+		if (active)
+		{
+			if (velocity < velocityMax)
+			{
+				velocity += velocityMax * acceleration;
+				if (velocity > velocityMax) velocity = velocityMax;
+			}
+			
+		}
+		else
+		{
+			if (velocity > 0)
+			{
+				velocity -= velocityMax * friction;
+				if (velocity < 0) velocity = 0;
+			}
+		}
+	}
 	
 	
 	
+	
+
 	public Container getContainer()
 	{
 		return container;
@@ -138,7 +178,13 @@ public abstract class Entity
 		updatable = _updatable;
 	}
 	
-	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 	public boolean isDead() {
 		return dead;
@@ -200,8 +246,8 @@ public abstract class Entity
 	
 	public void setPositionRandom()
 	{
-		x = Math.random() * container.getWidth();
-		y = Math.random() * container.getHeight();
+		x = Math.random() * (container.getWidth() - width);
+		y = Math.random() * (container.getHeight() - height);
 	}
 	
 	public void setPositionCentered()
@@ -224,7 +270,7 @@ public abstract class Entity
 	public void setRotation(double _rotation)
 	{
 		rotation = _rotation;
-		normalizeRotation();
+		rotationNormalize();
 	}
 	
 	public void setRotationRandom()
@@ -254,23 +300,33 @@ public abstract class Entity
 	
 	public double rotationFlipY(double _rotation)
 	{
-		return Math.PI - rotation;
+		return Math.PI - _rotation;
 	}
 	
 	public double rotationFlip(double _rotation)
 	{
-		return rotationFlipX(rotationFlipY(_rotation));
+		return _rotation + Math.PI;
 	}
 	
-	public void normalizeRotation()
+	public void rotationNormalize()
 	{
-		normalizeRotation(rotation);
+		rotation = rotationNormalize(rotation);
 	}
 	
-	public double normalizeRotation(double _rotation)
+	public double rotationNormalize(double _rotation)
 	{
-		if (_rotation > 2 * Math.PI) _rotation -= (int)(_rotation/(2 * Math.PI)) * 2 * Math.PI;
-		else if (_rotation < 0)	_rotation -= (int)(_rotation/(2 * Math.PI) + 1) * 2 * Math.PI;
+		if (_rotation > 2 * Math.PI)
+		{
+			//System.err.print(">2PI " + _rotation + "\t");
+			_rotation -= (int)(_rotation/(2 * Math.PI)) * 2 * Math.PI;
+			//System.err.println(_rotation);
+		}
+		else if (_rotation < 0)
+		{
+			//System.err.print("<0   " + _rotation + "\t");
+			_rotation -= ((int)(_rotation/(2 * Math.PI) - 1)) * 2 * Math.PI;
+			//System.err.println(_rotation);
+		}
 		return _rotation;
 	}
 	
@@ -280,13 +336,17 @@ public abstract class Entity
 		_x /= lenght;
 		_y /= lenght;
 		
+		//System.err.println(_x + " " + _y);
+		
 		if (_x > 0)
 		{
-			return normalizeRotation(Math.asin(_y));
+			//System.err.println("_x >  0: " + rotationNormalize(Math.asin(_y)));
+			return rotationNormalize(Math.asin(_y));
 		}
 		else
 		{
-			return normalizeRotation(rotationFlipX(Math.asin(_y)));
+			//System.err.println("_x <= 0: " + rotationNormalize(rotationFlipX(Math.asin(_y))));
+			return rotationNormalize(rotationFlipX(Math.asin(_y)));
 		}
 	}
 	
@@ -318,6 +378,30 @@ public abstract class Entity
 	public void setVelocityRandom(double _min, double _max)
 	{
 		velocity = Math.random() * (_max - _min) + _min;
+	}
+
+	public double getVelocityMax() {
+		return velocityMax;
+	}
+
+	public void setVelocityMax(double velocityMax) {
+		this.velocityMax = velocityMax;
+	}
+
+	public double getAcceleration() {
+		return acceleration;
+	}
+
+	public void setAcceleration(double acceleration) {
+		this.acceleration = acceleration;
+	}
+
+	public double getFriction() {
+		return friction;
+	}
+
+	public void setFriction(double friction) {
+		this.friction = friction;
 	}
 	
 	

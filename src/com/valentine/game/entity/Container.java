@@ -16,7 +16,7 @@ public class Container extends Entity
 	
 	public Container(Container _entities, double _x, double _y, double _width, double _height)
 	{
-		super(_entities, _x, _y, 0, 0, _width, _height, true, true);
+		super(_entities, _x, _y, 0, 0, 0, 1, 1, _width, _height, true, true, false);
 		backgroundColor = Screen.COLORS.TRANSPARENT;
 		borderColor = Screen.COLORS.TRANSPARENT;
 		entities = new ArrayList<Entity>();
@@ -31,7 +31,7 @@ public class Container extends Entity
 		
 		Screen.localize(getX(), getY());
 		
-		for (int i = entities.size()-1; i >= 0; i--)
+		for (int i = 0; i < size(); i++)
 		{
 			entities.get(i).paint();
 		}
@@ -46,7 +46,7 @@ public class Container extends Entity
 	{
 		super.update();
 		
-		for (int i = entities.size()-1; i >= 0; i--)
+		for (int i = 0; i < size(); i++)
 		{
 			entities.get(i).update();
 		}

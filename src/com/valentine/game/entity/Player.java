@@ -13,36 +13,33 @@ public class Player extends Entity implements KeyListener {
 
 	Image image;
 	
-	private final double VELOCITY_MAX = 12;
-	private final double ACCELERATION = 1;
-	private final double FRICTION = 0.1;
+	private static final double VELOCITY_MAX = 12;
+	private static final double ACCELERATION = 1;
+	private static final double FRICTION = 0.3;
 	
 	
-	private boolean MOVING, MOVING_SOUTH, MOVING_NORTH, MOVING_WEST, MOVING_EAST;
+	private boolean MOVING_SOUTH, MOVING_NORTH, MOVING_WEST, MOVING_EAST;
 	
 	public Player(Container _container)
 	{	
-		super(_container, 0, 0, 0, 0, 64, 64, true, true);
+		super(_container, 0, 0, 0, 0, VELOCITY_MAX, ACCELERATION, FRICTION, 64, 64, true, true, false);
 		setPositionCentered();
 		
-		MOVING =
 		MOVING_SOUTH = 
 		MOVING_NORTH =
 		MOVING_WEST = 
 		MOVING_EAST = false;
 		
-		image = new ImageIcon("player.png").getImage();			
+		image = new ImageIcon("player2.png").getImage();			
 	}
 
 	public void update()
 	{
 		super.update();
-		
-		movementFlagsToRotation();
-		
 		accelerate();
 		move();
 		keepContained();
+		movementFlagsToRotation();
 	}
 
 	public void paint()
@@ -58,7 +55,7 @@ public class Player extends Entity implements KeyListener {
 	
 	private void movementFlagsToRotation()
 	{
-		MOVING = true;
+		setActive(true);
 		
 		if (MOVING_SOUTH)
 		{
@@ -68,7 +65,7 @@ public class Player extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						MOVING = false;
+						setActive(false);
 					}
 					else
 					{
@@ -83,7 +80,7 @@ public class Player extends Entity implements KeyListener {
 					}
 					else
 					{
-						MOVING = false;
+						setActive(false);
 					}
 				}
 			}
@@ -146,7 +143,7 @@ public class Player extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						MOVING = false;
+						setActive(false);
 					}
 					else
 					{
@@ -161,7 +158,7 @@ public class Player extends Entity implements KeyListener {
 					}
 					else
 					{
-						MOVING = false;
+						setActive(false);
 					}
 				}
 			}
@@ -172,27 +169,6 @@ public class Player extends Entity implements KeyListener {
 	{
 		if (MOVING_SOUTH || MOVING_NORTH || MOVING_WEST || MOVING_EAST) return true;
 		return false;
-	}
-	
-	private void accelerate()
-	{
-		if (MOVING)
-		{
-			if (getVelocity() < VELOCITY_MAX)
-			{
-				setVelocity(getVelocity() + VELOCITY_MAX * ACCELERATION);
-				if (getVelocity() > VELOCITY_MAX) setVelocity(VELOCITY_MAX);
-			}
-			
-		}
-		else
-		{
-			if (getVelocity() > 0)
-			{
-				setVelocity(getVelocity() - VELOCITY_MAX * FRICTION);
-				if (getVelocity() < 0) setVelocity(0);
-			}
-		}
 	}
 
 	public void keyPressed(KeyEvent _keyEvent)
@@ -235,7 +211,7 @@ public class Player extends Entity implements KeyListener {
 					Entity entity = getContainer().get(i);
 					if (entity instanceof Collider)
 					{
-						if (entity.hit(getX(), getY()))
+						if (entity.hit(getCenterX(), getCenterY()))
 						{
 							entity.kill();
 							break;
