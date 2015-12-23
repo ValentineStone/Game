@@ -140,6 +140,19 @@ public abstract class Entity
 		}
 	}
 	
+	protected boolean isTouchingEdge()
+	{
+		if (
+			(getX() + getWidth() >= getContainer().getWidth()) ||
+			(getX() <= 0) ||
+			(getY() + getHeight() >= getContainer().getHeight()) ||
+			(getY() <= 0)
+			)
+			return true;
+		
+		return false;
+	}
+	
 	
 	
 	

@@ -10,15 +10,15 @@ public class Container extends Entity
 {
 	protected List<Entity> entities;
 	
-	protected Color backgroundColor;
-	protected Color borderColor;
+	protected Color fillColor;
+	protected Color drawColor;
 	
 	
 	public Container(Container _entities, double _x, double _y, double _width, double _height)
 	{
 		super(_entities, _x, _y, 0, 0, 0, 1, 1, _width, _height, true, true, false);
-		backgroundColor = Screen.COLORS.TRANSPARENT;
-		borderColor = Screen.COLORS.TRANSPARENT;
+		fillColor = Screen.COLORS.TRANSPARENT;
+		drawColor = Screen.COLORS.TRANSPARENT;
 		entities = new ArrayList<Entity>();
 	}
 	
@@ -26,20 +26,22 @@ public class Container extends Entity
 	{
 		super.paint();
 		
-		Screen.setColor(backgroundColor);
-		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		Screen.setColor(fillColor);
+		Screen.fillRect(getX(), getY(), getWidth()-1, getHeight()-1);
 		
 		Screen.localize(getX(), getY());
+		Screen.setClip(0, 0, getWidth(), getHeight());
 		
 		for (int i = 0; i < size(); i++)
 		{
 			entities.get(i).paint();
 		}
 		
+		Screen.setClip(null);
 		Screen.delocalize(getX(), getY());
 		
-		Screen.setColor(borderColor);
-		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
+		Screen.setColor(drawColor);
+		Screen.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
 	}
 
 	public void update()
@@ -52,30 +54,32 @@ public class Container extends Entity
 		}
 	}
 	
-	public Color getBackgroundColor()
+	
+	
+	
+	public Color getFillColor()
 	{
-		return backgroundColor;
+		return fillColor;
 	}
 
-	public void setBackgroundColor(Color _backgroundColor)
+	public void setFillColor(Color _fillColor)
 	{
-		backgroundColor = _backgroundColor;
+		fillColor = _fillColor;
 	}
 
-	public Color getBorderColor()
+	public Color getDrawColor()
 	{
-		return borderColor;
+		return drawColor;
 	}
 
-	public void setBorderColor(Color _borderColor)
+	public void setDrawColor(Color _drawColor)
 	{
-		borderColor = _borderColor;
+		drawColor = _drawColor;
 	}
 	
 	
 	
-	
-	
+
 	public boolean add(Entity _entity)
 	{
 		return entities.add(_entity);

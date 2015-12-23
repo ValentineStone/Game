@@ -9,7 +9,7 @@ public class Collider extends Entity
 {	
 	private static double VELOCITY_MAX = 5;
 	
-	private static boolean hugeExists = false;
+	private static boolean hugeExists = true;
 	
 	protected double rotationVelocity;
 	

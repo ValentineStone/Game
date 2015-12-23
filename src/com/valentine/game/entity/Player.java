@@ -13,12 +13,14 @@ public class Player extends Entity implements KeyListener {
 
 	Image image;
 	
-	private static final double VELOCITY_MAX = 12;
-	private static final double ACCELERATION = 1;
-	private static final double FRICTION = 0.3;
+	private static final double VELOCITY_MAX = 30;
+	private static final double ACCELERATION = 0.03;
+	private static final double FRICTION = 0.05;
+
+	private static final double VELOCITY_PRECISION = 10;
 	
 	
-	private boolean MOVING_SOUTH, MOVING_NORTH, MOVING_WEST, MOVING_EAST;
+	private boolean MOVING_SOUTH, MOVING_NORTH, MOVING_WEST, MOVING_EAST, BREAKS_ON;
 	
 	public Player(Container _container)
 	{	
@@ -30,13 +32,13 @@ public class Player extends Entity implements KeyListener {
 		MOVING_WEST = 
 		MOVING_EAST = false;
 		
-		image = new ImageIcon("player2.png").getImage();			
+		image = new ImageIcon("player.png").getImage();			
 	}
 
 	public void update()
 	{
 		super.update();
-		accelerate();
+		if (!breaks()) accelerate();
 		move();
 		keepContained();
 		movementFlagsToRotation();
@@ -46,7 +48,7 @@ public class Player extends Entity implements KeyListener {
 	{
 		super.paint();
 		
-		if (isMoving())
+		if (isMoving() && !isTouchingEdge())
 			Screen.drawImage(image, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()), null);
 		else
 			Screen.drawImage(image, getX(), getY(), null);
@@ -170,33 +172,53 @@ public class Player extends Entity implements KeyListener {
 		if (MOVING_SOUTH || MOVING_NORTH || MOVING_WEST || MOVING_EAST) return true;
 		return false;
 	}
+	
+	protected boolean breaks()
+	{
+		if (BREAKS_ON && getVelocity() > VELOCITY_PRECISION)
+		{
+			setVelocity(VELOCITY_PRECISION);
+			return true;
+		}
+		return false;
+	}
 
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
 		{
+			case KeyEvent.VK_S:
 			case KeyEvent.VK_DOWN:
 			{
 				MOVING_NORTH = true;
 				//System.err.println("begin NORTH");
 				break;
 			}
+			case KeyEvent.VK_W:
 			case KeyEvent.VK_UP:
 			{
 				MOVING_SOUTH = true;
 				//System.err.println("begin SOUTH");
 				break;
 			}
+			case KeyEvent.VK_A:
 			case KeyEvent.VK_LEFT:
 			{
 				MOVING_WEST = true;
 				//System.err.println("begin WEST");
 				break;
 			}
+			case KeyEvent.VK_D:
 			case KeyEvent.VK_RIGHT:
 			{
 				MOVING_EAST = true;
 				//System.err.println("begin EAST");
+				break;
+			}
+			case KeyEvent.VK_SPACE:
+			{
+				BREAKS_ON = true;
+				//System.err.println("begin BREAKS_ON");
 				break;
 			}
 			case KeyEvent.VK_C:
@@ -204,7 +226,7 @@ public class Player extends Entity implements KeyListener {
 				getContainer().add(new Collider(getContainer(), getX()+getWidth()/2, getY()+getHeight()/2));
 				break;
 			}
-			case KeyEvent.VK_D:
+			case KeyEvent.VK_X:
 			{
 				for (int i = getContainer().size()-1; i >= 0; i--)
 				{
@@ -226,28 +248,38 @@ public class Player extends Entity implements KeyListener {
 	{
 		switch (_keyEvent.getKeyCode())
 		{
+			case KeyEvent.VK_S:
 			case KeyEvent.VK_DOWN:
 			{
 				MOVING_NORTH = false;
 				//System.err.println("end NORTH");
 				break;
 			}
+			case KeyEvent.VK_W:
 			case KeyEvent.VK_UP:
 			{
 				MOVING_SOUTH = false;
 				//System.err.println("end SOUTH");
 				break;
 			}
+			case KeyEvent.VK_A:
 			case KeyEvent.VK_LEFT:
 			{
 				MOVING_WEST = false;
 				//System.err.println("end WEST");
 				break;
 			}
+			case KeyEvent.VK_D:
 			case KeyEvent.VK_RIGHT:
 			{
 				MOVING_EAST = false;
 				//System.err.println("end EAST");
+				break;
+			}
+			case KeyEvent.VK_SPACE:
+			{
+				BREAKS_ON = false;
+				//System.err.println("begin BREAKS_ON");
 				break;
 			}
 		}

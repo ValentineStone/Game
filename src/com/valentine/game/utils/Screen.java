@@ -232,6 +232,12 @@ public class Screen
 	{
 		graphics.translate((int)round(_x), (int)round(_y));
 	}
+
+	public static Graphics2D getGraphics()
+	{
+		return graphics;
+	}
+	
 	
 	
 }
