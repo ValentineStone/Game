@@ -163,5 +163,14 @@ public class Collider extends Entity
 
 		return false;
 	}
+
+
+
+	public Color getDrawColor()
+	{
+		return drawColor;
+	}
+	
+	
 	
 }

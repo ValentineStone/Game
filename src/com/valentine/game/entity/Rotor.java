@@ -31,7 +31,7 @@ public class Rotor extends Entity {
 		r = _r;
 		innerRotation = 0;
 		drawColor = Screen.randomColor(20, 255);
-		fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
+		fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 50);
 	}
 	
 	public Rotor(Container _container)
