@@ -27,7 +27,7 @@ public class Container extends Entity
 		super.paint();
 		
 		Screen.setColor(fillColor);
-		Screen.fillRect(getX(), getY(), getWidth()-1, getHeight()-1);
+		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
 		Screen.localize(getX(), getY());
 		Screen.setClip(0, 0, getWidth(), getHeight());

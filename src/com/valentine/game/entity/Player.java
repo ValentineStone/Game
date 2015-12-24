@@ -10,8 +10,10 @@ import com.valentine.game.utils.Interpolation;
 import com.valentine.game.utils.Screen;
 
 public class Player extends Entity implements KeyListener {
+	
+	//private List<Link> links = new ArrayList<Link>();
 
-	Image image;
+	private Image image;
 	
 	private static final double VELOCITY_MAX = 30;
 	private static final double ACCELERATION = 0.03;
@@ -223,9 +225,14 @@ public class Player extends Entity implements KeyListener {
 			}
 			case KeyEvent.VK_C:
 			{
-				getContainer().add(new Collider(getContainer(), getX()+getWidth()/2, getY()+getHeight()/2));
+				getContainer().add(new Link(
+											getContainer(),
+											this,
+											getContainer().add(new Collider(getContainer(), getX()+getWidth()/2, getY()+getHeight()/2))
+											));
 				break;
 			}
+			/*
 			case KeyEvent.VK_X:
 			{
 				for (int i = getContainer().size()-1; i >= 0; i--)
@@ -241,6 +248,7 @@ public class Player extends Entity implements KeyListener {
 					}
 				}
 			}
+			*/
 		}
 	}
 

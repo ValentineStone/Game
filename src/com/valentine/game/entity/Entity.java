@@ -269,6 +269,32 @@ public abstract class Entity
 		y = container.getHeight()/2 - height/2;;
 	}
 	
+	public double getTrueX()
+	{
+		if (container == null)
+			return getX();
+		else
+			return x + container.getTrueX();
+	}
+	
+	public double getTrueY()
+	{
+		if (container == null)
+			return getY();
+		else
+			return y + container.getTrueY();
+	}
+	
+	public double getTrueCenterX()
+	{
+		return getTrueX() + width/2;
+	}
+	
+	public double getTrueCenterY()
+	{
+		return getTrueY() + height/2;
+	}
+	
 	
 	
 	
