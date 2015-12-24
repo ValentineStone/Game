@@ -44,7 +44,7 @@ public class Collider extends Entity
 			rotationVelocity = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
 		}
 		
-		drawColor = Screen.randomColor(0, 255);
+		drawColor = Screen.randomColor(10, 255);
 		fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
 	}
 	
@@ -130,9 +130,9 @@ public class Collider extends Entity
 			setVelocity(_collider.getVelocity());
 			_collider.setVelocity(tmp);
 			
-			drawColor = Screen.randomColor(0,255);
+			drawColor = Screen.randomColor(10,255);
 			fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
-			_collider.drawColor = Screen.randomColor(0,255);
+			_collider.drawColor = Screen.randomColor(10,255);
 			_collider.fillColor = new Color(_collider.drawColor.getRed(), _collider.drawColor.getGreen(), _collider.drawColor.getBlue(), 20);
 			
 			do

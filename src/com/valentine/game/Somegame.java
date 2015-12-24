@@ -6,6 +6,7 @@ import com.valentine.game.entity.Collider;
 import com.valentine.game.entity.Container;
 import com.valentine.game.entity.EntityInfoBox;
 import com.valentine.game.entity.HelloWorld;
+import com.valentine.game.entity.Link;
 import com.valentine.game.entity.Player;
 import com.valentine.game.entity.Rotor;
 import com.valentine.game.utils.Game;
@@ -15,6 +16,9 @@ public class Somegame extends Game
 {
 	public void assemble()
 	{
+		setFillColor(new Color(0,0,20));
+		setDrawColor(new Color(0,0,20));
+		
 		for (int i = 0; i < 100; i++) add(new HelloWorld(this));
 		
 		Container rotorAquarium = new Container(this,3*getWidth()/5, 0, 2*getWidth()/5, getHeight()/2);
@@ -30,16 +34,18 @@ public class Somegame extends Game
 		for (int i = 0; i < 3; i++)
 		{
 			colliderAquarium.add(new Collider(colliderAquarium));
-			add(new EntityInfoBox(this, 6*getWidth()/7 - 250, getHeight()/2 + 115*(i), colliderAquarium.get(i)));
-		}
-		
-		setFillColor(new Color(0,0,20));
-		
+			add(new EntityInfoBox(this, 6*getWidth()/7 - EntityInfoBox.WIDTH, getHeight()/2 + i * EntityInfoBox.HEIGHT, colliderAquarium.get(i)));
+		}	
 		
 		Player player = new Player(this);
-		
-		add(new EntityInfoBox(this, 0, 0, player));
-		add(player);
 		Input.addKeyListener(player);
+		
+		EntityInfoBox playerInfo = new EntityInfoBox(this, 0, 0, player);
+		
+		add(new Link(this, playerInfo, player));
+		
+		add(playerInfo);
+		
+		add(player);
 	}
 }

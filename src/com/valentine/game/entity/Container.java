@@ -80,9 +80,10 @@ public class Container extends Entity
 	
 	
 
-	public boolean add(Entity _entity)
+	public Entity add(Entity _entity)
 	{
-		return entities.add(_entity);
+		entities.add(_entity);
+		return _entity;
 	}
 	
 	public Entity get(int _index)
