@@ -14,11 +14,6 @@ public class Interpolation
 		return interpolation;
 	}
 	
-	public static double make(double _value, double _dvalue)
-	{
-		return _value + get() * _dvalue;
-	}
-	
 	public static double make(double _dvalue)
 	{
 		return get() * _dvalue;

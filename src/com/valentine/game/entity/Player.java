@@ -2,114 +2,296 @@ package com.valentine.game.entity;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 
-import com.valentine.game.listener.InputListener;
-import com.valentine.game.utils.*;
+import com.valentine.game.utils.Interpolation;
+import com.valentine.game.utils.Screen;
 
-public class Player implements Entity, InputListener {
-	Image image;
-	public double x;
-	public double y;
-	public double width = 64;
-	public double height = 64;
-	public double up_dx;
-	public double down_dx;
-	public double up_dy;
-	public double down_dy;
-	public double speed = 10;
-	Box box;
+public class Player extends Entity implements KeyListener {
 	
-	int colliderID = 41;
+	//private List<Link> links = new ArrayList<Link>();
+
+	private Image image;
 	
-	public Player(Box _box)
+	private static final double VELOCITY_MAX = 30;
+	private static final double ACCELERATION = 0.03;
+	private static final double FRICTION = 0.05;
+
+	private static final double VELOCITY_PRECISION = 10;
+	
+	
+	private boolean MOVING_SOUTH, MOVING_NORTH, MOVING_WEST, MOVING_EAST, BREAKS_ON;
+	
+	public Player(Container _container)
 	{	
-		box = _box;
+		super(_container, 0, 0, 0, 0, VELOCITY_MAX, ACCELERATION, FRICTION, 64, 64, true, true, false);
+		setPositionCentered();
 		
-		x = box.getWidth()/2 - width/2;
-		y = box.getHeight()/2 - height/2;
+		MOVING_SOUTH = 
+		MOVING_NORTH =
+		MOVING_WEST = 
+		MOVING_EAST = false;
 		
-		image = new ImageIcon("player.png").getImage();
-			
+		image = new ImageIcon("player2.png").getImage();			
 	}
 
 	public void update()
 	{
-		x += (down_dx - up_dx);
-		y += (down_dy - up_dy);
-		
-		if (x + width > box.getWidth())
-		{
-			x = box.getWidth() - width;
-		}
-		if (x < 0)
-		{
-			x = 0;
-		}
-		if (y + height > box.getHeight())
-		{
-			y = box.getHeight() - height;
-		}
-		if (y < 0)
-		{
-			y = 0;
-		}
+		super.update();
+		if (!breaks()) accelerate();
+		move();
+		keepContained();
+		movementFlagsToRotation();
 	}
 
-	public void paint() {
-		Canvas.drawImage(image, x + Interpolation.make(down_dx - up_dx), y + Interpolation.make(down_dy - up_dy), null);
-	}
-	
-	public void takeAction(KeyEvent _keyEvent) {
-		switch (_keyEvent.getID()) {
-			case KeyEvent.KEY_PRESSED: {
-				switch (_keyEvent.getKeyCode()) {
-					case KeyEvent.VK_DOWN: down_dy = speed; break;
-					case KeyEvent.VK_UP: up_dy = speed; break;
-					case KeyEvent.VK_LEFT: up_dx = speed; break;
-					case KeyEvent.VK_RIGHT: down_dx = speed; break;
-				}
-			} break;
-			case KeyEvent.KEY_RELEASED: {
-				switch (_keyEvent.getKeyCode()) {
-					case KeyEvent.VK_DOWN: down_dy = 0; break;
-					case KeyEvent.VK_UP: up_dy = 0; break;
-					case KeyEvent.VK_LEFT: up_dx = 0; break;
-					case KeyEvent.VK_RIGHT: down_dx = 0; break;
-				}
-			} break;
-		}
+	public void paint()
+	{
+		super.paint();
 		
-		if (_keyEvent.getID() == KeyEvent.KEY_PRESSED)
+		if (isMoving() && !isTouchingEdge())
+			Screen.drawImage(image, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()), null);
+		else
+			Screen.drawImage(image, getX(), getY(), null);
+	}
+
+	
+	private void movementFlagsToRotation()
+	{
+		setActive(true);
+		
+		if (MOVING_SOUTH)
 		{
-			if (_keyEvent.getKeyCode() == KeyEvent.VK_C)
+			if (MOVING_NORTH)
 			{
-				box.add(new Collider(colliderID++,box, x+width/2, y+height/2));
+				if (MOVING_WEST)
+				{
+					if (MOVING_EAST)
+					{
+						setActive(false);
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.WEST.getRotation());
+					}
+				}
+				else
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.EAST.getRotation());
+					}
+					else
+					{
+						setActive(false);
+					}
+				}
+			}
+			else
+			{
+				if (MOVING_WEST)
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.SOUTH.getRotation());
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.SOUTHWEST.getRotation());
+					}
+				}
+				else
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.SOUTHEAST.getRotation());
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.SOUTH.getRotation());
+					}
+				}
 			}
 		}
-				
+		else
+		{
+			if (MOVING_NORTH)
+			{
+				if (MOVING_WEST)
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.NORTH.getRotation());
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.NORTHWEST.getRotation());
+					}
+				}
+				else
+				{
+					if (MOVING_EAST)
+					{
+						setRotation( Entity.DIRECTION.NORTHEAST.getRotation());
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.NORTH.getRotation());
+					}
+				}
+			}
+			else
+			{
+				if (MOVING_WEST)
+				{
+					if (MOVING_EAST)
+					{
+						setActive(false);
+					}
+					else
+					{
+						setRotation(Entity.DIRECTION.WEST.getRotation());
+					}
+				}
+				else
+				{
+					if (MOVING_EAST)
+					{
+						setRotation(Entity.DIRECTION.EAST.getRotation());
+					}
+					else
+					{
+						setActive(false);
+					}
+				}
+			}
+		}
+	}
+	
+	public boolean isMoving()
+	{
+		if (MOVING_SOUTH || MOVING_NORTH || MOVING_WEST || MOVING_EAST) return true;
+		return false;
+	}
+	
+	protected boolean breaks()
+	{
+		if (BREAKS_ON && getVelocity() > VELOCITY_PRECISION)
+		{
+			setVelocity(VELOCITY_PRECISION);
+			return true;
+		}
+		return false;
 	}
 
-	public void keyPressed(KeyEvent _keyEvent) { takeAction(_keyEvent);}
+	public void keyPressed(KeyEvent _keyEvent)
+	{
+		switch (_keyEvent.getKeyCode())
+		{
+			case KeyEvent.VK_S:
+			case KeyEvent.VK_DOWN:
+			{
+				MOVING_NORTH = true;
+				//System.err.println("begin NORTH");
+				break;
+			}
+			case KeyEvent.VK_W:
+			case KeyEvent.VK_UP:
+			{
+				MOVING_SOUTH = true;
+				//System.err.println("begin SOUTH");
+				break;
+			}
+			case KeyEvent.VK_A:
+			case KeyEvent.VK_LEFT:
+			{
+				MOVING_WEST = true;
+				//System.err.println("begin WEST");
+				break;
+			}
+			case KeyEvent.VK_D:
+			case KeyEvent.VK_RIGHT:
+			{
+				MOVING_EAST = true;
+				//System.err.println("begin EAST");
+				break;
+			}
+			case KeyEvent.VK_SPACE:
+			{
+				BREAKS_ON = true;
+				//System.err.println("begin BREAKS_ON");
+				break;
+			}
+			case KeyEvent.VK_C:
+			{
+				getContainer().add(new Link(
+											getContainer(),
+											this,
+											getContainer().add(new Collider(getContainer(), getX()+getWidth()/2, getY()+getHeight()/2))
+											));
+				break;
+			}
+			/*
+			case KeyEvent.VK_X:
+			{
+				for (int i = getContainer().size()-1; i >= 0; i--)
+				{
+					Entity entity = getContainer().get(i);
+					if (entity instanceof Collider)
+					{
+						if (entity.hit(getCenterX(), getCenterY()))
+						{
+							entity.kill();
+							break;
+						}
+					}
+				}
+			}
+			*/
+		}
+	}
 
-	public void keyReleased(KeyEvent _keyEvent) { takeAction(_keyEvent);}
+	public void keyReleased(KeyEvent _keyEvent)
+	{
+		switch (_keyEvent.getKeyCode())
+		{
+			case KeyEvent.VK_S:
+			case KeyEvent.VK_DOWN:
+			{
+				MOVING_NORTH = false;
+				//System.err.println("end NORTH");
+				break;
+			}
+			case KeyEvent.VK_W:
+			case KeyEvent.VK_UP:
+			{
+				MOVING_SOUTH = false;
+				//System.err.println("end SOUTH");
+				break;
+			}
+			case KeyEvent.VK_A:
+			case KeyEvent.VK_LEFT:
+			{
+				MOVING_WEST = false;
+				//System.err.println("end WEST");
+				break;
+			}
+			case KeyEvent.VK_D:
+			case KeyEvent.VK_RIGHT:
+			{
+				MOVING_EAST = false;
+				//System.err.println("end EAST");
+				break;
+			}
+			case KeyEvent.VK_SPACE:
+			{
+				BREAKS_ON = false;
+				//System.err.println("begin BREAKS_ON");
+				break;
+			}
+		}
+	}
 
 	public void keyTyped(KeyEvent _keyEvent) {}
-
-	public void mouseClicked(MouseEvent _mouseEvent) {}
-
-	public void mouseEntered(MouseEvent _mouseEvent) {}
-
-	public void mouseExited(MouseEvent _mouseEvent) {}
-
-	public void mousePressed(MouseEvent _mouseEvent) {}
-
-	public void mouseReleased(MouseEvent _mouseEvent) {}
-
-	public void mouseDragged(MouseEvent _mouseEvent) {}
-
-	public void mouseMoved(MouseEvent _mouseEvent) {}
-
 }

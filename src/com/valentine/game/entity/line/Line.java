@@ -2,21 +2,26 @@ package com.valentine.game.entity.line;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-import com.valentine.game.entity.Box;
+import com.valentine.game.entity.Container;
 import com.valentine.game.entity.Entity;
-import com.valentine.game.listener.InputListener;
-import com.valentine.game.utils.Canvas;
+import com.valentine.game.utils.Screen;
 
-public class Line implements Entity, InputListener{
+public class Line extends Entity implements MouseListener, MouseMotionListener, KeyListener
+{
 	
-	protected class Dot {
+	protected class Dot
+	{
 		public double x;
 		public double y;
 		public double t;
-		public Dot(double _x, double _y) {
+		public Dot(double _x, double _y)
+		{
 			x = _x;
 			y = _y;
 		}
@@ -32,15 +37,13 @@ public class Line implements Entity, InputListener{
 	
 	protected ArrayList<Dot> dots;
 	
-	protected Box box;
-	
 	
 	protected void makeT() {}
 	
 	
-	public Line(Box _box, int _n, double _r)
+	public Line(Container _container, int _n, double _r)
 	{
-		box = _box;
+		container = _container;
 		
 		randColor();
 		
@@ -53,7 +56,7 @@ public class Line implements Entity, InputListener{
 		dots = new ArrayList<Dot>();
 		
 		for (int i = 0; i < _n; i++) {
-			add(Math.random() * box.getWidth()/_n + i * box.getWidth()/(_n), Math.random() * box.getHeight());
+			add(Math.random() * container.getWidth()/_n + i * container.getWidth()/(_n), Math.random() * container.getHeight());
 		}
 		
 	}
@@ -77,26 +80,29 @@ public class Line implements Entity, InputListener{
 	
 	
 	
-	public void madMake() {
+	public void madMake()
+	{
 		randColor();
 		
 		for (Dot dot : dots) {
-			dot.x = box.getWidth() * Math.random();
-			dot.y = box.getHeight() * Math.random();
+			dot.x = container.getWidth() * Math.random();
+			dot.y = container.getHeight() * Math.random();
 		}
 	}
 	
 	
 	
 	
-	public void randColor() {
+	public void randColor()
+	{
 		color = new Color(((int)(Math.random() * 220) + 35),((int)(Math.random() * 220) + 35),((int)(Math.random() * 220) + 35));
 	}
 	
 	
 	
 	
-	public void add(double _x, double _y) {
+	public void add(double _x, double _y)
+	{
 		dots.add(new Dot(_x, _y));
 		makeT();
 	}
@@ -104,20 +110,23 @@ public class Line implements Entity, InputListener{
 	
 	
 	
-	private void delete(int _i) {
+	private void delete(int _i)
+	{
 		if (size() <= 2) return;
 		dots.remove(_i);
 		makeT();
 	}
 	
-	public void deleteSelected() {
+	public void deleteSelected()
+	{
 		delete(selected);
 	}
 	
 	
 	
 	
-	protected Dot get(int _i) {
+	protected Dot get(int _i)
+	{
 		return dots.get(_i);
 	}
 	
@@ -128,8 +137,9 @@ public class Line implements Entity, InputListener{
 	
 	
 	
-	public synchronized void update() {
-		
+	public void update() 
+	{
+		super.update();
 	}
 	
 	
@@ -137,27 +147,34 @@ public class Line implements Entity, InputListener{
 
 	public void paint()
 	{
-		Canvas.setColor(color);
+		super.paint();
 		
-		for (int i = 1; i < size(); i++) {
-			Canvas.drawLine(get(i-1).x, get(i-1).y, get(i).x, get(i).y);
+		Screen.setColor(color);
+		
+		for (int i = 1; i < size(); i++)
+		{
+			Screen.drawLine(get(i-1).x, get(i-1).y, get(i).x, get(i).y);
 		}
 		
-		for (int i = 0; i < size(); i++) {
-			Canvas.drawOval((get(i).x - r), (get(i).y - r), (r + r), (r + r));
+		for (int i = 0; i < size(); i++)
+		{
+			Screen.drawOval((get(i).x - r), (get(i).y - r), (r + r), (r + r));
 		}
 	}
 	
 	
 	
 	
-	public int select(int _x, int _y) {
+	public int select(int _x, int _y)
+	{
 		
-		for (int i = 0; i < size(); i++) {
+		for (int i = 0; i < size(); i++)
+		{
 			if (_x > dots.get(i).x - r &&
 				_x < dots.get(i).x + r &&
 				_y > dots.get(i).y - r &&
-				_y < dots.get(i).y + r ) {
+				_y < dots.get(i).y + r )
+			{
 				
 				selected = i;
 				return i;
@@ -169,7 +186,8 @@ public class Line implements Entity, InputListener{
 	
 		
 	
-	public void dragSelected(int _x, int _y) {
+	public void dragSelected(int _x, int _y)
+	{
 		if (mode == 2){
 			get(selected).x = _x;
 			get(selected).y = _y;
@@ -178,12 +196,14 @@ public class Line implements Entity, InputListener{
 	
 	
 	
-	public void setMode(int _mode) {
+	public void setMode(int _mode)
+	{
 		mode = _mode;
 	}
 	
 	
-	public int getMode() {
+	public int getMode()
+	{
 		return mode;
 	}
 

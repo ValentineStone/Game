@@ -1,26 +1,94 @@
 package com.valentine.game.entity;
 
+import java.awt.Color;
 import java.util.ArrayList;
-//import java.util.LinkedList;
+import java.util.List;
 
-public class Container implements Entity
+import com.valentine.game.utils.Screen;
+
+public class Container extends Entity
 {
-
-	protected ArrayList<Entity> entities = new ArrayList<Entity>();
+	protected List<Entity> entities;
 	
-	public Entity add(Entity _entity) {
+	protected Color fillColor;
+	protected Color drawColor;
+	
+	
+	public Container(Container _entities, double _x, double _y, double _width, double _height)
+	{
+		super(_entities, _x, _y, 0, 0, 0, 1, 1, _width, _height, true, true, false);
+		fillColor = Screen.COLORS.TRANSPARENT;
+		drawColor = Screen.COLORS.TRANSPARENT;
+		entities = new ArrayList<Entity>();
+	}
+	
+	public void paint()
+	{
+		super.paint();
+		
+		Screen.setColor(fillColor);
+		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		
+		Screen.localize(getX(), getY());
+		Screen.setClip(0, 0, getWidth(), getHeight());
+		
+		for (int i = 0; i < size(); i++)
+		{
+			entities.get(i).paint();
+		}
+		
+		Screen.setClip(null);
+		Screen.delocalize(getX(), getY());
+		
+		Screen.setColor(drawColor);
+		Screen.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
+	}
+
+	public void update()
+	{
+		super.update();
+		
+		for (int i = 0; i < size(); i++)
+		{
+			entities.get(i).update();
+		}
+	}
+	
+	
+	
+	
+	public Color getFillColor()
+	{
+		return fillColor;
+	}
+
+	public void setFillColor(Color _fillColor)
+	{
+		fillColor = _fillColor;
+	}
+
+	public Color getDrawColor()
+	{
+		return drawColor;
+	}
+
+	public void setDrawColor(Color _drawColor)
+	{
+		drawColor = _drawColor;
+	}
+	
+	
+	
+
+	public Entity add(Entity _entity)
+	{
 		entities.add(_entity);
 		return _entity;
 	}
 	
-	public Entity get(int _i)
+	public Entity get(int _index)
 	{
-		return entities.get(_i);
-	}
-	
-	public synchronized void remove(int _i)
-	{
-		entities.remove(_i);
+		return entities.get(_index);
 	}
 	
 	public int size()
@@ -28,19 +96,9 @@ public class Container implements Entity
 		return entities.size();
 	}
 	
-	public void paint()
+	public boolean remove(Entity _entity)
 	{
-		for (Entity entity : entities)
-		{
-			entity.paint();
-		}
+		return entities.remove(_entity);
 	}
 
-	public void update()
-	{
-		for (Entity entity : entities)
-		{
-			entity.update();
-		}
-	}
 }

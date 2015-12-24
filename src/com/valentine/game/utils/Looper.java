@@ -40,7 +40,7 @@ public final class Looper
 												continue;
 											}
 											
-											Display.repaint();
+											Window.repaint();
 										}
 										
 										try

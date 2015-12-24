@@ -2,26 +2,23 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
-import com.valentine.game.utils.*;
+import com.valentine.game.utils.Interpolation;
+import com.valentine.game.utils.Screen;
 
-public class HelloWorld implements Entity {
-	double x;
-	double y;
-	double height = 12;
-	double width = 75;
-	double dx;
-	double dy;
+public class HelloWorld extends Entity
+{
 	String text;
 	Color color;
-	Box box;
 	
-	public HelloWorld(Box _box) {
-		box = _box;
-		x = Math.random() * box.getWidth();
-		y = Math.random() * box.getHeight();
-		dx = (Math.random() > 0.5 ? -1 : 1) * ((Math.random()) + 1);
-		dy = (Math.random() > 0.5 ? -1 : 1) * ((Math.random()) + 1);
+	public HelloWorld(Container _container)
+	{
+		super(_container,0,0,0,0,0,1,1,75,12,true,true,true);
+		setPositionRandom();
+		setVelocityMax((Math.random()) + 1);
+		setRotationRandom();
 		text = "Hello world!";
+		color = Screen.randomColor(7, 55);
+		/*
 		color = 
 				Math.random() > 0.05
 				?
@@ -29,36 +26,23 @@ public class HelloWorld implements Entity {
 				:
 				new Color(((int)(Math.random() * 255) + 0),((int)(Math.random() * 255) + 0),((int)(Math.random() * 255) + 0))
 				;
+		*/
 	}
 
-	public void update() {
-		x += dx;
-		y += dy;
-		
-		if (x + width > box.getWidth()) {
-			x = box.getWidth() - width;
-			dx = -dx;
-		}
-		
-		if (x < 0) {
-			x = 0;
-			dx = -dx;
-		}
-		
-		if (y > box.getHeight()) {
-			y = box.getHeight();
-			dy = -dy;
-		}
-		
-		if (y - height< 0) {
-			y = height;
-			dy = -dy;
-		}
+	public void update()
+	{
+		super.update();
+		accelerate();
+		move();
+		keepContained();
 
 	}
 
-	public void paint() {
-		Canvas.setColor(color);
-		Canvas.drawString(text, Interpolation.make(x,dx), Interpolation.make(y,dy));
+	public void paint()
+	{
+		super.paint();
+		
+		Screen.setColor(color);
+		Screen.drawString(text, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()));
 	}
 }

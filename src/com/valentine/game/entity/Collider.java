@@ -2,173 +2,175 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
-import com.valentine.game.utils.*;
+import com.valentine.game.utils.Interpolation;
+import com.valentine.game.utils.Screen;
 
-public class Collider implements Entity
+public class Collider extends Entity
 {	
-	protected double x;
-	protected double y;
-	protected double a;
-	protected double rx;
-	protected double ry;
-	protected double ds;
-	protected double da;
+	private static double VELOCITY_MAX = 5;
 	
-	protected int id;
+	private static boolean hugeExists = true;
 	
-	protected Color color;
+	protected double rotationVelocity;
 	
-	protected Box box;
+	private Color drawColor;
+	private Color fillColor;
 	
-	protected boolean visibleHitbox = true;
-	
-	public Collider(int _id, Box _box)
+	public Collider(Container _container)
 	{
-		box = _box;
-		boolean isHuge = Math.random() < 0.01;
-		id = _id;
-		x = Math.random() * box.getWidth();
-		y = Math.random() * box.getHeight();
-		a = Math.random() * Math.PI * 2;
-		if (isHuge)
-		{
-			rx = Math.random() * 50 + 100;
-			ry = Math.random() * 50 + 100;	
-			da = 0;
-		} else
-		{
-			rx = Math.random() * 20 + 10;
-			ry = Math.random() * 20 + 10;
-			da = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
-		}
-		ds = ((Math.random() * 5) + 4);
-		color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
+		this(_container,0,0);
+		setPositionRandom();
 	}
 	
-	public Collider(int _id, Box _box, double _x, double _y)
+	
+	
+	public Collider(Container _container, double _x, double _y)
 	{
-		box = _box;
-		boolean isHuge = Math.random() < 0.01;
-		id = _id;
-		x = _x;
-		y = _y;
-		a = Math.random() * Math.PI * 2;
-		if (isHuge)
+		super(_container, _x, _y, 0, 0, VELOCITY_MAX, 0.1, 1, 0, 0, true, true, true);
+		setVelocityRandom(0, 5);
+		setRotationRandom();
+		
+		if (!hugeExists)
 		{
-			rx = Math.random() * 50 + 100;
-			ry = Math.random() * 50 + 100;	
-			da = 0;
-		} else
-		{
-			rx = Math.random() * 20 + 10;
-			ry = Math.random() * 20 + 10;
-			da = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
+			setWidth(Math.random() * 100 + 200);
+			setHeight(Math.random() * 100 + 200);	
+			rotationVelocity = 0;
+			hugeExists = true;
 		}
-		ds = ((Math.random() * 5) + 4);
-		color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
+		else
+		{
+			setWidth(Math.random() * 40 + 20);
+			setHeight(Math.random() * 40 + 20);
+			rotationVelocity = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
+		}
+		
+		drawColor = Screen.randomColor(10, 255);
+		fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
 	}
 	
 	public void update()
 	{
-		// Move it
+		super.update();
 		
-		x += ds * Math.cos(a);
-		y += ds * Math.sin(a);
-		rotate(da);
+		setRotation(getRotation() + rotationVelocity);
 		
-		// Collide with walls
+		accelerate();
 		
-		if (x - rx < 0)
-		{
-			x = rx;
-			a = Math.PI - a;
-		}
-		if (y - ry < 0)
-		{
-			y = ry;
-			a = 2 * Math.PI - a;
-		}
-		if (x + rx > box.getWidth())
-		{
-			x = box.getWidth() - rx;
-			a = Math.PI - a;
-		}
-		if (y + ry > box.getHeight())
-		{
-			y = box.getHeight() - ry;
-			a = 2 * Math.PI - a;
-		}
+		move();
+
+		keepContained();
 		
-		for (int i = 0; i < box.size(); i++)
+		Entity entity;
+		
+		for (int i = 0; i < getContainer().size(); i++)
 		{
-			if (box.get(i) instanceof Collider)
-				if ( ((Collider)(box.get(i))).getId() > getId() )
-					collide((Collider)(box.get(i)));
+			entity = getContainer().get(i);
+			
+			if (entity instanceof Collider)
+				if (entity.getId() < getId())
+					collide((Collider)entity);
 		}
 	}
+	
+	
+	
 	
 	public void paint()
-	{	
-		Canvas.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 50));
+	{
+		super.paint();
 		
-		Canvas.fillRect(x - rx + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * ry);
+		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 		
-		Canvas.setColor(color);
+		Screen.setColor(fillColor);
 		
-		Canvas.drawRect(x - rx + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * ry);
+		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Canvas.drawString(id + "", x + rx + Interpolation.make(ds * Math.cos(a)) + 3, y - ry + Interpolation.make(ds * Math.sin(a)) - 3);
+		Screen.setColor(drawColor);
+		
+		Screen.drawRect(getX(), getY(),  getWidth(), getHeight());
+		
+		Screen.drawString(String.valueOf(getId()), getX() + getWidth() + 3, getY() - 3);
 
-		Canvas.drawLine(
-						x + Interpolation.make(ds * Math.cos(a)),
-						y + ds * Interpolation.make(Math.sin(a)),
-						x + ds * Math.cos(a) + Interpolation.make(ds * Math.cos(a)),
-						y + ds * Math.sin(a) + Interpolation.make(ds * Math.sin(a))
-						);
+		Screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getVelocityX(), getCenterY() + getVelocityY());
 		
-		if (rx < ry) 
-			Canvas.drawOval(x - rx + Interpolation.make(ds * Math.cos(a)), y - rx + Interpolation.make(ds * Math.sin(a)), 2 * rx , 2 * rx );
+		if (getWidth() < getHeight()) 
+			Screen.drawOval(getX(), getCenterY() - getWidth()/2, getWidth(), getWidth());
 		else
-			Canvas.drawOval(x - ry + Interpolation.make(ds * Math.cos(a)), y - ry + Interpolation.make(ds * Math.sin(a)), 2 * ry , 2 * ry );
+			Screen.drawOval(getCenterX() - getHeight()/2, getY(), getHeight(), getHeight());
+		
+		Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}
 	
-	public void rotate(double _da)
+	private boolean isColliding(Collider _collider)
 	{
-		if ( da > 0)
-			a = a + _da > Math.PI * 2 ? a + _da - Math.PI * 2 : a + _da;
-		else
-			a = a + _da < 0 ? Math.PI * 2 + (a + _da) : a + _da;
+		if
+		(
+				(Math.abs(getCenterX() - _collider.getCenterX()) < (getWidth() + _collider.getWidth())/2)
+				&&
+				(Math.abs(getCenterY() - _collider.getCenterY()) < (getHeight() + _collider.getHeight())/2)
+		) return true;
+		return false;
 	}
 	
-	public boolean collide(Collider _entity)
+	public boolean collide(Collider _collider)
 	{
-
-		if ( (Math.abs(x - _entity.x) < rx + _entity.rx) && (Math.abs(y - _entity.y) < ry + _entity.ry) )
+		if (isColliding(_collider))
 		{
-			double oldds = ds;
-			double olda = a;
-			double _oldds = _entity.ds;
-			double _olda = _entity.a;
+			double tmp;
+			/*
+			tmp = getRotation();
+			setRotation(_collider.getRotation());
+			_collider.setRotation(tmp);
+			*/
 			
-			a = _olda;
-			_entity.a = olda;
+			setRotation(rotationFlip(rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
+			_collider.setRotation(rotationFlip(getRotation()));
 			
-			ds = _oldds;
-			_entity.ds = oldds;
+			tmp = getVelocity();
+			setVelocity(_collider.getVelocity());
+			_collider.setVelocity(tmp);
 			
-			color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
-			_entity.color = new Color(((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0),((int)(Math.random() * 225) + 0));
+			drawColor = Screen.randomColor(10,255);
+			fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
+			_collider.drawColor = Screen.randomColor(10,255);
+			_collider.fillColor = new Color(_collider.drawColor.getRed(), _collider.drawColor.getGreen(), _collider.drawColor.getBlue(), 20);
 			
-			x += ds * Math.cos(a);
-			y += ds * Math.sin(a);
+			do
+			{
+				accelerate();
+				move();
+				_collider.accelerate();
+				_collider.move();
+			} while(isColliding(_collider));
+			
+			setVelocity(0);
+			_collider.setVelocity(0);
+			/*
+			if ( (getWidth() + _collider.getWidth() - Math.abs(getX() - _collider.getX())) > (getHeight() + _collider.getHeight() - Math.abs(getY() - _collider.getY())) )
+			{
+				if (getX() - _collider.getX() > 0) getX() = _collider.getX() + _collider.getWidth() + getWidth();
+				else getX() = _collider.getX() - _collider.getWidth() - getWidth();
+			}
+			else
+			{
+				if (getY() - _collider.getY() > 0) getY() = _collider.getY() + _collider.getHeight() + getHeight();
+				else getY() = _collider.getY() - _collider.getHeight() - getHeight();
+			}
+			
+			*/
 			return true;
 		}
 
 		return false;
 	}
-	
-	public int getId()
+
+
+
+	public Color getDrawColor()
 	{
-		return id;
+		return drawColor;
 	}
+	
+	
+	
 }

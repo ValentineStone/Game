@@ -3,16 +3,21 @@ package com.valentine.game.utils;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
-public class Canvas
+public class Screen
 {
-	private static Graphics graphics;
+	private static Graphics2D graphics;
+	
+	public static class COLORS
+	{
+		public final static Color TRANSPARENT = new Color(0,0,0,0);
+	}
 	
 	public static void init()
 	
@@ -20,10 +25,14 @@ public class Canvas
 		System.err.println("[Canvas]");
 	}
 	
-	public static void setGraphics(Graphics _graphics)
+	public static void setGraphics(Graphics2D _graphics)
 	{
 		graphics = _graphics;
 	}
+	
+	
+	
+	
 	
 	public static void localize(double _x, double _y)
 	{
@@ -35,10 +44,29 @@ public class Canvas
 		translate(-_x, -_y);
 	}
 	
+	
+	
+	
+	
 	private static int round(double _value)
 	{
-		return (int)(_value + 0.5);
+		return (int)Math.round(_value);
 	}
+	
+	
+	
+	
+	public static Color randomColor(int _min, int _max)
+	{
+		return new Color(
+					((int)(Math.random() * (_max - _min)) + _min),
+					((int)(Math.random() * (_max - _min)) + _min),
+					((int)(Math.random() * (_max - _min)) + _min)
+					);
+	}
+	
+	
+	
 
 	public static void clearRect(double _x, double _y, double _width, double _height)
 	{
@@ -204,6 +232,12 @@ public class Canvas
 	{
 		graphics.translate((int)round(_x), (int)round(_y));
 	}
+
+	public static Graphics2D getGraphics()
+	{
+		return graphics;
+	}
+	
 	
 	
 }
