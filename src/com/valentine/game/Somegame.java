@@ -18,13 +18,13 @@ public class Somegame extends Game
 		add(rotorAquarium);
 		rotorAquarium.setFillColor(new Color(0,10,40,240));
 		rotorAquarium.setDrawColor(Color.WHITE);
-		for (int i = 0; i < 30; i++) rotorAquarium.add(new Rotor(rotorAquarium));
+		for (int i = 0; i < 130; i++) rotorAquarium.add(new Rotor(rotorAquarium));
 		
 		Container colliderAquarium = new Container(this, 6*getWidth()/7, getHeight()/2, getWidth()/7, getHeight()/5);
 		add(colliderAquarium);
 		colliderAquarium.setFillColor(new Color(50,0,30,100));
 		colliderAquarium.setDrawColor(Color.YELLOW);
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			colliderAquarium.add(new Collider(colliderAquarium));
 			add(new Link(

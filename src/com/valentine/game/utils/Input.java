@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Input implements MouseListener, MouseMotionListener, KeyListener, ComponentListener
 {
@@ -17,13 +16,13 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	private static Input input;
 	
 	
-	private static List<MouseListener> mouseListeners = new ArrayList<MouseListener>();
+	private static ArrayList<MouseListener> mouseListeners = new ArrayList<MouseListener>();
 	
-	private static List<MouseMotionListener> mouseMotionListeners = new ArrayList<MouseMotionListener>();
+	private static ArrayList<MouseMotionListener> mouseMotionListeners = new ArrayList<MouseMotionListener>();
 	
-	private static List<KeyListener> keyListeners = new ArrayList<KeyListener>();
+	private static ArrayList<KeyListener> keyListeners = new ArrayList<KeyListener>();
 	
-	private static List<ComponentListener> componentListeners = new ArrayList<ComponentListener>();
+	private static ArrayList<ComponentListener> componentListeners = new ArrayList<ComponentListener>();
 	
 	
 	
@@ -69,11 +68,11 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	{
 		componentListeners.remove(_componentListener);
 	}
+	
 	public static void removeKeyListener(KeyListener _keyListener)
 	{
 		keyListeners.remove(_keyListener);
 	}
-	
 	
 	
 	
@@ -105,7 +104,9 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	public void mouseClicked(MouseEvent _mouseEvent)
 	{
 		for (int i = 0; i < mouseListeners.size(); i++)
+		{
 			mouseListeners.get(i).mouseClicked(_mouseEvent);
+		}
 	}
 
 	public void mouseEntered(MouseEvent _mouseEvent)

@@ -114,50 +114,31 @@ public class Collider extends Entity
 	
 	public boolean collide(Collider _collider)
 	{
+		
 		if (isColliding(_collider))
 		{
-			double tmp;
-			/*
-			tmp = getRotation();
-			setRotation(_collider.getRotation());
-			_collider.setRotation(tmp);
-			*/
 			
-			setRotation(rotationFlip(rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
-			_collider.setRotation(rotationFlip(getRotation()));
-			
-			tmp = getVelocity();
-			setVelocity(_collider.getVelocity());
-			_collider.setVelocity(tmp);
-			
+			if (_collider.getX() - getX() > 0)
+			{
+				setRotation(rotationFlip(rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
+				_collider.setRotation(rotationFlip(getRotation()));
+			}
+			else
+			{
+				_collider.setRotation(rotationFlip(rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
+				setRotation(rotationFlip(getRotation()));
+			}
+						
 			drawColor = Screen.randomColor(10,255);
 			fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
 			_collider.drawColor = Screen.randomColor(10,255);
 			_collider.fillColor = new Color(_collider.drawColor.getRed(), _collider.drawColor.getGreen(), _collider.drawColor.getBlue(), 20);
 			
-			do
-			{
-				accelerate();
-				move();
-				_collider.accelerate();
-				_collider.move();
-			} while(isColliding(_collider));
+			accelerate();
+			move();
+			_collider.accelerate();
+			_collider.move();
 			
-			setVelocity(0);
-			_collider.setVelocity(0);
-			/*
-			if ( (getWidth() + _collider.getWidth() - Math.abs(getX() - _collider.getX())) > (getHeight() + _collider.getHeight() - Math.abs(getY() - _collider.getY())) )
-			{
-				if (getX() - _collider.getX() > 0) getX() = _collider.getX() + _collider.getWidth() + getWidth();
-				else getX() = _collider.getX() - _collider.getWidth() - getWidth();
-			}
-			else
-			{
-				if (getY() - _collider.getY() > 0) getY() = _collider.getY() + _collider.getHeight() + getHeight();
-				else getY() = _collider.getY() - _collider.getHeight() - getHeight();
-			}
-			
-			*/
 			return true;
 		}
 

@@ -105,8 +105,16 @@ public class Rotor extends Entity {
 	{
 		if (Math.pow(Math.pow(getX() - _rotor.getX(),2) + Math.pow(getY() - _rotor.getY(),2),0.5) < (r + _rotor.r))
 		{
-			_rotor.setRotation(rotationMake(_rotor.getX() - getX(), _rotor.getY() - getY()));
-			setRotation(rotationFlip(_rotor.getRotation()));
+			if (_rotor.getCenterX() - getCenterX() > 0)
+			{
+				_rotor.setRotation(rotationMake(_rotor.getCenterX() - getCenterX(), _rotor.getCenterY() - getCenterY()));
+				setRotation(rotationFlip(_rotor.getRotation()));
+			}
+			else
+			{
+				setRotation(rotationMake(_rotor.getCenterX() - getCenterX(), _rotor.getCenterY() - getCenterY()));
+				_rotor.setRotation(rotationFlip(_rotor.getRotation()));
+			}
 			
 			INNER_ROTATION_ACCELERATION *= -1;
 			_rotor.INNER_ROTATION_ACCELERATION *= -1;

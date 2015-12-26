@@ -36,6 +36,7 @@ public class Window
 				
 				if (bufferStrategy == null)
 				{
+					System.err.println("Creating tripple-buffer strategy.");
 					createBufferStrategy(3);
 					bufferStrategy = canvas.getBufferStrategy();
 				}
@@ -60,8 +61,11 @@ public class Window
 		
 		jframe.add(canvas);
 		
-		jframe.addKeyListener(Input.instance());
+		jframe.setFocusable(false);
+		canvas.setFocusable(true);
+		canvas.requestFocus();
 		
+		canvas.addKeyListener(Input.instance());
 		canvas.addComponentListener(Input.instance());
 		canvas.addMouseListener(Input.instance());
 		canvas.addMouseMotionListener(Input.instance());
