@@ -34,7 +34,7 @@ public class Player extends Entity implements KeyListener {
 		MOVING_WEST = 
 		MOVING_EAST = false;
 		
-		image = new ImageIcon("player.png").getImage();			
+		image = new ImageIcon("res/player.png").getImage();			
 	}
 
 	public void update()

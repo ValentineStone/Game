@@ -14,9 +14,9 @@ public class Window
 	private static JFrame jframe;
 	private static Canvas canvas;
 	
-	private static boolean isFullscreen = true;
+	private static boolean isFullscreen = false;
 	
-	public static final Dimension DEFAULT_DIMESION = new Dimension(1280, 720);
+	public static final Dimension DEFAULT_DIMESION = new Dimension(1900, 1000);
 	public static final Color DEFAULT_COLOR = new Color(0, 0, 20);
 	
 	public static void init()
@@ -36,7 +36,7 @@ public class Window
 				
 				if (bufferStrategy == null)
 				{
-					System.err.println("Creating tripple-buffer strategy.");
+					System.err.println("[Window]: Creating tripple-buffer strategy.");
 					createBufferStrategy(3);
 					bufferStrategy = canvas.getBufferStrategy();
 				}

@@ -24,7 +24,7 @@ public class Somegame extends Game
 		add(colliderAquarium);
 		colliderAquarium.setFillColor(new Color(50,0,30,100));
 		colliderAquarium.setDrawColor(Color.YELLOW);
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			colliderAquarium.add(new Collider(colliderAquarium));
 			add(new Link(

@@ -34,7 +34,6 @@ public abstract class Game extends Container implements ComponentListener
 	public static void init()
 	{
 		game = new Somegame();
-		
 	}
 	
 	public static Game instance()
@@ -43,16 +42,6 @@ public abstract class Game extends Container implements ComponentListener
 	}
 	
 	public abstract void assemble();
-
-	public void paint()
-	{
-		super.paint();
-	}
-	
-	public void update()
-	{
-		super.update();
-	}
 
 	public void componentResized(ComponentEvent _componentEvent)
 	{
