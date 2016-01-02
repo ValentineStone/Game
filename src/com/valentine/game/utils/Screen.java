@@ -14,10 +14,6 @@ public class Screen
 {
 	private static Graphics2D graphics;
 	
-	public static class COLORS
-	{
-		public final static Color TRANSPARENT = new Color(0,0,0,0);
-	}
 	
 	public static void init()
 	
@@ -44,43 +40,20 @@ public class Screen
 		translate(-_x, -_y);
 	}
 	
-	
-	
-	
-	
-	private static int round(double _value)
-	{
-		return (int)Math.round(_value);
-	}
-	
-	
-	
-	
-	public static Color randomColor(int _min, int _max)
-	{
-		return new Color(
-					((int)(Math.random() * (_max - _min)) + _min),
-					((int)(Math.random() * (_max - _min)) + _min),
-					((int)(Math.random() * (_max - _min)) + _min)
-					);
-	}
-	
-	
-	
 
 	public static void clearRect(double _x, double _y, double _width, double _height)
 	{
-		graphics.clearRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
+		graphics.clearRect((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height));
 	}
 
 	public static void clipRect(double _x, double _y, double _width, double _height)
 	{
-		graphics.clipRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
+		graphics.clipRect((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height));
 	}
 
 	public static void copyArea(double _x, double _y, double _width, double _height, double _dx, double _dy)
 	{
-		graphics.copyArea((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_dx), (int)round(_dy));
+		graphics.copyArea((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height), (int)Math.round(_dx), (int)Math.round(_dy));
 	}
 
 	public static void dispose()
@@ -90,87 +63,87 @@ public class Screen
 
 	public static void drawArc(double _x, double _y, double _width, double _height, double _startAngle, double _arcAngle)
 	{	
-		graphics.drawArc((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_startAngle), (int)round(_arcAngle));
+		graphics.drawArc((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height), (int)Math.round(_startAngle), (int)Math.round(_arcAngle));
 	}
 
 	public static boolean drawImage(Image _img, double _x, double _y, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)round(_x), (int)round(_y), _observer);
+		return graphics.drawImage(_img, (int)Math.round(_x), (int)Math.round(_y), _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _x, double _y, Color _bgcolor, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)round(_x), (int)round(_y), _bgcolor, _observer);
+		return graphics.drawImage(_img, (int)Math.round(_x), (int)Math.round(_y), _bgcolor, _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _x, double _y, double _width, double _height, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), _observer);
+		return graphics.drawImage(_img, (int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height), _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _x, double _y, double _width, double _height, Color _bgcolor, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), _bgcolor, _observer);
+		return graphics.drawImage(_img, (int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height), _bgcolor, _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _dx1, double _dy1, double _dx2, double _dy2, double _sx1, double _sy1, double _sx2, double _sy2, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int)round(_dx1), (int)round(_dy1), (int)round(_dx2), (int)round(_dy2), (int)round(_sx1), (int)round(_sy1), (int)round(_sx2), (int)round(_sy2), _observer);
+		return graphics.drawImage(_img, (int)Math.round(_dx1), (int)Math.round(_dy1), (int)Math.round(_dx2), (int)Math.round(_dy2), (int)Math.round(_sx1), (int)Math.round(_sy1), (int)Math.round(_sx2), (int)Math.round(_sy2), _observer);
 	}
 
 	public static boolean drawImage(Image _img, double _dx1, double _dy1, double _dx2, double _dy2, double _sx1, double _sy1, double _sx2, double _sy2, Color _bgcolor, ImageObserver _observer)
 	{
-		return graphics.drawImage( _img, (int)round(_dx1), (int)round(_dy1), (int)round(_dx2), (int)round(_dy2), (int)round(_sx1), (int)round(_sy1), (int)round(_sx2), (int)round(_sy2), _bgcolor, _observer);
+		return graphics.drawImage( _img, (int)Math.round(_dx1), (int)Math.round(_dy1), (int)Math.round(_dx2), (int)Math.round(_dy2), (int)Math.round(_sx1), (int)Math.round(_sy1), (int)Math.round(_sx2), (int)Math.round(_sy2), _bgcolor, _observer);
 	}
 
 	public static void drawLine(double _x1, double _y1, double _x2, double _y2)
 	{
-		graphics.drawLine((int)round(_x1), (int)round(_y1), (int)round(_x2), (int)round(_y2));
+		graphics.drawLine((int)Math.round(_x1), (int)Math.round(_y1), (int)Math.round(_x2), (int)Math.round(_y2));
 	}
 
 	public static void drawOval(double _x, double _y, double _width, double _height)
 	{
-		graphics.drawOval((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
+		graphics.drawOval((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height));
 	}
 
 	public static void drawRoundRect(double _x, double _y, double _width, double _height, double _arcWidth, double _arcHeight)
 	{
-		graphics.drawRoundRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_arcWidth), (int)round(_arcHeight));
+		graphics.drawRoundRect((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height), (int)Math.round(_arcWidth), (int)Math.round(_arcHeight));
 	}
 	
 	public static void drawRect(double _x, double _y, double _width, double _height)
 	{
-		graphics.drawRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
+		graphics.drawRect((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height));
 	}
 
 	public static void drawString(String _str, double _x, double _y)
 	{
-		graphics.drawString(_str, (int)round(_x), (int)round(_y));
+		graphics.drawString(_str, (int)Math.round(_x), (int)Math.round(_y));
 	}
 
 	public static void drawString(AttributedCharacterIterator _iterator, double _x, double _y)
 	{
-		graphics.drawString(_iterator, (int)round(_x), (int)round(_y));
+		graphics.drawString(_iterator, (int)Math.round(_x), (int)Math.round(_y));
 	}
 
 	public static void fillArc(double _x, double _y, double _width, double _height, double _startAngle, double _arcAngle)
 	{
-		graphics.fillArc((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_startAngle), (int)round(_arcAngle));
+		graphics.fillArc((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height), (int)Math.round(_startAngle), (int)Math.round(_arcAngle));
 	}
 
 	public static void fillOval(double _x, double _y, double _width, double _height)
 	{
-		graphics.fillOval((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
+		graphics.fillOval((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height));
 	}
 
 	public static void fillRect(double _x, double _y, double _width, double _height)
 	{
-		graphics.fillRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
+		graphics.fillRect((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height));
 	}
 
 	public static void fillRoundRect(double _x, double _y, double _width, double _height, double _arcWidth, double _arcHeight)
 	{
-		graphics.fillRoundRect((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height), (int)round(_arcWidth), (int)round(_arcHeight));
+		graphics.fillRoundRect((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height), (int)Math.round(_arcWidth), (int)Math.round(_arcHeight));
 	}
 
 	public static Shape getClip()
@@ -205,7 +178,7 @@ public class Screen
 
 	public static void setClip(double _x, double _y, double _width, double _height)
 	{
-		graphics.setClip((int)round(_x), (int)round(_y), (int)round(_width), (int)round(_height));
+		graphics.setClip((int)Math.round(_x), (int)Math.round(_y), (int)Math.round(_width), (int)Math.round(_height));
 	}
 
 	public static void setColor(Color _c)
@@ -230,7 +203,7 @@ public class Screen
 
 	public static void translate(double _x, double _y)
 	{
-		graphics.translate((int)round(_x), (int)round(_y));
+		graphics.translate(Math.round(_x), Math.round(_y));
 	}
 
 	public static Graphics2D getGraphics()

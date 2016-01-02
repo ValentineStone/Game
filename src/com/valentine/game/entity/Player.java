@@ -7,9 +7,10 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 
 import com.valentine.game.utils.Interpolation;
+import com.valentine.game.utils.MathExt;
 import com.valentine.game.utils.Screen;
 
-public class Player extends Entity implements KeyListener {
+public class Player extends EntityLiving implements KeyListener {
 	
 	//private List<Link> links = new ArrayList<Link>();
 
@@ -25,9 +26,12 @@ public class Player extends Entity implements KeyListener {
 	private boolean MOVING_SOUTH, MOVING_NORTH, MOVING_WEST, MOVING_EAST, BREAKS_ON;
 	
 	public Player(Container _container)
-	{	
-		super(_container, 0, 0, 0, 0, VELOCITY_MAX, ACCELERATION, FRICTION, 64, 64, true, true, false);
-		setPositionCentered();
+	{
+		setVelocityMax(VELOCITY_MAX);
+		setAcceleration(ACCELERATION);
+		setFriction(FRICTION);
+		setWidth(64);
+		setHeight(64);
 		
 		MOVING_SOUTH = 
 		MOVING_NORTH =
@@ -36,10 +40,14 @@ public class Player extends Entity implements KeyListener {
 		
 		image = new ImageIcon("res/player.png").getImage();			
 	}
+	
+	protected void reset()
+	{
+		setPositionCentered();
+	}
 
 	public void update()
 	{
-		super.update();
 		if (!breaks()) accelerate();
 		move();
 		keepContained();
@@ -48,8 +56,6 @@ public class Player extends Entity implements KeyListener {
 
 	public void paint()
 	{
-		super.paint();
-		
 		if (isMoving() && !isTouchingEdge())
 			Screen.drawImage(image, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()), null);
 		else
@@ -73,14 +79,14 @@ public class Player extends Entity implements KeyListener {
 					}
 					else
 					{
-						setRotation(Entity.DIRECTION.WEST.getRotation());
+						setRotation(MathExt.DIRECTION.WEST.getRotation());
 					}
 				}
 				else
 				{
 					if (MOVING_EAST)
 					{
-						setRotation(Entity.DIRECTION.EAST.getRotation());
+						setRotation(MathExt.DIRECTION.EAST.getRotation());
 					}
 					else
 					{
@@ -94,22 +100,22 @@ public class Player extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						setRotation(Entity.DIRECTION.SOUTH.getRotation());
+						setRotation(MathExt.DIRECTION.SOUTH.getRotation());
 					}
 					else
 					{
-						setRotation(Entity.DIRECTION.SOUTHWEST.getRotation());
+						setRotation(MathExt.DIRECTION.SOUTHWEST.getRotation());
 					}
 				}
 				else
 				{
 					if (MOVING_EAST)
 					{
-						setRotation(Entity.DIRECTION.SOUTHEAST.getRotation());
+						setRotation(MathExt.DIRECTION.SOUTHEAST.getRotation());
 					}
 					else
 					{
-						setRotation(Entity.DIRECTION.SOUTH.getRotation());
+						setRotation(MathExt.DIRECTION.SOUTH.getRotation());
 					}
 				}
 			}
@@ -122,22 +128,22 @@ public class Player extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						setRotation(Entity.DIRECTION.NORTH.getRotation());
+						setRotation(MathExt.DIRECTION.NORTH.getRotation());
 					}
 					else
 					{
-						setRotation(Entity.DIRECTION.NORTHWEST.getRotation());
+						setRotation(MathExt.DIRECTION.NORTHWEST.getRotation());
 					}
 				}
 				else
 				{
 					if (MOVING_EAST)
 					{
-						setRotation( Entity.DIRECTION.NORTHEAST.getRotation());
+						setRotation( MathExt.DIRECTION.NORTHEAST.getRotation());
 					}
 					else
 					{
-						setRotation(Entity.DIRECTION.NORTH.getRotation());
+						setRotation(MathExt.DIRECTION.NORTH.getRotation());
 					}
 				}
 			}
@@ -151,14 +157,14 @@ public class Player extends Entity implements KeyListener {
 					}
 					else
 					{
-						setRotation(Entity.DIRECTION.WEST.getRotation());
+						setRotation(MathExt.DIRECTION.WEST.getRotation());
 					}
 				}
 				else
 				{
 					if (MOVING_EAST)
 					{
-						setRotation(Entity.DIRECTION.EAST.getRotation());
+						setRotation(MathExt.DIRECTION.EAST.getRotation());
 					}
 					else
 					{
@@ -184,7 +190,7 @@ public class Player extends Entity implements KeyListener {
 		}
 		return false;
 	}
-
+	
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -225,11 +231,22 @@ public class Player extends Entity implements KeyListener {
 			}
 			case KeyEvent.VK_C:
 			{
+				Collider newCollider = new Collider(getCenterX(), getCenterY());
+				getContainer().add(newCollider);
+				newCollider.setPosition(getCenterX(), getCenterY());
 				getContainer().add(new Link(
-											getContainer(),
 											this,
-											getContainer().add(new Collider(getContainer(), getX()+getWidth()/2, getY()+getHeight()/2))
+											newCollider
 											));
+				break;
+			}
+			case KeyEvent.VK_R:
+			{
+				double r = MathExt.random(10,30);
+				Rotor2 newRotor = new Rotor2(getCenterX() - r, getCenterY() - r, r);
+				newRotor.setVelocityMax(7).setAcceleration(0.07);
+				getContainer().add(newRotor);
+				newRotor.setPosition(getCenterX() - r, getCenterY() - r);
 				break;
 			}
 			/*

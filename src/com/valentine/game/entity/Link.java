@@ -2,13 +2,14 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
+import com.valentine.game.utils.ColorExt;
 import com.valentine.game.utils.Interpolation;
 import com.valentine.game.utils.Screen;
 
 public class Link extends Entity {
 
-	private Entity source;
-	private Entity destination;
+	private EntityLiving source;
+	private EntityLiving destination;
 	
 	private double x1;
 	private double y1;
@@ -17,18 +18,19 @@ public class Link extends Entity {
 	
 	private Color drawColor = Color.WHITE;
 	
-	public Link(Container _container, Entity _source, Entity _destination)
+	public Link(EntityLiving _source, EntityLiving _destination)
 	{
-		super(_container,0,0,0,0,0,1,1,0,0,true,true,false);
 		destination = _destination;
 		source = _source;
 	}
+	
+	protected void reset() {}
 	
 	public void update() {}
 	
 	public void paint()
 	{
-		if (destination instanceof Collider) drawColor = ((Collider)destination).getDrawColor();
+		if (destination.getDrawColor() != ColorExt.TRANSPARENT) drawColor = destination.getDrawColor();
 		Screen.setColor(drawColor);
 		
 		if (source.getContainer() != destination.getContainer())

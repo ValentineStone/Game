@@ -14,7 +14,7 @@ public class Window
 	private static JFrame jframe;
 	private static Canvas canvas;
 	
-	private static boolean isFullscreen = false;
+	private static boolean isFullscreen = true;
 	
 	public static final Dimension DEFAULT_DIMESION = new Dimension(1900, 1000);
 	public static final Color DEFAULT_COLOR = new Color(0, 0, 20);

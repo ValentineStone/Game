@@ -2,10 +2,12 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
+import com.valentine.game.utils.ColorExt;
 import com.valentine.game.utils.Interpolation;
+import com.valentine.game.utils.MathExt;
 import com.valentine.game.utils.Screen;
 
-public class Rotor extends Entity {
+public class Rotor extends EntityLiving {
 	private double r;
 	private double x1;
 	private double y1;
@@ -21,29 +23,38 @@ public class Rotor extends Entity {
 	private static final double FRICTION = 1;
 	private double INNER_ROTATION_ACCELERATION = 0.1;
 	
-	private Color drawColor;
-	private Color fillColor;
-	
-	public Rotor(Container _container, double _r, double _x, double _y)
+	public Rotor(double _x, double _y, double _r)
 	{
-		super(_container, _x,_y,0,0, VELOCITY_MAX, ACCELERATION, FRICTION, _r*2, _r*2, true,true,true);
+		setX(_x);
+		setY(_y);
+		setWidth(_r * 2);
+		setHeight(_r * 2);
+		setActive(true);
+		
+		setVelocityMax(VELOCITY_MAX);
+		setAcceleration(ACCELERATION);
+		setFriction(FRICTION);
+		
 		setRotationRandom();
 		r = _r;
 		innerRotation = 0;
-		drawColor = Screen.randomColor(20, 255);
-		fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 50);
+		setDrawColor(ColorExt.randomColor(20, 255));
+		setFillColor(new Color(getDrawColor().getRed(), getDrawColor().getGreen(), getDrawColor().getBlue(), 50));
 	}
 	
-	public Rotor(Container _container)
+	public Rotor()
 	{
-		this (_container, Math.random() * 10 + 10, 0,0);
+		this (0,0, MathExt.random(20, 10));
 		INNER_ROTATION_ACCELERATION = (Math.random() > 0.5 ? -1 : 1) * (Math.random() * Math.PI / 8 + Math.PI / 32);
+	}
+	
+	protected void reset()
+	{
 		setPositionRandom();
 	}
 	
 	public void update()
 	{
-		super.update();
 		accelerate();
 		move();
 		
@@ -55,13 +66,10 @@ public class Rotor extends Entity {
 		
 		Entity entity;
 		
-		for (int i = 0; i < getContainer().size(); i++)
-		{
-			entity = getContainer().get(i);
-			
+		for (int i = 0; i < getContainer().size() && this != (entity = getContainer().get(i)); i++)
+		{			
 			if (entity instanceof Rotor)
-				if (entity.getId() < getId())
-					collide((Rotor)entity);
+				collide((Rotor)entity);
 		}
 		
 		innerRotation += (getVelocity()/getVelocityMax()) * INNER_ROTATION_ACCELERATION;
@@ -69,21 +77,19 @@ public class Rotor extends Entity {
 	
 	public void paint()
 	{
-		super.paint();
-		
 		double polatedInnerRotation = innerRotation + Interpolation.make((getVelocity()/getVelocityMax()) * INNER_ROTATION_ACCELERATION);
 		
 		x1 = getCenterX() + r * Math.cos(polatedInnerRotation);
 		y1 = getCenterY() + r * Math.sin(polatedInnerRotation);
-		x2 = getCenterX() + r * Math.cos(rotationNormalize(polatedInnerRotation + 2*Math.PI/3));
-		y2 = getCenterY() + r * Math.sin(rotationNormalize(polatedInnerRotation + 2*Math.PI/3));
-		x3 = getCenterX() + r * Math.cos(rotationNormalize(polatedInnerRotation + 4*Math.PI/3));
-		y3 = getCenterY() + r * Math.sin(rotationNormalize(polatedInnerRotation + 4*Math.PI/3));
+		x2 = getCenterX() + r * Math.cos(MathExt.rotationNormalize(polatedInnerRotation + 2*Math.PI/3));
+		y2 = getCenterY() + r * Math.sin(MathExt.rotationNormalize(polatedInnerRotation + 2*Math.PI/3));
+		x3 = getCenterX() + r * Math.cos(MathExt.rotationNormalize(polatedInnerRotation + 4*Math.PI/3));
+		y3 = getCenterY() + r * Math.sin(MathExt.rotationNormalize(polatedInnerRotation + 4*Math.PI/3));
 		
 		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
-		Screen.setColor(fillColor);
+		Screen.setColor(getFillColor());
 		Screen.fillOval(getX(), getY(), getWidth(), getHeight());
-		Screen.setColor(drawColor);
+		Screen.setColor(getDrawColor());
 		Screen.drawOval(getX(), getY(), getWidth(), getHeight());
 		Screen.drawLine(x1, y1, x2, y2);
 		Screen.drawLine(x2, y2, x3, y3);
@@ -105,16 +111,8 @@ public class Rotor extends Entity {
 	{
 		if (Math.pow(Math.pow(getX() - _rotor.getX(),2) + Math.pow(getY() - _rotor.getY(),2),0.5) < (r + _rotor.r))
 		{
-			if (_rotor.getCenterX() - getCenterX() > 0)
-			{
-				_rotor.setRotation(rotationMake(_rotor.getCenterX() - getCenterX(), _rotor.getCenterY() - getCenterY()));
-				setRotation(rotationFlip(_rotor.getRotation()));
-			}
-			else
-			{
-				setRotation(rotationMake(_rotor.getCenterX() - getCenterX(), _rotor.getCenterY() - getCenterY()));
-				_rotor.setRotation(rotationFlip(_rotor.getRotation()));
-			}
+			setRotation(MathExt.rotationMake(getCenterX() - _rotor.getCenterX(), getCenterY() - _rotor.getCenterY()));
+			_rotor.setRotation(MathExt.rotationFlip(getRotation()));
 			
 			INNER_ROTATION_ACCELERATION *= -1;
 			_rotor.INNER_ROTATION_ACCELERATION *= -1;
@@ -122,6 +120,8 @@ public class Rotor extends Entity {
 			setVelocity(getVelocity()/2);
 			_rotor.setVelocity(getVelocity()/2);
 			
+			move();
+			_rotor.move();
 			
 			return true;
 		}

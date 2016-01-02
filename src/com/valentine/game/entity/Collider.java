@@ -2,31 +2,38 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
+import com.valentine.game.utils.ColorExt;
 import com.valentine.game.utils.Interpolation;
+import com.valentine.game.utils.MathExt;
 import com.valentine.game.utils.Screen;
 
-public class Collider extends Entity
+public class Collider extends EntityLiving
 {	
 	private static double VELOCITY_MAX = 5;
 	
 	private static boolean hugeExists = true;
 	
-	protected double rotationVelocity;
+	public double rotationVelocity;
 	
 	private Color drawColor;
 	private Color fillColor;
 	
-	public Collider(Container _container)
+	public Collider()
 	{
-		this(_container,0,0);
-		setPositionRandom();
+		this(0,0);
 	}
 	
 	
 	
-	public Collider(Container _container, double _x, double _y)
+	public Collider(double _x, double _y)
 	{
-		super(_container, _x, _y, 0, 0, VELOCITY_MAX, 0.1, 1, 0, 0, true, true, true);
+		setX(_x);
+		setY(_y);
+		setVelocityMax(VELOCITY_MAX);
+		setAcceleration(0.1);
+		setFriction(1);
+		setActive(true);
+		
 		setVelocityRandom(0, 5);
 		setRotationRandom();
 		
@@ -44,14 +51,12 @@ public class Collider extends Entity
 			rotationVelocity = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
 		}
 		
-		drawColor = Screen.randomColor(10, 255);
+		drawColor = ColorExt.randomColor(10, 255);
 		fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
 	}
 	
 	public void update()
-	{
-		super.update();
-		
+	{		
 		setRotation(getRotation() + rotationVelocity);
 		
 		accelerate();
@@ -74,11 +79,16 @@ public class Collider extends Entity
 	
 	
 	
+	protected void reset()
+	{
+		setPositionRandom();
+	}
+	
+	
+	
 	
 	public void paint()
-	{
-		super.paint();
-		
+	{		
 		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 		
 		Screen.setColor(fillColor);
@@ -117,21 +127,12 @@ public class Collider extends Entity
 		
 		if (isColliding(_collider))
 		{
-			
-			if (_collider.getX() - getX() > 0)
-			{
-				setRotation(rotationFlip(rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
-				_collider.setRotation(rotationFlip(getRotation()));
-			}
-			else
-			{
-				_collider.setRotation(rotationFlip(rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
-				setRotation(rotationFlip(getRotation()));
-			}
+			setRotation(MathExt.rotationFlip(MathExt.rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
+			_collider.setRotation(MathExt.rotationFlip(getRotation()));
 						
-			drawColor = Screen.randomColor(10,255);
+			drawColor = ColorExt.randomColor(10,255);
 			fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
-			_collider.drawColor = Screen.randomColor(10,255);
+			_collider.drawColor = ColorExt.randomColor(10,255);
 			_collider.fillColor = new Color(_collider.drawColor.getRed(), _collider.drawColor.getGreen(), _collider.drawColor.getBlue(), 20);
 			
 			accelerate();

@@ -2,7 +2,7 @@ package com.valentine.game.utils;
 
 public final class Looper
 {
-	private static Thread thread;
+	public static Thread thread;
 	
 	private static boolean running;
 
@@ -62,6 +62,14 @@ public final class Looper
 		thread.start();
 		
 		System.err.println("[Looper]");
+	}
+	
+	public static void loop()
+	{
+		Interpolation.set(0, 0, 1);
+		Game.instance().update();
+		
+		Window.repaint();
 	}
 	
 	public static void play()

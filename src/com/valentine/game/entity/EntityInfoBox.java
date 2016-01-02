@@ -4,32 +4,37 @@ import java.awt.Color;
 
 import com.valentine.game.utils.Screen;
 
-public class EntityInfoBox extends Entity
+public class EntityInfoBox extends EntityLiving
 {
 	public static final double HEIGHT = 120;
 	public static final double WIDTH = 250;
 	
-	private Entity entity;
-	private Color fillColor = new Color(0,0,0,100);
-	private Color drawColor = Color.CYAN;
+	private EntityLiving entity;
 	
-	public EntityInfoBox(Container _container, double _x, double _y, Entity _entity)
+	public EntityInfoBox(double _x, double _y, EntityLiving _entity)
 	{
-		super(_container,_x, _y, 0,0,0,1,1,WIDTH, HEIGHT, false,true,false);
+		setX(_x);
+		setY(_y);
+		setWidth(WIDTH);
+		setHeight(HEIGHT);
+		setUpdatable(false);
+		setFillColor(new Color(0,0,0,100));
+		setDrawColor(Color.CYAN);
+		
 		entity = _entity;
 	}
 	
+	protected void reset() {}
+	
 	public void paint()
-	{
-		super.paint();
-		
+	{		
 		double dy = Screen.getGraphics().getFontMetrics().getHeight();
 		
-		Screen.setColor(fillColor);
+		Screen.setColor(getFillColor());
 		
 		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.setColor(drawColor);
+		Screen.setColor(getDrawColor());
 		
 		if (entity instanceof Collider)
 			Screen.setColor(((Collider)entity).getDrawColor());
@@ -45,4 +50,8 @@ public class EntityInfoBox extends Entity
 		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
 	}
 
+	public void update()
+	{
+		setUpdatable(false);
+	}
 }

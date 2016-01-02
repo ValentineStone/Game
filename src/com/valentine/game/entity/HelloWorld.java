@@ -2,22 +2,25 @@ package com.valentine.game.entity;
 
 import java.awt.Color;
 
+import com.valentine.game.utils.ColorExt;
 import com.valentine.game.utils.Interpolation;
 import com.valentine.game.utils.Screen;
 
-public class HelloWorld extends Entity
+public class HelloWorld extends EntityLiving
 {
 	String text;
 	Color color;
 	
 	public HelloWorld(Container _container)
 	{
-		super(_container,0,0,0,0,0,1,1,75,12,true,true,true);
+		setContainer(_container);
+		setWidth(75);
+		setHeight(12);
 		setPositionRandom();
+		setActive(true);
 		setVelocityMax((Math.random()) + 1);
-		setRotationRandom();
 		text = "Hello world!";
-		color = Screen.randomColor(7, 55);
+		color = ColorExt.randomColor(7, 55);
 		/*
 		color = 
 				Math.random() > 0.05
@@ -29,9 +32,13 @@ public class HelloWorld extends Entity
 		*/
 	}
 
+	protected void reset()
+	{
+		setRotationRandom();
+	}
+	
 	public void update()
 	{
-		super.update();
 		accelerate();
 		move();
 		keepContained();
@@ -39,9 +46,7 @@ public class HelloWorld extends Entity
 	}
 
 	public void paint()
-	{
-		super.paint();
-		
+	{		
 		Screen.setColor(color);
 		Screen.drawString(text, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()));
 	}

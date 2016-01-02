@@ -1,32 +1,30 @@
 package com.valentine.game.entity;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.valentine.game.utils.Screen;
 
-public class Container extends Entity
+public class Container extends EntityObject
 {
-	protected List<Entity> entities;
+	protected List<Entity> entities;	
 	
-	protected Color fillColor;
-	protected Color drawColor;
 	
 	
 	public Container(Container _entities, double _x, double _y, double _width, double _height)
 	{
-		super(_entities, _x, _y, 0, 0, 0, 1, 1, _width, _height, true, true, false);
-		fillColor = Screen.COLORS.TRANSPARENT;
-		drawColor = Screen.COLORS.TRANSPARENT;
+		setX(_x);
+		setY(_y);
+		setWidth(_width);
+		setHeight(_height);
 		entities = new ArrayList<Entity>();
 	}
 	
+	
+	
 	public void paint()
-	{
-		super.paint();
-		
-		Screen.setColor(fillColor);
+	{		
+		Screen.setColor(getFillColor());
 		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
 		Screen.localize(getX(), getY());
@@ -34,56 +32,30 @@ public class Container extends Entity
 		
 		for (int i = 0; i < size(); i++)
 		{
-			entities.get(i).paint();
+			if (entities.get(i).isPaintable()) entities.get(i).paint();
 		}
 		
 		Screen.setClip(null);
 		Screen.delocalize(getX(), getY());
 		
-		Screen.setColor(drawColor);
+		Screen.setColor(getDrawColor());
 		Screen.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
 	}
 
 	public void update()
 	{
-		super.update();
-		
 		for (int i = 0; i < size(); i++)
 		{
-			entities.get(i).update();
+			if (entities.get(i).isUpdatable()) entities.get(i).update();
 		}
 	}
 	
+	protected void reset() {}	
 	
 	
-	
-	public Color getFillColor()
+	public int size()
 	{
-		return fillColor;
-	}
-
-	public void setFillColor(Color _fillColor)
-	{
-		fillColor = _fillColor;
-	}
-
-	public Color getDrawColor()
-	{
-		return drawColor;
-	}
-
-	public void setDrawColor(Color _drawColor)
-	{
-		drawColor = _drawColor;
-	}
-	
-	
-	
-
-	public Entity add(Entity _entity)
-	{
-		entities.add(_entity);
-		return _entity;
+		return entities.size();
 	}
 	
 	public Entity get(int _index)
@@ -91,9 +63,15 @@ public class Container extends Entity
 		return entities.get(_index);
 	}
 	
-	public int size()
+	public Container add(Entity _entity)
 	{
-		return entities.size();
+		entities.add(_entity);
+		_entity.setContainer(this);
+		_entity.setPaintable(true);
+		_entity.setUpdatable(true);
+		_entity.reset();
+		
+		return this;
 	}
 	
 	public boolean remove(Entity _entity)
