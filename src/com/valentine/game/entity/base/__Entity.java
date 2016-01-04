@@ -1,6 +1,6 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.base;
 
-public abstract class Entity
+public abstract class __Entity
 {
 	private static int idGlobal = 0;
 	
@@ -14,7 +14,7 @@ public abstract class Entity
 	
 	
 	
-	Entity()
+	public __Entity()
 	{
 		id = idGlobal++;
 	}
@@ -37,7 +37,7 @@ public abstract class Entity
 		return container;
 	}
 	
-	protected Entity setContainer(Container _container)
+	protected __Entity setContainer(Container _container)
 	{
 		container = _container;
 		return this;
@@ -52,7 +52,7 @@ public abstract class Entity
 		return paintable;
 	}
 
-	protected Entity setPaintable(boolean _paintable)
+	protected __Entity setPaintable(boolean _paintable)
 	{
 		paintable = _paintable;
 		return this;
@@ -63,7 +63,7 @@ public abstract class Entity
 		return updatable;
 	}
 
-	protected Entity setUpdatable(boolean _updatable)
+	protected __Entity setUpdatable(boolean _updatable)
 	{
 		updatable = _updatable;
 		return this;

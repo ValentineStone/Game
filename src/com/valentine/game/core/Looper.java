@@ -1,10 +1,10 @@
-package com.valentine.game.utils;
+package com.valentine.game.core;
 
 public final class Looper
 {
 	public static Thread thread;
 	
-	private static boolean running;
+	private static boolean running = false;
 
 	private static long updatePeriodMs = 40;
 	private static long updatePeriodNs = updatePeriodMs * 1000000;
@@ -56,9 +56,6 @@ public final class Looper
 								}
 							}
 							);
-		
-		pause();
-		
 		thread.start();
 		
 		System.err.println("[Looper]");

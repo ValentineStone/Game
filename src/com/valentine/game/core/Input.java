@@ -1,4 +1,4 @@
-package com.valentine.game.utils;
+package com.valentine.game.core;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;

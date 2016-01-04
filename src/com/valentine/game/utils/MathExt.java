@@ -25,6 +25,15 @@ public class MathExt
 		return Math.random() * (_max - _min) + _min;
 	}
 	
+	public static double random(double _value)
+	{
+		return Math.random() * _value;
+	}
+	
+	public static double randomSigned(double _value)
+	{
+		return (Math.random() > 0.5 ? 1 : -1) *Math.random() * _value;
+	}
 	
 	
 	public static double rotationFlipX(double _rotation)

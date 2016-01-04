@@ -1,21 +1,22 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.creatures;
 
 import java.awt.Color;
 
-import com.valentine.game.utils.ColorExt;
-import com.valentine.game.utils.Interpolation;
-import com.valentine.game.utils.MathExt;
-import com.valentine.game.utils.Screen;
+import com.valentine.game.core.*;
+import com.valentine.game.entity.base.*;
+import com.valentine.game.utils.*;
 
-public class Rotor2 extends EntityLiving {
+public class Rotor2 extends EntityBasicAI {
 	private double r;
 	
 	private static final double VELOCITY_MAX = 7;
 	private static final double ACCELERATION = 1;
 	private static final double FRICTION = 1;
 	
-	public Rotor2(double _x, double _y, double _r)
+	public Rotor2(Container _container, double _x, double _y, double _r)
 	{
+		super(_container);
+		
 		setX(_x);
 		setY(_y);
 		setWidth(_r * 2);
@@ -32,13 +33,9 @@ public class Rotor2 extends EntityLiving {
 		setFillColor(new Color(getDrawColor().getRed(), getDrawColor().getGreen(), getDrawColor().getBlue(), 50));
 	}
 	
-	public Rotor2()
+	public Rotor2(Container _container)
 	{
-		this (0,0, MathExt.random(20, 10));
-	}
-	
-	protected void reset()
-	{
+		this (_container, 0,0, MathExt.random(20, 10));
 		setPositionRandom();
 	}
 	
@@ -49,12 +46,11 @@ public class Rotor2 extends EntityLiving {
 		
 		keepContained();
 		
-		Entity entity;
-		
-		for (int i = 0; i < getContainer().size() && this != (entity = getContainer().get(i)); i++)
-		{			
-			if (entity instanceof Rotor2)
-				collide((Rotor2)entity);
+		for (Entity entity : getContainer())
+		{
+			if (entity.getId() < getId())
+				if (entity instanceof Rotor2)
+					collide((Rotor2)entity);
 		}
 	}
 	

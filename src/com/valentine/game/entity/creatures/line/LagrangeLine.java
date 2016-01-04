@@ -1,7 +1,7 @@
-package com.valentine.game.entity.line;
+package com.valentine.game.entity.creatures.line;
 
-import com.valentine.game.entity.Container;
-import com.valentine.game.utils.Screen;
+import com.valentine.game.core.Screen;
+import com.valentine.game.entity.base.Container;
 
 public class LagrangeLine extends Line {
 	

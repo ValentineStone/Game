@@ -1,4 +1,6 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.creatures;
+
+import com.valentine.game.entity.base.Entity;
 
 public class Fractal extends Entity {
 	public Fractal()

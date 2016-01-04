@@ -1,15 +1,15 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.creatures;
 
 import java.awt.Color;
 
-import com.valentine.game.utils.ColorExt;
-import com.valentine.game.utils.Interpolation;
-import com.valentine.game.utils.MathExt;
-import com.valentine.game.utils.Screen;
+import com.valentine.game.core.*;
+import com.valentine.game.entity.base.*;
+import com.valentine.game.utils.*;
 
-public class Collider extends EntityLiving
+public class Collider extends EntityBasicAI
 {	
 	private static double VELOCITY_MAX = 5;
+	private static double ACCELERATION = 0.1;
 	
 	private static boolean hugeExists = true;
 	
@@ -18,23 +18,22 @@ public class Collider extends EntityLiving
 	private Color drawColor;
 	private Color fillColor;
 	
-	public Collider()
+	public Collider(Container _container)
 	{
-		this(0,0);
+		this(_container, 0,0);
+		setPositionRandom();
 	}
 	
 	
 	
-	public Collider(double _x, double _y)
+	public Collider(Container _container, double _x, double _y)
 	{
+		super(_container);
 		setX(_x);
 		setY(_y);
 		setVelocityMax(VELOCITY_MAX);
-		setAcceleration(0.1);
-		setFriction(1);
+		setAcceleration(ACCELERATION);
 		setActive(true);
-		
-		setVelocityRandom(0, 5);
 		setRotationRandom();
 		
 		if (!hugeExists)
@@ -64,26 +63,14 @@ public class Collider extends EntityLiving
 		move();
 
 		keepContained();
-		
-		Entity entity;
-		
-		for (int i = 0; i < getContainer().size(); i++)
+				
+		for (Entity entity : getContainer())
 		{
-			entity = getContainer().get(i);
-			
-			if (entity instanceof Collider)
-				if (entity.getId() < getId())
+			if (entity.getId() < getId())
+				if (entity instanceof Collider)
 					collide((Collider)entity);
 		}
-	}
-	
-	
-	
-	protected void reset()
-	{
-		setPositionRandom();
-	}
-	
+	}	
 	
 	
 	

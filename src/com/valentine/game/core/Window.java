@@ -1,4 +1,4 @@
-package com.valentine.game.utils;
+package com.valentine.game.core;
 
 import java.awt.Canvas;
 import java.awt.Color;

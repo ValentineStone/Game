@@ -1,16 +1,22 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.base;
 
-public abstract class EntityLiving extends EntityObject
+public abstract class EntityBasicAI extends Entity
 {
 	private boolean active = false;
 	
-	private double velocity = 0;
+
 	private double velocityMax = 0;
 	private double acceleration = 1;
 	private double friction = 1;
 	
-	private double _velocityX = 0;
-	private double _velocityY = 0;
+	
+	public EntityBasicAI(Container _container)
+	{
+		super(_container);
+	}
+	
+	
+	//---------------------------------------------BasicAI------------------------------------------------
 	
 	protected boolean keepContained()
 	{
@@ -61,7 +67,7 @@ public abstract class EntityLiving extends EntityObject
 		}
 		else
 		{
-			if (velocity > 0)
+			if (getVelocity() > 0)
 			{
 				setVelocity( getVelocity() - getVelocityMax() * getFriction());
 				if (getVelocity() < 0) setVelocity(0);
@@ -69,7 +75,7 @@ public abstract class EntityLiving extends EntityObject
 		}
 	}
 	
-	protected boolean isTouchingEdge()
+	public boolean isTouchingEdge()
 	{
 		if (
 			(getX() + getWidth() >= getContainer().getWidth()) ||
@@ -82,83 +88,46 @@ public abstract class EntityLiving extends EntityObject
 		return false;
 	}
 	
+	public boolean isHitting(double _x, double _y)
+	{
+		if (_x > getX() && _x < (getX() + getWidth()) && _y > getY() && _y < (getY() + getHeight())) return true;
+		return false;
+	}
 	
 	
 	
-
-
+	
+	
+	
+	
 	
 	public boolean isActive() {
 		return active;
 	}
 
-	public EntityLiving setActive(boolean active) {
+	public void setActive(boolean active) {
 		this.active = active;
-		return this;
 	}
 	
-		
-	
-	public EntityLiving setRotation(double _rotation)
-	{
-		super.setRotation(_rotation);
-		_velocityX = velocity * Math.cos(getRotation());
-		_velocityY = velocity * Math.sin(getRotation());
-		return this;
-	}
-	
-	
-	
-
-	public double getVelocity()
-	{
-		return velocity;
-	}
-	
-	public double getVelocityX()
-	{
-		return _velocityX;
-	}
-	
-	public double getVelocityY()
-	{
-		return _velocityY;
-	}
-
-	public EntityLiving setVelocity(double _velocity)
-	{
-		velocity = _velocity;
-		_velocityX = velocity * Math.cos(getRotation());
-		_velocityY = velocity * Math.sin(getRotation());
-		return this;
-	}
-	
-	public EntityLiving setVelocityRandom(double _min, double _max)
-	{
-		setVelocity(Math.random() * (_max - _min) + _min);
-		return this;
-	}
 
 	public double getVelocityMax()
 	{
 		return velocityMax;
 	}
 
-	public EntityLiving setVelocityMax(double _velocityMax)
+	public void setVelocityMax(double _velocityMax)
 	{
 		velocityMax = _velocityMax;
-		return this;
-	}
-
+	}	
+	
 	public double getAcceleration()
 	{
 		return acceleration;
 	}
 
-	public EntityLiving setAcceleration(double _acceleration)
+	public void setAcceleration(double _acceleration)
 	{
 		acceleration = _acceleration;
-		return this;
 	}
 
 	public double getFriction()
@@ -166,10 +135,9 @@ public abstract class EntityLiving extends EntityObject
 		return friction;
 	}
 
-	public EntityLiving setFriction(double _friction)
+	public void setFriction(double _friction)
 	{
 		friction = _friction;
-		return this;
 	}
 
 	

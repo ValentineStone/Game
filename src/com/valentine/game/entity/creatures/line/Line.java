@@ -1,4 +1,4 @@
-package com.valentine.game.entity.line;
+package com.valentine.game.entity.creatures.line;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -8,9 +8,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-import com.valentine.game.entity.Container;
-import com.valentine.game.entity.Entity;
-import com.valentine.game.utils.Screen;
+import com.valentine.game.core.Screen;
+import com.valentine.game.entity.base.*;
 
 public class Line extends Entity implements MouseListener, MouseMotionListener, KeyListener
 {

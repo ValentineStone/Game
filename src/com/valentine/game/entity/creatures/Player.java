@@ -1,16 +1,15 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.creatures;
 
 import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 import javax.swing.ImageIcon;
 
-import com.valentine.game.utils.Interpolation;
+import com.valentine.game.core.*;
+import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.MathExt;
-import com.valentine.game.utils.Screen;
 
-public class Player extends EntityLiving implements KeyListener {
+public class Player extends EntityBasicAI implements KeyListener {
 	
 	//private List<Link> links = new ArrayList<Link>();
 
@@ -27,23 +26,23 @@ public class Player extends EntityLiving implements KeyListener {
 	
 	public Player(Container _container)
 	{
+		super(_container);
+		
 		setVelocityMax(VELOCITY_MAX);
 		setAcceleration(ACCELERATION);
 		setFriction(FRICTION);
 		setWidth(64);
 		setHeight(64);
+		setPositionCentered();
 		
 		MOVING_SOUTH = 
 		MOVING_NORTH =
 		MOVING_WEST = 
 		MOVING_EAST = false;
 		
-		image = new ImageIcon("res/player.png").getImage();			
-	}
-	
-	protected void reset()
-	{
-		setPositionCentered();
+		image = new ImageIcon("res/player.png").getImage();
+		
+		Input.addKeyListener(this);
 	}
 
 	public void update()
@@ -231,22 +230,27 @@ public class Player extends EntityLiving implements KeyListener {
 			}
 			case KeyEvent.VK_C:
 			{
-				Collider newCollider = new Collider(getCenterX(), getCenterY());
-				getContainer().add(newCollider);
-				newCollider.setPosition(getCenterX(), getCenterY());
-				getContainer().add(new Link(
-											this,
-											newCollider
-											));
+				Collider newCollider = new Collider(getContainer(), getCenterX(), getCenterY());
+				
+				new Link(this, newCollider);
+				
 				break;
 			}
 			case KeyEvent.VK_R:
 			{
 				double r = MathExt.random(10,30);
-				Rotor2 newRotor = new Rotor2(getCenterX() - r, getCenterY() - r, r);
-				newRotor.setVelocityMax(7).setAcceleration(0.07);
-				getContainer().add(newRotor);
-				newRotor.setPosition(getCenterX() - r, getCenterY() - r);
+				
+				Rotor2 newRotor = new Rotor2(getContainer(), getCenterX() - r, getCenterY() - r, r);
+				
+				newRotor.setVelocityMax(7);
+				newRotor.setAcceleration(0.07);
+				
+				break;
+			}
+			case KeyEvent.VK_X:
+			{
+				new Bullet(getContainer(), getCenterX(), getCenterY());
+				
 				break;
 			}
 			/*

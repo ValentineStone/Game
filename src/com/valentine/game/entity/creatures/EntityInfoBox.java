@@ -1,18 +1,20 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.creatures;
 
 import java.awt.Color;
 
-import com.valentine.game.utils.Screen;
+import com.valentine.game.core.Screen;
+import com.valentine.game.entity.base.*;
 
-public class EntityInfoBox extends EntityLiving
+public class EntityInfoBox extends Entity
 {
 	public static final double HEIGHT = 120;
 	public static final double WIDTH = 250;
 	
-	private EntityLiving entity;
+	private Entity entity;
 	
-	public EntityInfoBox(double _x, double _y, EntityLiving _entity)
+	public EntityInfoBox(Container _container, double _x, double _y, Entity _entity)
 	{
+		super(_container);
 		setX(_x);
 		setY(_y);
 		setWidth(WIDTH);
@@ -23,8 +25,6 @@ public class EntityInfoBox extends EntityLiving
 		
 		entity = _entity;
 	}
-	
-	protected void reset() {}
 	
 	public void paint()
 	{		

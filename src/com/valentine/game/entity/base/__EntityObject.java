@@ -1,11 +1,11 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.base;
 
 import java.awt.Color;
 
 import com.valentine.game.utils.ColorExt;
 import com.valentine.game.utils.MathExt;
 
-public abstract class EntityObject extends Entity
+public abstract class __EntityObject extends Entity
 {
 	private double x = 0;
 	private double y = 0;
@@ -47,7 +47,7 @@ public abstract class EntityObject extends Entity
 		return x;
 	}
 
-	public EntityObject setX(double _x)
+	public __EntityObject setX(double _x)
 	{
 		x = _x;
 		return this;
@@ -58,7 +58,7 @@ public abstract class EntityObject extends Entity
 		return y;
 	}
 
-	public EntityObject setY(double _y)
+	public __EntityObject setY(double _y)
 	{
 		y = _y;
 		return this;
@@ -74,21 +74,21 @@ public abstract class EntityObject extends Entity
 		return y + height/2;
 	}
 	
-	public EntityObject setPosition(double _x, double _y)
+	public __EntityObject setPosition(double _x, double _y)
 	{
 		x = _x;
 		y = _y;
 		return this;
 	}
 	
-	public EntityObject setPositionRandom()
+	public __EntityObject setPositionRandom()
 	{
 		x = Math.random() * (getContainer().getWidth() - width);
 		y = Math.random() * (getContainer().getHeight() - height);
 		return this;
 	}
 	
-	public EntityObject setPositionCentered()
+	public __EntityObject setPositionCentered()
 	{
 		x = getContainer().getWidth()/2 - width/2;
 		y = getContainer().getHeight()/2 - height/2;;
@@ -132,13 +132,13 @@ public abstract class EntityObject extends Entity
 		return rotation;
 	}
 
-	public EntityObject setRotation(double _rotation)
+	public __EntityObject setRotation(double _rotation)
 	{
 		rotation = MathExt.rotationNormalize(_rotation);
 		return this;
 	}
 	
-	public EntityObject setRotationRandom()
+	public __EntityObject setRotationRandom()
 	{
 		setRotation(Math.random() * MathExt.PI_2_1);
 		return this;
@@ -168,7 +168,7 @@ public abstract class EntityObject extends Entity
 		return width;
 	}
 
-	public EntityObject setWidth(double _width)
+	public __EntityObject setWidth(double _width)
 	{
 		width = _width;
 		return this;
@@ -179,7 +179,7 @@ public abstract class EntityObject extends Entity
 		return height;
 	}
 
-	public EntityObject setHeight(double _height)
+	public __EntityObject setHeight(double _height)
 	{
 		height = _height;
 		return this;
@@ -194,7 +194,7 @@ public abstract class EntityObject extends Entity
 		return fillColor;
 	}
 
-	public EntityObject setFillColor(Color _fillColor)
+	public __EntityObject setFillColor(Color _fillColor)
 	{
 		fillColor = _fillColor;
 		return this;
@@ -205,7 +205,7 @@ public abstract class EntityObject extends Entity
 		return drawColor;
 	}
 
-	public EntityObject setDrawColor(Color _drawColor)
+	public __EntityObject setDrawColor(Color _drawColor)
 	{
 		drawColor = _drawColor;
 		return this;

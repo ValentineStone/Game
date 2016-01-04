@@ -1,4 +1,4 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.creatures;
 
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -6,8 +6,9 @@ import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 
-import com.valentine.game.utils.Input;
-import com.valentine.game.utils.Screen;
+import com.valentine.game.core.*;
+import com.valentine.game.entity.*;
+import com.valentine.game.entity.base.*;
 
 public class PlayerRotationBased extends Entity implements KeyListener {
 
@@ -55,25 +56,25 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 				{
 					case KeyEvent.VK_DOWN:
 					{
-						rotation = Entity.DIRECTION.NORTH;
+						rotation = com.valentine.game.entity.base.DIRECTION.NORTH;
 						Input.removeKeyListener(this);
 						break;
 					}
 					case KeyEvent.VK_UP:
 					{
-						rotation = Entity.DIRECTION.SOUTH;
+						rotation = com.valentine.game.entity.base.DIRECTION.SOUTH;
 						Input.removeKeyListener(this);
 						break;
 					}
 					case KeyEvent.VK_LEFT:
 					{
-						rotation = Entity.DIRECTION.WEST;
+						rotation = com.valentine.game.entity.base.DIRECTION.WEST;
 						Input.removeKeyListener(this);
 						break;
 					}
 					case KeyEvent.VK_RIGHT:
 					{
-						rotation = Entity.DIRECTION.EAST;
+						rotation = com.valentine.game.entity.base.DIRECTION.EAST;
 						Input.removeKeyListener(this);
 						break;
 					}
@@ -99,7 +100,7 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 					}
 					else
 					{
-						rotateTowards(Entity.DIRECTION.WEST);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.WEST);
 						accelerate(1);
 					}
 				}
@@ -107,7 +108,7 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						rotateTowards(Entity.DIRECTION.EAST);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.EAST);
 						accelerate(1);
 					}
 					else
@@ -122,12 +123,12 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						rotateTowards(Entity.DIRECTION.SOUTH);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.SOUTH);
 						accelerate(1);
 					}
 					else
 					{
-						rotateTowards(Entity.DIRECTION.SOUTHWEST);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.SOUTHWEST);
 						accelerate(1);
 					}
 				}
@@ -135,12 +136,12 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						rotateTowards(Entity.DIRECTION.SOUTHEAST);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.SOUTHEAST);
 						accelerate(1);
 					}
 					else
 					{
-						rotateTowards(Entity.DIRECTION.SOUTH);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.SOUTH);
 						accelerate(1);
 					}
 				}
@@ -154,12 +155,12 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						rotateTowards(Entity.DIRECTION.NORTH);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.NORTH);
 						accelerate(1);
 					}
 					else
 					{
-						rotateTowards(Entity.DIRECTION.NORTHWEST);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.NORTHWEST);
 						accelerate(1);
 					}
 				}
@@ -167,12 +168,12 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						rotateTowards(Entity.DIRECTION.NORTHEAST);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.NORTHEAST);
 						accelerate(1);
 					}
 					else
 					{
-						rotateTowards(Entity.DIRECTION.NORTH);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.NORTH);
 						accelerate(1);
 					}
 				}
@@ -187,7 +188,7 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 					}
 					else
 					{
-						rotateTowards(Entity.DIRECTION.WEST);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.WEST);
 						accelerate(1);
 					}
 				}
@@ -195,7 +196,7 @@ public class PlayerRotationBased extends Entity implements KeyListener {
 				{
 					if (MOVING_EAST)
 					{
-						rotateTowards(Entity.DIRECTION.EAST);
+						rotateTowards(com.valentine.game.entity.base.DIRECTION.EAST);
 						accelerate(1);
 					}
 					else

@@ -1,15 +1,16 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.creatures;
 
 import java.awt.Color;
 
+import com.valentine.game.core.*;
+import com.valentine.game.entity.*;
+import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.ColorExt;
-import com.valentine.game.utils.Interpolation;
-import com.valentine.game.utils.Screen;
 
 public class Link extends Entity {
 
-	private EntityLiving source;
-	private EntityLiving destination;
+	private Entity source;
+	private Entity destination;
 	
 	private double x1;
 	private double y1;
@@ -18,13 +19,12 @@ public class Link extends Entity {
 	
 	private Color drawColor = Color.WHITE;
 	
-	public Link(EntityLiving _source, EntityLiving _destination)
+	public Link(Entity _source, Entity _destination)
 	{
+		super(_source.getContainer());
 		destination = _destination;
 		source = _source;
 	}
-	
-	protected void reset() {}
 	
 	public void update() {}
 	
@@ -48,13 +48,15 @@ public class Link extends Entity {
 			y2 = destination.getCenterY();
 		}
 		
-		if (!source.isTouchingEdge())
+		if (source instanceof EntityBasicAI)
+		if (!((EntityBasicAI)source).isTouchingEdge())
 		{
 			x1 += Interpolation.make(source.getVelocityX());
 			y1 += Interpolation.make(source.getVelocityY());
 		}
 		
-		if (!destination.isTouchingEdge())
+		if (destination instanceof EntityBasicAI)
+		if (!((EntityBasicAI)destination).isTouchingEdge())
 		{
 			x2 += Interpolation.make(destination.getVelocityX());
 			y2 += Interpolation.make(destination.getVelocityY());

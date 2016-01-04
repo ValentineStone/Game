@@ -1,30 +1,33 @@
-package com.valentine.game.entity;
+package com.valentine.game.entity.creatures;
 
-import java.awt.Color;
+import com.valentine.game.core.*;
+import com.valentine.game.entity.base.*;
+import com.valentine.game.utils.*;
 
-import com.valentine.game.utils.ColorExt;
-import com.valentine.game.utils.Interpolation;
-import com.valentine.game.utils.MathExt;
-import com.valentine.game.utils.Screen;
+public class Rotor extends EntityBasicAI {
 
-public class Rotor extends EntityLiving {
-	private double r;
-	private double x1;
-	private double y1;
-	private double x2;
-	private double y2;
-	private double x3;
-	private double y3;
+	private double r = 0;
+	private double x1 = 0;
+	private double y1 = 0;
+	private double x2 = 0;
+	private double y2 = 0;
+	private double x3 = 0;
+	private double y3 = 0;
 	
-	private double innerRotation;
+	private double innerRotation = 0;
 	
 	private static final double VELOCITY_MAX = 7;
 	private static final double ACCELERATION = 0.07;
 	private static final double FRICTION = 1;
 	private double INNER_ROTATION_ACCELERATION = 0.1;
 	
-	public Rotor(double _x, double _y, double _r)
+	
+	
+	
+	public Rotor(Container _container, double _x, double _y, double _r)
 	{
+		super(_container);
+
 		setX(_x);
 		setY(_y);
 		setWidth(_r * 2);
@@ -39,19 +42,19 @@ public class Rotor extends EntityLiving {
 		r = _r;
 		innerRotation = 0;
 		setDrawColor(ColorExt.randomColor(20, 255));
-		setFillColor(new Color(getDrawColor().getRed(), getDrawColor().getGreen(), getDrawColor().getBlue(), 50));
+		setFillColor(ColorExt.makeTransparent(getDrawColor(), 50));
 	}
 	
-	public Rotor()
+	public Rotor(Container _container)
 	{
-		this (0,0, MathExt.random(20, 10));
+		this (_container, 0,0, MathExt.random(20, 10));
 		INNER_ROTATION_ACCELERATION = (Math.random() > 0.5 ? -1 : 1) * (Math.random() * Math.PI / 8 + Math.PI / 32);
-	}
-	
-	protected void reset()
-	{
+
 		setPositionRandom();
 	}
+	
+	
+	
 	
 	public void update()
 	{
@@ -64,12 +67,11 @@ public class Rotor extends EntityLiving {
 			INNER_ROTATION_ACCELERATION *= -1;
 		}
 		
-		Entity entity;
-		
-		for (int i = 0; i < getContainer().size() && this != (entity = getContainer().get(i)); i++)
-		{			
-			if (entity instanceof Rotor)
-				collide((Rotor)entity);
+		for (Entity entity : getContainer())
+		{		
+			if (entity.getId() < getId())
+				if (entity instanceof Rotor)
+					collide((Rotor)entity);
 		}
 		
 		innerRotation += (getVelocity()/getVelocityMax()) * INNER_ROTATION_ACCELERATION;
