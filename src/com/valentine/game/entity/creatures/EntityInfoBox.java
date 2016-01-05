@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import com.valentine.game.core.Screen;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.utils.*;
 
 public class EntityInfoBox extends Entity
 {
@@ -30,11 +31,11 @@ public class EntityInfoBox extends Entity
 	{		
 		double dy = Screen.getGraphics().getFontMetrics().getHeight();
 		
-		Screen.setColor(entity.getFillColor());
+		Screen.setColor(getFillColor());
 		
 		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.setColor(entity.getDrawColor());
+		Screen.setColor(getDrawColor());
 		
 		Screen.drawString("|---------------------------------------------------------\n", getX() + 5, getY() + dy);
 		Screen.drawString("| ID_______:___" + entity.getId() + " " + entity.getClass().getSimpleName(), getX() + 5, getY() + 2 * dy);
@@ -60,6 +61,12 @@ public class EntityInfoBox extends Entity
 	public void setEntity(Entity _entity)
 	{
 		entity = _entity;
+		
+		if (entity != null)
+		{
+			setDrawColor(entity.getDrawColor());
+			setFillColor(ColorExt.makeTransparent(entity.getFillColor(), 30));
+		}
 	}
 	
 	
