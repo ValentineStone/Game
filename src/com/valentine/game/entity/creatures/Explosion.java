@@ -10,7 +10,7 @@ public class Explosion extends Entity
 {
 	private double r = 0;
 	private double R = MathExt.random(50, 100);
-	private double dr = MathExt.random(20, 30);
+	private double dr = MathExt.random(10, 20);
 	private double rI = 0;
 	
 	

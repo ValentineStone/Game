@@ -24,6 +24,8 @@ public class Somegame extends Game
 		
 		new Player(box1);
 		new Player(box2);
-		
+
+		new OnPointInfo(box1, 300, 0);
+		new OnPointInfo(box2, 300, 0);
 	}
 }

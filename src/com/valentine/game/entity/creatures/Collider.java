@@ -15,9 +15,6 @@ public class Collider extends EntityBasicAI
 	
 	public double rotationVelocity;
 	
-	private Color drawColor;
-	private Color fillColor;
-	
 	public Collider(Container _container)
 	{
 		this(_container, 0,0);
@@ -50,8 +47,8 @@ public class Collider extends EntityBasicAI
 			rotationVelocity = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
 		}
 		
-		drawColor = ColorExt.randomColor(10, 255);
-		fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
+		setDrawColor(ColorExt.randomColor(10, 255));
+		setFillColor(ColorExt.makeTransparent(getDrawColor(), 20));
 	}
 	
 	public void update()
@@ -78,11 +75,11 @@ public class Collider extends EntityBasicAI
 	{		
 		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 		
-		Screen.setColor(fillColor);
+		Screen.setColor(getFillColor());
 		
 		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.setColor(drawColor);
+		Screen.setColor(getDrawColor());
 		
 		Screen.drawRect(getX(), getY(),  getWidth(), getHeight());
 		
@@ -117,10 +114,10 @@ public class Collider extends EntityBasicAI
 			setRotation(MathExt.rotationFlip(MathExt.rotationMake(_collider.getX() - getX(), _collider.getY() - getY())));
 			_collider.setRotation(MathExt.rotationFlip(getRotation()));
 						
-			drawColor = ColorExt.randomColor(10,255);
-			fillColor = new Color(drawColor.getRed(), drawColor.getGreen(), drawColor.getBlue(), 20);
-			_collider.drawColor = ColorExt.randomColor(10,255);
-			_collider.fillColor = new Color(_collider.drawColor.getRed(), _collider.drawColor.getGreen(), _collider.drawColor.getBlue(), 20);
+			setDrawColor(ColorExt.randomColor(10, 255));
+			setFillColor(ColorExt.makeTransparent(getDrawColor(), 20));
+			_collider.setDrawColor(ColorExt.randomColor(10, 255));
+			_collider.setFillColor(ColorExt.makeTransparent(_collider.getDrawColor(), 20));
 			
 			accelerate();
 			move();
@@ -131,15 +128,5 @@ public class Collider extends EntityBasicAI
 		}
 
 		return false;
-	}
-
-
-
-	public Color getDrawColor()
-	{
-		return drawColor;
-	}
-	
-	
-	
+	}	
 }

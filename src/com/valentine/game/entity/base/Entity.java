@@ -37,8 +37,8 @@ public abstract class Entity
 	private double _velocityX = 0;
 	private double _velocityY = 0;
 	
-	private Color drawColor = ColorExt.TRANSPARENT;
-	private Color fillColor = ColorExt.TRANSPARENT;
+	private Color drawColor = Color.WHITE;
+	private Color fillColor = Color.BLACK;
 	
 	
 	
@@ -320,6 +320,14 @@ public abstract class Entity
 		dead = true;
 		return true;
 	}
+	
+	public boolean isDead()
+	{
+		return dead;
+	}
+	
+	
+	
 
 	public int getId()
 	{

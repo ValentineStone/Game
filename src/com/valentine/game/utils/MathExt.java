@@ -68,6 +68,9 @@ public class MathExt
 	public static double rotationMake(double _x, double _y)
 	{		
 		double lenght = Math.sqrt(_x*_x + _y*_y);
+		
+		if (lenght == 0) return 0;
+		
 		_x /= lenght;
 		_y /= lenght;
 		

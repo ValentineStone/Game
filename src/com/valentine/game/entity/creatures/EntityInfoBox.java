@@ -30,14 +30,11 @@ public class EntityInfoBox extends Entity
 	{		
 		double dy = Screen.getGraphics().getFontMetrics().getHeight();
 		
-		Screen.setColor(getFillColor());
+		Screen.setColor(entity.getFillColor());
 		
 		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.setColor(getDrawColor());
-		
-		if (entity instanceof Collider)
-			Screen.setColor(((Collider)entity).getDrawColor());
+		Screen.setColor(entity.getDrawColor());
 		
 		Screen.drawString("|---------------------------------------------------------\n", getX() + 5, getY() + dy);
 		Screen.drawString("| ID_______:___" + entity.getId() + " " + entity.getClass().getSimpleName(), getX() + 5, getY() + 2 * dy);
@@ -54,4 +51,16 @@ public class EntityInfoBox extends Entity
 	{
 		setUpdatable(false);
 	}
+
+	public Entity getEntity()
+	{
+		return entity;
+	}
+
+	public void setEntity(Entity _entity)
+	{
+		entity = _entity;
+	}
+	
+	
 }
