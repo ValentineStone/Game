@@ -23,9 +23,9 @@ public class Bullet extends EntityBasicAI
 		
 		setVelocityMax(50);
 		
-		//setRotation(MathExt.randomSigned(MathExt.PI_1_4 / 50));
+		//setRotation(MathExt.randomSigned(MathExt.PI_1_2));
 		
-		setRotationRandom();
+		//setRotationRandom();
 		
 		setDrawColor(ColorExt.opposite(getContainer().getFillColor()));
 	}
@@ -58,9 +58,9 @@ public class Bullet extends EntityBasicAI
 		{	
 			for (Entity entity : getContainer())
 			{
-				if (entity instanceof Rotor2)
+				if (entity instanceof EntityBasicAI && !(entity instanceof Player))
 				{
-					if (((EntityBasicAI)entity).isHitting(getX() + tmpX, getY() + tmpY))
+					if (((EntityBasicAI)entity).isGettingHit(getX() + tmpX, getY() + tmpY))
 					{
 						entity.setPaintable(false);
 						entity.setUpdatable(false);
@@ -70,7 +70,7 @@ public class Bullet extends EntityBasicAI
 						setUpdatable(false);
 						getContainer().remove(this);
 						
-						new Explosion(getContainer(), getX() + tmpX, getY() + tmpY);
+						new Explosion(getContainer(), entity.getCenterX(), entity.getCenterY());
 						
 						return;
 					}

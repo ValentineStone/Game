@@ -232,10 +232,23 @@ public class Player extends EntityBasicAI implements KeyListener {
 			{
 				Collider newCollider = new Collider(getContainer(), getCenterX(), getCenterY());
 				
-				new Link(this, newCollider);
+				//new Link(this, newCollider);
 				
 				break;
 			}
+			
+			case KeyEvent.VK_E:
+			{
+				double r = MathExt.random(10,30);
+				
+				Rotor newRotor = new Rotor(getContainer(), getCenterX() - r, getCenterY() - r, r);
+				
+				newRotor.setVelocityMax(7);
+				newRotor.setAcceleration(0.07);
+				
+				break;
+			}
+			
 			case KeyEvent.VK_R:
 			{
 				double r = MathExt.random(10,30);

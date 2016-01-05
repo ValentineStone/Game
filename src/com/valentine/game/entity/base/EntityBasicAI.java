@@ -88,9 +88,15 @@ public abstract class EntityBasicAI extends Entity
 		return false;
 	}
 	
-	public boolean isHitting(double _x, double _y)
+	public boolean isGettingHit(double _x, double _y)
 	{
 		if (_x > getX() && _x < (getX() + getWidth()) && _y > getY() && _y < (getY() + getHeight())) return true;
+		return false;
+	}
+	
+	public boolean isCenterClose(double _x, double _y, double _r)
+	{
+		if (Math.pow(Math.pow(getX() - _x, 2) + Math.pow(getY() - _y, 2), 0.5) <= _r) return true;
 		return false;
 	}
 	

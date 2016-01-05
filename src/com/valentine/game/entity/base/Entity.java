@@ -22,7 +22,7 @@ public abstract class Entity
 	
 	private boolean paintable = true;
 	private boolean updatable = true;
-	//private boolean dead = false;
+	private boolean dead = false;
 	
 	private double x = 0;
 	private double y = 0;
@@ -312,10 +312,13 @@ public abstract class Entity
 	
 	
 	
-	public void kill()
+	public boolean kill()
 	{
+		if (dead) return false;
 		setUpdatable(false);
 		setPaintable(false);
+		dead = true;
+		return true;
 	}
 
 	public int getId()

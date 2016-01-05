@@ -1,13 +1,12 @@
 package com.valentine.game.entity.creatures;
 
 import java.awt.Color;
-import java.io.ObjectInputStream.GetField;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.*;
 
-public class Explosion extends EntityBasicAI
+public class Explosion extends Entity
 {
 	private double r = 0;
 	private double R = MathExt.random(50, 100);
@@ -34,7 +33,7 @@ public class Explosion extends EntityBasicAI
 		r = 0;
 		
 		setDrawColor(Color.RED);
-		setFillColor(ColorExt.makeTransparent(getDrawColor(), 50));
+		setFillColor(ColorExt.makeTransparent(getDrawColor(), 40));
 		
 	}
 
@@ -60,6 +59,19 @@ public class Explosion extends EntityBasicAI
 		}
 		
 		r += dr;
+		
+		for (Entity entity : getContainer())
+			if (entity instanceof EntityBasicAI && !(entity instanceof Player))
+			{
+				if (((EntityBasicAI)entity).isCenterClose(getX(), getY(), r))
+				{
+					if (entity.kill())
+					{
+						getContainer().remove(entity);
+						new Explosion(getContainer(), entity.getCenterX(), entity.getCenterY());
+					}
+				}
+			}
 	}
 
 }
