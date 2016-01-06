@@ -5,11 +5,11 @@ public abstract class Main
 
 	public static void main(String[] args)
 	{
+		Screen.init();
 		Game.init();
 		Looper.init();
 		Input.init();
 		Window.init();
-		Screen.init();
 		
 		System.err.println("[Game]");
 
