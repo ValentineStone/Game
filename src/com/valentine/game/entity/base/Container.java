@@ -101,4 +101,30 @@ public class Container extends Entity implements Iterable<Entity>
 
 
 
+	public List<Entity> getItems()
+	{
+		return items;
+	}
+
+
+
+	public List<Entity> getAdditions()
+	{
+		return additions;
+	}
+
+
+
+	public List<Entity> getDeletions()
+	{
+		return deletions;
+	}
+	
+	
+	
+	
+	
+
+
+
 }

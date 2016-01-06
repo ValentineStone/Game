@@ -312,12 +312,16 @@ public abstract class Entity
 	
 	
 	
-	public boolean kill()
+	public boolean kill(Entity _killer)
 	{
 		if (dead) return false;
+		
 		setUpdatable(false);
 		setPaintable(false);
 		dead = true;
+		
+		if (getContainer() != null) getContainer().remove(this);
+		
 		return true;
 	}
 	
@@ -349,5 +353,4 @@ public abstract class Entity
 	{
 		return "Entity " + getId() + ": " + getClass().getSimpleName();
 	}
-	
 }

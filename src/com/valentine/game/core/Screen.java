@@ -1,29 +1,53 @@
 package com.valentine.game.core;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.io.*;
 import java.text.AttributedCharacterIterator;
 
 public class Screen
 {
 	private static Graphics2D graphics;
 	
+	private static Font font;
+	
 	
 	public static void init()
 	
 	{
 		System.err.println("[Canvas]");
+		
+		try
+		{
+		     GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
+		}
+		catch (IOException|FontFormatException e)
+		{
+		     System.err.println("IOException|FontFormatException!!!");
+		}
+		
+		String fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+	    for ( int i = 0; i < fonts.length; i++ )
+	    {
+	      System.out.println(fonts[i]);
+	    }
+		
+		font = new Font("Press Start 2P", Font.PLAIN, 12);
+		
 	}
 	
 	public static void setGraphics(Graphics2D _graphics)
 	{
 		graphics = _graphics;
+		
+		graphics.setFont(font);
+		
+		graphics.setRenderingHint(
+							        RenderingHints.KEY_TEXT_ANTIALIASING,
+							        RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+							        );
+		
 	}
 	
 	
@@ -189,6 +213,11 @@ public class Screen
 	public static void setFont(Font _font)
 	{
 		graphics.setFont(_font);
+	}
+	
+	public static void resetFont()
+	{
+		graphics.setFont(font);
 	}
 
 	public static void setPaintMode()

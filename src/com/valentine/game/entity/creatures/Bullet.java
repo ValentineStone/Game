@@ -10,8 +10,10 @@ public class Bullet extends EntityBasicAI
 {
 	private double x0;
 	private double y0;
+	
+	private Entity master;
 
-	public Bullet(Container _container, double _x, double _y)
+	public Bullet(Container _container, Entity _master, double _x, double _y, double _rotation)
 	{
 		super(_container);
 		
@@ -23,11 +25,15 @@ public class Bullet extends EntityBasicAI
 		
 		setVelocityMax(50);
 		
+		setRotation(_rotation);
+		
 		//setRotation(MathExt.randomSigned(MathExt.PI_1_2));
 		
 		//setRotationRandom();
 		
 		setDrawColor(ColorExt.opposite(getContainer().getFillColor()));
+		
+		master = _master;
 	}
 
 	public void paint()
@@ -58,17 +64,13 @@ public class Bullet extends EntityBasicAI
 		{	
 			for (Entity entity : getContainer())
 			{
-				if (entity instanceof EntityBasicAI && !(entity instanceof Player))
+				if (entity instanceof EntityBasicAI && entity != master)
 				{
 					if (((EntityBasicAI)entity).isGettingHit(getX() + tmpX, getY() + tmpY))
 					{
-						entity.setPaintable(false);
-						entity.setUpdatable(false);
-						getContainer().remove(entity);
+						entity.kill(this);
 						
-						setPaintable(false);
-						setUpdatable(false);
-						getContainer().remove(this);
+						kill(this);
 						
 						new Explosion(getContainer(), entity.getCenterX(), entity.getCenterY());
 						
@@ -85,15 +87,25 @@ public class Bullet extends EntityBasicAI
 			
 			if (isTouchingEdge())
 			{
-				new Explosion(getContainer(), getX(), getY(), 20);
+				kill(this);
 				
-				//setPaintable(false);
-				setUpdatable(false);
-				getContainer().remove(this);
+				new Explosion(getContainer(), getX(), getY(), 20);
 			}
 		}
 		
 		setActive(true);
 	}
+
+	public Entity getMaster()
+	{
+		return master;
+	}
+
+	public void setMaster(Entity _master)
+	{
+		master = _master;
+	}
+	
+	
 
 }

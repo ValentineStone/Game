@@ -2,8 +2,8 @@ package com.valentine.game.core;
 
 import java.awt.event.*;
 
-import com.valentine.game.*;
-import com.valentine.game.entity.base.Container;
+import com.valentine.game.Somegame;
+import com.valentine.game.entity.base.*;
 
 public abstract class Game extends Container implements ComponentListener
 {	
@@ -40,7 +40,28 @@ public abstract class Game extends Container implements ComponentListener
 		return game;
 	}
 	
-	public abstract void assemble();
+	public void assemble()
+	{		
+		for (Entity entity : this)
+		{
+			entity.kill(this);
+		}
+		
+		getItems().clear();
+	}
+	
+	
+	
+	public void update()
+	{
+		if (isUpdatable()) super.update();
+	}
+	
+	public void paint()
+	{
+		if (isPaintable()) super.paint();
+	}
+	
 
 	public void componentResized(ComponentEvent _componentEvent)
 	{

@@ -8,8 +8,8 @@ import com.valentine.game.utils.*;
 
 public class EntityInfoBox extends Entity
 {
-	public static final double HEIGHT = 120;
-	public static final double WIDTH = 250;
+	public static double HEIGHT = 0;
+	public static double WIDTH = 400;
 	
 	private Entity entity;
 	
@@ -29,7 +29,10 @@ public class EntityInfoBox extends Entity
 	
 	public void paint()
 	{		
-		double dy = Screen.getGraphics().getFontMetrics().getHeight();
+		double dy = Screen.getGraphics().getFontMetrics().getHeight() + 1;
+		
+		HEIGHT = dy * 8;
+		setHeight(HEIGHT);
 		
 		Screen.setColor(getFillColor());
 		
@@ -37,13 +40,12 @@ public class EntityInfoBox extends Entity
 		
 		Screen.setColor(getDrawColor());
 		
-		Screen.drawString("|---------------------------------------------------------\n", getX() + 5, getY() + dy);
-		Screen.drawString("| ID_______:___" + entity.getId() + " " + entity.getClass().getSimpleName(), getX() + 5, getY() + 2 * dy);
-		Screen.drawString("| X________:___" + entity.getX(), getX() + 5, getY() + 3 * dy);
-		Screen.drawString("| Y________:___" + entity.getY(), getX() + 5, getY() + 4 * dy);
-		Screen.drawString("| Velocity_:___" + entity.getVelocity(), getX() + 5, getY() + 5 * dy);
-		Screen.drawString("| Rotation_:___" + entity.getRotation(), getX() + 5, getY() + 6 * dy);
-		Screen.drawString("|---------------------------------------------------------\n", getX() + 5, getY() + 7 * dy);
+		Screen.drawString(" Type_____:_" + entity.getClass().getSimpleName(), getX(), getY() + 2 * dy);
+		Screen.drawString(" ID_______:_" + entity.getId(), getX(), getY() + 3 * dy);
+		Screen.drawString(" X________:_" + entity.getX(), getX(), getY() + 4 * dy);
+		Screen.drawString(" Y________:_" + entity.getY(), getX(), getY() + 5 * dy);
+		Screen.drawString(" Velocity_:_" + entity.getVelocity(), getX(), getY() + 6 * dy);
+		Screen.drawString(" Rotation_:_" + entity.getRotation(), getX(), getY() + 7 * dy);
 		
 		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
 	}

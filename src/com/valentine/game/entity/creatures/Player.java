@@ -24,6 +24,8 @@ public class Player extends EntityBasicAI implements KeyListener {
 	
 	private boolean MOVING_SOUTH, MOVING_NORTH, MOVING_WEST, MOVING_EAST, BREAKS_ON;
 	
+	private boolean INVULNERABLE = false;
+	
 	public Player(Container _container)
 	{
 		super(_container);
@@ -190,6 +192,23 @@ public class Player extends EntityBasicAI implements KeyListener {
 		return false;
 	}
 	
+	
+	
+	
+	public boolean kill(Entity _killer)
+	{
+		if (INVULNERABLE) return false;
+		
+		Input.removeKeyListener(this);
+		new GameOver(getContainer());
+		return super.kill(_killer);
+	}
+	
+	
+	
+	
+	
+	
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -236,13 +255,19 @@ public class Player extends EntityBasicAI implements KeyListener {
 				
 				break;
 			}
+			case KeyEvent.VK_B:
+			{
+				new Killider(getContainer(), this);
+				
+				break;
+			}
 			case KeyEvent.VK_V:
 			{
 				Collider newCollider = new Collider(getContainer(), getCenterX(), getCenterY());
 				
-				newCollider.setWidth(MathExt.random(150, 250));
-				newCollider.setHeight(MathExt.random(150, 250));
-				newCollider.rotationVelocity = 0;
+				newCollider.setWidth(MathExt.random(100, 200));
+				newCollider.setHeight(MathExt.random(100, 200));
+				newCollider.setRotationVelocity(0);
 				
 				break;
 			}
@@ -271,9 +296,13 @@ public class Player extends EntityBasicAI implements KeyListener {
 			}
 			case KeyEvent.VK_X:
 			{
-				new Bullet(getContainer(), getCenterX(), getCenterY());
+				new Bullet(getContainer(), this, getCenterX(), getCenterY(), 0);
 				
 				break;
+			}
+			case KeyEvent.VK_I:
+			{
+				INVULNERABLE = INVULNERABLE ? false : true;
 			}
 			/*
 			case KeyEvent.VK_X:

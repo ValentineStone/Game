@@ -9,6 +9,7 @@ public abstract class Main
 		Looper.init();
 		Input.init();
 		Window.init();
+		Screen.init();
 		
 		System.err.println("[Game]");
 

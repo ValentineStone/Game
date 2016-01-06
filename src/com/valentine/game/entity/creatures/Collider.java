@@ -1,7 +1,5 @@
 package com.valentine.game.entity.creatures;
 
-import java.awt.Color;
-
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.*;
@@ -11,9 +9,7 @@ public class Collider extends EntityBasicAI
 	private static double VELOCITY_MAX = 5;
 	private static double ACCELERATION = 0.1;
 	
-	private static boolean hugeExists = true;
-	
-	public double rotationVelocity;
+	private double rotationVelocity;
 	
 	public Collider(Container _container)
 	{
@@ -33,19 +29,9 @@ public class Collider extends EntityBasicAI
 		setActive(true);
 		setRotationRandom();
 		
-		if (!hugeExists)
-		{
-			setWidth(Math.random() * 100 + 200);
-			setHeight(Math.random() * 100 + 200);	
-			rotationVelocity = 0;
-			hugeExists = true;
-		}
-		else
-		{
-			setWidth(Math.random() * 40 + 20);
-			setHeight(Math.random() * 40 + 20);
-			rotationVelocity = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05);
-		}
+		setWidth(Math.random() * 40 + 20);
+		setHeight(Math.random() * 40 + 20);
+		setRotationVelocity((Math.random() > 0.5 ? 1 : -1) * (Math.random() * 0.01 + 0.05));
 		
 		setDrawColor(ColorExt.randomColor(10, 255));
 		setFillColor(ColorExt.makeTransparent(getDrawColor(), 20));
@@ -53,7 +39,7 @@ public class Collider extends EntityBasicAI
 	
 	public void update()
 	{		
-		setRotation(getRotation() + rotationVelocity);
+		setRotation(getRotation() + getRotationVelocity());
 		
 		accelerate();
 		
@@ -63,8 +49,8 @@ public class Collider extends EntityBasicAI
 				
 		for (Entity entity : getContainer())
 		{
-			if (entity.getId() < getId())
-				if (entity instanceof Collider)
+			if (entity instanceof Collider)
+				if (entity.getId() < getId())
 					collide((Collider)entity);
 		}
 	}	
@@ -128,5 +114,21 @@ public class Collider extends EntityBasicAI
 		}
 
 		return false;
+	}
+
+
+
+	public double getRotationVelocity()
+	{
+		return rotationVelocity;
+	}
+
+
+
+	public void setRotationVelocity(double _rotationVelocity)
+	{
+		rotationVelocity = _rotationVelocity;
 	}	
+	
+	
 }

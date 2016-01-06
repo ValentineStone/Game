@@ -54,20 +54,18 @@ public class Explosion extends Entity
 	{
 		if (r > R)
 		{
-			kill();
-			getContainer().remove(this);
+			kill(this);
 		}
 		
 		r += dr;
 		
 		for (Entity entity : getContainer())
-			if (entity instanceof EntityBasicAI && !(entity instanceof Player))
+			if (entity instanceof EntityBasicAI)
 			{
 				if (((EntityBasicAI)entity).isCenterClose(getX(), getY(), r))
 				{
-					if (entity.kill())
+					if (entity.kill(this))
 					{
-						getContainer().remove(entity);
 						new Explosion(getContainer(), entity.getCenterX(), entity.getCenterY());
 					}
 				}
