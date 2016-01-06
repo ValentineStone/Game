@@ -19,19 +19,16 @@ public class Screen
 		
 		try
 		{
-		     GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
+			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, Screen.class.getClassLoader().getResourceAsStream("res/PressStart2P.ttf")));
 		}
-		catch (IOException|FontFormatException e)
+		catch (FontFormatException _exception)
 		{
-		     System.err.println("IOException|FontFormatException!!!");
+			_exception.printStackTrace();
 		}
-		
-		String fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-
-	    for ( int i = 0; i < fonts.length; i++ )
-	    {
-	      System.out.println(fonts[i]);
-	    }
+		catch (IOException _exception)
+		{
+			_exception.printStackTrace();
+		}
 		
 		font = new Font("Press Start 2P", Font.PLAIN, 12);
 		

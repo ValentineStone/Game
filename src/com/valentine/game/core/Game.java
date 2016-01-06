@@ -48,6 +48,8 @@ public abstract class Game extends Container implements ComponentListener
 		}
 		
 		getItems().clear();
+		getAdditions().clear();
+		getDeletions().clear();
 	}
 	
 	

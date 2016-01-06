@@ -42,7 +42,7 @@ public class Player extends EntityBasicAI implements KeyListener {
 		MOVING_WEST = 
 		MOVING_EAST = false;
 		
-		image = new ImageIcon("res/player.png").getImage();
+		image = new ImageIcon(getClass().getClassLoader().getResource("res/player.png")).getImage();
 		
 		Input.addKeyListener(this);
 	}
