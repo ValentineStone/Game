@@ -102,6 +102,11 @@ public class SomegameV2 extends Game implements KeyListener
 					NEW_GAME = true;
 					setUpdatable(true);
 				}
+				else
+				{
+					if (Looper.isRunning()) Looper.pause();
+					else Looper.play();
+				}
 				break;
 			}
 		}
