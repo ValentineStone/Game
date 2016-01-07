@@ -2,7 +2,7 @@ package com.valentine.game.core;
 
 import java.awt.event.*;
 
-import com.valentine.game.Somegame;
+import com.valentine.game.SomegameV2;
 import com.valentine.game.entity.base.*;
 
 public abstract class Game extends Container implements ComponentListener
@@ -32,7 +32,7 @@ public abstract class Game extends Container implements ComponentListener
 
 	public static void init()
 	{
-		game = new Somegame();
+		game = new SomegameV2();
 	}
 	
 	public static Game instance()

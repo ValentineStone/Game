@@ -6,7 +6,7 @@ import java.awt.event.*;
 import com.valentine.game.core.*;
 import com.valentine.game.entity.creatures.*;
 
-public class Somegame extends Game implements KeyListener
+public class SomegameV2 extends Game implements KeyListener
 {
 	private boolean NEW_GAME = false;
 	
@@ -15,6 +15,8 @@ public class Somegame extends Game implements KeyListener
 	public void assemble()
 	{
 		super.assemble();
+		
+		new StarrySkyMoving(this);
 		
 		Input.addKeyListener(this);
 		
