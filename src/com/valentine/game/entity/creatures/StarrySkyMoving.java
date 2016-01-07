@@ -8,7 +8,7 @@ import com.valentine.game.utils.MathExt;
 
 public class StarrySkyMoving extends Entity
 {
-	Color[] shadesOfGray;
+	Color[][] shadesOfColor;
 	
 	Star[] Stars;	
 	
@@ -16,9 +16,14 @@ public class StarrySkyMoving extends Entity
 	{
 		super(_container);
 		
-		shadesOfGray = new Color[256];
+		shadesOfColor = new Color[3][256];
 		
-		for (int i = 0; i < shadesOfGray.length; i++) shadesOfGray[i] = new Color(i, i, i);
+		for (int i = 0; i < shadesOfColor[0].length; i++)
+		{
+			shadesOfColor[0][i] = new Color(i,i/2,i/2);
+			shadesOfColor[1][i] = new Color(i/2,i,i/2);
+			shadesOfColor[2][i] = new Color(i/2,i/2,i);
+		}
 		
 		Stars = new Star[(int)(getContainer().getWidth() + getContainer().getHeight()) / 2];
 		
@@ -34,7 +39,7 @@ public class StarrySkyMoving extends Entity
 	{
 		for (int i = 0; i < Stars.length; i++)
 		{
-			Screen.setColor(shadesOfGray[Stars[i].brightness]);
+			Screen.setColor(shadesOfColor[Stars[i].type][Stars[i].brightness]);
 			Screen.fillRect(Stars[i].x + Interpolation.make(Stars[i].dx), Stars[i].y, Stars[i].size, Stars[i].size);
 		}
 	}
@@ -52,11 +57,12 @@ public class StarrySkyMoving extends Entity
 	private class Star
 	{
 		public static final int sizeMax = 5;
-		public static final int brightnessMax = 150;
+		public static final int brightnessMax = 200;
 		
 		public int size;
 		public int brightness;
 		public int dBrightness = 5;
+		public int type;
 		
 		public double x;
 		public double y;
@@ -66,6 +72,8 @@ public class StarrySkyMoving extends Entity
 		
 		public Star()
 		{
+			type = (int)MathExt.random(3);
+			
 			respawn();
 			
 			brightness = (int)(MathExt.random(1, brightnessMax));
