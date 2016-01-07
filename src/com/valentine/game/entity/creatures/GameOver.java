@@ -15,7 +15,7 @@ public class GameOver extends Entity
 	{
 		super(_container);
 		
-		setFillColor(ColorExt.makeTransparent(Color.RED, 50));
+		setFillColor(ColorExt.makeTransparent(Color.RED, 20));
 		setDrawColor(Color.WHITE);
 	}
 

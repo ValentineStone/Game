@@ -29,7 +29,7 @@ public class StarrySkyMoving extends Entity
 	{
 		super(_container);
 		
-		Stars = new Star[(int)(getContainer().getWidth() + getContainer().getHeight()) / 4];
+		Stars = new Star[(int)(getContainer().getWidth() + getContainer().getHeight()) / 2];
 		
 		for (int i = 0; i < Stars.length; i++) Stars[i] = new Star();	
 	}
@@ -60,7 +60,7 @@ public class StarrySkyMoving extends Entity
 	
 	private class Star
 	{
-		public static final int sizeMax = 5;
+		public static final int sizeMax = 4;
 		public static final int brightnessMax = 150;
 		
 		public int size;
@@ -76,7 +76,7 @@ public class StarrySkyMoving extends Entity
 		
 		public Star()
 		{
-			type = MathExt.randomIf() ? 0 : (int)MathExt.random(4);
+			type = MathExt.randomIf(0.7) ? 0 : (int)MathExt.random(1,4);
 			
 			respawn();
 			

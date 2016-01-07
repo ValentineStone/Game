@@ -40,9 +40,14 @@ public class MathExt
 		return (Math.random() > 0.5 ? 1 : -1) * Math.random() * _value;
 	}
 	
+	public static boolean randomIf(double _trueProbablity)
+	{
+		return Math.random() < _trueProbablity ? true : false;
+	}
+	
 	public static boolean randomIf()
 	{
-		return Math.random() > 0.5 ? true : false;
+		return Math.random() < 0.5 ? true : false;
 	}
 	
 	
