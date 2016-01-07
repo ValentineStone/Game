@@ -72,7 +72,7 @@ public class StarrySkyMoving extends Entity
 			
 			if (MathExt.randomIf()) dBrightness = -dBrightness;
 			
-			dx = MathExt.random(1, dx);
+			dx = MathExt.random(dx);
 		}
 		
 		private void respawn()
@@ -93,6 +93,7 @@ public class StarrySkyMoving extends Entity
 			{
 				respawn();
 				x = MathExt.random(getContainer().getWidth(), getContainer().getWidth() + 2 * dx);
+				brightness = (int)(MathExt.random(1, brightnessMax));
 			}
 			
 			if (brightness <= 0)
