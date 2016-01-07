@@ -20,7 +20,7 @@ public class SomegameV2 extends Game implements KeyListener
 		
 		Input.addKeyListener(this);
 		
-		setFillColor(new Color(0,0,20));
+		setFillColor(Color.BLACK);
 		setDrawColor(Color.WHITE);
 		
 		for (int i = 0; i < 5; i++) new Collider(this);
