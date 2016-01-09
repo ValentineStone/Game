@@ -4,6 +4,7 @@ import java.awt.Color;
 
 public class ColorExt {
 	public final static Color TRANSPARENT = new Color(0,0,0,0);
+	public final static Color ORANGE = new Color(255,90,0);
 	
 	public static Color randomColor(int _min, int _max)
 	{

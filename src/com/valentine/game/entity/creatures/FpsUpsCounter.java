@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.utils.ColorExt;
 
 public class FpsUpsCounter extends Entity
 {
@@ -16,6 +17,9 @@ public class FpsUpsCounter extends Entity
 	private int n;
 	
 	private double dy = 0;
+	
+	private int fps;
+	private int ups;
 	
 	public FpsUpsCounter(Container _container, double _x, double _y)
 	{
@@ -44,17 +48,18 @@ public class FpsUpsCounter extends Entity
 		
 		n = fpsText.length() > upsText.length() ? fpsText.length() : upsText.length();
 		
+		fps = Looper.fps;
+		ups = Looper.ups;
 		
-		
-		if (Looper.fps >= 60)
+		if (fps >= 60)
 		{
 			fpsColor = Color.GREEN;
 		}
-		else if (Looper.fps >= 30)
+		else if (fps >= 30)
 		{
 			fpsColor = Color.YELLOW;
 		}
-		else if (Looper.fps >= 15)
+		else if (fps >= 15)
 		{
 			fpsColor = Color.ORANGE;
 		}
@@ -65,17 +70,22 @@ public class FpsUpsCounter extends Entity
 		
 		
 		
-		if (Looper.ups >= 25)
+		
+		if (ups >= 25)
+		{
+			upsColor = Color.RED;
+		}
+		else if (ups == 25)
 		{
 			upsColor = Color.GREEN;
 		}
-		else if (Looper.ups >= 30)
+		else if (ups >= 20)
 		{
 			upsColor = Color.YELLOW;
 		}
-		else if (Looper.ups >= 15)
+		else if (ups >= 15)
 		{
-			upsColor = Color.ORANGE;
+			upsColor = ColorExt.ORANGE;
 		}
 		else
 		{
