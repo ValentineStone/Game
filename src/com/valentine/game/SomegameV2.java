@@ -39,7 +39,9 @@ public class SomegameV2 extends Game implements KeyListener
 		
 		new Killider(this, player, 1800, 540);
 		
-		new EntityCounter(this, Killider.class, 10, 130);
+		EntityCounter entityCounter = new EntityCounter(this, Killider.class, 10, 130);
+		
+		new FpsUpsCounter(this, entityCounter.getX() + entityCounter.getWidth() + 10, entityCounter.getY());
 	}
 
 	

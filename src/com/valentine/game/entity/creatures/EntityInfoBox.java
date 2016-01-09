@@ -13,6 +13,8 @@ public class EntityInfoBox extends Entity
 	
 	private Entity entity;
 	
+	private double dy = 0;
+	
 	public EntityInfoBox(Container _container, double _x, double _y, Entity _entity)
 	{
 		super(_container);
@@ -28,8 +30,8 @@ public class EntityInfoBox extends Entity
 	}
 	
 	public void paint()
-	{		
-		double dy = Screen.getGraphics().getFontMetrics().getHeight() + 1;
+	{
+		if (dy == 0) dy = Screen.getGraphics().getFontMetrics().getHeight() + 1;
 		
 		HEIGHT = dy * 8;
 		setHeight(HEIGHT);

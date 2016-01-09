@@ -12,6 +12,8 @@ public class EntityCounter extends Entity
 	
 	private Class targetClass;
 	
+	private double dy = 0;
+	
 	public EntityCounter(Container _container, Class _targetClass, double _x, double _y)
 	{
 		super(_container);
@@ -19,11 +21,13 @@ public class EntityCounter extends Entity
 		setPosition(_x, _y);
 		
 		targetClass = _targetClass;
+		
+		setWidth(200);
 	}
 
 	public void paint()
 	{
-		double dy = Screen.getGraphics().getFontMetrics().getHeight() + 1;
+		if (dy == 0) dy = Screen.getGraphics().getFontMetrics().getHeight() + 1;
 		
 		Screen.setColor(getDrawColor());
 		
@@ -31,7 +35,9 @@ public class EntityCounter extends Entity
 		Screen.drawString(" current_:_" + count, getX(), getY() + 3 * dy);
 		Screen.drawString(" max_____:_" + maxCount, getX(), getY() + 4 * dy);
 		
-		Screen.drawRect(getX(), getY(), 200, dy * 5);
+		setHeight(dy * 5);
+		
+		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
 	}
 
 	public void update()

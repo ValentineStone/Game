@@ -16,8 +16,7 @@ public class Window
 	
 	private static boolean isFullscreen = true;
 	
-	public static final Dimension DEFAULT_DIMESION = new Dimension(1900, 1000);
-	public static final Color DEFAULT_COLOR = new Color(0, 0, 20);
+	public static final Dimension DEFAULT_DIMESION = new Dimension(1280, 720);
 	
 	public static void init()
 	{
@@ -27,13 +26,11 @@ public class Window
 		{
 			private static final long serialVersionUID = 124515635493300032L;
 			
-			BufferStrategy bufferStrategy;
+			BufferStrategy bufferStrategy = null;
 			Graphics2D graphics2D;
 
 			public void repaint()
 			{
-				bufferStrategy = canvas.getBufferStrategy();
-				
 				if (bufferStrategy == null)
 				{
 					System.err.println("[Window]: Creating tripple-buffer strategy.");
@@ -54,10 +51,7 @@ public class Window
 		};
 		
 		jframe.setTitle("Dead Space");
-		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
-		
-		jframe.setBackground(DEFAULT_COLOR);
-		canvas.setBackground(DEFAULT_COLOR);
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		jframe.add(canvas);
 		

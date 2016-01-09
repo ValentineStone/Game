@@ -16,6 +16,14 @@ public final class Looper
 	
 	private static long lastUpdateTick = System.nanoTime();
 	
+	private static long second = 0;
+	private static long _second = 0;
+	
+	public static int fps = 0;
+	public static int ups = 0;
+	private static int _fps = 0;
+	private static int _ups = 0;
+	
 	public static void init()
 	{
 		thread = new Thread(
@@ -33,15 +41,31 @@ public final class Looper
 											
 											if (Interpolation.get() >= 1)
 											{
+												Game.instance().update();
+												
 												lastUpdateTick = System.nanoTime();
 												
-												Game.instance().update();
+												//Interpolation.set(lastPaintTick, lastUpdateTick, updatePeriodNs);
+												
+												_ups++;
 												
 												continue;
 											}
 											
 											Window.repaint();
+											
+											_fps++;
+											
+											if (second != (_second = lastPaintTick / 1000000000))
+											{
+												fps = _fps;
+												_fps = 0;
+												ups = _ups;
+												_ups = 0;
+												second = _second;
+											}
 										}
+										
 										
 										try
 										{
@@ -51,6 +75,7 @@ public final class Looper
 										{
 											e.printStackTrace();
 										}
+										
 										
 									}
 								}

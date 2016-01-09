@@ -205,6 +205,12 @@ public abstract class Entity
 		height = _height;
 	}
 	
+	public void setSize(double _width, double _height)
+	{
+		setWidth(_width);
+		setHeight(_height);
+	}
+	
 	
 	
 	
@@ -301,6 +307,12 @@ public abstract class Entity
 	public void setDrawColor(Color _drawColor)
 	{
 		drawColor = _drawColor;
+	}
+	
+	public void setColors(Color _fillColor, Color _drawColor)
+	{
+		setFillColor(_fillColor);
+		setDrawColor(_drawColor);
 	}
 	
 	
