@@ -6,12 +6,12 @@ public abstract class Main
 	public static void main(String[] args)
 	{
 		Screen.init();
-		Game.init();
-		Looper.init();
 		Input.init();
+		Game.init();
 		Window.init();
+		Looper.init();
 		
-		System.err.println("[Game]");
+		System.err.println("[Main]");
 
 	}
 

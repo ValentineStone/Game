@@ -5,82 +5,77 @@ public final class Looper
 	public static Thread thread;
 	
 	private static boolean running = false;
+	private static boolean working = true;
 
-	private static long updatePeriodMs = 40;
-	private static long updatePeriodNs = updatePeriodMs * 1000000;
-	
-	
-	private static long paintPeriodMs = 5;
-	
-	private static long lastPaintTick = System.nanoTime();
-	
-	private static long lastUpdateTick = System.nanoTime();
-	
-	private static long second = 0;
-	private static long _second = 0;
+	public static final double updatesPerSecond = 25;
+	public static final double updatePeriodNs = 1000 * 1000 * 1000 / updatesPerSecond;
 	
 	public static int fps = 0;
 	public static int ups = 0;
-	private static int _fps = 0;
-	private static int _ups = 0;
 	
 	public static void init()
 	{
-		thread = new Thread(
-							new Runnable()
+		thread = new Thread
+		(
+			new Runnable()
+			{
+				private double fakeInterpolation = 0;
+				private long lastTick = System.nanoTime();
+				private long thisTick = System.nanoTime();
+				private long updateTick = System.nanoTime();
+				private long second = System.currentTimeMillis();
+				private int _fps = 0;
+				private int _ups = 0;
+				
+				public void run()
+				{
+					while (Looper.isWorking())
+					{
+						if (Looper.isRunning())
+						{
+							thisTick = System.nanoTime();
+							
+							fakeInterpolation += (thisTick - lastTick) / Looper.updatePeriodNs;
+							
+							lastTick = thisTick;
+							
+							if (fakeInterpolation >= 1)
 							{
-								public void run()
-								{
-									while (true)
-									{
-										if (isRunning())
-										{
-											lastPaintTick = System.nanoTime();
-											
-											Interpolation.set(lastPaintTick, lastUpdateTick, updatePeriodNs);
-											
-											if (Interpolation.get() >= 1)
-											{
-												Game.instance().update();
-												
-												lastUpdateTick = System.nanoTime();
-												
-												//Interpolation.set(lastPaintTick, lastUpdateTick, updatePeriodNs);
-												
-												_ups++;
-												
-												continue;
-											}
-											
-											Window.repaint();
-											
-											_fps++;
-											
-											if (second != (_second = lastPaintTick / 1000000000))
-											{
-												fps = _fps;
-												_fps = 0;
-												ups = _ups;
-												_ups = 0;
-												second = _second;
-											}
-										}
-										
-										
-										try
-										{
-											Thread.sleep(paintPeriodMs);
-										}
-										catch (InterruptedException e)
-										{
-											e.printStackTrace();
-										}
-										
-										
-									}
-								}
+								updateTick = System.nanoTime();
+								
+								Game.instance().update();
+								
+								_ups++;
+								
+								fakeInterpolation--;
+								
+								continue;
 							}
-							);
+							
+							Interpolation.set((thisTick - updateTick) / Looper.updatePeriodNs);
+							
+							Window.repaint();
+							
+							_fps++;
+							
+							if (System.currentTimeMillis() - second > 1000)
+							{
+								second += 1000;
+								Looper.fps = _fps;
+								_fps = 0;
+								Looper.ups = _ups;
+								_ups = 0;
+							}
+							
+							System.err.println("FPS: " + Looper.fps);
+							System.err.println("UPS: " + Looper.ups);
+							System.err.println("----------------");
+						}
+					}
+				}
+			}		
+		);
+		
 		thread.start();
 		
 		System.err.println("[Looper]");
@@ -88,9 +83,8 @@ public final class Looper
 	
 	public static void loop()
 	{
-		Interpolation.set(0, 0, 1);
+		Interpolation.set(0);
 		Game.instance().update();
-		
 		Window.repaint();
 	}
 	
@@ -108,6 +102,10 @@ public final class Looper
 	
 	public static boolean isRunning() {
 		return running;
+	}
+	
+	public static boolean isWorking() {
+		return working;
 	}
 
 }

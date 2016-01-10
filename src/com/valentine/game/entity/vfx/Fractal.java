@@ -1,4 +1,4 @@
-package com.valentine.game.entity.creatures;
+package com.valentine.game.entity.vfx;
 
 import com.valentine.game.entity.base.Entity;
 

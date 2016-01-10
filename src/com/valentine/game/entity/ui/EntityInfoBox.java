@@ -1,4 +1,4 @@
-package com.valentine.game.entity.creatures;
+package com.valentine.game.entity.ui;
 
 import java.awt.Color;
 

@@ -1,4 +1,4 @@
-package com.valentine.game.entity.creatures.line;
+package com.valentine.game.entity.vfx.line;
 
 import com.valentine.game.core.Screen;
 import com.valentine.game.entity.base.Container;

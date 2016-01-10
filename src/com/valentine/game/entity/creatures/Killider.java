@@ -1,6 +1,7 @@
 package com.valentine.game.entity.creatures;
 
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.objects.*;
 import com.valentine.game.utils.MathExt;
 
 public class Killider extends Collider

@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.objects.Bullet;
+import com.valentine.game.entity.ui.GameOver;
 import com.valentine.game.utils.MathExt;
 
 public class Player extends EntityBasicAI implements KeyListener {

@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
+import com.valentine.game.entity.ambient.StarrySkyMoving;
 import com.valentine.game.entity.creatures.*;
+import com.valentine.game.entity.ui.*;
 
 public class SomegameV2 extends Game implements KeyListener
 {
@@ -41,7 +43,7 @@ public class SomegameV2 extends Game implements KeyListener
 		
 		EntityCounter entityCounter = new EntityCounter(this, Killider.class, 10, 130);
 		
-		new FpsUpsCounter(this, entityCounter.getX() + entityCounter.getWidth() + 10, entityCounter.getY());
+		new FpsUpsCounter(this, entityCounter.getX() + entityCounter.getWidth() + 17, entityCounter.getY());
 	}
 
 	

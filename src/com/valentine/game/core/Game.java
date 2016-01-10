@@ -25,6 +25,7 @@ public abstract class Game extends Container implements ComponentListener
 				Input.removeComponentListener(this);
 				instance().componentResized(_componentEvent);
 				instance().assemble();
+				System.err.println("[Game].assemble()");
 				Looper.play();
 			}
 		});

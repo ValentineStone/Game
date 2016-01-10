@@ -2,11 +2,11 @@ package com.valentine.game.core;
 
 public class Interpolation
 {
-	private static double interpolation = 1.;
+	private static double interpolation = 0.;
 	
-	public static void set(long _paintTickNs, long _updateTickNs, long _updatePeriod)
-	{				
-		interpolation = (_paintTickNs - _updateTickNs) / (double)_updatePeriod;
+	public static void set(double _interpolation)
+	{
+		interpolation = _interpolation;
 	}
 	
 	public static double get()

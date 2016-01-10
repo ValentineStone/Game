@@ -1,4 +1,4 @@
-package com.valentine.game.entity.creatures;
+package com.valentine.game.entity.ui;
 
 import java.awt.Color;
 
@@ -53,7 +53,7 @@ public class FpsUpsCounter extends Entity
 		
 		if (fps >= 60)
 		{
-			fpsColor = Color.GREEN;
+			fpsColor = ColorExt.GREEN;
 		}
 		else if (fps >= 30)
 		{
@@ -61,7 +61,7 @@ public class FpsUpsCounter extends Entity
 		}
 		else if (fps >= 15)
 		{
-			fpsColor = Color.ORANGE;
+			fpsColor = ColorExt.ORANGE;
 		}
 		else
 		{
@@ -71,13 +71,17 @@ public class FpsUpsCounter extends Entity
 		
 		
 		
-		if (ups >= 25)
+		if (ups > 30)
 		{
 			upsColor = Color.RED;
 		}
+		else if (ups > 25)
+		{
+			upsColor = ColorExt.ORANGE;
+		}
 		else if (ups == 25)
 		{
-			upsColor = Color.GREEN;
+			upsColor = ColorExt.GREEN;
 		}
 		else if (ups >= 20)
 		{

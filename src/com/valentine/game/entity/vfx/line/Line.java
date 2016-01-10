@@ -1,4 +1,4 @@
-package com.valentine.game.entity.creatures.line;
+package com.valentine.game.entity.vfx.line;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;

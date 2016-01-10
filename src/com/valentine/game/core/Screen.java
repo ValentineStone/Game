@@ -15,7 +15,7 @@ public class Screen
 	public static void init()
 	
 	{
-		System.err.println("[Canvas]");
+		System.err.println("[Screen]");
 		
 		try
 		{
@@ -31,6 +31,8 @@ public class Screen
 		}
 		
 		font = new Font("Press Start 2P", Font.PLAIN, 12);
+		
+		
 		
 	}
 	
@@ -184,7 +186,7 @@ public class Screen
 
 	public static Font getFont()
 	{
-		return graphics.getFont();
+		return font;
 	}
 
 	public static FontMetrics getFontMetrics(Font _f)

@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
+import com.valentine.game.entity.ambient.Link;
 import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.creatures.*;
+import com.valentine.game.entity.ui.EntityInfoBox;
 
 public class SomegameV1 extends Game implements KeyListener
 {
