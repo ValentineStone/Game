@@ -99,6 +99,24 @@ public class MathExt
 		}
 	}
 	
+	public static double rotationMakeX(double _rotation)
+	{
+		return Math.cos(_rotation);
+	}
+	
+	public static double rotationMakeY(double _rotation)
+	{
+		return Math.sin(_rotation);
+	}
+	
+	
+	public static double distanceMake(double _x, double _y)
+	{
+		double distance = Math.sqrt(_x*_x + _y*_y);
+		
+		return distance;
+	}
+	
 	
 	
 	public static enum DIRECTION

@@ -13,6 +13,8 @@ public final class Looper
 	public static int fps = 0;
 	public static int ups = 0;
 	
+	private static long loopNumber = 0;
+	
 	public static void init()
 	{
 		thread = new Thread
@@ -69,8 +71,8 @@ public final class Looper
 							
 							System.err.println("FPS: " + Looper.fps);
 							System.err.println("UPS: " + Looper.ups);
-							System.err.println("----------------");
 						}
+						System.err.println("---------------------------- LOOP: " + (loopNumber++));
 					}
 				}
 			}		
@@ -98,6 +100,12 @@ public final class Looper
 	{
 		System.err.println("[Looper].pause()");
 		running = false;
+	}
+	
+	public static void kill()
+	{
+		System.err.println("[Looper].kill()");
+		working = false;
 	}
 	
 	public static boolean isRunning() {

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
+import com.valentine.game.entity.ambient.Star;
 import com.valentine.game.entity.ambient.StarrySkyMoving;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
@@ -19,6 +20,10 @@ public class SomegameV2 extends Game implements KeyListener
 		super.assemble();
 		
 		new StarrySkyMoving(this);
+		
+		//new Star(this, getWidth() / 2 - getHeight() / 3, 0, getHeight() / 1.5);
+		//new Star(this, getWidth() / 2 - getHeight() / 3, 0, getHeight() / .43);
+		new Star(this, 14, 190, 230);
 		
 		Input.addKeyListener(this);
 		
