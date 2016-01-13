@@ -4,16 +4,14 @@ public final class Looper
 {
 	public static Thread thread;
 	
-	private static boolean running = false;
-	private static boolean working = true;
+	private static volatile boolean running = false;
+	private static volatile boolean working = true;
 
 	public static final double updatesPerSecond = 25;
 	public static final double updatePeriodNs = 1000 * 1000 * 1000 / updatesPerSecond;
 	
-	public static int fps = 0;
-	public static int ups = 0;
-	
-	private static long loopNumber = 0;
+	public static volatile int fps = 0;
+	public static volatile int ups = 0;
 	
 	public static void init()
 	{
@@ -68,11 +66,7 @@ public final class Looper
 								Looper.ups = _ups;
 								_ups = 0;
 							}
-							
-							System.err.println("FPS: " + Looper.fps);
-							System.err.println("UPS: " + Looper.ups);
 						}
-						System.err.println("---------------------------- LOOP: " + (loopNumber++));
 					}
 				}
 			}		
