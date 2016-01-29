@@ -31,7 +31,7 @@ public final class Looper
 				{
 					while (Looper.isWorking())
 					{
-						if (Looper.isRunning())
+						//if (Looper.isRunning())
 						{
 							thisTick = System.nanoTime();
 							
@@ -43,7 +43,7 @@ public final class Looper
 							{
 								updateTick = System.nanoTime();
 								
-								Game.instance().update();
+								if (Looper.isRunning()) Game.instance().update();
 								
 								_ups++;
 								
@@ -54,11 +54,11 @@ public final class Looper
 							
 							Interpolation.set((thisTick - updateTick) / Looper.updatePeriodNs);
 							
-							Window.repaint();
+							if (Looper.isRunning()) Window.repaint();
 							
 							_fps++;
 							
-							if (System.currentTimeMillis() - second > 1000)
+							if (System.currentTimeMillis() - second > 1000 && Looper.isRunning())
 							{
 								second += 1000;
 								Looper.fps = _fps;
