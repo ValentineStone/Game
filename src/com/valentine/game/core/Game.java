@@ -1,11 +1,9 @@
 package com.valentine.game.core;
 
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.event.*;
 
-import com.valentine.game.SomegameV2;
-import com.valentine.game.entity.base.Container;
-import com.valentine.game.entity.base.Entity;
+import com.valentine.game.SomegameV4;
+import com.valentine.game.entity.base.*;
 
 public abstract class Game extends Container implements ComponentListener
 {	
@@ -35,7 +33,7 @@ public abstract class Game extends Container implements ComponentListener
 
 	public static void init()
 	{
-		game = new SomegameV2();
+		game = new SomegameV4();
 	}
 	
 	public static Game instance()

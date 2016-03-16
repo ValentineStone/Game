@@ -117,6 +117,11 @@ public class MathExt
 		return distance;
 	}
 	
+	public static double distanceMake(double _x1, double _y1, double _x2, double _y2)
+	{
+		return distanceMake(_x2 - _x1, _y2 - _y1);
+	}
+	
 	
 	
 	public static enum DIRECTION
