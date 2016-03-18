@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.valentine.game.core.Game;
 import com.valentine.game.entity.vfx.BeepingCircle;
-import com.valentine.game.entity.vfx.line.Line;
+import com.valentine.game.entity.vfx.Line;
 
 public class PolatingLines extends Game
 {
@@ -15,6 +15,6 @@ public class PolatingLines extends Game
 	{
 		super.assemble();
 		
-		Line line  = new Line(this, 10, 10);
+		Line line  = new Line(this, 4, 20, Line.Style.LAGRANGE);
 	}
 }

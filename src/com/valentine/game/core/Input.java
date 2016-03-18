@@ -58,6 +58,9 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 		componentListeners.add(_componentListener);
 	}
 	
+	
+	
+	
 	public static void removeComponentListener(ComponentListener _componentListener)
 	{
 		componentListeners.remove(_componentListener);
@@ -66,6 +69,16 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	public static void removeKeyListener(KeyListener _keyListener)
 	{
 		keyListeners.remove(_keyListener);
+	}
+	
+	public static void removeMouseMotionListener(MouseMotionListener _mouseMotionListener)
+	{
+		componentListeners.remove(_mouseMotionListener);
+	}
+	
+	public static void removeMouseListener(MouseListener _mouseListener)
+	{
+		keyListeners.remove(_mouseListener);
 	}
 	
 	
