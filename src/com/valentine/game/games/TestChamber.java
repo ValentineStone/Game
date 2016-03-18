@@ -1,4 +1,4 @@
-package com.valentine.game;
+package com.valentine.game.games;
 
 import java.awt.Color;
 import java.awt.event.*;
@@ -9,7 +9,7 @@ import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.EntityInfoBox;
 
-public class SomegameV1 extends Game implements KeyListener
+public class TestChamber extends Game implements KeyListener
 {
 	public void assemble()
 	{	
@@ -18,7 +18,7 @@ public class SomegameV1 extends Game implements KeyListener
 		setFillColor(new Color(0,0,20));
 		
 		Collider colli = new Collider(this);
-		colli.rotationVelocity = 0.01;
+		colli.setRotationVelocity(0.01);
 		
 		for (int i = 0; i < 50; i++) new HelloWorld(this);
 		

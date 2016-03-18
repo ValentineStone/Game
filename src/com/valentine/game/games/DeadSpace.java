@@ -1,15 +1,15 @@
-package com.valentine.game;
+package com.valentine.game.games;
 
 import java.awt.Color;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
-import com.valentine.game.entity.ambient.Star;
 import com.valentine.game.entity.ambient.StarrySkyMoving;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
+import com.valentine.game.entity.vfx.Star;
 
-public class SomegameV2 extends Game implements KeyListener
+public class DeadSpace extends Game implements KeyListener
 {
 	private boolean NEW_GAME = false;
 	

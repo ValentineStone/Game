@@ -7,9 +7,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.valentine.game.core.Screen;
-import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.base.Container;
+import com.valentine.game.entity.base.Entity;
 
 public class Line extends Entity implements MouseListener, MouseMotionListener, KeyListener
 {
@@ -34,7 +36,7 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 
 	protected int selected;
 	
-	protected ArrayList<Dot> dots;
+	protected List<Dot> dots;
 	
 	
 	protected void makeT() {}
@@ -42,7 +44,7 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	public Line(Container _container, int _n, double _r)
 	{
-		container = _container;
+		super(_container);
 		
 		randColor();
 		
@@ -55,14 +57,15 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		dots = new ArrayList<Dot>();
 		
 		for (int i = 0; i < _n; i++) {
-			add(Math.random() * container.getWidth()/_n + i * container.getWidth()/(_n), Math.random() * container.getHeight());
+			add(Math.random() * getContainer().getWidth()/_n + i * getContainer().getWidth()/(_n), Math.random() * getContainer().getHeight());
 		}
 		
 	}
 	
 	
-	public Line(Line _line) {		
-		
+	public Line(Line _line)
+	{
+		super(_line.getContainer());
 		color = _line.color;
 		r = _line.r;
 		
@@ -84,8 +87,8 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		randColor();
 		
 		for (Dot dot : dots) {
-			dot.x = container.getWidth() * Math.random();
-			dot.y = container.getHeight() * Math.random();
+			dot.x = getContainer().getWidth() * Math.random();
+			dot.y = getContainer().getHeight() * Math.random();
 		}
 	}
 	
@@ -138,7 +141,6 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	public void update() 
 	{
-		super.update();
 	}
 	
 	
@@ -146,8 +148,6 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 
 	public void paint()
 	{
-		super.paint();
-		
 		Screen.setColor(color);
 		
 		for (int i = 1; i < size(); i++)
