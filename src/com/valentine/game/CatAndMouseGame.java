@@ -1,10 +1,10 @@
 package com.valentine.game;
 
 import com.valentine.game.core.Game;
-import com.valentine.game.entity.base.FlyingMouse;
 import com.valentine.game.entity.creatures.CatchyCat;
+import com.valentine.game.entity.creatures.FlyingMouse;
 
-public class SomegameV4 extends Game
+public class CatAndMouseGame extends Game
 {
 	int updateCounter = 0;
 	
@@ -20,6 +20,8 @@ public class SomegameV4 extends Game
 	public void update()
 	{
 		super.update();
+		
+		// drop mice every 10th update
 		
 		if (updateCounter++ > 10)
 		{

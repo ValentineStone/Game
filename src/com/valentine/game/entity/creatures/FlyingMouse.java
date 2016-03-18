@@ -1,13 +1,16 @@
-package com.valentine.game.entity.base;
+package com.valentine.game.entity.creatures;
 
 import com.valentine.game.core.Screen;
-import com.valentine.game.entity.creatures.CatchyCat;
+import com.valentine.game.entity.base.Container;
+import com.valentine.game.entity.base.EntityBasicAI;
 import com.valentine.game.utils.*;
 
 public class FlyingMouse extends EntityBasicAI
 {
+	// the cat mouse will play with
 	CatchyCat enimy;
 	
+	// mouse state, courpses wont aggro cat
 	boolean isCourpse = false;
 	
 	public FlyingMouse(Container _container, CatchyCat _enimy)
@@ -17,8 +20,11 @@ public class FlyingMouse extends EntityBasicAI
 		enimy = _enimy;
 		
 		setSize(30, 27);
+		
+		// drop randomly
 		setPositionRandom();
 		
+		//enable movement and set parameters
 		setActive(true);
 		
 		setVelocityMax(5);
@@ -57,22 +63,26 @@ public class FlyingMouse extends EntityBasicAI
 		{
 			if (getDrawColor().getAlpha() > 0)
 			{
+				// if courpse fade
 				setDrawColor(ColorExt.makeTransparent(getDrawColor(), getDrawColor().getAlpha() - 3));
 				return;
 			}
 			else
 			{
+				// if fully faded remove
 				kill(this);
 			}
 		}
 		
 		if (enimy.getAggroDistance() > MathExt.distanceMake(getCenterX(), getCenterY(), enimy.getCenterX(), enimy.getCenterY()))
 		{
+			// if close enough, aggro and turn into courpse
 			enimy.aggro(this);
 			isCourpse = true;
 		}
 		else
 		{
+			// if far from cat, determine direction and run away
 			setRotation(MathExt.rotationMake(getCenterX() - enimy.getCenterX(), getCenterY() - enimy.getCenterY()));
 			
 			accelerate();
@@ -80,6 +90,7 @@ public class FlyingMouse extends EntityBasicAI
 			
 			if (isOutOfContainer())
 			{
+				// if out of vision - remove self
 				kill(this);
 				enimy.notifyAboutEscaping();
 			}

@@ -7,11 +7,14 @@ import com.valentine.game.entity.base.*;
 
 public class CatchyCat extends EntityBasicAI
 {
+	// mouse detection radius
 	double aggroDistance;
 	
+	// mice counters
 	int miceCaught = 0;
 	int miceGotAway = 0;
 	
+	// mice catching rate
 	double efficiency;
 	
 	public CatchyCat(Container _container, double _triggerDistance)
@@ -26,6 +29,7 @@ public class CatchyCat extends EntityBasicAI
 
 	public void paint()
 	{
+		// cat clip
 		Screen.setColor(getDrawColor());
 		Screen.drawLine(getX() + 5, getY() - 10, getCenterX(), getY());
 		Screen.drawLine(getX() + 5, getY() - 10, getX(), getCenterY());
@@ -45,19 +49,23 @@ public class CatchyCat extends EntityBasicAI
 		Screen.drawLine(getCenterX(), getCenterY(), getX() + getWidth() + 20, getCenterY() - 10);
 		Screen.drawLine(getCenterX(), getCenterY(), getX() + getWidth() + 20, getCenterY() + 40);
 		
+		//cat info
 		Screen.drawString("Caught: " + miceCaught, getX(), getY() + getHeight() + 30);
 		Screen.drawString("Escaped: " + miceGotAway, getX(), getY() + getHeight() + 50);
 		Screen.drawString("Efficiency: " + String.format("%.2f",efficiency) + '%', getX(), getY() + getHeight() + 70);
 		
+		//cat aggro radius
 		Screen.setColor(Color.RED);
 		Screen.drawOval(getCenterX() - aggroDistance, getCenterY() - aggroDistance, aggroDistance * 2, aggroDistance * 2);
 	}
 
 	public void update()
 	{
+		//mice catch rate update
 		efficiency = (miceCaught + miceGotAway) > 0 ? 100 * miceCaught / (double)(miceCaught + miceGotAway) : 0;
 	}
 	
+	// enrage cat to jump and kill given target
 	public void aggro(FlyingMouse _mouse)
 	{
 		setX(_mouse.getX() - getWidth() / 2);
@@ -70,6 +78,7 @@ public class CatchyCat extends EntityBasicAI
 		return aggroDistance;
 	}
 	
+	// notify cat that mouse escaped
 	public void notifyAboutEscaping()
 	{
 		miceGotAway++;
