@@ -1,8 +1,15 @@
 package com.valentine.game.entity.vfx;
 
 import java.awt.Color;
-import java.awt.Toolkit;
+import java.io.File;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+
+import com.valentine.game.core.Interpolation;
 import com.valentine.game.core.Screen;
 import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.base.Entity;
@@ -11,6 +18,13 @@ import com.valentine.game.utils.MathExt;
 
 public class BeepingCircle extends EntityBasicAI
 {
+	private static final File soundFile = new File("C:/Users/Kostya/Desktop/alien_beep.wav");
+	
+	private boolean isTouchingFriend = false;
+	private double dr = 0.09;
+	private double rmax = MathExt.PI_1_1;
+	private double rmin = 0;
+	
 	public BeepingCircle(Container _container, double _r)
 	{
 		super(_container);
@@ -18,39 +32,100 @@ public class BeepingCircle extends EntityBasicAI
 		setR(_r);
 		
 		setPositionRandom();
+		
+		setAcceleration(0.01);
+		setFriction(1);
+		setVelocityMax(MathExt.random(5, 15));
+		setRotation(MathExt.random(0, MathExt.PI_2_1));
+		setActive(true);
+		
+		calculateRLimits();
 	}
 
 	public void paint()
 	{
+		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 		Screen.setColor(getDrawColor());
 		Screen.drawOval(getX(), getY(), getWidth(), getHeight());
+		
+		double indicatorSize = 50;
+		double maxX = getCenterX() + Math.cos(rmax) * indicatorSize;
+		double maxY = getCenterY() + Math.sin(rmax) * indicatorSize;
+		double minX = getCenterX() + Math.cos(rmin) * indicatorSize;
+		double minY = getCenterY() + Math.sin(rmin) * indicatorSize;
+		double rX = getCenterX() + Math.cos(getRotation()) * indicatorSize;
+		double rY = getCenterY() + Math.sin(getRotation()) * indicatorSize;
+		
+		Screen.drawLine(getCenterX(), getCenterY(), maxX, maxY);
+		Screen.drawString("max:" + String.format("%.3f", rmax), maxX, maxY);
+		Screen.drawLine(getCenterX(), getCenterY(), minX, minY);
+		Screen.drawString("min:" + String.format("%.3f", rmin), minX, minY);
+		Screen.drawLine(getCenterX(), getCenterY(), rX, rY);
+		Screen.drawString(String.format("%.3f", getRotation()), rX, rY);
+		Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}
 
 	public void update()
 	{
-		boolean isTouching = false;
+		boolean wasTouching = isTouchingFriend;
+		
+		isTouchingFriend = false;
+		
 		for (Entity entity : getContainer())
 		{
 			if (entity instanceof BeepingCircle && !entity.equals(this))
 			{
 				if (MathExt.distanceMake(getCenterX(), getCenterY(), entity.getCenterX(), entity.getCenterY()) < getR() + ((BeepingCircle)entity).getR())
 				{
-					isTouching = true;
+					isTouchingFriend = true;
+					break;
 				}
 			}
 		}
 		
-		if (isTouching)
+		if (isTouchingFriend)
 		{
 			setDrawColor(Color.RED);
-			Toolkit.getDefaultToolkit().beep();
-			System.out.print((char)7);
 		}
 		else
 		{
 			setDrawColor(Color.WHITE);
 		}
-
+		
+		if (!wasTouching && isTouchingFriend)
+		{
+			playSound(soundFile);
+		}
+		
+		
+		boolean changedDirection = false;
+		if (isTouchingEdge())
+		{
+			changedDirection = true;
+		}
+		
+		if (Math.abs(rmax - getRotation()) <= Math.abs(dr) || Math.abs(rmin - getRotation()) <= Math.abs(dr))
+		{
+			dr *= -1;
+			
+		}
+		
+		setRotation(getRotation() + dr);
+		
+		move();
+		accelerate();
+		keepContained();
+		
+		if (changedDirection)
+		{
+			calculateRLimits();
+		}
+	}
+	
+	private void calculateRLimits()
+	{
+		rmax = MathExt.rotationNormalize(getRotation() + MathExt.PI_1_4);
+		rmin = MathExt.rotationNormalize(getRotation() - MathExt.PI_1_4);
 	}
 
 	public double getR()
@@ -61,6 +136,32 @@ public class BeepingCircle extends EntityBasicAI
 	public void setR(double _r)
 	{
 		setSize(_r * 2, _r * 2);
+	}
+	
+	
+	public void playSound(File _file) 
+	{
+	    try
+	    {
+	        final Clip clip = (Clip)AudioSystem.getLine(new Line.Info(Clip.class));
+
+	        clip.addLineListener(new LineListener()
+	        {
+	            @Override
+	            public void update(LineEvent event)
+	            {
+	                if (event.getType() == LineEvent.Type.STOP)
+	                    clip.close();
+	            }
+	        });
+
+	        clip.open(AudioSystem.getAudioInputStream(_file));
+	        clip.start();
+	    }
+	    catch (Exception _exc)
+	    {
+	        _exc.printStackTrace(System.out);
+	    }
 	}
 	
 	

@@ -36,7 +36,7 @@ public abstract class Game extends Container implements ComponentListener
 
 	public static void init()
 	{
-		game = new CatAndMouseGame();
+		game = new BeepingCirclesGame();
 	}
 	
 	public static Game instance()

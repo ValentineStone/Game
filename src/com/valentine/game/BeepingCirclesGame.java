@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.valentine.game.core.Game;
 import com.valentine.game.entity.vfx.BeepingCircle;
+import com.valentine.game.entity.vfx.Trail;
 import com.valentine.game.utils.MathExt;
 
 public class BeepingCirclesGame extends Game
@@ -15,9 +16,14 @@ public class BeepingCirclesGame extends Game
 	{
 		super.assemble();
 		
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			circles.add(new BeepingCircle(this, MathExt.random(15, 75)));
+		}
+		
+		for (BeepingCircle beeper : circles)
+		{
+			new Trail(this, beeper, 80);
 		}
 	}
 }
