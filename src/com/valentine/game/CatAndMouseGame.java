@@ -3,6 +3,9 @@ package com.valentine.game;
 import com.valentine.game.core.Game;
 import com.valentine.game.entity.creatures.CatchyCat;
 import com.valentine.game.entity.creatures.FlyingMouse;
+import com.valentine.game.entity.ui.EntityCounter;
+import com.valentine.game.entity.ui.FpsUpsCounter;
+import com.valentine.game.entity.ui.OnPointInfo;
 
 public class CatAndMouseGame extends Game
 {
@@ -15,6 +18,12 @@ public class CatAndMouseGame extends Game
 		super.assemble();
 		
 		cat = new CatchyCat(this, getHeight() / 2);
+		
+		new OnPointInfo(this, 10, 10);
+		
+		new FpsUpsCounter(this, 10, 130);
+		
+		new EntityCounter(this, FlyingMouse.class, 10, 200);
 	}
 	
 	public void update()

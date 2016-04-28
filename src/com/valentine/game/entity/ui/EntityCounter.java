@@ -31,7 +31,7 @@ public class EntityCounter extends Entity
 		
 		Screen.setColor(getDrawColor());
 		
-		Screen.drawString(" " + targetClass.getSimpleName() + "s:", getX(), getY() + 2 * dy);
+		Screen.drawString(" " + targetClass.getSimpleName(), getX(), getY() + 2 * dy);
 		Screen.drawString(" current_:_" + count, getX(), getY() + 3 * dy);
 		Screen.drawString(" max_____:_" + maxCount, getX(), getY() + 4 * dy);
 		

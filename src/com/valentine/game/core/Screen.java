@@ -239,6 +239,11 @@ public class Screen
 		return graphics;
 	}
 	
+	public static void setStroke(Stroke _stroke)
+	{
+		graphics.setStroke(_stroke);
+	}
+	
 	
 	
 }

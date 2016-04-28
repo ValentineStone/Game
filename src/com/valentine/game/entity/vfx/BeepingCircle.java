@@ -22,8 +22,8 @@ public class BeepingCircle extends EntityBasicAI
 	
 	private boolean isTouchingFriend = false;
 	private double dr = 0.09;
-	private double rmax = MathExt.PI_1_1;
-	private double rmin = 0;
+	private double rmax;
+	private double rmin;
 	
 	public BeepingCircle(Container _container, double _r)
 	{
@@ -40,6 +40,12 @@ public class BeepingCircle extends EntityBasicAI
 		setActive(true);
 		
 		calculateRLimits();
+	}
+	
+	public BeepingCircle(Container _container, double _r, double _x, double _y)
+	{
+		this(_container, _r);
+		setPosition(_x, _y);
 	}
 
 	public void paint()
@@ -147,7 +153,6 @@ public class BeepingCircle extends EntityBasicAI
 
 	        clip.addLineListener(new LineListener()
 	        {
-	            @Override
 	            public void update(LineEvent event)
 	            {
 	                if (event.getType() == LineEvent.Type.STOP)

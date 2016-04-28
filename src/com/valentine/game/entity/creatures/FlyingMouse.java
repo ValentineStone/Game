@@ -63,7 +63,7 @@ public class FlyingMouse extends EntityBasicAI
 		{
 			if (getDrawColor().getAlpha() > 0)
 			{
-				// if courpse fade
+				// keep fading
 				setDrawColor(ColorExt.makeTransparent(getDrawColor(), getDrawColor().getAlpha() - 3));
 				return;
 			}
@@ -78,7 +78,6 @@ public class FlyingMouse extends EntityBasicAI
 		{
 			// if close enough, aggro and turn into courpse
 			enimy.aggro(this);
-			isCourpse = true;
 		}
 		else
 		{
@@ -95,6 +94,11 @@ public class FlyingMouse extends EntityBasicAI
 				enimy.notifyAboutEscaping();
 			}
 		}
+	}
+	
+	public void makeCourpse()
+	{
+		isCourpse = true;
 	}
 
 }

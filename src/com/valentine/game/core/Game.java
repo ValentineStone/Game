@@ -5,6 +5,7 @@ import java.awt.event.ComponentListener;
 
 import com.valentine.game.BeepingCirclesGame;
 import com.valentine.game.CatAndMouseGame;
+import com.valentine.game.ClockGame;
 import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.base.Entity;
 
@@ -36,7 +37,7 @@ public abstract class Game extends Container implements ComponentListener
 
 	public static void init()
 	{
-		game = new BeepingCirclesGame();
+		game = new ClockGame();
 	}
 	
 	public static Game instance()

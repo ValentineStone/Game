@@ -17,11 +17,11 @@ public class CatchyCat extends EntityBasicAI
 	// mice catching rate
 	double efficiency;
 	
-	public CatchyCat(Container _container, double _triggerDistance)
+	public CatchyCat(Container _container, double _aggroDistance)
 	{
 		super(_container);
 		
-		aggroDistance = _triggerDistance;
+		aggroDistance = _aggroDistance;
 		
 		setSize(100, 70);
 		setPositionCentered();
@@ -75,6 +75,7 @@ public class CatchyCat extends EntityBasicAI
 	{
 		setX(_mouse.getX() - getWidth() / 2);
 		setY(_mouse.getY() - getHeight() / 2);
+		_mouse.makeCourpse();
 		miceCaught++;
 	}
 
