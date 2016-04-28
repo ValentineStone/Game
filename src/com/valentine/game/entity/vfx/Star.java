@@ -1,4 +1,4 @@
-package com.valentine.game.entity.ambient;
+package com.valentine.game.entity.vfx;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;

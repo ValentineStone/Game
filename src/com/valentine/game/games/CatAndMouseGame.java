@@ -1,4 +1,4 @@
-package com.valentine.game;
+package com.valentine.game.games;
 
 import com.valentine.game.core.Game;
 import com.valentine.game.entity.creatures.CatchyCat;

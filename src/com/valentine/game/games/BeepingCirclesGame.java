@@ -1,4 +1,4 @@
-package com.valentine.game;
+package com.valentine.game.games;
 
 import java.util.ArrayList;
 import java.util.List;

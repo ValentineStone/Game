@@ -122,6 +122,14 @@ public class MathExt
 		return distanceMake(_x2 - _x1, _y2 - _y1);
 	}
 	
+	@Deprecated
+	public static long factorial(int _n) {
+		long factorial = 1;
+		for (int i = 2; i <= _n; i++)
+			factorial *= i;
+		return factorial;
+	}
+	
 	
 	
 	public static enum DIRECTION

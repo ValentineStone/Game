@@ -1,6 +1,7 @@
 package com.valentine.game.entity.vfx;
 
 import java.awt.BasicStroke;
+import java.awt.Stroke;
 
 import com.valentine.game.core.Screen;
 import com.valentine.game.entity.base.Container;
