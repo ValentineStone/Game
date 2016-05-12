@@ -59,11 +59,13 @@ public class FiniteCubicLineTry2 extends Line
 	
 	private void remakeMatrix()
 	{
-		debugLine();
+		//debugLine();
 		
 		refillMatrix();
+		debugLine();
 		
-		//calculateMatrix();
+		calculateMatrix();
+		debugLine();
 	}
 	
 	private void calculateMatrix()
@@ -91,7 +93,7 @@ public class FiniteCubicLineTry2 extends Line
 				b[j] -= b[i] * multiplier;
 			}
 			
-			debugLine();
+			//debugLine();
 		}
 	}
 	
@@ -110,7 +112,7 @@ public class FiniteCubicLineTry2 extends Line
 			b[p+0] = 0;
 			b[p+1] = 0;
 			b[p+2] = 0;
-			b[p+3] = 0;
+			b[p+3] = 2*dots.get(i).y;
 			
 			Arrays.fill(A[p+0], 0);
 			Arrays.fill(A[p+1], 0);
@@ -118,7 +120,7 @@ public class FiniteCubicLineTry2 extends Line
 			Arrays.fill(A[p+3], 0);
 		}
 		
-		for (int i = 0; i < A.length; i++)
+		for (int i = 0; i < dots.size(); i++)
 		{
 			int p = 4*i;
 			
@@ -156,13 +158,31 @@ public class FiniteCubicLineTry2 extends Line
 			A[p+2][p+1] = -2*x;
 			A[p+2][p+2] = -1;
 			
-			A[p+3][p+0] = -x3;
-			A[p+3][p+1] = -x2;
-			A[p+3][p+2] = -x;
-			A[p+3][p+3] = -1;
+			A[p+3][p+0] = x3;
+			A[p+3][p+1] = x2;
+			A[p+3][p+2] = x;
+			A[p+3][p+3] = 1;
 		}
 		
-		debugLine();
+		/*
+		
+		A[0][0] = 3*dots.get(0).x*dots.get(0).x;
+		A[0][1] = 2*dots.get(0).x;
+		A[0][2] = 1;
+		
+		int k = 4*(dots.size())-1;
+		int p = 4*(dots.size()-1);
+		
+		*/
+		
+		/*
+		A[k][p+0] = 6*dots.get(0).x;
+		A[k][p+1] = 2;
+		b[k] = 0;
+		*/
+		
+		
+		//debugLine();
 		
 		/*
 		

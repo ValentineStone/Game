@@ -9,6 +9,6 @@ public class PolatingLines extends Game
 	{
 		super.assemble();
 		
-		Line line  = new FiniteCubicLineTry2(this, 7, 20);
+		Line line  = new FiniteCubicLineTry2(this, 5, 20);
 	}
 }
