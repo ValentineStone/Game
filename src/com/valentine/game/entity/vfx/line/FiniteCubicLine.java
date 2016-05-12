@@ -5,14 +5,14 @@ import java.util.*;
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
 
-public class FiniteQuadraticLine extends Line
+public class FiniteCubicLine extends Line
 {	
 	private double[][] A = new double[0][0];
 	private double[] b = new double[0];
 	
 	private boolean changed = true;
 	
-	public FiniteQuadraticLine(Container _container, int _amountOfDots, double _dotRadius)
+	public FiniteCubicLine(Container _container, int _amountOfDots, double _dotRadius)
 	{
 		super(_container, _amountOfDots, _dotRadius);
 	}
