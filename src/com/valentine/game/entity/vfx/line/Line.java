@@ -1,4 +1,4 @@
-package com.valentine.game.entity.vfx;
+package com.valentine.game.entity.vfx.line;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -8,16 +8,9 @@ import com.valentine.game.core.*;
 import com.valentine.game.utils.*;
 import com.valentine.game.entity.base.*;
 
-public class LineOld extends Entity implements MouseListener, MouseMotionListener, KeyListener
+public class Line extends Entity implements MouseListener, MouseMotionListener, KeyListener
 {
-	public enum Style
-	{
-		STRAIGHT,
-		LAGRANGE,
-		BEZIER
-	}
-	
-	private class Dot
+	protected class Dot
 	{
 		public double x;
 		public double y;
@@ -29,17 +22,14 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 		}
 	}
 	
-	Style style = Style.STRAIGHT;
-	Style scheduledStyle  = Style.STRAIGHT;
-	
 	private double dotRadius;
 	
-	private List<Dot> dots;
+	protected List<Dot> dots;
 	private List<Dot> dotsForDeletion;
 	
 	private Dot selected;
 	
-	public LineOld(Container _container, int _amountOfDots, double _dotRadius, Style _style)
+	public Line(Container _container, int _amountOfDots, double _dotRadius)
 	{
 		super(_container);
 		
@@ -51,8 +41,6 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 		
 		setDrawColorRandom();
 		
-		setStyle(_style);
-		
 		dotsForDeletion = new ArrayList<Dot>();
 		dots = new ArrayList<Dot>();
 		
@@ -60,51 +48,6 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 		{
 			addDot(MathExt.random(getContainer().getWidth()/_amountOfDots) + i * getContainer().getWidth()/_amountOfDots, MathExt.random(getContainer().getHeight()));
 		}
-	}
-	
-	public LineOld(Container _container, int _amountOfDots, double _dotRadius)
-	{
-		this(_container, _amountOfDots, _dotRadius, Style.STRAIGHT);
-	}
-	
-	private void makeT()
-	{
-		switch (getStyle())
-		{
-			case LAGRANGE:
-			{
-				int n = dots.size();
-				double dt = 1/(n-1.);
-				for (int i = 0; i < n; i++)
-				{
-					getDot(i).t = dt * i;
-				}
-				break;
-			}
-			case BEZIER:
-			{
-				int n = dots.size();
-				for (int i = 0; i < n; i++)
-				{
-					getDot(i).t = MathExt.factorial(n-1) / (double)(MathExt.factorial(i) * MathExt.factorial(n-1-i));
-				}
-				break;
-			}
-			case STRAIGHT: {}
-		}
-	}
-	
-	
-	
-	public Style getStyle()
-	{
-		return style;
-	}
-
-
-	public void setStyle(Style _style)
-	{
-		scheduleStyleChange(_style);
 	}
 
 
@@ -146,7 +89,6 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 	public void addDot(double _x, double _y)
 	{
 		dots.add(new Dot(_x, _y));
-		makeT();
 	}
 	
 	protected Dot getDot(int _i)
@@ -190,41 +132,20 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 		dotsForDeletion.add(_dot);
 	}
 	
-	private void scheduleStyleChange(Style _style)
-	{
-		scheduledStyle = _style;
-	}
-	
 	
 	
 	
 	public void update()
 	{
-		boolean needsMakeT = false;
-		
 		if (!dotsForDeletion.isEmpty())
 		{
 			for (Dot dot : dotsForDeletion)
 			{
 				dots.remove(dot);
 			}
-			needsMakeT = true;
 		}
 		
-		if (!scheduledStyle.equals(getStyle()))
-		{
-			style = scheduledStyle;
-			
-			if (getStyle() != Style.STRAIGHT)
-			{
-				needsMakeT = true;
-			}
-		}
-		
-		if (needsMakeT)
-		{
-			makeT();
-		}
+		dotsForDeletion.clear();
 	}
 	
 	
@@ -234,114 +155,21 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 	{
 		Screen.setColor(getDrawColor());
 		
-		switch (getStyle())
-		{
-			case LAGRANGE:
-			{
-				paintLagrange();
-				break;
-			}
-			case BEZIER:
-			{
-				paintBezier();
-				break;
-			}
-			default:
-			{
-				paintStraight();
-			}
-		}
-		paintDots();
-	}
-	
-	private void paintStraight()
-	{
 		for (int i = 1; i < size(); i++)
 		{
 			Screen.drawLine(getDot(i-1).x, getDot(i-1).y, getDot(i).x, getDot(i).y);
 		}
 		
+		paintDots();
+	}
+	
+	public void paintDots()
+	{
+		Screen.setColor(getDrawColor());
+		
 		for (int i = 0; i < size(); i++)
 		{
 			Screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius), (dotRadius + dotRadius));
-		}
-	}
-	
-	private void paintLagrange()
-	{
-		int n = dots.size();
-	
-		double x;
-		double y;
-		double omega;
-		
-		double x_old = getDot(0).x;
-		double y_old = getDot(0).y;
-		
-		for (double t = 0, dt = 0.001; t <= 1+dt; t += dt) {
-			
-			x = 0;
-			y = 0;
-			
-			for (int i = 0; i < n; i++) {
-				omega = 1;
-				
-				for (int j = 0; j < i; j++) {
-					omega *= ((t - getDot(j).t)/(getDot(i).t - getDot(j).t));
-				}
-				for (int j = i+1; j < n; j++) {
-					omega *= ((t - getDot(j).t)/(getDot(i).t - getDot(j).t));
-				}
-				
-				x += omega * getDot(i).x;
-				y += omega * getDot(i).y;
-				
-			}
-			
-			Screen.drawLine(x_old, y_old, x, y);
-			
-			x_old = x;
-			y_old = y;
-		}
-	}
-	
-	private void paintBezier()
-	{
-		int n = dots.size();
-		
-		double x;
-		double y;
-		double coeficent;
-		
-		double x_old = getDot(0).x;
-		double y_old = getDot(0).y;
-		
-		for (double t = 0, dt = 0.001; t <= 1+dt; t += dt)
-		{
-			
-			x = 0;
-			y = 0;
-			
-			for (int i = 0; i < n; i++)
-			{
-				coeficent = getDot(i).t * Math.pow(t, i) * Math.pow((1-t), (n-1)-i);
-				x +=  coeficent * getDot(i).x;
-				y +=  coeficent * getDot(i).y;
-			}
-			
-			Screen.drawLine(x_old, y_old, x, y);
-			
-			x_old = x;
-			y_old = y;
-		}
-	}
-	
-	private void paintDots()
-	{
-		for (int i = 0; i < dots.size(); i++)
-		{
-			Screen.drawOval(getDot(i).x - getDotRadius(), getDot(i).y - getDotRadius(), 2 * getDotRadius(), 2 * getDotRadius());
-			Screen.drawString(i + "", getDot(i).x + getDotRadius(), getDot(i).y - getDotRadius());
 		}
 	}
 	
@@ -377,27 +205,6 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 			case KeyEvent.VK_C:
 			{
 				setDrawColorRandom();
-				break;
-			}
-			case KeyEvent.VK_S:
-			{
-				switch (getStyle())
-				{
-					case LAGRANGE:
-					{
-						setStyle(Style.BEZIER);
-						break;
-					}
-					case BEZIER:
-					{
-						setStyle(Style.STRAIGHT);
-						break;
-					}
-					default:
-					{
-						setStyle(Style.LAGRANGE);
-					}
-				}
 				break;
 			}
 		}
