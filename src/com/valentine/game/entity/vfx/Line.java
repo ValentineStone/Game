@@ -208,7 +208,6 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 				break;
 			}
 		}
-		
 	}
 
 	public void keyReleased(KeyEvent _keyEvent) {}

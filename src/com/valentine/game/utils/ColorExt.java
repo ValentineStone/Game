@@ -25,4 +25,14 @@ public class ColorExt {
 	{
 		return new Color(255 - _color.getRed(), 255 - _color.getGreen(), 255 - _color.getBlue());
 	}
+	
+	public static Color fadeto(Color _src, Color _dest)
+	{
+		return new Color
+		(
+				_src.getRed() > _dest.getRed() ? _src.getRed() - 1 : (_src.getRed() < _dest.getRed() ? _src.getRed() + 1 : _src.getRed()),
+				_src.getGreen() > _dest.getGreen() ? _src.getGreen() - 1 : (_src.getGreen() < _dest.getGreen() ? _src.getGreen() + 1 : _src.getGreen()),
+				_src.getBlue() > _dest.getBlue() ? _src.getBlue() - 1 : (_src.getBlue() < _dest.getBlue() ? _src.getBlue() + 1 : _src.getBlue())
+		);
+	}
 }

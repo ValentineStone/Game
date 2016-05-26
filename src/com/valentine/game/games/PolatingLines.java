@@ -9,6 +9,6 @@ public class PolatingLines extends Game
 	{
 		super.assemble();
 		
-		Line line  = new FiniteStraightLine(this, 4, 20);
+		Line line  = new FiniteSplineLine(this, 4, 20);
 	}
 }
