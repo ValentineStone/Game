@@ -2,9 +2,10 @@ package com.valentine.game.entity.creatures;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.objects.*;
 import com.valentine.game.utils.*;
 
-public class Collider extends EntityBasicAI
+public class Collider extends EntityBasicAI implements Explodable
 {	
 	private static double VELOCITY_MAX = 5;
 	private static double ACCELERATION = 0.1;

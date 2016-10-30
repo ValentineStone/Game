@@ -2,9 +2,11 @@ package com.valentine.game.entity.creatures;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.objects.*;
 import com.valentine.game.utils.*;
 
-public class Rotor extends EntityBasicAI {
+public class Rotor extends EntityBasicAI implements Explodable
+{
 
 	private double r = 0;
 	private double x1 = 0;

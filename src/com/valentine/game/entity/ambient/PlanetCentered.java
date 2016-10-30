@@ -23,11 +23,11 @@ public class PlanetCentered extends Entity
 		setD(_d);
 		setR(_r);
 		setAngle(MathExt.random(MathExt.PI_2_1));
-		setdAngle(MathExt.random(0.02, 0.05) * 1000 / (1000 + getD()));
+		setdAngle((MathExt.randomIf(0.05) ? -1 : 1) * MathExt.random(0.02, 0.05) * 1000 / (1000 + getD()));
 		setSize(getR() * 2, getR() * 2);
 		setPosition(getCenter().getCenterX() - getR(), getCenter().getCenterY() - getR());
-		setFillColor(ColorExt.randomColor(40, 255));
-		setTargetColor(ColorExt.randomColor(40, 255));
+		setFillColor(ColorExt.randomColor(20, 255));
+		setTargetColor(ColorExt.randomColor(20, 255));
 	}
 
 	public void paint()
@@ -45,10 +45,12 @@ public class PlanetCentered extends Entity
 		
 		if (getFillColor().equals(getTargetColor()))
 		{
-			setTargetColor(ColorExt.randomColor(40, 255));
+			setTargetColor(ColorExt.randomColor(20, 255));
 		}
 		
 		setFillColor(ColorExt.fadeto(getFillColor(), getTargetColor()));
+		
+		setPosition(getCenter().getCenterX() - getR(), getCenter().getCenterY() - getR());
 	}
 
 	public Entity getCenter()

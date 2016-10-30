@@ -19,7 +19,12 @@ public class Screen
 		
 		try
 		{
-			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, Screen.class.getClassLoader().getResourceAsStream("res/PressStart2P.ttf")));
+			GraphicsEnvironment
+			.getLocalGraphicsEnvironment()
+			.registerFont
+			(
+				Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf"))
+			);
 		}
 		catch (FontFormatException _exception)
 		{
@@ -42,6 +47,7 @@ public class Screen
 		
 		graphics.setFont(font);
 		
+		/*
 		graphics.setRenderingHint
 		(
 	        RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -53,7 +59,7 @@ public class Screen
 	        RenderingHints.KEY_ANTIALIASING,
 	        RenderingHints.VALUE_ANTIALIAS_ON
 	    );
-		
+		*/
 	}
 	
 	

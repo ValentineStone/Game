@@ -8,8 +8,8 @@ import com.valentine.game.entity.base.*;
 
 public class PhasedMoon extends Entity implements KeyListener
 {
-	private double phase;
-	private double dPhase = 0.015;
+	private double phase = 0;
+	private double dPhase = -0.002;
 	private double r;
 	private boolean paused;
 
@@ -43,15 +43,13 @@ public class PhasedMoon extends Entity implements KeyListener
 	{
 		setPhase(getPhase() + getdPhase());
 		
-		if (getPhase() > 1)
+		if (getPhase() < -1)
 		{
 			setPhase(1);
-			setdPhase(-getdPhase());
 		}
-		else if (getPhase() < -1)
+		else if (getPhase() > 1)
 		{
 			setPhase(-1);
-			setdPhase(-getdPhase());
 		}
 	}
 
@@ -111,6 +109,18 @@ public class PhasedMoon extends Entity implements KeyListener
 			{
 				if (getdPhase() > 0) setdPhase(-getdPhase());
 				updatePhase();
+				break;
+			}
+			case KeyEvent.VK_UP:
+			case KeyEvent.VK_KP_UP:
+			{
+				setdPhase(getdPhase() + getdPhase() / 10);
+				break;
+			}
+			case KeyEvent.VK_DOWN:
+			case KeyEvent.VK_KP_DOWN:
+			{
+				setdPhase(getdPhase() - getdPhase() / 10);
 				break;
 			}
 			case KeyEvent.VK_SPACE:

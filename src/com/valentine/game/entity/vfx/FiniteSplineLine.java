@@ -2,6 +2,7 @@ package com.valentine.game.entity.vfx;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.vfx.line.*;
 import com.valentine.game.utils.MathExt;
 
 public class FiniteSplineLine extends Line

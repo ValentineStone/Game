@@ -4,12 +4,14 @@ import java.awt.Color;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.objects.*;
 import com.valentine.game.utils.*;
 
-public class Rotor2 extends EntityBasicAI {
+public class Rotor2 extends EntityBasicAI implements Explodable
+{
 	private double r;
 	
-	private static final double VELOCITY_MAX = 7;
+	private static final double VELOCITY_MAX = 1;
 	private static final double ACCELERATION = 1;
 	private static final double FRICTION = 1;
 	

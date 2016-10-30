@@ -80,7 +80,7 @@ public class Container extends Entity implements Iterable<Entity>
 		{
 			if (_entity.getContainer() != null)
 			{
-				_entity.getContainer().remove(this);
+				_entity.getContainer().remove(_entity);
 			}
 	
 			additions.add(_entity);

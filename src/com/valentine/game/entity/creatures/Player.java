@@ -7,11 +7,12 @@ import javax.swing.ImageIcon;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
-import com.valentine.game.entity.objects.Bullet;
+import com.valentine.game.entity.objects.*;
 import com.valentine.game.entity.ui.GameOver;
 import com.valentine.game.utils.MathExt;
 
-public class Player extends EntityBasicAI implements KeyListener {
+public class Player extends EntityBasicAI  implements Explodable, KeyListener
+{
 	
 	//private List<Link> links = new ArrayList<Link>();
 
@@ -44,7 +45,7 @@ public class Player extends EntityBasicAI implements KeyListener {
 		MOVING_WEST = 
 		MOVING_EAST = false;
 		
-		image = new ImageIcon(getClass().getClassLoader().getResource("res/player.png")).getImage();
+		image = new ImageIcon("res/player.png").getImage();
 		
 		Input.addKeyListener(this);
 	}
@@ -66,7 +67,7 @@ public class Player extends EntityBasicAI implements KeyListener {
 	}
 
 	
-	private void movementFlagsToRotation()
+	protected void movementFlagsToRotation()
 	{
 		setActive(true);
 		
@@ -207,6 +208,10 @@ public class Player extends EntityBasicAI implements KeyListener {
 	}
 	
 	
+	public void setInvulnerable(boolean _invulnerable)
+	{
+		INVULNERABLE = _invulnerable;
+	}
 	
 	
 	

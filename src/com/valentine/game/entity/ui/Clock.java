@@ -1,15 +1,14 @@
 package com.valentine.game.entity.ui;
 
-import java.awt.BasicStroke;
-import java.awt.Stroke;
-import java.util.Calendar;
+import java.awt.*;
+import java.util.*;
 
-import com.valentine.game.core.Screen;
+import com.valentine.game.core.*;
+import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
-import com.valentine.game.entity.base.Entity;
-import com.valentine.game.utils.MathExt;
+import com.valentine.game.utils.*;
 
-public class Clock extends Entity
+public class Clock extends EntityBasicAI
 {
 	private double radius;
 	

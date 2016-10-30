@@ -1,4 +1,4 @@
-	package com.valentine.game.core;
+package com.valentine.game.core;
 
 public abstract class Main
 {
@@ -12,7 +12,6 @@ public abstract class Main
 		Looper.init();
 		
 		System.err.println("[Main]");
-
 	}
 
 }

@@ -6,7 +6,7 @@ import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.*;
 
-public class Bullet extends EntityBasicAI
+public class Bullet extends EntityBasicAI implements Explodable
 {
 	private double x0;
 	private double y0;
@@ -64,7 +64,7 @@ public class Bullet extends EntityBasicAI
 		{	
 			for (Entity entity : getContainer())
 			{
-				if (entity instanceof EntityBasicAI && entity != master)
+				if (entity instanceof Explodable && entity != master)
 				{
 					if (((EntityBasicAI)entity).isGettingHit(getX() + tmpX, getY() + tmpY))
 					{

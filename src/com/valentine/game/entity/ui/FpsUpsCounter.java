@@ -1,12 +1,13 @@
 package com.valentine.game.entity.ui;
 
-import java.awt.Color;
+import java.awt.*;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
-import com.valentine.game.utils.ColorExt;
+import com.valentine.game.entity.base.Container;
+import com.valentine.game.utils.*;
 
-public class FpsUpsCounter extends Entity
+public class FpsUpsCounter extends EntityBasicAI
 {
 	private String fpsText;
 	private String upsText;
@@ -69,25 +70,29 @@ public class FpsUpsCounter extends Entity
 		}
 		
 		
+		double idealUps = Looper.updatesPerSecond;
 		
-		
-		if (ups > 30)
+		if (ups > idealUps + 2)
 		{
 			upsColor = Color.RED;
 		}
-		else if (ups > 25)
+		else if (ups == idealUps + 2)
 		{
 			upsColor = ColorExt.ORANGE;
 		}
-		else if (ups == 25)
-		{
-			upsColor = ColorExt.GREEN;
-		}
-		else if (ups >= 20)
+		else if (ups == idealUps + 1)
 		{
 			upsColor = Color.YELLOW;
 		}
-		else if (ups >= 15)
+		else if (ups == idealUps)
+		{
+			upsColor = ColorExt.GREEN;
+		}
+		else if (ups == idealUps - 1)
+		{
+			upsColor = Color.YELLOW;
+		}
+		else if (ups == idealUps - 2)
 		{
 			upsColor = ColorExt.ORANGE;
 		}
@@ -95,6 +100,10 @@ public class FpsUpsCounter extends Entity
 		{
 			upsColor = Color.RED;
 		}
+		
+		
+		
+		setSize((n + 1) * dy, 4 * dy);
 	}
 
 }

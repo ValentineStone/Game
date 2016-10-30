@@ -62,6 +62,7 @@ public class Window
 		canvas.addComponentListener(Input.instance());
 		canvas.addMouseListener(Input.instance());
 		canvas.addMouseMotionListener(Input.instance());
+		canvas.addMouseWheelListener(Input.instance());
 		
 		if (isFullscreen) {
 			jframe.setUndecorated(true);

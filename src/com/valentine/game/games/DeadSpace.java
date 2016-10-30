@@ -1,13 +1,13 @@
 package com.valentine.game.games;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
-import com.valentine.game.entity.ambient.StarrySkyMoving;
+import com.valentine.game.entity.ambient.*;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
-import com.valentine.game.entity.vfx.Star;
+import com.valentine.game.entity.vfx.*;
 
 public class DeadSpace extends Game implements KeyListener
 {
@@ -34,7 +34,8 @@ public class DeadSpace extends Game implements KeyListener
 		for (int i = 0; i < 5; i++) new Rotor(this);
 		for (int i = 0; i < 5; i++) new Rotor2(this);
 		
-		Player player = new Player(this);
+		Player player = new PlayerSpacecraft(this);
+		new Trail(this, player, 5);
 		
 		new OnPointInfo(this, 10, 10);
 		/*
@@ -44,9 +45,9 @@ public class DeadSpace extends Game implements KeyListener
 		new Killider(this, player, 1800, 840);
 		*/
 		
-		new Killider(this, player, 1800, 540);
+		//new Killider(this, player, 1800, 540);
 		
-		EntityCounter entityCounter = new EntityCounter(this, Killider.class, 10, 130);
+		EntityCounter entityCounter = new EntityCounter(this, Rotor2.class, 10, 130);
 		
 		new FpsUpsCounter(this, entityCounter.getX() + entityCounter.getWidth() + 17, entityCounter.getY());
 	}

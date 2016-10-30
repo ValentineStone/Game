@@ -48,6 +48,36 @@ public abstract class EntityBasicAI extends Entity
 		return impact;
 	}
 	
+	protected boolean keepOffEdges()
+	{
+		boolean impact = false;
+		if (getX() + getWidth() > getContainer().getWidth())
+		{
+			setX(getContainer().getWidth() - getWidth() - 1);
+			rotationFlipY();
+			impact = true;
+		}
+		if (getX() < 0)
+		{
+			setX(1);
+			rotationFlipY();
+			impact = true;
+		}
+		if (getY() + getHeight() > getContainer().getHeight())
+		{
+			setY(getContainer().getHeight() - getHeight() - 1);
+			rotationFlipX();
+			impact = true;
+		}
+		if (getY() < 0)
+		{
+			setY(1);
+			rotationFlipX();
+			impact = true;
+		}
+		return impact;
+	}
+	
 	protected void move()
 	{	
 		setX(getX() + getVelocityX());

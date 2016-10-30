@@ -3,7 +3,7 @@ package com.valentine.game.core;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class Input implements MouseListener, MouseMotionListener, KeyListener, ComponentListener
+public class Input implements MouseListener, MouseMotionListener, KeyListener, ComponentListener, MouseWheelListener
 {
 	
 	
@@ -17,6 +17,8 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	private static ArrayList<KeyListener> keyListeners = new ArrayList<KeyListener>();
 	
 	private static ArrayList<ComponentListener> componentListeners = new ArrayList<ComponentListener>();
+	
+	private static ArrayList<MouseWheelListener> mouseWheelListeners = new ArrayList<MouseWheelListener>();
 	
 	
 	
@@ -58,6 +60,11 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 		componentListeners.add(_componentListener);
 	}
 	
+	public static void addMouseWheelListener(MouseWheelListener _mouseWheelListener)
+	{
+		mouseWheelListeners.add(_mouseWheelListener);
+	}
+	
 	
 	
 	
@@ -79,6 +86,11 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	public static void removeMouseListener(MouseListener _mouseListener)
 	{
 		keyListeners.remove(_mouseListener);
+	}
+	
+	public static void removeMouseWheelListener(MouseWheelListener _mouseWheelListener)
+	{
+		mouseWheelListeners.remove(_mouseWheelListener);
 	}
 	
 	
@@ -183,5 +195,16 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 	{
 		for (int i = 0; i < componentListeners.size(); i++)
 			componentListeners.get(i).componentShown(_componentEvent);
+	}
+
+	
+	
+	
+	public void mouseWheelMoved(MouseWheelEvent _mouseWheelEvent)
+	{
+		for (MouseWheelListener mouseWheelListener : mouseWheelListeners)
+		{
+			mouseWheelListener.mouseWheelMoved(_mouseWheelEvent);
+		}
 	}
 }

@@ -2,6 +2,9 @@ package com.valentine.game.games;
 
 import com.valentine.game.core.Game;
 import com.valentine.game.entity.ambient.*;
+import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.creatures.*;
+import com.valentine.game.entity.vfx.line.*;
 import com.valentine.game.utils.*;
 
 public class Night extends Game
@@ -27,14 +30,48 @@ public class Night extends Game
 		double d;
 		double offset = 130;
 		
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 12; i++)
 		{
-			r = MathExt.random(10, 50);
-			d = MathExt.random(100);
+			r = MathExt.random(10, 30);
+			d = MathExt.random(10);
 			
 			new PlanetCentered(this, r, offset + d, phasedMoon);
 			
-			offset += r + d;
+			offset += 2 * r + d;
 		}
+		
+		Player player = new Player(this);
+		player.setInvulnerable(true);
+		
+		offset = 30;
+		
+		for (int i = 0; i < 7; i++)
+		{
+			r = MathExt.random(5, 10);
+			d = MathExt.random(10);
+			
+			new PlanetCentered(this, r, offset + d, player);
+			
+			offset += 2 * r + d;
+		}
+		
+		for (int i = 0; i < 30; i++)
+		{
+			offset = 30;
+
+			Entity entity = MathExt.randomIf() ? new Rotor(this) : new Rotor2(this);
+			
+			for (int j = 0; j < 6; j++)
+			{
+				r = MathExt.random(5, 10);
+				d = MathExt.random(10);
+				
+				new PlanetCentered(this, r, offset + d, entity);
+				
+				offset += 2 * r + d;
+			}
+		}
+		
+		new Line(this, 40, 30);
 	}
 }

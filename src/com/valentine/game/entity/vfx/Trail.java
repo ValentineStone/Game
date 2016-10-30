@@ -15,6 +15,9 @@ public class Trail extends Entity
 	private int maxAge;
 	private long age = 0;
 	
+	private boolean isScheduledForKill = false;
+	private long scheduledKillAge = 0;
+	
 	private class Dot
 	{
 		public Dot(double _x, double _y, boolean _isMarked)
@@ -60,7 +63,12 @@ public class Trail extends Entity
 
 	public void update()
 	{
-		path.add(new Dot(target.getCenterX(), target.getCenterY(), target.isTouchingEdge()));
+		if ((age - scheduledKillAge) > maxAge && isScheduledForKill)
+		{
+			kill(this);
+		}
+		
+		path.add(new Dot(target.getCenterX(), target.getCenterY(), false));
 		
 		age++;
 		
@@ -69,6 +77,12 @@ public class Trail extends Entity
 			path.remove(path.get(0));
 		}
 		
+	}
+	
+	public void scheduleKill()
+	{
+		isScheduledForKill = true;
+		scheduledKillAge = age;
 	}
 
 }
