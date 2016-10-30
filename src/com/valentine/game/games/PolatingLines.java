@@ -3,7 +3,7 @@ package com.valentine.game.games;
 import com.valentine.game.core.*;
 import com.valentine.game.entity.vfx.line.*;
 
-public class PolatingLines extends Game
+public class PolatingLines extends Yame
 {
 	public void assemble()
 	{

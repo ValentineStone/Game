@@ -41,7 +41,7 @@ public class Window
 				
 				Screen.setGraphics(graphics2D);
 				
-				Game.instance().paint();
+				Yame.instance().paint();
 				
 				bufferStrategy.show();
 				

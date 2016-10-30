@@ -44,13 +44,13 @@ public class FpsUpsCounter extends EntityBasicAI
 
 	public void update()
 	{
-		fpsText = " FPS:" + Looper.fps;
-		upsText = " UPS:" + Looper.ups;
+		fpsText = " FPS:" + NotchLoop.fps;
+		upsText = " UPS:" + NotchLoop.ups;
 		
 		n = fpsText.length() > upsText.length() ? fpsText.length() : upsText.length();
 		
-		fps = Looper.fps;
-		ups = Looper.ups;
+		fps = NotchLoop.fps;
+		ups = NotchLoop.ups;
 		
 		if (fps >= 60)
 		{
@@ -70,7 +70,7 @@ public class FpsUpsCounter extends EntityBasicAI
 		}
 		
 		
-		double idealUps = Looper.updatesPerSecond;
+		double idealUps = NotchLoop.updatesPerSecond;
 		
 		if (ups > idealUps + 2)
 		{

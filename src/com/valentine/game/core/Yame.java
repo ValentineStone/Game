@@ -7,11 +7,11 @@ import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.base.Entity;
 import com.valentine.game.games.*;
 
-public abstract class Game extends Container implements ComponentListener
+public class Yame extends Container implements ComponentListener
 {	
-	private static Game game;
+	private static Yame game;
 	
-	public Game()
+	public Yame(Screen _screen)
 	{
 		super(null, 0, 0, 0, 0);
 		
@@ -28,7 +28,7 @@ public abstract class Game extends Container implements ComponentListener
 				instance().componentResized(_componentEvent);
 				instance().assemble();
 				System.err.println("[Game].assemble()");
-				Looper.play();
+				//NotchLoop.play();
 			}
 		});
 	}
@@ -38,7 +38,7 @@ public abstract class Game extends Container implements ComponentListener
 		game = new FlowGame();
 	}
 	
-	public static Game instance()
+	public static Yame instance()
 	{
 		return game;
 	}

@@ -9,7 +9,7 @@ import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.EntityInfoBox;
 
-public class TestChamber extends Game implements KeyListener
+public class TestChamber extends Yame implements KeyListener
 {
 	public void assemble()
 	{	
@@ -70,14 +70,14 @@ public class TestChamber extends Game implements KeyListener
 		{
 			case KeyEvent.VK_ESCAPE:
 			{
-				if (Looper.isRunning()) Looper.pause();
-				else Looper.play();
+				if (NotchLoop.isRunning()) NotchLoop.pause();
+				else NotchLoop.play();
 				
 				break;
 			}
 			case KeyEvent.VK_SPACE:
 			{
-				if (!Looper.isRunning()) Looper.loop();
+				if (!NotchLoop.isRunning()) NotchLoop.loop();
 				
 				break;
 			}

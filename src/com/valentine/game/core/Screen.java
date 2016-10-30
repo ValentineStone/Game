@@ -5,13 +5,25 @@ import java.awt.image.ImageObserver;
 import java.io.*;
 import java.text.AttributedCharacterIterator;
 
-public class Screen
+public abstract class Screen implements Paintable
 {
 	private static Graphics2D graphics;
 	
 	private static Font font;
 	
+	private Paintable paintable;
 	
+	
+	public Paintable getPaintable()
+	{
+		return paintable;
+	}
+
+	public void setPaintable(Paintable _paintable)
+	{
+		paintable = _paintable;
+	}
+
 	public static void init()
 	
 	{
@@ -256,6 +268,9 @@ public class Screen
 	{
 		graphics.setStroke(_stroke);
 	}
+
+	public static void setStaticRedirect(Screen _screen)
+	{}
 	
 	
 	
