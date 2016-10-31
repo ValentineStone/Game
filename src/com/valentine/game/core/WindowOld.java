@@ -8,7 +8,7 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-public class Window
+public class WindowOld
 {
 	private static JFrame jframe;
 	private static Canvas canvas;
@@ -41,7 +41,7 @@ public class Window
 				
 				Screen.setGraphics(graphics2D);
 				
-				Yame.instance().paint();
+				Game.instance().paint();
 				
 				bufferStrategy.show();
 				

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.valentine.game.core.Yame;
+import com.valentine.game.core.Game;
 import com.valentine.game.entity.creatures.Collider;
 import com.valentine.game.entity.ui.Clock;
 import com.valentine.game.entity.ui.FpsUpsCounter;
@@ -13,7 +13,7 @@ import com.valentine.game.entity.vfx.BeepingCircle;
 import com.valentine.game.entity.vfx.Trail;
 import com.valentine.game.utils.MathExt;
 
-public class ClockGame extends Yame
+public class ClockGame extends Game
 {
 	List<Clock> clocks = new ArrayList<Clock>();
 	

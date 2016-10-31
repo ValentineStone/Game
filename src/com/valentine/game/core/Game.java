@@ -7,11 +7,11 @@ import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.base.Entity;
 import com.valentine.game.games.*;
 
-public class Yame extends Container implements ComponentListener
+public class Game extends Container implements ComponentListener
 {	
-	private static Yame game;
+	private static Game game;
 	
-	public Yame(Screen _screen)
+	public Game(Screen _screen)
 	{
 		super(null, 0, 0, 0, 0);
 		
@@ -38,7 +38,7 @@ public class Yame extends Container implements ComponentListener
 		game = new FlowGame();
 	}
 	
-	public static Yame instance()
+	public static Game instance()
 	{
 		return game;
 	}
@@ -70,8 +70,8 @@ public class Yame extends Container implements ComponentListener
 
 	public void componentResized(ComponentEvent _componentEvent)
 	{
-		setWidth(Window.getDimension().getWidth());
-		setHeight(Window.getDimension().getHeight());
+		setWidth(WindowOld.getDimension().getWidth());
+		setHeight(WindowOld.getDimension().getHeight());
 	}
 	
 	public void componentHidden(ComponentEvent _componentEvent)

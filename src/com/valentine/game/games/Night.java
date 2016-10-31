@@ -1,13 +1,13 @@
 package com.valentine.game.games;
 
-import com.valentine.game.core.Yame;
+import com.valentine.game.core.Game;
 import com.valentine.game.entity.ambient.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.vfx.line.*;
 import com.valentine.game.utils.*;
 
-public class Night extends Yame
+public class Night extends Game
 {
 	public void assemble()
 	{

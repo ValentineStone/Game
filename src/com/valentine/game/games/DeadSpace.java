@@ -9,7 +9,7 @@ import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.entity.vfx.*;
 
-public class DeadSpace extends Yame implements KeyListener
+public class DeadSpace extends Game implements KeyListener
 {
 	private boolean NEW_GAME = false;
 	

@@ -1,13 +1,13 @@
 package com.valentine.game.games;
 
-import com.valentine.game.core.Yame;
+import com.valentine.game.core.Game;
 import com.valentine.game.entity.creatures.CatchyCat;
 import com.valentine.game.entity.creatures.FlyingMouse;
 import com.valentine.game.entity.ui.EntityCounter;
 import com.valentine.game.entity.ui.FpsUpsCounter;
 import com.valentine.game.entity.ui.OnPointInfo;
 
-public class CatAndMouseGame extends Yame
+public class CatAndMouseGame extends Game
 {
 	int updateCounter = 0;
 	
