@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.valentine.game.core.Game;
-import com.valentine.game.entity.creatures.Collider;
 import com.valentine.game.entity.ui.FpsUpsCounter;
 import com.valentine.game.entity.ui.OnPointInfo;
 import com.valentine.game.entity.vfx.BeepingCircle;
@@ -15,6 +14,7 @@ public class BeepingCirclesGame extends Game
 {
 	List<BeepingCircle> circles = new ArrayList<BeepingCircle>();
 	
+	@Override
 	public void assemble()
 	{
 		super.assemble();

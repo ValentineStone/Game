@@ -27,14 +27,16 @@ public class PhasedMoon extends Entity implements KeyListener
 		setFillColor(new Color(255, 255, 100));
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getFillColor());
-		Screen.fillOval(getX(), getY(), getWidth(), getHeight());
-		Screen.setColor(getContainer().getFillColor());
-		Screen.fillOval(getX() + getWidth() * getPhase(), getY(), getWidth(), getHeight());
+		_screen.setColor(getFillColor());
+		_screen.fillOval(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getContainer().getFillColor());
+		_screen.fillOval(getX() + getWidth() * getPhase(), getY(), getWidth(), getHeight());
 	}
 
+	@Override
 	public void update()
 	{
 		if (!isPaused()) updatePhase();
@@ -94,6 +96,7 @@ public class PhasedMoon extends Entity implements KeyListener
 		paused = _paused;
 	}
 
+	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -132,10 +135,12 @@ public class PhasedMoon extends Entity implements KeyListener
 		}
 	}
 
+	@Override
 	public void keyReleased(KeyEvent _keyEvent)
 	{
 	}
 
+	@Override
 	public void keyTyped(KeyEvent _keyEvent)
 	{
 	}

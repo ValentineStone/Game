@@ -19,26 +19,28 @@ public class ScrollContainer extends Container implements MouseWheelListener
 		Input.addMouseWheelListener(this);
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getFillColor());
-		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getFillColor());
+		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.localize(getX() + xScroll, getY() + yScroll);
-		Screen.setClip(0, 0, getWidth(), getHeight());
+		_screen.localize(getX() + xScroll, getY() + yScroll);
+		_screen.setClip(0, 0, getWidth(), getHeight());
 		
 		for (Entity entity : items)
 		{
-			if (entity.isPaintable()) entity.paint();
+			if (entity.isPaintable()) entity.paint(null);
 		}
 		
-		Screen.setClip(null);
-		Screen.delocalize(getX() + xScroll, getY() + yScroll);
+		_screen.setClip(null);
+		_screen.delocalize(getX() + xScroll, getY() + yScroll);
 		
-		Screen.setColor(getDrawColor());
-		Screen.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
+		_screen.setColor(getDrawColor());
+		_screen.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
 	}
 
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent _evt)
 	{
 		if (_evt.isAltDown() || _evt.isControlDown() || _evt.isShiftDown())

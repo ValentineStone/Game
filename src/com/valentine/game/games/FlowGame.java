@@ -27,6 +27,7 @@ public class FlowGame extends Game implements KeyListener
 	double maxr = 1000;
 	double minr = 10;
 	
+	@Override
 	public void assemble()
 	{
 		super.assemble();
@@ -40,6 +41,7 @@ public class FlowGame extends Game implements KeyListener
 		
 		circle = new Circle(this, 1)
 		{
+			@Override
 			public void update()
 			{
 				setR(radiusSlider.getValue() * (maxr - minr) + minr);
@@ -60,6 +62,7 @@ public class FlowGame extends Game implements KeyListener
 		//new DragHandler(this, circle);
 	}
 	
+	@Override
 	public void update()
 	{
 		if (stepsToTake > 0)
@@ -104,16 +107,19 @@ public class FlowGame extends Game implements KeyListener
 		}
 	}
 
+	@Override
 	public void keyPressed(KeyEvent _evt)
 	{
 		
 	}
 
+	@Override
 	public void keyReleased(KeyEvent _evt)
 	{
 		
 	}
 
+	@Override
 	public void keyTyped(KeyEvent _evt)
 	{
 		if (_evt.getKeyChar() == ' ')

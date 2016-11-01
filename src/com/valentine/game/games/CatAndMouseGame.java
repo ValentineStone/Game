@@ -13,6 +13,7 @@ public class CatAndMouseGame extends Game
 	
 	CatchyCat cat;
 	
+	@Override
 	public void assemble()
 	{
 		super.assemble();
@@ -26,6 +27,7 @@ public class CatAndMouseGame extends Game
 		new EntityCounter(this, FlyingMouse.class, 10, 200);
 	}
 	
+	@Override
 	public void update()
 	{
 		super.update();

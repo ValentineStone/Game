@@ -42,6 +42,7 @@ public class Rotor2 extends EntityBasicAI implements Explodable
 		setPositionRandom();
 	}
 	
+	@Override
 	public void update()
 	{
 		accelerate();
@@ -57,23 +58,24 @@ public class Rotor2 extends EntityBasicAI implements Explodable
 		}
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		
-		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
-		Screen.setColor(getDrawColor());
-		Screen.drawOval(getX(), getY(), getWidth(), getHeight());
-		Screen.drawLine(
+		_screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.setColor(getDrawColor());
+		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
+		_screen.drawLine(
 				getCenterX(),
 				getCenterY(),
 				getCenterX() + 2 * getVelocityX(),
 				getCenterY() + 2 * getVelocityY()
 				);
-		Screen.setColor(getFillColor());
-		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getFillColor());
+		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
 
-		Screen.fillOval(getX(), getY(), r*2, r*2);
-		Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.fillOval(getX(), getY(), r*2, r*2);
+		_screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}
 	
 	public boolean collide(Rotor2 _rotor)

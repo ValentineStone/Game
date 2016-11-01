@@ -19,9 +19,13 @@ public class Game extends Container implements ComponentListener
 		
 		Input.addComponentListener(new ComponentListener()
 		{
+			@Override
 			public void componentShown(ComponentEvent _componentEvent) {}
+			@Override
 			public void componentHidden(ComponentEvent _componentEvent) {}
+			@Override
 			public void componentMoved(ComponentEvent _componentEvent) {}
+			@Override
 			public void componentResized(ComponentEvent _componentEvent)
 			{
 				Input.removeComponentListener(this);
@@ -57,29 +61,35 @@ public class Game extends Container implements ComponentListener
 	
 	
 	
+	@Override
 	public void update()
 	{
 		if (isUpdatable()) super.update();
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		if (isPaintable()) super.paint();
+		if (isPaintable()) super.paint(_screen);
 	}
 	
 
+	@Override
 	public void componentResized(ComponentEvent _componentEvent)
 	{
 		setWidth(WindowOld.getDimension().getWidth());
 		setHeight(WindowOld.getDimension().getHeight());
 	}
 	
+	@Override
 	public void componentHidden(ComponentEvent _componentEvent)
 	{}
 
+	@Override
 	public void componentMoved(ComponentEvent _componentEvent)
 	{}
 
+	@Override
 	public void componentShown(ComponentEvent _componentEvent)
 	{}
 }

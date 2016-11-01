@@ -37,6 +37,7 @@ public class Killider extends Collider
 		target = _target;
 	}
 	
+	@Override
 	public void update()
 	{
 		targetRotation = MathExt.rotationMake(target.getCenterX() - getCenterX(), target.getCenterY() - getCenterY());
@@ -50,6 +51,7 @@ public class Killider extends Collider
 		super.update();
 	}
 	
+	@Override
 	public boolean kill(Entity _killer)
 	{
 		if (_killer instanceof Explosion) return false;

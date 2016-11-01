@@ -29,29 +29,31 @@ public class EntityInfoBox extends Entity
 		entity = _entity;
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		if (dy == 0) dy = Screen.getGraphics().getFontMetrics().getHeight() + 1;
+		if (dy == 0) dy = _screen.getGraphics().getFontMetrics().getHeight() + 1;
 		
 		HEIGHT = dy * 8;
 		setHeight(HEIGHT);
 		
-		Screen.setColor(getFillColor());
+		_screen.setColor(getFillColor());
 		
-		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
-		Screen.drawString(" Type_____:_" + entity.getClass().getSimpleName(), getX(), getY() + 2 * dy);
-		Screen.drawString(" ID_______:_" + entity.getId(), getX(), getY() + 3 * dy);
-		Screen.drawString(" X________:_" + entity.getX(), getX(), getY() + 4 * dy);
-		Screen.drawString(" Y________:_" + entity.getY(), getX(), getY() + 5 * dy);
-		Screen.drawString(" Velocity_:_" + entity.getVelocity(), getX(), getY() + 6 * dy);
-		Screen.drawString(" Rotation_:_" + entity.getRotation(), getX(), getY() + 7 * dy);
+		_screen.drawString(" Type_____:_" + entity.getClass().getSimpleName(), getX(), getY() + 2 * dy);
+		_screen.drawString(" ID_______:_" + entity.getId(), getX(), getY() + 3 * dy);
+		_screen.drawString(" X________:_" + entity.getX(), getX(), getY() + 4 * dy);
+		_screen.drawString(" Y________:_" + entity.getY(), getX(), getY() + 5 * dy);
+		_screen.drawString(" Velocity_:_" + entity.getVelocity(), getX(), getY() + 6 * dy);
+		_screen.drawString(" Rotation_:_" + entity.getRotation(), getX(), getY() + 7 * dy);
 		
-		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
+		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
 	}
 
+	@Override
 	public void update()
 	{
 		setUpdatable(false);

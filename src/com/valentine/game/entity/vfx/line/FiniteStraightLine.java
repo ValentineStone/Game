@@ -10,6 +10,7 @@ public class FiniteStraightLine extends Line
 		super(_container, _amountOfDots, _dotRadius);
 	}
 	
+	@Override
 	public void update()
 	{
 		super.update();
@@ -28,9 +29,10 @@ public class FiniteStraightLine extends Line
 		}
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		paintDots();
+		paintDots(_screen);
 		
 		double x1 = dots.get(0).x;
 		double y1 = dots.get(0).y;
@@ -41,7 +43,7 @@ public class FiniteStraightLine extends Line
 			for (double y2, x2 = dots.get(i-1).x; x2 < dots.get(i).x; x2 += 0.01)
 			{
 				y2 = dots.get(i-1).y * (dots.get(i).x - x2)/distance + dots.get(i).y * (x2 - dots.get(i-1).x)/distance;
-				Screen.drawLine(x1, y1, x2, y2);
+				_screen.drawLine(x1, y1, x2, y2);
 				x1 = x2;
 				y1 = y2;
 			}

@@ -16,6 +16,7 @@ public class PolynomLine extends Line
 		super(_container, _amountOfDots, _dotRadius);
 	}
 	
+	@Override
 	public void update()
 	{
 		super.update();
@@ -75,9 +76,10 @@ public class PolynomLine extends Line
 		debugLine();
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
 		double x1 = xMin;
 		double x2 = x1;
@@ -87,12 +89,12 @@ public class PolynomLine extends Line
 		for (x2 = xMin; x2 <= xMax; x2 += 0.01)
 		{
 			y2 = calculateY(x2);
-			Screen.drawLine(x1, y1, x2, y2);
+			_screen.drawLine(x1, y1, x2, y2);
 			x1 = x2;
 			y1 = y2;
 		}
 		
-		paintDots();
+		paintDots(_screen);
 	}
 	
 	private double calculateY(double _x)

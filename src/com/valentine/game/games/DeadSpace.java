@@ -15,6 +15,7 @@ public class DeadSpace extends Game implements KeyListener
 	
 	private long tick = 0;
 	
+	@Override
 	public void assemble()
 	{
 		super.assemble();
@@ -64,6 +65,7 @@ public class DeadSpace extends Game implements KeyListener
 	
 	
 	
+	@Override
 	public void update()
 	{
 		if (NEW_GAME)
@@ -101,6 +103,7 @@ public class DeadSpace extends Game implements KeyListener
 	
 	
 	
+	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -123,7 +126,9 @@ public class DeadSpace extends Game implements KeyListener
 		}
 	}
 
+	@Override
 	public void keyReleased(KeyEvent _keyEvent) {}
 
+	@Override
 	public void keyTyped(KeyEvent _keyEvent) {}
 }

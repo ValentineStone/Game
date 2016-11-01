@@ -48,19 +48,21 @@ public class Explosion extends Entity
 		setFillColor(ColorExt.makeTransparent(getDrawColor(), 40));	
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		rI = r + Interpolation.make(dr);
 		
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
-		Screen.drawOval(getX() - rI, getY() - rI, 2 * rI, 2 * rI);
+		_screen.drawOval(getX() - rI, getY() - rI, 2 * rI, 2 * rI);
 		
-		Screen.setColor(getFillColor());
+		_screen.setColor(getFillColor());
 		
-		Screen.fillOval(getX() - rI, getY() - rI, 2 * rI, 2 * rI);
+		_screen.fillOval(getX() - rI, getY() - rI, 2 * rI, 2 * rI);
 	}
 
+	@Override
 	public void update()
 	{
 		if (r > R)

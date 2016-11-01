@@ -47,13 +47,14 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 		slider.setFillColor(getFillColor());
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getFillColor());
-		Screen.fillRoundRect(getX(), getY(), getWidth(), getHeight(), 2*sliderR,2*sliderR);
+		_screen.setColor(getFillColor());
+		_screen.fillRoundRect(getX(), getY(), getWidth(), getHeight(), 2*sliderR,2*sliderR);
 		
-		Screen.setColor(getDrawColor());
-		Screen.drawRoundRect(getX(), getY(), getWidth(), getHeight(), 2*sliderR,2*sliderR);
+		_screen.setColor(getDrawColor());
+		_screen.drawRoundRect(getX(), getY(), getWidth(), getHeight(), 2*sliderR,2*sliderR);
 		/*
 		Screen.drawLine
 		(
@@ -65,6 +66,7 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 		*/
 	}
 
+	@Override
 	public void update()
 	{
 		dragHandler.update();
@@ -114,6 +116,7 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 		}
 	}
 
+	@Override
 	public Double getValue()
 	{
 		return value;

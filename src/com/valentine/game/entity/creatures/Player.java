@@ -51,6 +51,7 @@ public class Player extends EntityBasicAI  implements Explodable, KeyListener
 		Input.addKeyListener(this);
 	}
 
+	@Override
 	public void update()
 	{
 		if (!breaks()) accelerate();
@@ -59,12 +60,13 @@ public class Player extends EntityBasicAI  implements Explodable, KeyListener
 		movementFlagsToRotation();
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		if (isMoving() && !isTouchingEdge())
-			Screen.drawImage(image, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()), null);
+			_screen.drawImage(image, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()), null);
 		else
-			Screen.drawImage(image, getX(), getY(), null);
+			_screen.drawImage(image, getX(), getY(), null);
 	}
 
 	
@@ -199,6 +201,7 @@ public class Player extends EntityBasicAI  implements Explodable, KeyListener
 	
 	
 	
+	@Override
 	public boolean kill(Entity _killer)
 	{
 		if (INVULNERABLE) return false;
@@ -217,6 +220,7 @@ public class Player extends EntityBasicAI  implements Explodable, KeyListener
 	
 	
 	
+	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -332,6 +336,7 @@ public class Player extends EntityBasicAI  implements Explodable, KeyListener
 		}
 	}
 
+	@Override
 	public void keyReleased(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -373,5 +378,6 @@ public class Player extends EntityBasicAI  implements Explodable, KeyListener
 		}
 	}
 
+	@Override
 	public void keyTyped(KeyEvent _keyEvent) {}
 }

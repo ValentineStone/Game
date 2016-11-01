@@ -11,6 +11,7 @@ import com.valentine.game.entity.ui.EntityInfoBox;
 
 public class TestChamber extends Game implements KeyListener
 {
+	@Override
 	public void assemble()
 	{	
 		Input.addKeyListener(this);
@@ -64,6 +65,7 @@ public class TestChamber extends Game implements KeyListener
 		Link rotorLink3 = new Link(rotor3, rotor1);
 	}
 
+	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -87,7 +89,9 @@ public class TestChamber extends Game implements KeyListener
 		}
 	}
 
+	@Override
 	public void keyReleased(KeyEvent _keyEvent) {}
 
+	@Override
 	public void keyTyped(KeyEvent _keyEvent) {}
 }

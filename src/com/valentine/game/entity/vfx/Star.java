@@ -54,13 +54,15 @@ public class Star extends Layer implements KeyListener
 		left = new StarSide(this, 0, xTop, yTop, xLeft, yLeft);
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(Color.MAGENTA);
-		super.paint();
-		Screen.drawString("LEVEL: " + level, getX(), getY() + 30);
+		_screen.setColor(Color.MAGENTA);
+		super.paint(_screen);
+		_screen.drawString("LEVEL: " + level, getX(), getY() + 30);
 	}
 	
+	@Override
 	public void update()
 	{
 		super.update();
@@ -84,6 +86,7 @@ public class Star extends Layer implements KeyListener
 		}
 	}
 
+	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch(_keyEvent.getKeyChar())
@@ -102,7 +105,9 @@ public class Star extends Layer implements KeyListener
 		}
 	}
 	
+	@Override
 	public void keyTyped(KeyEvent _keyEvent) {}
+	@Override
 	public void keyReleased(KeyEvent _keyEvent) {}
 }
 
@@ -156,17 +161,19 @@ class StarSide extends Entity
 		update();
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		//Screen.setColor(getDrawColor());
 		if (uno != null && duo != null && tre != null && qtr != null) return;
 		
-		Screen.drawLine(xBeg, yBeg, x2, y2);
-		Screen.drawLine(x2, y2, x3, y3);
-		Screen.drawLine(x3, y3, x4, y4);
-		Screen.drawLine(x4, y4, xEnd, yEnd);
+		_screen.drawLine(xBeg, yBeg, x2, y2);
+		_screen.drawLine(x2, y2, x3, y3);
+		_screen.drawLine(x3, y3, x4, y4);
+		_screen.drawLine(x4, y4, xEnd, yEnd);
 	}
 
+	@Override
 	public void update()
 	{
 		if (level < ((Star)getContainer()).level)

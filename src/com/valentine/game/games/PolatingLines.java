@@ -5,6 +5,7 @@ import com.valentine.game.entity.vfx.line.*;
 
 public class PolatingLines extends Game
 {
+	@Override
 	public void assemble()
 	{
 		super.assemble();

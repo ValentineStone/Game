@@ -15,14 +15,16 @@ public class Circle extends EntityBasicAI
 		setPositionRandom();
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getFillColor());
-		Screen.fillOval(getX(), getY(), getWidth(), getHeight());
-		Screen.setColor(getDrawColor());
-		Screen.drawOval(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getFillColor());
+		_screen.fillOval(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getDrawColor());
+		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
 	}
 
+	@Override
 	public void update()
 	{
 		setUpdatable(false);

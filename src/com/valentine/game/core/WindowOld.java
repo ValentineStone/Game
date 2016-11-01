@@ -1,9 +1,6 @@
 package com.valentine.game.core;
 
-import java.awt.Canvas;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
@@ -28,6 +25,7 @@ public class WindowOld
 			BufferStrategy bufferStrategy = null;
 			Graphics2D graphics2D;
 
+			@Override
 			public void repaint()
 			{
 				if (bufferStrategy == null)
@@ -39,9 +37,10 @@ public class WindowOld
 				
 				graphics2D = (Graphics2D)bufferStrategy.getDrawGraphics();
 				
-				Screen.setGraphics(graphics2D);
+				System.err.println("Static call of Screen is no longer supported");
+				//Screen.setGraphics(graphics2D);
 				
-				Game.instance().paint();
+				Game.instance().paint(null);
 				
 				bufferStrategy.show();
 				
@@ -66,7 +65,7 @@ public class WindowOld
 		
 		if (isFullscreen) {
 			jframe.setUndecorated(true);
-			jframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			jframe.setExtendedState(Frame.MAXIMIZED_BOTH);
 			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jframe);
 		}
 		else {

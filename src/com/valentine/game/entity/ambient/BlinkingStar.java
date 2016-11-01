@@ -20,12 +20,14 @@ public class BlinkingStar extends Entity
 		dr = MathExt.random(maxr / 100, maxr / 5);
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getDrawColor());
-		Screen.fillRect(getX() - r, getY() - r, r, r);
+		_screen.setColor(getDrawColor());
+		_screen.fillRect(getX() - r, getY() - r, r, r);
 	}
 
+	@Override
 	public void update()
 	{
 		r += dr;

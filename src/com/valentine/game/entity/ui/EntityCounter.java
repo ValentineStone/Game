@@ -25,21 +25,23 @@ public class EntityCounter extends Entity
 		setWidth(200);
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		if (dy == 0) dy = Screen.getGraphics().getFontMetrics().getHeight() + 1;
+		if (dy == 0) dy = _screen.getGraphics().getFontMetrics().getHeight() + 1;
 		
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
-		Screen.drawString(" " + targetClass.getSimpleName(), getX(), getY() + 2 * dy);
-		Screen.drawString(" current_:_" + count, getX(), getY() + 3 * dy);
-		Screen.drawString(" max_____:_" + maxCount, getX(), getY() + 4 * dy);
+		_screen.drawString(" " + targetClass.getSimpleName(), getX(), getY() + 2 * dy);
+		_screen.drawString(" current_:_" + count, getX(), getY() + 3 * dy);
+		_screen.drawString(" max_____:_" + maxCount, getX(), getY() + 4 * dy);
 		
 		setHeight(dy * 5);
 		
-		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
+		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
 	}
 
+	@Override
 	public void update()
 	{
 		count = 0;

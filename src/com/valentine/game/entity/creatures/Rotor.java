@@ -58,6 +58,7 @@ public class Rotor extends EntityBasicAI implements Explodable
 	
 	
 	
+	@Override
 	public void update()
 	{
 		accelerate();
@@ -79,7 +80,8 @@ public class Rotor extends EntityBasicAI implements Explodable
 		innerRotation += (getVelocity()/getVelocityMax()) * INNER_ROTATION_ACCELERATION;
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		double polatedInnerRotation = innerRotation + Interpolation.make((getVelocity()/getVelocityMax()) * INNER_ROTATION_ACCELERATION);
 		
@@ -90,25 +92,25 @@ public class Rotor extends EntityBasicAI implements Explodable
 		x3 = getCenterX() + r * Math.cos(MathExt.rotationNormalize(polatedInnerRotation + 4*Math.PI/3));
 		y3 = getCenterY() + r * Math.sin(MathExt.rotationNormalize(polatedInnerRotation + 4*Math.PI/3));
 		
-		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
-		Screen.setColor(getFillColor());
-		Screen.fillOval(getX(), getY(), getWidth(), getHeight());
-		Screen.setColor(getDrawColor());
-		Screen.drawOval(getX(), getY(), getWidth(), getHeight());
-		Screen.drawLine(x1, y1, x2, y2);
-		Screen.drawLine(x2, y2, x3, y3);
-		Screen.drawLine(x3, y3, x1, y1);
-		Screen.drawLine(getCenterX(), getCenterY(), x1, y1);
-		Screen.drawLine(getCenterX(), getCenterY(), x2, y2);
-		Screen.drawLine(getCenterX(), getCenterY(), x3, y3);
-		Screen.drawLine(
+		_screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.setColor(getFillColor());
+		_screen.fillOval(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getDrawColor());
+		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
+		_screen.drawLine(x1, y1, x2, y2);
+		_screen.drawLine(x2, y2, x3, y3);
+		_screen.drawLine(x3, y3, x1, y1);
+		_screen.drawLine(getCenterX(), getCenterY(), x1, y1);
+		_screen.drawLine(getCenterX(), getCenterY(), x2, y2);
+		_screen.drawLine(getCenterX(), getCenterY(), x3, y3);
+		_screen.drawLine(
 						getCenterX() + Math.cos(getRotation())*r,
 						getCenterY() + Math.sin(getRotation())*r,
 						getCenterX() + Math.cos(getRotation())*r + 2 * getVelocityX(),
 						getCenterY() + Math.sin(getRotation())*r + 2 * getVelocityY()
 						);
-		Screen.drawString(getId()+"", getX() + getWidth() + 3, getY() - 3);
-		Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.drawString(getId()+"", getX() + getWidth() + 3, getY() - 3);
+		_screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}
 	
 	public boolean collide(Rotor _rotor)

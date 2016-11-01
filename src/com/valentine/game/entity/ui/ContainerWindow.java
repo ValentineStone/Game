@@ -20,6 +20,7 @@ public class ContainerWindow extends Container
 		dragHandler.setUpdatable(false);
 	}
 	
+	@Override
 	public void update()
 	{
 		dragHandler.update();

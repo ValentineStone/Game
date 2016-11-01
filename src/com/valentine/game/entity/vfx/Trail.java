@@ -42,25 +42,27 @@ public class Trail extends Entity
 		setDrawColor(ColorExt.randomColor(70, 255));
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		if (path.size() < 2)
 		{
 			return;
 		}
 		
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
 		for (int i = 1; i < path.size(); i++)
 		{
-			Screen.drawLine(path.get(i-1).x, path.get(i-1).y, path.get(i).x, path.get(i).y);
+			_screen.drawLine(path.get(i-1).x, path.get(i-1).y, path.get(i).x, path.get(i).y);
 			if (path.get(i).isMarked)
 			{
-				Screen.drawOval(path.get(i).x - 5, path.get(i).y - 5, 10, 10);
+				_screen.drawOval(path.get(i).x - 5, path.get(i).y - 5, 10, 10);
 			}
 		}
 	}
 
+	@Override
 	public void update()
 	{
 		if ((age - scheduledKillAge) > maxAge && isScheduledForKill)

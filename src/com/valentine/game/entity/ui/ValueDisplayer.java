@@ -16,27 +16,31 @@ public class ValueDisplayer extends Rect
 		setPosition(_x, _y);
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		super.paint();
+		super.paint(_screen);
 		
-		Screen.drawString
+		_screen.drawString
 		(
 			value.toString(),
-			getX() + Screen.getGraphics().getFontMetrics().getHeight(),
-			getY() + 2*Screen.getGraphics().getFontMetrics().getHeight()
+			getX() + _screen.getGraphics().getFontMetrics().getHeight(),
+			getY() + 2*_screen.getGraphics().getFontMetrics().getHeight()
 		);
 	}
 
+	@Override
 	public void update()
 	{
 		value = valuable.getValue();
+
+		System.err.println("Static screen call is no longer supported");
 		
-		setSize
+		/*setSize
 		(
 			(value.toString().length() + 2) * Screen.getGraphics().getFontMetrics().getHeight(),
 			3 * Screen.getGraphics().getFontMetrics().getHeight()
-		);
+		);*/
 	}
 
 }

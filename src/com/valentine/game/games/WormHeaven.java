@@ -10,6 +10,7 @@ import com.valentine.game.entity.vfx.*;
 
 public class WormHeaven extends Game
 {
+	@Override
 	public void assemble()
 	{
 		super.assemble();

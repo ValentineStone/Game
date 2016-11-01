@@ -134,6 +134,7 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 	
+	@Override
 	public void update()
 	{
 		if (!dotsForDeletion.isEmpty())
@@ -150,25 +151,26 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
 		for (int i = 1; i < size(); i++)
 		{
-			Screen.drawLine(getDot(i-1).x, getDot(i-1).y, getDot(i).x, getDot(i).y);
+			_screen.drawLine(getDot(i-1).x, getDot(i-1).y, getDot(i).x, getDot(i).y);
 		}
 		
-		paintDots();
+		paintDots(_screen);
 	}
 	
-	public void paintDots()
+	public void paintDots(Screen _screen)
 	{
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
 		for (int i = 0; i < size(); i++)
 		{
-			Screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius), (dotRadius + dotRadius));
+			_screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius), (dotRadius + dotRadius));
 		}
 	}
 	
@@ -178,6 +180,7 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 	
+	@Override
 	public boolean kill(Entity _killer)
 	{
 		Input.removeKeyListener(this);
@@ -192,6 +195,7 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 	
 	
 
+	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -209,16 +213,22 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		}
 	}
 
+	@Override
 	public void keyReleased(KeyEvent _keyEvent) {}
 
+	@Override
 	public void keyTyped(KeyEvent _keyEvent) {}
 
+	@Override
 	public void mouseClicked(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mouseEntered(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mouseExited(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mousePressed(MouseEvent _mouseEvent)
 	{
 		if (_mouseEvent.getButton() == MouseEvent.BUTTON3)
@@ -234,16 +244,19 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		}
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent _mouseEvent)
 	{
 		selected = null;
 	}
 
+	@Override
 	public void mouseDragged(MouseEvent _mouseEvent)
 	{
 		mouseMoved(_mouseEvent);
 	}
 
+	@Override
 	public void mouseMoved(MouseEvent _mouseEvent)
 	{
 		if (selected != null)

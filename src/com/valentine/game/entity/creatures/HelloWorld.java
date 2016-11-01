@@ -28,6 +28,7 @@ public class HelloWorld extends EntityBasicAI
 					);
 	}
 	
+	@Override
 	public void update()
 	{
 		accelerate();
@@ -36,9 +37,10 @@ public class HelloWorld extends EntityBasicAI
 
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{		
-		Screen.setColor(getDrawColor());
-		Screen.drawString(text, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()));
+		_screen.setColor(getDrawColor());
+		_screen.drawString(text, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()));
 	}
 }

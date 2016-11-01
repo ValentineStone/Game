@@ -3,7 +3,6 @@ package com.valentine.game.entity.ui;
 import java.awt.Color;
 
 import com.valentine.game.core.*;
-import com.valentine.game.core.basic.EntityNew;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.*;
 
@@ -35,11 +34,13 @@ public class ColorGrader extends Entity
 		}
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		setPaintable(false);
 	}
 
+	@Override
 	public void update()
 	{
 		if (doForeground)

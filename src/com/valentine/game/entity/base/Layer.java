@@ -9,17 +9,18 @@ public class Layer extends Container {
 		super(_container, _x, _y, 0, 0);
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		
-		Screen.localize(getX(), getY());
+		_screen.localize(getX(), getY());
 		
 		for (Entity entity : items)
 		{
-			if (entity.isPaintable()) entity.paint();
+			if (entity.isPaintable()) entity.paint(null);
 		}
 		
-		Screen.delocalize(getX(), getY());
+		_screen.delocalize(getX(), getY());
 	}
 
 }

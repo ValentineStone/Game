@@ -44,6 +44,7 @@ public class DragHandler extends Entity implements MouseListener, MouseMotionLis
 		this(_container, _entity, Orientation.XY);
 	}
 
+	@Override
 	public void update()
 	{
 		if (selected)
@@ -54,7 +55,8 @@ public class DragHandler extends Entity implements MouseListener, MouseMotionLis
 		}
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		setPaintable(false);
 	}
@@ -65,6 +67,7 @@ public class DragHandler extends Entity implements MouseListener, MouseMotionLis
 		y = entity.getY();
 	}
 	
+	@Override
 	public boolean kill(Entity _killer)
 	{
 		Input.removeMouseListener(this);
@@ -76,12 +79,16 @@ public class DragHandler extends Entity implements MouseListener, MouseMotionLis
 	
 
 
+	@Override
 	public void mouseClicked(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mouseEntered(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mouseExited(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mousePressed(MouseEvent _mouseEvent)
 	{
 		if
@@ -99,16 +106,19 @@ public class DragHandler extends Entity implements MouseListener, MouseMotionLis
 		}
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent _mouseEvent)
 	{
 		selected = false;
 	}
 
+	@Override
 	public void mouseDragged(MouseEvent _mouseEvent)
 	{
 		mouseMoved(_mouseEvent);
 	}
 
+	@Override
 	public void mouseMoved(MouseEvent _mouseEvent)
 	{
 		if (selected)

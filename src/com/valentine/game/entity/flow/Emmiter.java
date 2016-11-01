@@ -18,13 +18,16 @@ public class Emmiter extends EntityBasicAI implements MouseWheelListener
 		handle = new Handle(_container);
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{}
 
+	@Override
 	public void update()
 	{
 	}
 
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent _evt)
 	{
 		setWidth(getWidth() + _evt.getUnitsToScroll());
@@ -49,6 +52,7 @@ class Handle extends Circle implements MouseWheelListener
 		Input.addMouseWheelListener(this);
 	}
 	
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent _e)
 	{
 		dSize += _e.getUnitsToScroll();

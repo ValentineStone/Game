@@ -3,7 +3,6 @@ package com.valentine.game.entity.polarcoordinated;
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.geometry.*;
-import com.valentine.game.entity.objects.*;
 import com.valentine.game.entity.vfx.*;
 import com.valentine.game.utils.*;
 
@@ -39,13 +38,15 @@ public class Particle extends EntityBasicAI
 		setDrawColor(ColorExt.randomColor(30, 255));
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		//Screen.drawRect(getX(), getY(), 2, 2);
-		Screen.drawLine(getX(), getY(), getX(), getY());
+		_screen.drawLine(getX(), getY(), getX(), getY());
 	}
 
+	@Override
 	public void update()
 	{
 		//System.err.println("(" + getX() + ", " + getY() + ")\n" + "[" + a + ", " + r + "]\n" + "da: " + da + " dr: " + dr);

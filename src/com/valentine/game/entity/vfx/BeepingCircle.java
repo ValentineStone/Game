@@ -48,11 +48,12 @@ public class BeepingCircle extends EntityBasicAI
 		setPosition(_x, _y);
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
-		Screen.setColor(getDrawColor());
-		Screen.drawOval(getX(), getY(), getWidth(), getHeight());
+		_screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.setColor(getDrawColor());
+		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
 		
 		double indicatorSize = 50;
 		double maxX = getCenterX() + Math.cos(rmax) * indicatorSize;
@@ -62,15 +63,16 @@ public class BeepingCircle extends EntityBasicAI
 		double rX = getCenterX() + Math.cos(getRotation()) * indicatorSize;
 		double rY = getCenterY() + Math.sin(getRotation()) * indicatorSize;
 		
-		Screen.drawLine(getCenterX(), getCenterY(), maxX, maxY);
-		Screen.drawString("max:" + String.format("%.3f", rmax), maxX, maxY);
-		Screen.drawLine(getCenterX(), getCenterY(), minX, minY);
-		Screen.drawString("min:" + String.format("%.3f", rmin), minX, minY);
-		Screen.drawLine(getCenterX(), getCenterY(), rX, rY);
-		Screen.drawString(String.format("%.3f", getRotation()), rX, rY);
-		Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.drawLine(getCenterX(), getCenterY(), maxX, maxY);
+		_screen.drawString("max:" + String.format("%.3f", rmax), maxX, maxY);
+		_screen.drawLine(getCenterX(), getCenterY(), minX, minY);
+		_screen.drawString("min:" + String.format("%.3f", rmin), minX, minY);
+		_screen.drawLine(getCenterX(), getCenterY(), rX, rY);
+		_screen.drawString(String.format("%.3f", getRotation()), rX, rY);
+		_screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}
 
+	@Override
 	public void update()
 	{
 		boolean wasTouching = isTouchingFriend;
@@ -153,7 +155,8 @@ public class BeepingCircle extends EntityBasicAI
 
 	        clip.addLineListener(new LineListener()
 	        {
-	            public void update(LineEvent event)
+	            @Override
+				public void update(LineEvent event)
 	            {
 	                if (event.getType() == LineEvent.Type.STOP)
 	                    clip.close();

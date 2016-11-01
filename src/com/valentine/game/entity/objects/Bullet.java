@@ -37,21 +37,23 @@ public class Bullet extends EntityBasicAI implements Explodable
 		master = _master;
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 		
-		Screen.setColor(Color.RED);
-		Screen.drawLine(x0, y0, getX(), getY());
+		_screen.setColor(Color.RED);
+		_screen.drawLine(x0, y0, getX(), getY());
 		
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
-		Screen.drawOval(getX() - 2, getY() - 2, 4, 4);
-		Screen.fillOval(getX() - 2, getY() - 2, 4, 4);
+		_screen.drawOval(getX() - 2, getY() - 2, 4, 4);
+		_screen.fillOval(getX() - 2, getY() - 2, 4, 4);
 		
-		Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}
 
+	@Override
 	public void update()
 	{
 		x0 = getX();

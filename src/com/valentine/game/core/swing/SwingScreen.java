@@ -333,6 +333,7 @@ class Window
 			BufferStrategy bufferStrategy = null;
 			Graphics2D graphics2D;
 
+			@Override
 			public void repaint()
 			{
 				if (bufferStrategy == null)
@@ -343,7 +344,8 @@ class Window
 				
 				graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
 				
-				Screen.setGraphics(graphics2D);
+				System.err.println("Static call of Screen is no longer supported");
+				//Screen.setGraphics(graphics2D);
 				
 				paintable.paint();
 				
@@ -371,7 +373,7 @@ class Window
 		if (isFullscreen)
 		{
 			jframe.setUndecorated(true);
-			jframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			jframe.setExtendedState(Frame.MAXIMIZED_BOTH);
 			GraphicsEnvironment
 				.getLocalGraphicsEnvironment()
 				.getDefaultScreenDevice()

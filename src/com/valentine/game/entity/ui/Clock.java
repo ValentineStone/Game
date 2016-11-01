@@ -37,26 +37,28 @@ public class Clock extends EntityBasicAI
 		setPositionCentered();
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getFillColor());
-		Screen.fillOval(getX(), getY(), getWidth(), getHeight());
-		Screen.setColor(getDrawColor());
-		Screen.drawOval(getX(), getY(), getWidth(), getHeight());
-		Screen.setStroke(hourStroke);
-		Screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(hourRotation), getCenterY() + getInnerR() * Math.sin(hourRotation));
-		Screen.setStroke(minStroke);
-		Screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(minRotation), getCenterY() + getInnerR() * Math.sin(minRotation));
-		Screen.setStroke(secStroke);
-		Screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(secRotation), getCenterY() + getInnerR() * Math.sin(secRotation));
+		_screen.setColor(getFillColor());
+		_screen.fillOval(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getDrawColor());
+		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
+		_screen.setStroke(hourStroke);
+		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(hourRotation), getCenterY() + getInnerR() * Math.sin(hourRotation));
+		_screen.setStroke(minStroke);
+		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(minRotation), getCenterY() + getInnerR() * Math.sin(minRotation));
+		_screen.setStroke(secStroke);
+		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(secRotation), getCenterY() + getInnerR() * Math.sin(secRotation));
 		
-		Screen.fillOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2*cntrDotRad, 2*cntrDotRad);
-		Screen.setColor(getFillColor());
-		Screen.fillOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2*cntrDotRad, 2*cntrDotRad);
-		Screen.setColor(getDrawColor());
-		Screen.drawOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2*cntrDotRad, 2*cntrDotRad);
+		_screen.fillOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2*cntrDotRad, 2*cntrDotRad);
+		_screen.setColor(getFillColor());
+		_screen.fillOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2*cntrDotRad, 2*cntrDotRad);
+		_screen.setColor(getDrawColor());
+		_screen.drawOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2*cntrDotRad, 2*cntrDotRad);
 	}
 
+	@Override
 	public void update()
 	{
 		calendar = Calendar.getInstance();

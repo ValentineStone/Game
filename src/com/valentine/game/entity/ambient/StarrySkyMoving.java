@@ -40,15 +40,17 @@ public class StarrySkyMoving extends Entity
 	
 	
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		for (int i = 0; i < Stars.length; i++)
 		{
-			Screen.setColor(shadesOfColor[Stars[i].type][Stars[i].brightness]);
-			Screen.fillRect(Stars[i].x + Interpolation.make(Stars[i].dx), Stars[i].y, Stars[i].size, Stars[i].size);
+			_screen.setColor(shadesOfColor[Stars[i].type][Stars[i].brightness]);
+			_screen.fillRect(Stars[i].x + Interpolation.make(Stars[i].dx), Stars[i].y, Stars[i].size, Stars[i].size);
 		}
 	}
 
+	@Override
 	public void update()
 	{
 		for (int i = 0; i < Stars.length; i++)

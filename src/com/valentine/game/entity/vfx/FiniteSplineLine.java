@@ -12,6 +12,7 @@ public class FiniteSplineLine extends Line
 		super(_container, _amountOfDots, _dotRadius);
 	}
 	
+	@Override
 	public void update()
 	{
 		super.update();
@@ -30,9 +31,10 @@ public class FiniteSplineLine extends Line
 		}
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		paintDots();
+		paintDots(_screen);
 		
 		double x1 = dots.get(0).x;
 		double y1 = dots.get(0).y;
@@ -47,7 +49,7 @@ public class FiniteSplineLine extends Line
 				double up   = (Math.sin(MathExt.PI_1_1 * done - MathExt.PI_1_2) + 1) / 2.;
 				//System.err.println(down + " " + up);
 				y2 = dots.get(i-1).y * down + dots.get(i).y * up;
-				Screen.drawLine(x1, y1, x2, y2);
+				_screen.drawLine(x1, y1, x2, y2);
 				x1 = x2;
 				y1 = y2;
 			}

@@ -197,6 +197,7 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 	
 	
 	
+	@Override
 	public void update()
 	{
 		boolean needsMakeT = false;
@@ -229,44 +230,45 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 	
 	
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
 		switch (getStyle())
 		{
 			case LAGRANGE:
 			{
-				paintLagrange();
+				paintLagrange(_screen);
 				break;
 			}
 			case BEZIER:
 			{
-				paintBezier();
+				paintBezier(_screen);
 				break;
 			}
 			default:
 			{
-				paintStraight();
+				paintStraight(_screen);
 			}
 		}
-		paintDots();
+		paintDots(_screen);
 	}
 	
-	private void paintStraight()
+	private void paintStraight(Screen _screen)
 	{
 		for (int i = 1; i < size(); i++)
 		{
-			Screen.drawLine(getDot(i-1).x, getDot(i-1).y, getDot(i).x, getDot(i).y);
+			_screen.drawLine(getDot(i-1).x, getDot(i-1).y, getDot(i).x, getDot(i).y);
 		}
 		
 		for (int i = 0; i < size(); i++)
 		{
-			Screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius), (dotRadius + dotRadius));
+			_screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius), (dotRadius + dotRadius));
 		}
 	}
 	
-	private void paintLagrange()
+	private void paintLagrange(Screen _screen)
 	{
 		int n = dots.size();
 	
@@ -297,14 +299,14 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 				
 			}
 			
-			Screen.drawLine(x_old, y_old, x, y);
+			_screen.drawLine(x_old, y_old, x, y);
 			
 			x_old = x;
 			y_old = y;
 		}
 	}
 	
-	private void paintBezier()
+	private void paintBezier(Screen _screen)
 	{
 		int n = dots.size();
 		
@@ -328,19 +330,19 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 				y +=  coeficent * getDot(i).y;
 			}
 			
-			Screen.drawLine(x_old, y_old, x, y);
+			_screen.drawLine(x_old, y_old, x, y);
 			
 			x_old = x;
 			y_old = y;
 		}
 	}
 	
-	private void paintDots()
+	private void paintDots(Screen _screen)
 	{
 		for (int i = 0; i < dots.size(); i++)
 		{
-			Screen.drawOval(getDot(i).x - getDotRadius(), getDot(i).y - getDotRadius(), 2 * getDotRadius(), 2 * getDotRadius());
-			Screen.drawString(i + "", getDot(i).x + getDotRadius(), getDot(i).y - getDotRadius());
+			_screen.drawOval(getDot(i).x - getDotRadius(), getDot(i).y - getDotRadius(), 2 * getDotRadius(), 2 * getDotRadius());
+			_screen.drawString(i + "", getDot(i).x + getDotRadius(), getDot(i).y - getDotRadius());
 		}
 	}
 	
@@ -350,6 +352,7 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 	
 	
 	
+	@Override
 	public boolean kill(Entity _killer)
 	{
 		Input.removeKeyListener(this);
@@ -364,6 +367,7 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 	
 	
 
+	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -403,16 +407,22 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 		
 	}
 
+	@Override
 	public void keyReleased(KeyEvent _keyEvent) {}
 
+	@Override
 	public void keyTyped(KeyEvent _keyEvent) {}
 
+	@Override
 	public void mouseClicked(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mouseEntered(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mouseExited(MouseEvent _mouseEvent) {}
 
+	@Override
 	public void mousePressed(MouseEvent _mouseEvent)
 	{
 		if (_mouseEvent.getButton() == MouseEvent.BUTTON3)
@@ -428,16 +438,19 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 		}
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent _mouseEvent)
 	{
 		selected = null;
 	}
 
+	@Override
 	public void mouseDragged(MouseEvent _mouseEvent)
 	{
 		mouseMoved(_mouseEvent);
 	}
 
+	@Override
 	public void mouseMoved(MouseEvent _mouseEvent)
 	{
 		if (selected != null)

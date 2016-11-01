@@ -38,6 +38,7 @@ public class Collider extends EntityBasicAI implements Explodable
 		setFillColor(ColorExt.makeTransparent(getDrawColor(), 20));
 	}
 	
+	@Override
 	public void update()
 	{		
 		setRotation(getRotation() + getRotationVelocity());
@@ -58,28 +59,29 @@ public class Collider extends EntityBasicAI implements Explodable
 	
 	
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{		
-		Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 		
-		Screen.setColor(getFillColor());
+		_screen.setColor(getFillColor());
 		
-		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
-		Screen.drawRect(getX(), getY(),  getWidth(), getHeight());
+		_screen.drawRect(getX(), getY(),  getWidth(), getHeight());
 		
-		Screen.drawString(String.valueOf(getId()), getX() + getWidth() + 3, getY() - 3);
+		_screen.drawString(String.valueOf(getId()), getX() + getWidth() + 3, getY() - 3);
 
-		Screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getVelocityX(), getCenterY() + getVelocityY());
+		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getVelocityX(), getCenterY() + getVelocityY());
 		
 		if (getWidth() < getHeight()) 
-			Screen.drawOval(getX(), getCenterY() - getWidth()/2, getWidth(), getWidth());
+			_screen.drawOval(getX(), getCenterY() - getWidth()/2, getWidth(), getWidth());
 		else
-			Screen.drawOval(getCenterX() - getHeight()/2, getY(), getHeight(), getHeight());
+			_screen.drawOval(getCenterX() - getHeight()/2, getY(), getHeight(), getHeight());
 		
-		Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+		_screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}
 	
 	private boolean isColliding(Collider _collider)

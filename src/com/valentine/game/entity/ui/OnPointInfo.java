@@ -19,15 +19,17 @@ public class OnPointInfo extends EntityInfoBox implements MouseMotionListener
 		Input.addMouseMotionListener(this);
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		if (target == null || getEntity() == null)
 		{		
 			setEntity(getContainer());
 		}
-		super.paint();
+		super.paint(_screen);
 	}
 	
+	@Override
 	public void update()
 	{
 		boolean found = false;
@@ -47,12 +49,14 @@ public class OnPointInfo extends EntityInfoBox implements MouseMotionListener
 		setEntity(target);
 	}
 
+	@Override
 	public void mouseMoved(MouseEvent _mouseEvent)
 	{
 		mouseX = _mouseEvent.getX() - getContainer().getTrueX();
 		mouseY = _mouseEvent.getY() - getContainer().getTrueY();
 	}
 	
+	@Override
 	public void mouseDragged(MouseEvent _mouseEvent) {}
 	
 

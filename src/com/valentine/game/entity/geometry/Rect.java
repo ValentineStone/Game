@@ -11,15 +11,17 @@ public class Rect extends EntityBasicAI
 		super(_container);
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getFillColor());
-		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getFillColor());
+		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.setColor(getDrawColor());
-		Screen.drawRect(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getDrawColor());
+		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
 	}
 
+	@Override
 	public void update()
 	{
 		setUpdatable(false);

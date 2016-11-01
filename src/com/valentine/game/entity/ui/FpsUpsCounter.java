@@ -29,19 +29,21 @@ public class FpsUpsCounter extends EntityBasicAI
 		setDrawColor(Color.WHITE);
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		if (dy == 0) dy = Screen.getGraphics().getFontMetrics().getHeight() + 1;
+		if (dy == 0) dy = _screen.getGraphics().getFontMetrics().getHeight() + 1;
 		
-		Screen.setColor(getDrawColor());
-		Screen.drawRect(getX(), getY(), (n + 1) * dy, 4 * dy);
+		_screen.setColor(getDrawColor());
+		_screen.drawRect(getX(), getY(), (n + 1) * dy, 4 * dy);
 		
-		Screen.setColor(fpsColor);
-		Screen.drawString(fpsText, getX(), getY() + 2 * dy);
-		Screen.setColor(upsColor);
-		Screen.drawString(upsText, getX(), getY() + 3 * dy);
+		_screen.setColor(fpsColor);
+		_screen.drawString(fpsText, getX(), getY() + 2 * dy);
+		_screen.setColor(upsColor);
+		_screen.drawString(upsText, getX(), getY() + 3 * dy);
 	}
 
+	@Override
 	public void update()
 	{
 		fpsText = " FPS:" + -1;//NotchLoop.fps;

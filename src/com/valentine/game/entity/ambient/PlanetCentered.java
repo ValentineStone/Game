@@ -31,15 +31,17 @@ public class PlanetCentered extends Entity
 		setTargetColor(ColorExt.randomColor(20, 255));
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		double x = getX() + getD() * MathExt.rotationMakeX(getAngle());
 		double y = getY() + getD() * MathExt.rotationMakeY(getAngle());
 		
-		Screen.setColor(getFillColor());
-		Screen.fillOval(x, y, getWidth(), getHeight());
+		_screen.setColor(getFillColor());
+		_screen.fillOval(x, y, getWidth(), getHeight());
 	}
 
+	@Override
 	public void update()
 	{
 		setAngle(MathExt.rotationNormalize(getAngle() + getdAngle()));

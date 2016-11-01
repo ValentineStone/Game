@@ -40,6 +40,7 @@ public final class NotchLoop
 			new Runnable()
 			{
 				
+				@Override
 				public void run()
 				{
 					update();

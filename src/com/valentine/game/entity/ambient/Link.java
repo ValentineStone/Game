@@ -25,12 +25,14 @@ public class Link extends Entity {
 		source = _source;
 	}
 	
+	@Override
 	public void update() {}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
 		if (destination.getDrawColor() != ColorExt.TRANSPARENT) drawColor = destination.getDrawColor();
-		Screen.setColor(drawColor);
+		_screen.setColor(drawColor);
 		
 		if (source.getContainer() != destination.getContainer())
 		{
@@ -61,6 +63,6 @@ public class Link extends Entity {
 			y2 += Interpolation.make(destination.getVelocityY());
 		}
 		
-		Screen.drawLine(x1, y1, x2, y2);
+		_screen.drawLine(x1, y1, x2, y2);
 	}
 }

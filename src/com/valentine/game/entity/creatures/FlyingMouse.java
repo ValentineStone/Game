@@ -32,31 +32,33 @@ public class FlyingMouse extends EntityBasicAI
 		setFriction(1);
 	}
 
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		
-		Screen.drawOval(getX() - 5, getY() - 10, getWidth() / 2, getWidth() / 2);
-		Screen.drawOval(getX() + getWidth() / 2 + 5, getY() - 10, getWidth() / 2, getWidth() / 2);
+		_screen.drawOval(getX() - 5, getY() - 10, getWidth() / 2, getWidth() / 2);
+		_screen.drawOval(getX() + getWidth() / 2 + 5, getY() - 10, getWidth() / 2, getWidth() / 2);
 
-		Screen.setColor(getDrawColor());
-		Screen.drawOval(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getDrawColor());
+		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
 		
 		if (isCourpse)
 		{
-			Screen.drawLine(getCenterX() - 9, getCenterY() - 7, getCenterX() - 2, getCenterY());
-			Screen.drawLine(getCenterX() - 9, getCenterY(), getCenterX() - 2, getCenterY() - 7);
+			_screen.drawLine(getCenterX() - 9, getCenterY() - 7, getCenterX() - 2, getCenterY());
+			_screen.drawLine(getCenterX() - 9, getCenterY(), getCenterX() - 2, getCenterY() - 7);
 			
-			Screen.drawLine(getCenterX() + 2, getCenterY() - 7, getCenterX() + 9, getCenterY());
-			Screen.drawLine(getCenterX() + 2, getCenterY(), getCenterX() + 9, getCenterY() - 7);
+			_screen.drawLine(getCenterX() + 2, getCenterY() - 7, getCenterX() + 9, getCenterY());
+			_screen.drawLine(getCenterX() + 2, getCenterY(), getCenterX() + 9, getCenterY() - 7);
 		}
 		else
 		{
-			Screen.drawRect(getCenterX() - 9, getCenterY() - 7, 7, 7);
-			Screen.drawRect(getCenterX() + 2, getCenterY() - 7, 7, 7);
+			_screen.drawRect(getCenterX() - 9, getCenterY() - 7, 7, 7);
+			_screen.drawRect(getCenterX() + 2, getCenterY() - 7, 7, 7);
 		}
 	}
 
+	@Override
 	public void update()
 	{
 		if (isCourpse)

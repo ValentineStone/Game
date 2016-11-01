@@ -23,26 +23,28 @@ public class Container extends Entity implements Iterable<Entity>
 	
 	
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{		
-		Screen.setColor(getFillColor());
-		Screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		_screen.setColor(getFillColor());
+		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		Screen.localize(getX(), getY());
-		Screen.setClip(0, 0, getWidth(), getHeight());
+		_screen.localize(getX(), getY());
+		_screen.setClip(0, 0, getWidth(), getHeight());
 		
 		for (Entity entity : items)
 		{
-			if (entity.isPaintable()) entity.paint();
+			if (entity.isPaintable()) entity.paint(null);
 		}
 		
-		Screen.setClip(null);
-		Screen.delocalize(getX(), getY());
+		_screen.setClip(null);
+		_screen.delocalize(getX(), getY());
 		
-		Screen.setColor(getDrawColor());
-		Screen.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
+		_screen.setColor(getDrawColor());
+		_screen.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
 	}
 
+	@Override
 	public void update()
 	{
 		if (deletions.size() > 0)
@@ -94,6 +96,7 @@ public class Container extends Entity implements Iterable<Entity>
 
 
 
+	@Override
 	public Iterator<Entity> iterator()
 	{
 		return items.iterator();

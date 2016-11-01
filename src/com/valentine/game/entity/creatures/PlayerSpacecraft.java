@@ -27,54 +27,56 @@ public class PlayerSpacecraft extends Player implements Explodable
 		super(_container);
 	}
 	
-	public void paint()
+	@Override
+	public void paint(Screen _screen)
 	{
-		Screen.localize(getX(), getY());
+		_screen.localize(getX(), getY());
 		
 		if (getAcceleration() != 0)
 		{
-			Screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+			_screen.localize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 		}
 		
-		Screen.setColor(frameColorTransparent);
-		Screen.fillOval(16, 0, 32, 32);
-		Screen.fillOval(16, 32, 32, 32);
+		_screen.setColor(frameColorTransparent);
+		_screen.fillOval(16, 0, 32, 32);
+		_screen.fillOval(16, 32, 32, 32);
 		
-		Screen.setColor(engineColorTransparent);
-		Screen.fillRect(0, 0, 32, 16);
-		Screen.fillRect(0, 48, 32, 16);
+		_screen.setColor(engineColorTransparent);
+		_screen.fillRect(0, 0, 32, 16);
+		_screen.fillRect(0, 48, 32, 16);
 		
-		Screen.setColor(bodyColorTransparent);
-		Screen.fillRect(16, 16, 32, 32);
+		_screen.setColor(bodyColorTransparent);
+		_screen.fillRect(16, 16, 32, 32);
 		
-		Screen.setColor(cannonColorTransparent);
-		Screen.fillRect(16, 24, 48, 16);
+		_screen.setColor(cannonColorTransparent);
+		_screen.fillRect(16, 24, 48, 16);
 		
 
 		
-		Screen.setColor(getDrawColor());
+		_screen.setColor(getDrawColor());
 		//Screen.setColor(frameColor);
-		Screen.drawOval(16, 0, 32, 32);
-		Screen.drawOval(16, 32, 32, 32);
+		_screen.drawOval(16, 0, 32, 32);
+		_screen.drawOval(16, 32, 32, 32);
 		
 		//Screen.setColor(engineColor);
-		Screen.drawRect(0, 0, 32, 16);
-		Screen.drawRect(0, 48, 32, 16);
+		_screen.drawRect(0, 0, 32, 16);
+		_screen.drawRect(0, 48, 32, 16);
 		
 		//Screen.setColor(bodyColor);
-		Screen.drawRect(16, 16, 32, 32);
+		_screen.drawRect(16, 16, 32, 32);
 		
 		//Screen.setColor(cannonColor);
-		Screen.drawRect(16, 24, 48, 16);
+		_screen.drawRect(16, 24, 48, 16);
 		
 		if (getAcceleration() != 0)
 		{
-			Screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
+			_screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 		}
 		
-		Screen.delocalize(getX(), getY());
+		_screen.delocalize(getX(), getY());
 	}
 	
+	@Override
 	public void update()
 	{
 		if (!breaks()) accelerate();

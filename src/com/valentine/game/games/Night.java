@@ -9,6 +9,7 @@ import com.valentine.game.utils.*;
 
 public class Night extends Game
 {
+	@Override
 	public void assemble()
 	{
 		super.assemble();

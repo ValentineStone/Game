@@ -2,17 +2,14 @@ package com.valentine.game.entity.base;
 
 import java.awt.Color;
 
+import com.valentine.game.core.*;
 import com.valentine.game.utils.*;
 
-public abstract class Entity extends com.valentine.game.core.basic.EntityNew
+public abstract class Entity
 {
 	private static int idGlobalTop = 0;
 	
 	//private static int[] idGlobalFree = new int[Integer.MAX_VALUE];
-	
-	
-	
-	
 	
 	
 	
@@ -54,7 +51,7 @@ public abstract class Entity extends com.valentine.game.core.basic.EntityNew
 		id = idGlobalTop++;
 	}
 	
-	public abstract void paint();
+	public abstract void paint(Screen _screen);
 	
 	public abstract void update();
 	
@@ -350,17 +347,20 @@ public abstract class Entity extends com.valentine.game.core.basic.EntityNew
 		return id;
 	}
 		
+	@Override
 	public int hashCode()
 	{
 		return getId();
 	}
 	
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj instanceof Entity) if (((Entity)obj).getId() == getId()) return true;
 		return false;
 	}
 	
+	@Override
 	public String toString()
 	{
 		return "Entity " + getId() + ": " + getClass().getSimpleName();
