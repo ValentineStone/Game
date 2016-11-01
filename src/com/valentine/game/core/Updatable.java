@@ -1,4 +1,4 @@
-package com.valentine.game.core.basic;
+package com.valentine.game.core;
 
 public interface Updatable
 {

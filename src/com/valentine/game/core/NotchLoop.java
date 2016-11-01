@@ -1,7 +1,5 @@
 package com.valentine.game.core;
 
-import com.valentine.game.core.basic.*;
-
 public final class NotchLoop
 {
 	public Thread thread;

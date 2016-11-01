@@ -1,4 +1,4 @@
-package com.valentine.game.core.swing;
+package com.valentine.game.core;
 
 import java.awt.*;
 import java.awt.image.*;
