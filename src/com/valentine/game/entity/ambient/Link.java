@@ -1,11 +1,10 @@
 package com.valentine.game.entity.ambient;
 
-import java.awt.Color;
+import java.awt.*;
 
 import com.valentine.game.core.*;
-import com.valentine.game.entity.*;
 import com.valentine.game.entity.base.*;
-import com.valentine.game.utils.ColorExt;
+import com.valentine.game.utils.*;
 
 public class Link extends Entity {
 

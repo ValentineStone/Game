@@ -70,14 +70,16 @@ public class TestChamber extends Game implements KeyListener
 		{
 			case KeyEvent.VK_ESCAPE:
 			{
-				if (NotchLoop.isRunning()) NotchLoop.pause();
-				else NotchLoop.play();
+				System.err.println("Working with Looper in a static way is depricated.");
+				// if (NotchLoop.isRunning()) NotchLoop.pause();
+				// else NotchLoop.play();
 				
 				break;
 			}
 			case KeyEvent.VK_SPACE:
 			{
-				if (!NotchLoop.isRunning()) NotchLoop.loop();
+				System.err.println("Working with Looper in a static way is depricated.");
+				// if (!NotchLoop.isRunning()) NotchLoop.loop();
 				
 				break;
 			}

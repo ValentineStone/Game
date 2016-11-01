@@ -1,4 +1,4 @@
-package com.valentine.game.core;
+package com.valentine.game.core.swing;
 
 import java.awt.*;
 import java.awt.image.*;
@@ -6,6 +6,9 @@ import java.io.*;
 import java.text.AttributedCharacterIterator;
 
 import javax.swing.*;
+
+import com.valentine.game.core.*;
+import com.valentine.game.core.basic.*;
 
 public abstract class SwingScreen implements Paintable
 {

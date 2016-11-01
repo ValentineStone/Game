@@ -5,6 +5,8 @@ import java.awt.image.ImageObserver;
 import java.io.*;
 import java.text.AttributedCharacterIterator;
 
+import com.valentine.game.core.basic.*;
+
 public abstract class Screen implements Paintable
 {
 	private static Graphics2D graphics;

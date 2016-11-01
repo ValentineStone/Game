@@ -1,6 +1,6 @@
-package com.valentine.game.core;
+package com.valentine.game.core.basic;
 
-public abstract class Entity implements Updatable, Paintable
+public abstract class EntityNew implements Updatable, Paintable
 {
 
 	private boolean paintable = true;

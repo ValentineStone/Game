@@ -114,8 +114,9 @@ public class DeadSpace extends Game implements KeyListener
 				}
 				else
 				{
-					if (NotchLoop.isRunning()) NotchLoop.pause();
-					else NotchLoop.play();
+					System.err.println("Working with Looper in a static way is depricated.");
+					// if (NotchLoop.isRunning()) NotchLoop.pause();
+					// else NotchLoop.play();
 				}
 				break;
 			}

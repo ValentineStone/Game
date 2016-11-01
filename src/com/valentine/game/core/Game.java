@@ -11,7 +11,7 @@ public class Game extends Container implements ComponentListener
 {	
 	private static Game game;
 	
-	public Game(Screen _screen)
+	public Game()
 	{
 		super(null, 0, 0, 0, 0);
 		

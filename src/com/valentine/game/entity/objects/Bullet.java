@@ -1,9 +1,10 @@
 package com.valentine.game.entity.objects;
 
-import java.awt.Color;
+import java.awt.*;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.base.Container;
 import com.valentine.game.utils.*;
 
 public class Bullet extends EntityBasicAI implements Explodable

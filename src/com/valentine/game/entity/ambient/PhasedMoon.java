@@ -1,10 +1,11 @@
 package com.valentine.game.entity.ambient;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.base.Container;
 
 public class PhasedMoon extends Entity implements KeyListener
 {

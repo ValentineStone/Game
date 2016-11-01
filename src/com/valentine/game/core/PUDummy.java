@@ -1,6 +1,8 @@
 package com.valentine.game.core;
 
-public class PUDummy extends Entity
+import com.valentine.game.core.basic.*;
+
+public class PUDummy extends EntityNew
 {
 	NotchLoop nl;
 	

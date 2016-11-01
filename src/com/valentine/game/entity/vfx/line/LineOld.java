@@ -1,12 +1,11 @@
 package com.valentine.game.entity.vfx.line;
 
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.valentine.game.core.*;
-import com.valentine.game.utils.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.utils.*;
 
 public class LineOld extends Entity implements MouseListener, MouseMotionListener, KeyListener
 {

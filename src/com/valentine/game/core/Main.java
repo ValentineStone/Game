@@ -6,12 +6,12 @@ public abstract class Main
 	public static void main(String[] args) throws InterruptedException
 	{
 		// Create a new screen and initialize the static wrapper with it.
-		Screen screen = new SwingScreen();
+		Screen screen = null; //new SwingScreen();
 		Screen.setStaticRedirect(screen);
 		
 		// Create new yame painted in the given screen.
 		// Will call all the constructors recursively
-		Game game = new Game(screen);
+		Game game = new Game();
 		
 		// Add the given game as the one being painted by given screen.
 		screen.setPaintable(game);
