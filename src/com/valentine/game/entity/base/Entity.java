@@ -1,81 +1,65 @@
 package com.valentine.game.entity.base;
 
-import java.awt.Color;
+import java.awt.*;
 
-import com.valentine.game.core.*;
+import com.valentine.game.core.interfaces.*;
+import com.valentine.game.core.screen.*;
 import com.valentine.game.utils.*;
 
 public abstract class Entity implements BasicEntity
 {
 	private static int idGlobalTop = 0;
-	
-	//private static int[] idGlobalFree = new int[Integer.MAX_VALUE];
-	
-	
-	
+
+	// private static int[] idGlobalFree = new int[Integer.MAX_VALUE];
+
 	private int id = 0;
-	
+
 	private Container container = null;
-	
+
 	private boolean paintable = true;
 	private boolean updatable = true;
 	private boolean dead = false;
-	
+
 	private double x = 0;
 	private double y = 0;
-	
+
 	private double width = 0;
 	private double height = 0;
-	
+
 	private double rotation = 0;
-	
+
 	private double velocity = 0;
-	
+
 	private double _velocityX = 0;
 	private double _velocityY = 0;
-	
+
 	private Color drawColor = Color.WHITE;
 	private Color fillColor = Color.BLACK;
-	
-	
-	
-	
-	
-	
-	
+
 	public Entity(Container _container)
 	{
 		setContainer(_container);
-		if(getContainer() != null) getContainer().moveIn(this);
-		
+		if (getContainer() != null)
+		{
+			getContainer().moveIn(this);
+		}
+
 		id = idGlobalTop++;
 	}
-	
+
 	public abstract void paint(Screen _screen);
-	
+
 	public abstract void update();
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public Container getContainer()
 	{
 		return container;
 	}
-	
+
 	public void setContainer(Container _container)
 	{
 		container = _container;
 	}
-	
-	
-	
-	
 
 	public boolean isPaintable()
 	{
@@ -97,12 +81,6 @@ public abstract class Entity implements BasicEntity
 		updatable = _updatable;
 	}
 
-	
-	
-	
-	
-	
-	
 	public double getX()
 	{
 		return x;
@@ -122,66 +100,69 @@ public abstract class Entity implements BasicEntity
 	{
 		y = _y;
 	}
-	
+
 	public double getCenterX()
 	{
-		return getX() + getWidth()/2;
+		return getX() + getWidth() / 2;
 	}
-	
+
 	public double getCenterY()
 	{
-		return getY() + getHeight()/2;
+		return getY() + getHeight() / 2;
 	}
-	
+
 	public void setPosition(double _x, double _y)
 	{
 		setX(_x);
 		setY(_y);
 	}
-	
+
 	public void setPositionRandom()
 	{
 		setX(MathExt.random(getContainer().getWidth() - getWidth()));
 		setY(MathExt.random(getContainer().getHeight() - getHeight()));
 	}
-	
+
 	public void setPositionCentered()
 	{
-		setX(getContainer().getWidth()/2 - getWidth()/2);
-		setY(getContainer().getHeight()/2 - getHeight()/2);
+		setX(getContainer().getWidth() / 2 - getWidth() / 2);
+		setY(getContainer().getHeight() / 2 - getHeight() / 2);
 	}
-	
+
 	public double getTrueX()
 	{
 		if (getContainer() == null)
+		{
 			return getX();
+		}
 		else
+		{
 			return getX() + getContainer().getTrueX();
+		}
 	}
-	
+
 	public double getTrueY()
 	{
 		if (getContainer() == null)
+		{
 			return getY();
+		}
 		else
+		{
 			return getY() + getContainer().getTrueY();
+		}
 	}
-	
+
 	public double getTrueCenterX()
 	{
-		return getTrueX() + getHeight()/2;
+		return getTrueX() + getHeight() / 2;
 	}
-	
+
 	public double getTrueCenterY()
 	{
-		return getTrueY() + getHeight()/2;
+		return getTrueY() + getHeight() / 2;
 	}
-	
-	
-	
-	
-	
-	
+
 	public double getWidth()
 	{
 		return width;
@@ -201,19 +182,13 @@ public abstract class Entity implements BasicEntity
 	{
 		height = _height;
 	}
-	
+
 	public void setSize(double _width, double _height)
 	{
 		setWidth(_width);
 		setHeight(_height);
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	public double getRotation()
 	{
 		return rotation;
@@ -224,44 +199,37 @@ public abstract class Entity implements BasicEntity
 		rotation = MathExt.rotationNormalize(_rotation);
 		_makeVelocityXY();
 	}
-	
+
 	public void setRotationRandom()
 	{
 		setRotation(MathExt.random(MathExt.PI_2_1));
 	}
-	
+
 	public void rotationFlip()
 	{
 		setRotation(MathExt.rotationFlip(getRotation()));
 	}
-	
+
 	public void rotationFlipX()
 	{
 		setRotation(MathExt.rotationFlipX(getRotation()));
 	}
-	
+
 	public void rotationFlipY()
 	{
 		setRotation(MathExt.rotationFlipY(getRotation()));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public double getVelocity()
 	{
 		return velocity;
 	}
-	
+
 	public double getVelocityX()
 	{
 		return _velocityX;
 	}
-	
+
 	public double getVelocityY()
 	{
 		return _velocityY;
@@ -272,20 +240,13 @@ public abstract class Entity implements BasicEntity
 		velocity = _velocity;
 		_makeVelocityXY();
 	}
-	
+
 	private void _makeVelocityXY()
 	{
 		_velocityX = getVelocity() * Math.cos(getRotation());
-		_velocityY = getVelocity() * Math.sin(getRotation());		
+		_velocityY = getVelocity() * Math.sin(getRotation());
 	}
 
-	
-	
-	
-	
-	
-	
-	
 	public Color getFillColor()
 	{
 		return fillColor;
@@ -305,62 +266,59 @@ public abstract class Entity implements BasicEntity
 	{
 		drawColor = _drawColor;
 	}
-	
+
 	public void setColors(Color _fillColor, Color _drawColor)
 	{
 		setFillColor(_fillColor);
 		setDrawColor(_drawColor);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public boolean kill(Entity _killer)
 	{
-		if (dead) return false;
-		
+		if (dead)
+		{
+			return false;
+		}
+
 		setUpdatable(false);
 		setPaintable(false);
 		dead = true;
-		
-		if (getContainer() != null) getContainer().remove(this);
-		
+
+		if (getContainer() != null)
+		{
+			getContainer().remove(this);
+		}
+
 		return true;
 	}
-	
+
 	public boolean isDead()
 	{
 		return dead;
 	}
-	
-	
-	
 
 	public int getId()
 	{
 		return id;
 	}
-		
-	@Override
+
 	public int hashCode()
 	{
 		return getId();
 	}
-	
-	@Override
+
 	public boolean equals(Object obj)
 	{
-		if (obj instanceof Entity) if (((Entity)obj).getId() == getId()) return true;
+		if (obj instanceof Entity)
+		{
+			if (((Entity) obj).getId() == getId())
+			{
+				return true;
+			}
+		}
 		return false;
 	}
-	
-	@Override
+
 	public String toString()
 	{
 		return "Entity " + getId() + ": " + getClass().getSimpleName();

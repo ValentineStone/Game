@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.util.*;
 
 import com.valentine.game.core.*;
+import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.*;
 
@@ -14,87 +15,84 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		public double x;
 		public double y;
 		public double t;
+
 		public Dot(double _x, double _y)
 		{
 			x = _x;
 			y = _y;
 		}
 	}
-	
+
 	private double dotRadius;
-	
+
 	protected List<Dot> dots;
 	private List<Dot> dotsForDeletion;
-	
+
 	private Dot selected;
-	
+
 	public Line(Container _container, int _amountOfDots, double _dotRadius)
 	{
 		super(_container);
-		
+
 		Input.addKeyListener(this);
 		Input.addMouseListener(this);
 		Input.addMouseMotionListener(this);
-		
+
 		setDotRadius(_dotRadius);
-		
+
 		setDrawColorRandom();
-		
-		dotsForDeletion = new ArrayList<Dot>();
-		dots = new ArrayList<Dot>();
-		
+
+		dotsForDeletion = new ArrayList<>();
+		dots = new ArrayList<>();
+
 		for (int i = 0; i < _amountOfDots; i++)
 		{
-			addDot(MathExt.random(getContainer().getWidth()/_amountOfDots) + i * getContainer().getWidth()/_amountOfDots, MathExt.random(getContainer().getHeight()));
+			addDot(MathExt.random(getContainer().getWidth() / _amountOfDots) + i * getContainer().getWidth() / _amountOfDots,
+					MathExt.random(getContainer().getHeight()));
 		}
 	}
-
 
 	public double getDotRadius()
 	{
 		return dotRadius;
 	}
 
-
 	public void setDotRadius(double _dotRadius)
 	{
 		dotRadius = _dotRadius;
 	}
 
-	
-	
-
 	public void randomize()
 	{
 		setDrawColorRandom();
-		
-		for (Dot dot : dots) {
+
+		for (Dot dot : dots)
+		{
 			dot.x = MathExt.random(getContainer().getWidth());
 			dot.y = MathExt.random(getContainer().getHeight());
 		}
 	}
-	
+
 	public void setDrawColorRandom()
 	{
 		setDrawColor(ColorExt.randomColor(35, 220));
 	}
-	
-	
+
 	private int size()
 	{
 		return dots.size();
 	}
-	
+
 	public void addDot(double _x, double _y)
 	{
 		dots.add(new Dot(_x, _y));
 	}
-	
+
 	protected Dot getDot(int _i)
 	{
 		return dots.get(_i);
 	}
-	
+
 	public Dot getDotNear(double _x, double _y)
 	{
 		for (Dot dot : dots)
@@ -106,12 +104,12 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		}
 		return null;
 	}
-	
+
 	public void removeDot(Dot _dot)
 	{
 		scheduleDotDeletion(_dot);
 	}
-	
+
 	public boolean removeDotNear(double _x, double _y)
 	{
 		Dot dotForRemoval = getDotNear(_x, _y);
@@ -122,19 +120,12 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		}
 		return false;
 	}
-	
-	
-	
-	
+
 	private void scheduleDotDeletion(Dot _dot)
 	{
 		dotsForDeletion.add(_dot);
 	}
-	
-	
-	
-	
-	@Override
+
 	public void update()
 	{
 		if (!dotsForDeletion.isEmpty())
@@ -144,43 +135,33 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 				dots.remove(dot);
 			}
 		}
-		
+
 		dotsForDeletion.clear();
 	}
-	
-	
-	
 
-	@Override
 	public void paint(Screen _screen)
 	{
 		_screen.setColor(getDrawColor());
-		
+
 		for (int i = 1; i < size(); i++)
 		{
-			_screen.drawLine(getDot(i-1).x, getDot(i-1).y, getDot(i).x, getDot(i).y);
+			_screen.drawLine(getDot(i - 1).x, getDot(i - 1).y, getDot(i).x, getDot(i).y);
 		}
-		
+
 		paintDots(_screen);
 	}
-	
+
 	public void paintDots(Screen _screen)
 	{
 		_screen.setColor(getDrawColor());
-		
+
 		for (int i = 0; i < size(); i++)
 		{
-			_screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius), (dotRadius + dotRadius));
+			_screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius),
+					(dotRadius + dotRadius));
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	@Override
+
 	public boolean kill(Entity _killer)
 	{
 		Input.removeKeyListener(this);
@@ -188,14 +169,7 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		Input.removeMouseMotionListener(this);
 		return kill(_killer);
 	}
-	
-	
-	
-	
-	
-	
 
-	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -213,22 +187,21 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		}
 	}
 
-	@Override
-	public void keyReleased(KeyEvent _keyEvent) {}
+	public void keyReleased(KeyEvent _keyEvent)
+	{}
 
-	@Override
-	public void keyTyped(KeyEvent _keyEvent) {}
+	public void keyTyped(KeyEvent _keyEvent)
+	{}
 
-	@Override
-	public void mouseClicked(MouseEvent _mouseEvent) {}
+	public void mouseClicked(MouseEvent _mouseEvent)
+	{}
 
-	@Override
-	public void mouseEntered(MouseEvent _mouseEvent) {}
+	public void mouseEntered(MouseEvent _mouseEvent)
+	{}
 
-	@Override
-	public void mouseExited(MouseEvent _mouseEvent) {}
+	public void mouseExited(MouseEvent _mouseEvent)
+	{}
 
-	@Override
 	public void mousePressed(MouseEvent _mouseEvent)
 	{
 		if (_mouseEvent.getButton() == MouseEvent.BUTTON3)
@@ -244,19 +217,16 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 		}
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent _mouseEvent)
 	{
 		selected = null;
 	}
 
-	@Override
 	public void mouseDragged(MouseEvent _mouseEvent)
 	{
 		mouseMoved(_mouseEvent);
 	}
 
-	@Override
 	public void mouseMoved(MouseEvent _mouseEvent)
 	{
 		if (selected != null)

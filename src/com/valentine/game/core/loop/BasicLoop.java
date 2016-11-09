@@ -1,4 +1,4 @@
-package com.valentine.game.core;
+package com.valentine.game.core.loop;
 
 public class BasicLoop extends Loop
 {
@@ -8,17 +8,18 @@ public class BasicLoop extends Loop
 	{
 		sleepTime = _sleepTime;
 	}
-	
+
 	public void run()
 	{
 		update();
 		paint();
-		
+
 		try
 		{
 			Thread.sleep(sleepTime);
 		}
-		catch (Exception _e) {}
+		catch (Exception _e)
+		{}
 	}
 
 }

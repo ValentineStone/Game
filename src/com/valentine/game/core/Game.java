@@ -1,5 +1,8 @@
 package com.valentine.game.core;
 
-public interface Game extends BasicEntity {
+import com.valentine.game.core.interfaces.*;
+
+public interface Game extends BasicEntity
+{
 
 }

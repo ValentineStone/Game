@@ -1,13 +1,12 @@
 package com.valentine.game.entity.geometry;
 
-import com.valentine.game.core.Screen;
-import com.valentine.game.entity.base.Container;
-import com.valentine.game.entity.base.EntityBasicAI;
+import com.valentine.game.core.screen.*;
+import com.valentine.game.entity.base.*;
 
 public class Circle extends EntityBasicAI
 {
 	private double r;
-	
+
 	public Circle(Container _container, double _r)
 	{
 		super(_container);
@@ -15,7 +14,6 @@ public class Circle extends EntityBasicAI
 		setPositionRandom();
 	}
 
-	@Override
 	public void paint(Screen _screen)
 	{
 		_screen.setColor(getFillColor());
@@ -24,7 +22,6 @@ public class Circle extends EntityBasicAI
 		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
 	}
 
-	@Override
 	public void update()
 	{
 		setUpdatable(false);
@@ -38,6 +35,6 @@ public class Circle extends EntityBasicAI
 	public void setR(double _r)
 	{
 		r = _r;
-		setSize(2*getR(), 2*getR());
+		setSize(2 * getR(), 2 * getR());
 	}
 }

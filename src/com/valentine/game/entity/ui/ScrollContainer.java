@@ -1,12 +1,10 @@
 package com.valentine.game.entity.ui;
 
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.*;
 
-import com.valentine.game.core.Input;
-import com.valentine.game.core.Screen;
-import com.valentine.game.entity.base.Container;
-import com.valentine.game.entity.base.Entity;
+import com.valentine.game.core.*;
+import com.valentine.game.core.screen.*;
+import com.valentine.game.entity.base.*;
 
 public class ScrollContainer extends Container implements MouseWheelListener
 {
@@ -18,29 +16,30 @@ public class ScrollContainer extends Container implements MouseWheelListener
 		super(_container, _x, _y, _width, _height);
 		Input.addMouseWheelListener(this);
 	}
-	
-	@Override
+
 	public void paint(Screen _screen)
 	{
 		_screen.setColor(getFillColor());
 		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
-		
+
 		_screen.localize(getX() + xScroll, getY() + yScroll);
 		_screen.setClip(0, 0, getWidth(), getHeight());
-		
+
 		for (Entity entity : items)
 		{
-			if (entity.isPaintable()) entity.paint(null);
+			if (entity.isPaintable())
+			{
+				entity.paint(null);
+			}
 		}
-		
+
 		_screen.setClip(null);
 		_screen.delocalize(getX() + xScroll, getY() + yScroll);
-		
+
 		_screen.setColor(getDrawColor());
-		_screen.drawRect(getX(), getY(), getWidth()-1, getHeight()-1);
+		_screen.drawRect(getX(), getY(), getWidth() - 1, getHeight() - 1);
 	}
 
-	@Override
 	public void mouseWheelMoved(MouseWheelEvent _evt)
 	{
 		if (_evt.isAltDown() || _evt.isControlDown() || _evt.isShiftDown())
@@ -53,7 +52,7 @@ public class ScrollContainer extends Container implements MouseWheelListener
 		}
 		System.err.println(xScroll + " : " + yScroll);
 	}
-	
+
 	public void kill()
 	{
 		Input.removeMouseWheelListener(this);

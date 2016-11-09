@@ -3,21 +3,18 @@ package com.valentine.game.entity.base;
 public abstract class EntityBasicAI extends Entity
 {
 	private boolean active = false;
-	
 
 	private double velocityMax = 0;
 	private double acceleration = 1;
 	private double friction = 1;
-	
-	
+
 	public EntityBasicAI(Container _container)
 	{
 		super(_container);
 	}
-	
-	
-	//---------------------------------------------BasicAI------------------------------------------------
-	
+
+	// ---------------------------------------------BasicAI------------------------------------------------
+
 	protected boolean keepContained()
 	{
 		boolean impact = false;
@@ -47,7 +44,7 @@ public abstract class EntityBasicAI extends Entity
 		}
 		return impact;
 	}
-	
+
 	protected boolean keepOffEdges()
 	{
 		boolean impact = false;
@@ -77,87 +74,89 @@ public abstract class EntityBasicAI extends Entity
 		}
 		return impact;
 	}
-	
+
 	protected void move()
-	{	
+	{
 		setX(getX() + getVelocityX());
 		setY(getY() + getVelocityY());
 	}
-	
+
 	protected void accelerate()
 	{
 		if (isActive())
 		{
 			if (getVelocity() < getVelocityMax())
 			{
-				setVelocity( getVelocity() + getVelocityMax() * getAcceleration());
-				if (getVelocity() > getVelocityMax()) setVelocity(getVelocityMax());
+				setVelocity(getVelocity() + getVelocityMax() * getAcceleration());
+				if (getVelocity() > getVelocityMax())
+				{
+					setVelocity(getVelocityMax());
+				}
 			}
-			
+
 		}
 		else
 		{
 			if (getVelocity() > 0)
 			{
-				setVelocity( getVelocity() - getVelocityMax() * getFriction());
-				if (getVelocity() < 0) setVelocity(0);
+				setVelocity(getVelocity() - getVelocityMax() * getFriction());
+				if (getVelocity() < 0)
+				{
+					setVelocity(0);
+				}
 			}
 		}
 	}
-	
+
 	public boolean isTouchingEdge()
 	{
-		if (
-			(getX() + getWidth() >= getContainer().getWidth()) ||
-			(getX() <= 0) ||
-			(getY() + getHeight() >= getContainer().getHeight()) ||
-			(getY() <= 0)
-			)
+		if ((getX() + getWidth() >= getContainer().getWidth()) || (getX() <= 0)
+				|| (getY() + getHeight() >= getContainer().getHeight()) || (getY() <= 0))
+		{
 			return true;
-		
+		}
+
 		return false;
 	}
-	
+
 	public boolean isOutOfContainer()
 	{
-		if (
-			(getX() > getContainer().getWidth()) ||
-			(getX() + getWidth() < 0) ||
-			(getY() > getContainer().getHeight()) ||
-			(getY() + getHeight() < 0)
-			)
+		if ((getX() > getContainer().getWidth()) || (getX() + getWidth() < 0) || (getY() > getContainer().getHeight())
+				|| (getY() + getHeight() < 0))
+		{
 			return true;
-		
+		}
+
 		return false;
 	}
-	
+
 	public boolean isGettingHit(double _x, double _y)
 	{
-		if (_x > getX() && _x < (getX() + getWidth()) && _y > getY() && _y < (getY() + getHeight())) return true;
+		if (_x > getX() && _x < (getX() + getWidth()) && _y > getY() && _y < (getY() + getHeight()))
+		{
+			return true;
+		}
 		return false;
 	}
-	
+
 	public boolean isCenterClose(double _x, double _y, double _r)
 	{
-		if (Math.pow(Math.pow(getX() - _x, 2) + Math.pow(getY() - _y, 2), 0.5) <= _r) return true;
+		if (Math.pow(Math.pow(getX() - _x, 2) + Math.pow(getY() - _y, 2), 0.5) <= _r)
+		{
+			return true;
+		}
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	public boolean isActive() {
+
+	public boolean isActive()
+	{
 		return active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(boolean active)
+	{
 		this.active = active;
 	}
-	
 
 	public double getVelocityMax()
 	{
@@ -167,8 +166,8 @@ public abstract class EntityBasicAI extends Entity
 	public void setVelocityMax(double _velocityMax)
 	{
 		velocityMax = _velocityMax;
-	}	
-	
+	}
+
 	public double getAcceleration()
 	{
 		return acceleration;
@@ -189,5 +188,4 @@ public abstract class EntityBasicAI extends Entity
 		friction = _friction;
 	}
 
-	
 }

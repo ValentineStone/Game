@@ -1,53 +1,51 @@
 package com.valentine.game.entity.creatures;
 
-import com.valentine.game.core.Screen;
-import com.valentine.game.entity.base.Container;
-import com.valentine.game.entity.base.EntityBasicAI;
+import com.valentine.game.core.screen.*;
+import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.*;
 
 public class FlyingMouse extends EntityBasicAI
 {
 	// the cat mouse will play with
 	CatchyCat enimy;
-	
+
 	// mouse state, courpses wont aggro cat
 	boolean isCourpse = false;
-	
+
 	public FlyingMouse(Container _container, CatchyCat _enimy)
 	{
 		super(_container);
-		
+
 		enimy = _enimy;
-		
+
 		setSize(30, 27);
-		
+
 		// drop randomly
 		setPositionRandom();
-		
-		//enable movement and set parameters
+
+		// enable movement and set parameters
 		setActive(true);
-		
+
 		setVelocityMax(5);
 		setAcceleration(0.07);
 		setFriction(1);
 	}
 
-	@Override
 	public void paint(Screen _screen)
 	{
 		_screen.setColor(getDrawColor());
-		
+
 		_screen.drawOval(getX() - 5, getY() - 10, getWidth() / 2, getWidth() / 2);
 		_screen.drawOval(getX() + getWidth() / 2 + 5, getY() - 10, getWidth() / 2, getWidth() / 2);
 
 		_screen.setColor(getDrawColor());
 		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
-		
+
 		if (isCourpse)
 		{
 			_screen.drawLine(getCenterX() - 9, getCenterY() - 7, getCenterX() - 2, getCenterY());
 			_screen.drawLine(getCenterX() - 9, getCenterY(), getCenterX() - 2, getCenterY() - 7);
-			
+
 			_screen.drawLine(getCenterX() + 2, getCenterY() - 7, getCenterX() + 9, getCenterY());
 			_screen.drawLine(getCenterX() + 2, getCenterY(), getCenterX() + 9, getCenterY() - 7);
 		}
@@ -58,7 +56,6 @@ public class FlyingMouse extends EntityBasicAI
 		}
 	}
 
-	@Override
 	public void update()
 	{
 		if (isCourpse)
@@ -75,7 +72,7 @@ public class FlyingMouse extends EntityBasicAI
 				kill(this);
 			}
 		}
-		
+
 		if (enimy.getAggroDistance() > MathExt.distanceMake(getCenterX(), getCenterY(), enimy.getCenterX(), enimy.getCenterY()))
 		{
 			// if close enough, aggro and turn into courpse
@@ -85,10 +82,10 @@ public class FlyingMouse extends EntityBasicAI
 		{
 			// if far from cat, determine direction and run away
 			setRotation(MathExt.rotationMake(getCenterX() - enimy.getCenterX(), getCenterY() - enimy.getCenterY()));
-			
+
 			accelerate();
 			move();
-			
+
 			if (isOutOfContainer())
 			{
 				// if out of vision - remove self
@@ -97,7 +94,7 @@ public class FlyingMouse extends EntityBasicAI
 			}
 		}
 	}
-	
+
 	public void makeCourpse()
 	{
 		isCourpse = true;

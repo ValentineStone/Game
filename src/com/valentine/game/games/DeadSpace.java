@@ -1,7 +1,6 @@
 package com.valentine.game.games;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
@@ -14,70 +13,66 @@ import com.valentine.game.entity.vfx.*;
 public class DeadSpace extends Container implements KeyListener
 {
 	private boolean NEW_GAME = false;
-	
+
 	private long tick = 0;
-	
+
 	public DeadSpace(Dimension _dimension)
 	{
 		super(null, 0, 0, _dimension.getWidth(), _dimension.getHeight());
-		
+
 		create();
 	}
-	
+
 	private void create()
 	{
 		getAdditions().clear();
 		getDeletions().clear();
 		getItems().clear();
-		
+
 		new StarrySkyMoving(this);
-		
-		//new Star(this, getWidth() / 2 - getHeight() / 3, 0, getHeight() / 1.5);
-		//new Star(this, getWidth() / 2 - getHeight() / 3, 0, getHeight() / .43);
+
+		// new Star(this, getWidth() / 2 - getHeight() / 3, 0, getHeight() /
+		// 1.5);
+		// new Star(this, getWidth() / 2 - getHeight() / 3, 0, getHeight() /
+		// .43);
 		new Star(this, 14, 190, 230);
-		
+
 		Input.addKeyListener(this);
 
-		
-		//setFillColor(new Color(0,0,0,10));
-		setFillColor(Color.BLACK);
+		setFillColor(new Color(0,0,0,10));
+		//setFillColor(Color.BLACK);
 		setDrawColor(Color.WHITE);
-		
-		for (int i = 0; i < 5; i++) new Collider(this);
-		for (int i = 0; i < 5; i++) new Rotor(this);
-		for (int i = 0; i < 5; i++) new Rotor2(this);
-		
+
+		for (int i = 0; i < 5; i++)
+		{
+			new Collider(this);
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			new Rotor(this);
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			new Rotor2(this);
+		}
+
 		Player player = new PlayerSpacecraft(this);
 		new Trail(this, player, 5);
-		
+
 		new OnPointInfo(this, 10, 10);
 		/*
-		new Killider(this, player, 1800, 210);
-		new Killider(this, player, 1800, 420);
-		new Killider(this, player, 1800, 630);
-		new Killider(this, player, 1800, 840);
-		*/
-		
-		//new Killider(this, player, 1800, 540);
-		
+		 * new Killider(this, player, 1800, 210); new Killider(this, player,
+		 * 1800, 420); new Killider(this, player, 1800, 630); new Killider(this,
+		 * player, 1800, 840);
+		 */
+
+		// new Killider(this, player, 1800, 540);
+
 		EntityCounter entityCounter = new EntityCounter(this, Rotor2.class, 10, 130);
-		
+
 		new FpsUpsCounter(this, entityCounter.getX() + entityCounter.getWidth() + 17, entityCounter.getY());
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Override
 	public void update()
 	{
 		if (NEW_GAME)
@@ -86,7 +81,7 @@ public class DeadSpace extends Container implements KeyListener
 			NEW_GAME = false;
 			create();
 		}
-		
+
 		if (tick++ % 20 == 0)
 		{
 			double rand = Math.random();
@@ -96,26 +91,17 @@ public class DeadSpace extends Container implements KeyListener
 			}
 			else if (rand > 0.666)
 			{
-				new Rotor(this);
+				new Collider(this);// new Rotor(this);
 			}
 			else
 			{
-				new Rotor2(this);
+				new Collider(this);// new Rotor2(this);
 			}
 		}
-		
+
 		super.update();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Override
+
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -138,9 +124,9 @@ public class DeadSpace extends Container implements KeyListener
 		}
 	}
 
-	@Override
-	public void keyReleased(KeyEvent _keyEvent) {}
+	public void keyReleased(KeyEvent _keyEvent)
+	{}
 
-	@Override
-	public void keyTyped(KeyEvent _keyEvent) {}
+	public void keyTyped(KeyEvent _keyEvent)
+	{}
 }

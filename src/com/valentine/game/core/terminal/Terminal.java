@@ -1,4 +1,9 @@
-package com.valentine.game.core;
+package com.valentine.game.core.terminal;
+
+import com.valentine.game.core.*;
+import com.valentine.game.core.interfaces.*;
+import com.valentine.game.core.loop.*;
+import com.valentine.game.core.screen.*;
 
 public class Terminal implements PaintableSmart, Updatable
 {
@@ -6,12 +11,12 @@ public class Terminal implements PaintableSmart, Updatable
 	protected Screen screen;
 	protected Cassette cassette;
 	protected Loop loop;
-	
+
 	public Terminal()
 	{
 		this(new BasicLoop(300));
 	}
-	
+
 	protected Terminal(Loop _loop)
 	{
 		loop = _loop;
@@ -19,17 +24,17 @@ public class Terminal implements PaintableSmart, Updatable
 		loop.setUpdatable(this);
 		loop.enable();
 	}
-	
+
 	public void plugIn(Input _input)
 	{
 		input = _input;
 	}
-	
+
 	public void plugIn(Screen _screen)
 	{
 		screen = _screen;
 	}
-	
+
 	public void plugIn(Cassette _cassette)
 	{
 		cassette = _cassette;
@@ -38,9 +43,13 @@ public class Terminal implements PaintableSmart, Updatable
 	public void update()
 	{
 		if (input != null)
+		{
 			input.update();
+		}
 		if (cassette != null)
+		{
 			cassette.update();
+		}
 	}
 
 	public void paint()

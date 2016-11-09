@@ -1,4 +1,6 @@
-package com.valentine.game.core;
+package com.valentine.game.core.terminal;
+
+import com.valentine.game.core.loop.*;
 
 public class NotchTerminal extends Terminal
 {

@@ -1,4 +1,4 @@
-package com.valentine.game.core;
+package com.valentine.game.core.loop;
 
 public final class NotchLoop extends Loop
 {
@@ -9,38 +9,38 @@ public final class NotchLoop extends Loop
 	private long second = System.currentTimeMillis();
 	private int fpsCounter = 0;
 	private int upsCounter = 0;
-	
+
 	public void run()
 	{
 		update();
-		
+
 		while (state == State.RUNNING)
 		{
 			thisTick = System.nanoTime();
-			
+
 			fakeInterpolation += (thisTick - lastTick) / updatePeriodNs;
-			
+
 			lastTick = thisTick;
-			
+
 			if (fakeInterpolation >= 1)
 			{
 				updateTick = System.nanoTime();
-				
+
 				update();
-				
+
 				upsCounter++;
-				
+
 				fakeInterpolation--;
-				
+
 				continue;
 			}
-			
+
 			interpolation = (thisTick - updateTick) / updatePeriodNs;
-			
+
 			paint();
-			
+
 			fpsCounter++;
-			
+
 			if (System.currentTimeMillis() - second > 1000)
 			{
 				second += 1000;

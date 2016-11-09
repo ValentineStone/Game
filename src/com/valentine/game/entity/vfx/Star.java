@@ -1,77 +1,75 @@
 package com.valentine.game.entity.vfx;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import com.valentine.game.core.Input;
-import com.valentine.game.core.Screen;
+import com.valentine.game.core.*;
+import com.valentine.game.core.screen.*;
+import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
-import com.valentine.game.entity.base.Entity;
-import com.valentine.game.entity.base.Layer;
-import com.valentine.game.utils.ColorExt;
-import com.valentine.game.utils.MathExt;
+import com.valentine.game.utils.*;
 
 public class Star extends Layer implements KeyListener
 {
 	public int level = 0;
-	
+
 	private StarSide left;
 	private StarSide right;
 	private StarSide bottom;
-	
+
 	private double sideLenght;
-	
+
 	private double xTop;
 	private double yTop;
 	private double xLeft;
 	private double yLeft;
 	private double xRight;
 	private double yRight;
-	
+
 	private boolean LEVEL_UP = false;
 	private boolean LEVEL_DOWN = false;
-	
+
 	public Star(Container _container, double _x, double _y, double _sideLenght)
 	{
 		super(_container, _x, _y);
-		
+
 		Input.addKeyListener(this);
-		
+
 		setFillColor(ColorExt.makeTransparent(Color.BLACK, 220));
-		
-		sideLenght =_sideLenght;
-		
+
+		sideLenght = _sideLenght;
+
 		xTop = sideLenght / 2.;
 		yTop = sideLenght - Math.pow(3, 0.5) * sideLenght / 2;
 		xLeft = 0;
 		yLeft = sideLenght;
 		xRight = sideLenght;
 		yRight = sideLenght;
-		
+
 		bottom = new StarSide(this, 0, xLeft, yLeft, xRight, yRight);
 		right = new StarSide(this, 0, xRight, yRight, xTop, yTop);
 		left = new StarSide(this, 0, xTop, yTop, xLeft, yLeft);
 	}
-	
-	@Override
+
 	public void paint(Screen _screen)
 	{
 		_screen.setColor(Color.MAGENTA);
 		super.paint(_screen);
 		_screen.drawString("LEVEL: " + level, getX(), getY() + 30);
 	}
-	
-	@Override
+
 	public void update()
 	{
 		super.update();
-		
+
 		if (LEVEL_DOWN || LEVEL_UP)
 		{
 			if (LEVEL_DOWN)
 			{
-				if (level > 0) level--;
+				if (level > 0)
+				{
+					level--;
+				}
 				LEVEL_DOWN = false;
 			}
 			if (LEVEL_UP)
@@ -79,17 +77,16 @@ public class Star extends Layer implements KeyListener
 				level++;
 				LEVEL_UP = false;
 			}
-			
+
 			bottom.update();
 			right.update();
 			left.update();
 		}
 	}
 
-	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
-		switch(_keyEvent.getKeyChar())
+		switch (_keyEvent.getKeyChar())
 		{
 			case '=':
 			case '+':
@@ -104,11 +101,12 @@ public class Star extends Layer implements KeyListener
 			}
 		}
 	}
-	
-	@Override
-	public void keyTyped(KeyEvent _keyEvent) {}
-	@Override
-	public void keyReleased(KeyEvent _keyEvent) {}
+
+	public void keyTyped(KeyEvent _keyEvent)
+	{}
+
+	public void keyReleased(KeyEvent _keyEvent)
+	{}
 }
 
 class StarSide extends Entity
@@ -117,7 +115,7 @@ class StarSide extends Entity
 	private StarSide duo;
 	private StarSide tre;
 	private StarSide qtr;
-	
+
 	private double xBeg;
 	private double yBeg;
 	private double x2;
@@ -131,23 +129,23 @@ class StarSide extends Entity
 	private double normal;
 	private double segmentLengh;
 	private double triangleHeight;
-	
+
 	private int level = 0;
-	
+
 	public StarSide(Container _star, int _level, double _xBeg, double _yBeg, double _xEnd, double _yEnd)
 	{
 		super(_star);
-		
+
 		setDrawColor(ColorExt.randomColor(20, 255));
 		setUpdatable(false);
-		
+
 		level = _level;
-		
+
 		xBeg = _xBeg;
 		yBeg = _yBeg;
 		xEnd = _xEnd;
 		yEnd = _yEnd;
-		
+
 		x2 = xBeg + (xEnd - xBeg) / 3.;
 		y2 = yBeg + (yEnd - yBeg) / 3.;
 		normal = MathExt.rotationMake(xEnd - xBeg, yEnd - yBeg) + MathExt.PI_1_2;
@@ -157,28 +155,32 @@ class StarSide extends Entity
 		y3 = (yEnd + yBeg) / 2. + MathExt.rotationMakeY(normal) * triangleHeight;
 		x4 = xBeg + 2 * (xEnd - xBeg) / 3.;
 		y4 = yBeg + 2 * (yEnd - yBeg) / 3.;
-		
+
 		update();
 	}
-	
-	@Override
+
 	public void paint(Screen _screen)
 	{
-		//Screen.setColor(getDrawColor());
-		if (uno != null && duo != null && tre != null && qtr != null) return;
-		
+		// Screen.setColor(getDrawColor());
+		if (uno != null && duo != null && tre != null && qtr != null)
+		{
+			return;
+		}
+
 		_screen.drawLine(xBeg, yBeg, x2, y2);
 		_screen.drawLine(x2, y2, x3, y3);
 		_screen.drawLine(x3, y3, x4, y4);
 		_screen.drawLine(x4, y4, xEnd, yEnd);
 	}
 
-	@Override
 	public void update()
 	{
-		if (level < ((Star)getContainer()).level)
+		if (level < ((Star) getContainer()).level)
 		{
-			if (uno == null) makeChildren();
+			if (uno == null)
+			{
+				makeChildren();
+			}
 			else
 			{
 				uno.update();
@@ -191,17 +193,17 @@ class StarSide extends Entity
 		{
 			massakarsh();
 		}
-		
+
 	}
-	
+
 	public void makeChildren()
 	{
-		uno = new StarSide(getContainer(), level+1, xBeg, yBeg, x2, y2);
-		duo = new StarSide(getContainer(), level+1, x2, y2, x3, y3);
-		tre = new StarSide(getContainer(), level+1, x3, y3, x4, y4);
-		qtr = new StarSide(getContainer(), level+1, x4, y4, xEnd, yEnd);
+		uno = new StarSide(getContainer(), level + 1, xBeg, yBeg, x2, y2);
+		duo = new StarSide(getContainer(), level + 1, x2, y2, x3, y3);
+		tre = new StarSide(getContainer(), level + 1, x3, y3, x4, y4);
+		qtr = new StarSide(getContainer(), level + 1, x4, y4, xEnd, yEnd);
 	}
-	
+
 	private void massakarsh()
 	{
 		if (uno != null)

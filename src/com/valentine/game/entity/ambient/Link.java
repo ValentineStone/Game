@@ -2,38 +2,42 @@ package com.valentine.game.entity.ambient;
 
 import java.awt.*;
 
-import com.valentine.game.core.*;
+import com.valentine.game.core.loop.*;
+import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.*;
 
-public class Link extends Entity {
+public class Link extends Entity
+{
 
 	private Entity source;
 	private Entity destination;
-	
+
 	private double x1;
 	private double y1;
 	private double x2;
 	private double y2;
-	
+
 	private Color drawColor = Color.WHITE;
-	
+
 	public Link(Entity _source, Entity _destination)
 	{
 		super(_source.getContainer());
 		destination = _destination;
 		source = _source;
 	}
-	
-	@Override
-	public void update() {}
-	
-	@Override
+
+	public void update()
+	{}
+
 	public void paint(Screen _screen)
 	{
-		if (destination.getDrawColor() != ColorExt.TRANSPARENT) drawColor = destination.getDrawColor();
+		if (destination.getDrawColor() != ColorExt.TRANSPARENT)
+		{
+			drawColor = destination.getDrawColor();
+		}
 		_screen.setColor(drawColor);
-		
+
 		if (source.getContainer() != destination.getContainer())
 		{
 			x1 = source.getTrueCenterX() - getContainer().getTrueX();
@@ -48,21 +52,25 @@ public class Link extends Entity {
 			x2 = destination.getCenterX();
 			y2 = destination.getCenterY();
 		}
-		
+
 		if (source instanceof EntityBasicAI)
-		if (!((EntityBasicAI)source).isTouchingEdge())
 		{
-			x1 += Interpolation.make(source.getVelocityX());
-			y1 += Interpolation.make(source.getVelocityY());
+			if (!((EntityBasicAI) source).isTouchingEdge())
+			{
+				x1 += Interpolation.make(source.getVelocityX());
+				y1 += Interpolation.make(source.getVelocityY());
+			}
 		}
-		
+
 		if (destination instanceof EntityBasicAI)
-		if (!((EntityBasicAI)destination).isTouchingEdge())
 		{
-			x2 += Interpolation.make(destination.getVelocityX());
-			y2 += Interpolation.make(destination.getVelocityY());
+			if (!((EntityBasicAI) destination).isTouchingEdge())
+			{
+				x2 += Interpolation.make(destination.getVelocityX());
+				y2 += Interpolation.make(destination.getVelocityY());
+			}
 		}
-		
+
 		_screen.drawLine(x1, y1, x2, y2);
 	}
 }

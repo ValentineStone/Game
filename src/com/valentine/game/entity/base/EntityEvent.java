@@ -4,8 +4,6 @@ public abstract class EntityEvent
 {
 	public enum DEATH_BY
 	{
-		BULLET,
-		EXPLOSION,
-		SILENT;
+		BULLET, EXPLOSION, SILENT;
 	}
 }

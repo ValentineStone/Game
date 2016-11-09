@@ -2,7 +2,7 @@ package com.valentine.game.entity.ambient;
 
 import java.awt.*;
 
-import com.valentine.game.core.*;
+import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
 import com.valentine.game.utils.*;
@@ -15,11 +15,11 @@ public class PlanetCentered extends Entity
 	private double angle;
 	private double dAngle = 0.04;
 	private Color targetColor;
-	
+
 	public PlanetCentered(Container _container, double _r, double _d, Entity _center)
 	{
 		super(_container);
-		
+
 		setCenter(_center);
 		setD(_d);
 		setR(_r);
@@ -31,28 +31,26 @@ public class PlanetCentered extends Entity
 		setTargetColor(ColorExt.randomColor(20, 255));
 	}
 
-	@Override
 	public void paint(Screen _screen)
 	{
 		double x = getX() + getD() * MathExt.rotationMakeX(getAngle());
 		double y = getY() + getD() * MathExt.rotationMakeY(getAngle());
-		
+
 		_screen.setColor(getFillColor());
 		_screen.fillOval(x, y, getWidth(), getHeight());
 	}
 
-	@Override
 	public void update()
 	{
 		setAngle(MathExt.rotationNormalize(getAngle() + getdAngle()));
-		
+
 		if (getFillColor().equals(getTargetColor()))
 		{
 			setTargetColor(ColorExt.randomColor(20, 255));
 		}
-		
+
 		setFillColor(ColorExt.fadeto(getFillColor(), getTargetColor()));
-		
+
 		setPosition(getCenter().getCenterX() - getR(), getCenter().getCenterY() - getR());
 	}
 
@@ -116,6 +114,4 @@ public class PlanetCentered extends Entity
 		targetColor = _targetColor;
 	}
 
-	
-	
 }

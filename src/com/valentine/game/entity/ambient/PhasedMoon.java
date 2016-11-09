@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
+import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
 
@@ -17,17 +18,16 @@ public class PhasedMoon extends Entity implements KeyListener
 	public PhasedMoon(Container _container, double _r)
 	{
 		super(_container);
-		
+
 		Input.addKeyListener(this);
-		
+
 		setR(_r);
 		setSize(getR() * 2, getR() * 2);
 		setPositionCentered();
-		
+
 		setFillColor(new Color(255, 255, 100));
 	}
 
-	@Override
 	public void paint(Screen _screen)
 	{
 		_screen.setColor(getFillColor());
@@ -36,16 +36,18 @@ public class PhasedMoon extends Entity implements KeyListener
 		_screen.fillOval(getX() + getWidth() * getPhase(), getY(), getWidth(), getHeight());
 	}
 
-	@Override
 	public void update()
 	{
-		if (!isPaused()) updatePhase();
+		if (!isPaused())
+		{
+			updatePhase();
+		}
 	}
-	
+
 	private void updatePhase()
 	{
 		setPhase(getPhase() + getdPhase());
-		
+
 		if (getPhase() < -1)
 		{
 			setPhase(1);
@@ -96,7 +98,6 @@ public class PhasedMoon extends Entity implements KeyListener
 		paused = _paused;
 	}
 
-	@Override
 	public void keyPressed(KeyEvent _keyEvent)
 	{
 		switch (_keyEvent.getKeyCode())
@@ -104,14 +105,20 @@ public class PhasedMoon extends Entity implements KeyListener
 			case KeyEvent.VK_RIGHT:
 			case KeyEvent.VK_KP_RIGHT:
 			{
-				if (getdPhase() < 0) setdPhase(-getdPhase());
+				if (getdPhase() < 0)
+				{
+					setdPhase(-getdPhase());
+				}
 				updatePhase();
 				break;
 			}
 			case KeyEvent.VK_LEFT:
 			case KeyEvent.VK_KP_LEFT:
 			{
-				if (getdPhase() > 0) setdPhase(-getdPhase());
+				if (getdPhase() > 0)
+				{
+					setdPhase(-getdPhase());
+				}
 				updatePhase();
 				break;
 			}
@@ -135,14 +142,10 @@ public class PhasedMoon extends Entity implements KeyListener
 		}
 	}
 
-	@Override
 	public void keyReleased(KeyEvent _keyEvent)
-	{
-	}
+	{}
 
-	@Override
 	public void keyTyped(KeyEvent _keyEvent)
-	{
-	}
-	
+	{}
+
 }
