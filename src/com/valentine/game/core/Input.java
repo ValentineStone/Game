@@ -7,7 +7,7 @@ public class Input implements Updatable, MouseListener, MouseMotionListener, Key
 {
 	
 	
-	private static Input input;
+	private static Input input = new Input();
 	
 	
 	private static ArrayList<MouseListener> mouseListeners = new ArrayList<MouseListener>();
@@ -20,16 +20,6 @@ public class Input implements Updatable, MouseListener, MouseMotionListener, Key
 	
 	private static ArrayList<MouseWheelListener> mouseWheelListeners = new ArrayList<MouseWheelListener>();
 	
-	
-	
-	
-	
-	public static void init()
-	{
-		input = new Input();
-		
-		System.err.println("[Input]");
-	}
 	
 	public static Input instance()
 	{

@@ -1,24 +1,34 @@
 package com.valentine.game.games;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.ambient.*;
+import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.entity.vfx.*;
 
-public class DeadSpace extends GameContainer implements KeyListener
+public class DeadSpace extends Container implements KeyListener
 {
 	private boolean NEW_GAME = false;
 	
 	private long tick = 0;
 	
-	@Override
-	public void assemble()
+	public DeadSpace(Dimension _dimension)
 	{
-		super.assemble();
+		super(null, 0, 0, _dimension.getWidth(), _dimension.getHeight());
+		
+		create();
+	}
+	
+	private void create()
+	{
+		getAdditions().clear();
+		getDeletions().clear();
+		getItems().clear();
 		
 		new StarrySkyMoving(this);
 		
@@ -27,7 +37,9 @@ public class DeadSpace extends GameContainer implements KeyListener
 		new Star(this, 14, 190, 230);
 		
 		Input.addKeyListener(this);
+
 		
+		//setFillColor(new Color(0,0,0,10));
 		setFillColor(Color.BLACK);
 		setDrawColor(Color.WHITE);
 		
@@ -72,7 +84,7 @@ public class DeadSpace extends GameContainer implements KeyListener
 		{
 			Input.removeKeyListener(this);
 			NEW_GAME = false;
-			assemble();
+			create();
 		}
 		
 		if (tick++ % 20 == 0)

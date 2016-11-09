@@ -5,7 +5,7 @@ import java.awt.Color;
 import com.valentine.game.core.*;
 import com.valentine.game.utils.*;
 
-public abstract class Entity
+public abstract class Entity implements BasicEntity
 {
 	private static int idGlobalTop = 0;
 	

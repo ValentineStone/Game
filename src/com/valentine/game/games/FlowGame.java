@@ -5,11 +5,12 @@ import java.awt.event.*;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.flow.*;
+import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.geometry.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.utils.*;
 
-public class FlowGame extends GameContainer implements KeyListener
+public class FlowGame extends Container implements KeyListener
 {
 	Color fill = new Color(255,0,0,50);
 	
@@ -27,10 +28,11 @@ public class FlowGame extends GameContainer implements KeyListener
 	double maxr = 1000;
 	double minr = 10;
 	
-	@Override
-	public void assemble()
+
+	public FlowGame(Dimension _dimension)
 	{
-		super.assemble();
+		super(null, 0, 0, _dimension.getWidth(), _dimension.getHeight());
+		
 		Input.addKeyListener(this);
 		
 		maxr = getHeight() / 2. - minr;

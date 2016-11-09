@@ -42,8 +42,9 @@ public abstract class Loop implements Runnable
 		enable();
 		
 		thread = new Thread(this);
-		
 		thread.setDaemon(false);
+		
+		state = State.RUNNING;
 		thread.start();
 	}
 	

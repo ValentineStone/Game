@@ -2,21 +2,21 @@ package com.valentine.game.core;
 
 public class Cassette implements Updatable, Paintable
 {
-	Game game;
+	BasicEntity data;
 	
-	public Cassette(Game _game)
+	public Cassette(BasicEntity _data)
 	{
-		game = _game;
+		data = _data;
 	}
 	
 	public void update()
 	{
-		game.update();
+		data.update();
 	}
 
 	public void paint(Screen _screen)
 	{
-		game.paint(_screen);
+		data.paint(_screen);
 	}
 
 }

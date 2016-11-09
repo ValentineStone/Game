@@ -17,7 +17,7 @@ public class Layer extends Container {
 		
 		for (Entity entity : items)
 		{
-			if (entity.isPaintable()) entity.paint(null);
+			if (entity.isPaintable()) entity.paint(_screen);
 		}
 		
 		_screen.delocalize(getX(), getY());

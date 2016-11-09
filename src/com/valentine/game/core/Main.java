@@ -1,31 +1,19 @@
 package com.valentine.game.core;
 
+import com.valentine.game.games.*;
+
 public abstract class Main
 {
-
-	public static void main(String[] args) throws InterruptedException
+	public static void main(String[] _args)
 	{
-		// Create a new screen and initialize the static wrapper with it.
-		Screen screen = null; //new SwingScreen();
-		//Screen.setStaticRedirect(screen);
+		Screen screen = new SwingScreen();
 		
-		// Create new yame painted in the given screen.
-		// Will call all the constructors recursively
-		GameContainer game = new GameContainer();
-		
-		// Add the given game as the one being painted by given screen.
-		//screen.setPaintable(game);
-		
-		PUDummy puDummy = new PUDummy();
-		
-		// Create and start a notch loop on game and screen
-		NotchLoop notchLoop = new NotchLoop(puDummy, puDummy);
-		notchLoop.setPaintable(false);
-		
-		puDummy.setNotchLoop(notchLoop);
-		
-		//Thread.sleep(60);
-		//notchLoop.stop();
-	}
+		Cassette cassete = new Cassette(new DeadSpace(screen.getScreenSize()));
 
+		Terminal terminal = new NotchTerminal();
+		
+		terminal.plugIn(cassete);
+		terminal.plugIn(Input.instance());
+		terminal.plugIn(screen);
+	}
 }

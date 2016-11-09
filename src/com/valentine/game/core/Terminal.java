@@ -46,6 +46,10 @@ public class Terminal implements PaintableSmart, Updatable
 	public void paint()
 	{
 		if (cassette != null && screen != null)
+		{
+			screen.open();
 			cassette.paint(screen);
+			screen.flush();
+		}
 	}
 }

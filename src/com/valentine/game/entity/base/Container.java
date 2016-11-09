@@ -34,7 +34,7 @@ public class Container extends Entity implements Iterable<Entity>
 		
 		for (Entity entity : items)
 		{
-			if (entity.isPaintable()) entity.paint(null);
+			if (entity.isPaintable()) entity.paint(_screen);
 		}
 		
 		_screen.setClip(null);

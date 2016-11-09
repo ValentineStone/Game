@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.Graphics2D;
@@ -17,34 +16,34 @@ import java.awt.Stroke;
 import java.awt.image.BufferStrategy;
 import java.awt.image.ImageObserver;
 import java.io.File;
-import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 
 import javax.swing.JFrame;
 
-public abstract class SwingScreen implements Screen
+public class SwingScreen implements Screen
 {
 	private Graphics2D graphics;
 	
 	private Font font;
 	
-	private Paintable paintable;
+	private RigidSwingWindow window;
 	
-	Window window;
 	
-	public Paintable getPaintable()
+	
+	
+	public SwingScreen()
 	{
-		return paintable;
+		loadFont();
+		window = new RigidSwingWindow();
 	}
-
-	public void setPaintable(Paintable _paintable)
-	{
-		paintable = _paintable;
-	}
-
+	
+	
+	
+	
 	public void loadFont()
-	
 	{
+		System.err.println("Loadnig font...");
+		
 		try
 		{
 			GraphicsEnvironment
@@ -53,17 +52,15 @@ public abstract class SwingScreen implements Screen
 			(
 				Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf"))
 			);
+			
+			font = new Font("Press Start 2P", Font.PLAIN, 12);
+			System.err.println("Success.");
 		}
-		catch (FontFormatException _exception)
+		catch (Exception _exception)
 		{
-			_exception.printStackTrace();
+			font = new Font("Monospace", Font.PLAIN, 12);
+			System.err.println("Unsuccessfull.");
 		}
-		catch (IOException _exception)
-		{
-			_exception.printStackTrace();
-		}
-		
-		font = new Font("Press Start 2P", Font.PLAIN, 12);
 	}
 	
 	public void setGraphics(Graphics2D _graphics)
@@ -160,6 +157,12 @@ public abstract class SwingScreen implements Screen
 	public void drawLine(double _x1, double _y1, double _x2, double _y2)
 	{
 		graphics.drawLine((int)Math.round(_x1), (int)Math.round(_y1), (int)Math.round(_x2), (int)Math.round(_y2));
+	}
+	
+
+	public void drawDot(double _x, double _y)
+	{
+		drawLine(_x, _y, _x, _y);
 	}
 
 	public void drawOval(double _x, double _y, double _width, double _height)
@@ -281,13 +284,21 @@ public abstract class SwingScreen implements Screen
 	{
 		graphics.setStroke(_stroke);
 	}
-
-	public void setStaticRedirect(Screen _screen)
-	{}
 	
-	Dimension getCreenSize()
+	public void open()
 	{
-		return window.getFullScreenSize();
+		window.openForPaint();
+		setGraphics(window.getGraphics());
+	}
+
+	public void flush()
+	{
+		window.flush();
+	}
+	
+	public Dimension getScreenSize()
+	{
+		return window.getDimension();
 	}
 }
 
@@ -295,7 +306,7 @@ public abstract class SwingScreen implements Screen
 
 
 
-class Window
+class RigidSwingWindow
 {
 	private JFrame jframe;
 	private Canvas canvas;
@@ -306,9 +317,20 @@ class Window
 	
 	private String title = "";
 	
+	private BufferStrategy bufferStrategy = null;
+	private Graphics2D graphics = null;
+	
+	
+	
+	
+	
 	public final static Dimension DEFAULT_DIMESION = new Dimension(1280, 720);
 	
-	public Window(Dimension _defaultDimension, boolean _isFullscreen)
+	
+	
+	
+	
+	public RigidSwingWindow(Dimension _defaultDimension, boolean _isFullscreen)
 	{
 		defaultDimension = _defaultDimension;
 		isFullscreen = _isFullscreen;
@@ -316,15 +338,24 @@ class Window
 		createWindow();
 	}
 	
-	public Window(Dimension _defaultDimension)
+	public RigidSwingWindow(Dimension _defaultDimension)
 	{
 		this(_defaultDimension, false);
 	}
 	
-	public Window()
+	public RigidSwingWindow()
 	{
 		this(DEFAULT_DIMESION, true);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private void createWindow()
 	{
@@ -333,8 +364,6 @@ class Window
 		canvas = new Canvas()
 		{
 			private static final long serialVersionUID = -4962224423650843597L;
-			
-			BufferStrategy bufferStrategy = null;
 			
 			public void repaint()
 			{
@@ -345,12 +374,6 @@ class Window
 				}
 				
 				graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
-				
-				paintable.paint();
-				
-				bufferStrategy.show();
-				
-				graphics2D.dispose();
 			}
 		};
 		
@@ -384,26 +407,49 @@ class Window
 			jframe.pack();
 		}
 		
+		jframe.setResizable(false);
+		
 		jframe.setVisible(true);
 	}
-
-
-	public Dimension getFullScreenSize()
-	{
-		DisplayMode displayMode =
-			GraphicsEnvironment
-			.getLocalGraphicsEnvironment()
-			.getDefaultScreenDevice()
-			.getDisplayMode();
-		
-		return new Dimension(displayMode.getWidth(), displayMode.getHeight());
-	}
 	
-	public void repaint()
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void openForPaint()
 	{
 		canvas.repaint();
 	}
+	
+	
+	public Graphics2D getGraphics()
+	{
+		return graphics;
+	}
 
+	public void flush()
+	{
+		bufferStrategy.show();
+		
+		graphics.dispose();
+	}
+
+	
+	
+	
+
+	
+	
+	
+	
+	
 	public String getTitle()
 	{
 		return title;
@@ -412,5 +458,42 @@ class Window
 	public void setTitle(String _title)
 	{
 		title = _title;
+	}
+	
+	
+	
+	
+	
+	
+	
+
+	public Dimension getDimension()
+	{
+		if (isFullscreen)
+			return getFullScreenSize();
+		else	
+			return defaultDimension;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static Dimension getFullScreenSize()
+	{
+		DisplayMode displayMode =
+			GraphicsEnvironment
+			.getLocalGraphicsEnvironment()
+			.getDefaultScreenDevice()
+			.getDisplayMode();
+		
+		return new Dimension(displayMode.getWidth(), displayMode.getHeight());
 	}
 }
