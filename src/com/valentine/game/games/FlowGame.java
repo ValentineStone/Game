@@ -9,7 +9,7 @@ import com.valentine.game.entity.geometry.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.utils.*;
 
-public class FlowGame extends Game implements KeyListener
+public class FlowGame extends GameContainer implements KeyListener
 {
 	Color fill = new Color(255,0,0,50);
 	

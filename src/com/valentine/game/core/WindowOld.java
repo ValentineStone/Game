@@ -40,7 +40,7 @@ public class WindowOld
 				System.err.println("Static call of Screen is no longer supported");
 				//Screen.setGraphics(graphics2D);
 				
-				Game.instance().paint(null);
+				GameContainer.instance().paint(null);
 				
 				bufferStrategy.show();
 				

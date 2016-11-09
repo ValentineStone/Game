@@ -1,16 +1,28 @@
 package com.valentine.game.core;
 
-import java.awt.*;
-import java.awt.image.*;
-import java.io.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.FontMetrics;
+import java.awt.Frame;
+import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.image.BufferStrategy;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
-import com.valentine.game.core.*;
-import com.valentine.game.core.basic.*;
-
-public abstract class SwingScreen implements Paintable
+public abstract class SwingScreen implements Screen
 {
 	private Graphics2D graphics;
 	
@@ -30,11 +42,9 @@ public abstract class SwingScreen implements Paintable
 		paintable = _paintable;
 	}
 
-	public void init()
+	public void loadFont()
 	
 	{
-		System.err.println("[Screen]");
-		
 		try
 		{
 			GraphicsEnvironment
@@ -54,9 +64,6 @@ public abstract class SwingScreen implements Paintable
 		}
 		
 		font = new Font("Press Start 2P", Font.PLAIN, 12);
-		
-		
-		
 	}
 	
 	public void setGraphics(Graphics2D _graphics)
@@ -297,29 +304,26 @@ class Window
 	
 	private Dimension defaultDimension;
 	
-	private Paintable paintable;
-	
 	private String title = "";
 	
 	public final static Dimension DEFAULT_DIMESION = new Dimension(1280, 720);
 	
-	public Window(Paintable _paintable, Dimension _defaultDimension, boolean _isFullscreen)
+	public Window(Dimension _defaultDimension, boolean _isFullscreen)
 	{
-		paintable = _paintable;
 		defaultDimension = _defaultDimension;
 		isFullscreen = _isFullscreen;
 		
 		createWindow();
 	}
 	
-	public Window(Paintable _paintable, Dimension _defaultDimension)
+	public Window(Dimension _defaultDimension)
 	{
-		this(_paintable, _defaultDimension, false);
+		this(_defaultDimension, false);
 	}
 	
-	public Window(Paintable _paintable)
+	public Window()
 	{
-		this(_paintable, DEFAULT_DIMESION, true);
+		this(DEFAULT_DIMESION, true);
 	}
 	
 	private void createWindow()
@@ -331,9 +335,7 @@ class Window
 			private static final long serialVersionUID = -4962224423650843597L;
 			
 			BufferStrategy bufferStrategy = null;
-			Graphics2D graphics2D;
-
-			@Override
+			
 			public void repaint()
 			{
 				if (bufferStrategy == null)
@@ -342,10 +344,7 @@ class Window
 					bufferStrategy = canvas.getBufferStrategy();
 				}
 				
-				graphics2D = (Graphics2D) bufferStrategy.getDrawGraphics();
-				
-				System.err.println("Static call of Screen is no longer supported");
-				//Screen.setGraphics(graphics2D);
+				graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
 				
 				paintable.paint();
 				

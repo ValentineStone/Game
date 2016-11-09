@@ -3,7 +3,7 @@ package com.valentine.game.core;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class Input implements MouseListener, MouseMotionListener, KeyListener, ComponentListener, MouseWheelListener
+public class Input implements Updatable, MouseListener, MouseMotionListener, KeyListener, ComponentListener, MouseWheelListener
 {
 	
 	
@@ -221,5 +221,10 @@ public class Input implements MouseListener, MouseMotionListener, KeyListener, C
 		{
 			mouseWheelListener.mouseWheelMoved(_mouseWheelEvent);
 		}
+	}
+
+	public void update()
+	{
+		//placeholder
 	}
 }

@@ -6,34 +6,67 @@ public abstract class Loop implements Runnable
 	
 	public enum State
 	{
-		
+		NOT_STARTED,
+		RUNNING,
+		STOPPED
 	}
 	
-	private Paintable paintable;
-	private Updatable updatable;
+	protected PaintableSmart paintable;
+	protected Updatable updatable;
 	
-	private boolean running = true;
+	protected State state = State.NOT_STARTED;
 
-	private final double updatesPerSecond = 25;
-	private final double updatePeriodNs = 1000 * 1000 * 1000 / updatesPerSecond;
+	protected final double updatesPerSecond = 25;
+	protected final double updatePeriodNs = 1000 * 1000 * 1000 / updatesPerSecond;
 	
-	private volatile int fps = 0;
-	private volatile int ups = 0;
+	protected volatile int fps = 0;
+	protected volatile int ups = 0;
 	
-	private double interpolation;
+	protected double interpolation;
 	
-	private boolean isPaintable = true;
-	private boolean isUpdatable = true;
+	protected boolean isPaintable = false;
+	protected boolean isUpdatable = false;
+	
+	
+	public Loop ()
+	{
+		this(null, null);
+	}
+	
 
-	public Loop (Paintable _paintable, Updatable _updatable)
+	public Loop (PaintableSmart _paintable, Updatable _updatable)
 	{
 		paintable = _paintable;
 		updatable = _updatable;
 		
+		enable();
+		
 		thread = new Thread(this);
 		
 		thread.setDaemon(false);
+		thread.start();
 	}
+	
+	
+	
+	
+	
+	public void setPaintable(PaintableSmart _paintable)
+	{
+		paintable = _paintable;
+	}
+	
+	public void setUpdatable(Updatable _updatable)
+	{
+		updatable = _updatable;
+	}
+	
+	public void setBasicEntity(BasicEntitySmart _basicEntity)
+	{
+		paintable = _basicEntity;
+		updatable = _basicEntity;
+	}
+	
 	
 	
 	
@@ -41,7 +74,6 @@ public abstract class Loop implements Runnable
 	public void paint()
 	{
 		if (isPaintable()) paintable.paint();
-		
 	}
 
 	public void update()
@@ -72,9 +104,9 @@ public abstract class Loop implements Runnable
 		return isPaintable;
 	}
 
-	public void setPaintable(boolean _isPaintable)
+	public void setIsPaintable(boolean _isPaintable)
 	{
-		isPaintable = _isPaintable;
+		isPaintable = paintable != null ? _isPaintable : false;
 	}
 
 	public boolean isUpdatable()
@@ -82,12 +114,22 @@ public abstract class Loop implements Runnable
 		return isUpdatable;
 	}
 
-	public void setUpdatable(boolean _isUpdatable)
+	public void setIsUpdatable(boolean _isUpdatable)
 	{
-		isUpdatable = _isUpdatable;
+		isUpdatable = updatable != null ? _isUpdatable : false;
 	}
 	
+	public void enable()
+	{
+		setIsPaintable(true);
+		setIsUpdatable(true);
+	}
 	
+	public void disable()
+	{
+		setIsPaintable(false);
+		setIsUpdatable(false);
+	}
 	
 	
 	

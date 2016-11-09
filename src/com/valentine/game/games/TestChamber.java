@@ -9,7 +9,7 @@ import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.EntityInfoBox;
 
-public class TestChamber extends Game implements KeyListener
+public class TestChamber extends GameContainer implements KeyListener
 {
 	@Override
 	public void assemble()

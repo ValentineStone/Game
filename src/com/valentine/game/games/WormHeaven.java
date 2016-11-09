@@ -8,7 +8,7 @@ import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.entity.vfx.*;
 
-public class WormHeaven extends Game
+public class WormHeaven extends GameContainer
 {
 	@Override
 	public void assemble()

@@ -11,7 +11,7 @@ public abstract class Main
 		
 		// Create new yame painted in the given screen.
 		// Will call all the constructors recursively
-		Game game = new Game();
+		GameContainer game = new GameContainer();
 		
 		// Add the given game as the one being painted by given screen.
 		//screen.setPaintable(game);

@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.valentine.game.core.Game;
+import com.valentine.game.core.GameContainer;
 import com.valentine.game.entity.ui.Clock;
 import com.valentine.game.utils.MathExt;
 
-public class ClockGame extends Game
+public class ClockGame extends GameContainer
 {
 	List<Clock> clocks = new ArrayList<Clock>();
 	
