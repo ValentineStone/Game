@@ -9,7 +9,7 @@ import com.valentine.game.utils.*;
 
 public class GameOver extends Entity
 {
-	Font font;// = new Font(Screen.getFont().getFontName(), Font.ITALIC, 100);
+	Font font = null;
 
 	public GameOver(Container _container)
 	{
@@ -23,12 +23,17 @@ public class GameOver extends Entity
 
 	public void paint(Screen _screen)
 	{
+		if (font == null)
+		{
+			font = new Font(_screen.getFont().getFontName(), Font.ITALIC, 60);
+		}
+		
 		_screen.setColor(getFillColor());
 		_screen.fillRect(0, 0, getContainer().getWidth(), getContainer().getHeight());
 
 		_screen.setColor(getDrawColor());
 		_screen.setFont(font);
-		_screen.drawString("GAME OVER", getContainer().getCenterX() - 450, getContainer().getCenterY() + 40);
+		_screen.drawString("GAME OVER", getContainer().getCenterX() - 250, getContainer().getCenterY() + 40);
 		_screen.resetFont();
 		_screen.drawString("Press ESC to retry.", getContainer().getCenterX() - 100, getContainer().getCenterY() + 80);
 	}

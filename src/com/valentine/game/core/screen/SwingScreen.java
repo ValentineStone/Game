@@ -13,14 +13,16 @@ public class SwingScreen implements Screen
 {
 	private Graphics2D graphics;
 
-	private Font font;
+	private Font defaultFont;
 
 	private RigidSwingWindow window;
+	
+	private Stroke defaultStroke = new BasicStroke(1);
 
 	public SwingScreen()
 	{
 		loadFont();
-		window = new RigidSwingWindow(new Dimension(1280, 720), true);
+		window = new RigidSwingWindow(new Dimension(1200, 720), true);
 	}
 
 	public void loadFont()
@@ -32,12 +34,12 @@ public class SwingScreen implements Screen
 			GraphicsEnvironment.getLocalGraphicsEnvironment()
 					.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
 
-			font = new Font("Press Start 2P", Font.PLAIN, 12);
+			defaultFont = new Font("Press Start 2P", Font.PLAIN, 12);
 			System.err.println("Success.");
 		}
 		catch (Exception _exception)
 		{
-			font = new Font("Monospace", Font.PLAIN, 12);
+			defaultFont = new Font("Monospace", Font.PLAIN, 12);
 			System.err.println("Unsuccessfull.");
 		}
 	}
@@ -46,7 +48,10 @@ public class SwingScreen implements Screen
 	{
 		graphics = _graphics;
 
-		graphics.setFont(font);
+		resetFont();
+		resetStroke();
+		
+		
 
 		/*
 		 * graphics.setRenderingHint ( RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -208,7 +213,7 @@ public class SwingScreen implements Screen
 
 	public Font getFont()
 	{
-		return font;
+		return defaultFont;
 	}
 
 	public FontMetrics getFontMetrics(Font _f)
@@ -238,7 +243,7 @@ public class SwingScreen implements Screen
 
 	public void resetFont()
 	{
-		graphics.setFont(font);
+		graphics.setFont(defaultFont);
 	}
 
 	public void setPaintMode()
@@ -264,6 +269,11 @@ public class SwingScreen implements Screen
 	public void setStroke(Stroke _stroke)
 	{
 		graphics.setStroke(_stroke);
+	}
+	
+	public void resetStroke()
+	{
+		graphics.setStroke(defaultStroke);
 	}
 
 	public void open()

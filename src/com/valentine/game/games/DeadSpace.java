@@ -39,7 +39,7 @@ public class DeadSpace extends Container implements KeyListener
 
 		Input.addKeyListener(this);
 
-		setFillColor(new Color(0,0,0,10));
+		setFillColor(new Color(0,0,255,10));
 		//setFillColor(Color.BLACK);
 		setDrawColor(Color.WHITE);
 
@@ -91,11 +91,11 @@ public class DeadSpace extends Container implements KeyListener
 			}
 			else if (rand > 0.666)
 			{
-				new Collider(this);// new Rotor(this);
+				new Rotor(this);
 			}
 			else
 			{
-				new Collider(this);// new Rotor2(this);
+				new Rotor2(this);
 			}
 		}
 

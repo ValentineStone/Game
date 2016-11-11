@@ -88,6 +88,8 @@ public interface Screen
 	public Graphics2D getGraphics();
 
 	public void setStroke(Stroke _stroke);
+	
+	public void resetStroke();
 
 	Dimension getScreenSize();
 }

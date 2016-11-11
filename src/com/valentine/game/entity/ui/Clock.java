@@ -58,6 +58,8 @@ public class Clock extends EntityBasicAI
 		_screen.fillOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2 * cntrDotRad, 2 * cntrDotRad);
 		_screen.setColor(getDrawColor());
 		_screen.drawOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2 * cntrDotRad, 2 * cntrDotRad);
+		
+		_screen.resetStroke();
 	}
 
 	public void update()

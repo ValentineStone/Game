@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
+import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.flow.*;
 import com.valentine.game.entity.geometry.*;
@@ -61,6 +62,12 @@ public class FlowGame extends Container implements KeyListener
 		speedSlider.setValue(1);
 
 		// new DragHandler(this, circle);
+		
+		
+		ContainerWindow gameWin = new ContainerWindow(this, 200, 70, 840, 650);
+		Entity game = new DeadSpace(new Dimension(840,620));
+		game.setY(30);
+		gameWin.moveIn(game);
 	}
 
 	public void update()

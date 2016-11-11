@@ -11,7 +11,7 @@ public abstract class Main
 	{
 		Screen screen = new SwingScreen();
 
-		Cassette cassete = new Cassette(new DeadSpace(screen.getScreenSize()));
+		Cassette cassete = new Cassette(new FuzzySets(screen.getScreenSize()));
 
 		Terminal terminal = new NotchTerminal();
 
