@@ -11,15 +11,18 @@ public class BasicLoop extends Loop
 
 	public void run()
 	{
-		update();
-		paint();
-
-		try
+		while (state == State.RUNNING)
 		{
-			Thread.sleep(sleepTime);
+			update();
+			paint();
+
+			try
+			{
+				Thread.sleep(sleepTime);
+			}
+			catch (Exception _e)
+			{}
 		}
-		catch (Exception _e)
-		{}
 	}
 
 }

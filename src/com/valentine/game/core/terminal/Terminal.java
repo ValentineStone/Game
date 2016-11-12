@@ -14,7 +14,7 @@ public class Terminal implements PaintableSmart, Updatable
 
 	public Terminal()
 	{
-		this(new BasicLoop(300));
+		this(new BasicLoop(25));
 	}
 
 	protected Terminal(Loop _loop)

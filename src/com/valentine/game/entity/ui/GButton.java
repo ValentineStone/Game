@@ -1,15 +1,16 @@
 package com.valentine.game.entity.ui;
 
-import java.awt.BasicStroke;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.List;
 
-import javax.swing.event.MouseInputListener;
+import javax.swing.event.*;
 
-import com.valentine.game.core.Input;
+import com.valentine.game.core.*;
 import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.base.Container;
 
 public class GButton extends EntityBasicAI implements MouseInputListener
 {
@@ -51,12 +52,12 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 			setText(getText());
 			// ^ reset size according to font
 			
-			hoverStroke = new BasicStroke(charHeight / 3);
-			pressStroke = new BasicStroke(charHeight / 2);
+			hoverStroke = new BasicStroke(2);
+			pressStroke = new BasicStroke(3);
 		}
 		
 		_screen.setColor(getFillColor());
-		_screen.fillRoundRect(getX(), getY(), getWidth(), getHeight(), 10, 10);
+		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		_screen.setColor(getDrawColor());
 		
 		switch (state)
@@ -69,17 +70,18 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 				_screen.setStroke(hoverStroke);
 		}
 		
-		_screen.drawRoundRect(getX(), getY(), getWidth(), getHeight(), charHeight*2, charHeight*2);
+		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
 		
 		_screen.resetStroke();
 		
-		_screen.drawString(getText(), charHeight, charHeight*2);
+		_screen.drawString(getText(), getX() + charHeight, getY() + charHeight*2);
 	}
 
 	public void update()
 	{	
-		for (;bufferedClicks-- > 0;)
+		while (bufferedClicks > 0)
 		{
+			bufferedClicks--;
 			for (Runnable listener : listeners)
 			{
 				listener.run();
@@ -100,8 +102,12 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 	public void setText(String _text)
 	{
 		text = _text;
-		setWidth(charHeight * (getText().length() + 2));
-		setHeight(charHeight * 3);
+		
+		double width = charHeight * (getText().length() + 2);
+		double height = charHeight * 3;
+		
+		setWidth(width);
+		setHeight(height);
 	}
 	
 	

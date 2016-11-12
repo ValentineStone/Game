@@ -22,7 +22,7 @@ public class SwingScreen implements Screen
 	public SwingScreen()
 	{
 		loadFont();
-		window = new RigidSwingWindow(new Dimension(1200, 720), true);
+		window = new RigidSwingWindow(new Dimension(960, 720), true);
 	}
 
 	public void loadFont()
@@ -354,7 +354,8 @@ class RigidSwingWindow
 		{
 			jframe.setUndecorated(true);
 			jframe.setExtendedState(Frame.MAXIMIZED_BOTH);
-			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jframe);
+			jframe.setSize(getFullScreenSize());
+			//GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jframe);
 		}
 		else
 		{

@@ -14,6 +14,7 @@ public class Trail extends Entity
 
 	private boolean isScheduledForKill = false;
 	private long scheduledKillAge = 0;
+	private int consistency;
 
 	private class Dot
 	{
@@ -34,9 +35,15 @@ public class Trail extends Entity
 
 	public Trail(Container _container, EntityBasicAI _target, int _maxAge)
 	{
+		this(_container, _target, _maxAge, 1);
+	}
+	
+	public Trail(Container _container, EntityBasicAI _target, int _maxAge, int _consistency)
+	{
 		super(_container);
 		target = _target;
 		maxAge = _maxAge;
+		consistency = _consistency;
 		setDrawColor(ColorExt.randomColor(70, 255));
 	}
 
@@ -66,13 +73,16 @@ public class Trail extends Entity
 			kill(this);
 		}
 
-		path.add(new Dot(target.getCenterX(), target.getCenterY(), false));
-
 		age++;
-
-		if (age > maxAge)
+		
+		if (age % consistency == 0)
 		{
-			path.remove(path.get(0));
+			path.add(new Dot(target.getCenterX(), target.getCenterY(), false));
+
+			if (age > maxAge)
+			{
+				path.remove(path.get(0));
+			}
 		}
 
 	}

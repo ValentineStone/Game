@@ -21,6 +21,9 @@ public class FpsUpsCounter extends EntityBasicAI
 
 	private int fps;
 	private int ups;
+	private int _fps;
+	private int _ups;
+	private long second = 0;
 
 	public FpsUpsCounter(Container _container, double _x, double _y)
 	{
@@ -31,29 +34,48 @@ public class FpsUpsCounter extends EntityBasicAI
 
 	public void paint(Screen _screen)
 	{
+		_fps++;
+		
 		if (dy == 0)
 		{
 			dy = _screen.getGraphics().getFontMetrics().getHeight() + 1;
 		}
 
 		_screen.setColor(getDrawColor());
-		_screen.drawRect(getX(), getY(), (n + 1) * dy, 4 * dy);
+		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
 
 		_screen.setColor(fpsColor);
-		_screen.drawString(fpsText, getX(), getY() + 2 * dy);
+		_screen.drawString(fpsText, getX() + dy, getY() + 2 * dy);
 		_screen.setColor(upsColor);
-		_screen.drawString(upsText, getX(), getY() + 3 * dy);
+		_screen.drawString(upsText, getX() + dy, getY() + 3 * dy);
+		
+		_screen.setColor(getDrawColor());
+		_screen.drawString("FPS:", getX() + dy, getY() + 2 * dy);
+		_screen.drawString("UPS:", getX() + dy, getY() + 3 * dy);
 	}
 
 	public void update()
 	{
-		fpsText = " FPS:" + -1;// NotchLoop.fps;
-		upsText = " UPS:" + -1;// NotchLoop.ups;
+		if (second == 0)
+		{
+			second = System.currentTimeMillis();
+		}
+		
+		_ups++;
+
+		if (System.currentTimeMillis() - second > 1000)
+		{
+			second += 1000;
+			fps = _fps;
+			_fps = 0;
+			ups = _ups;
+			_ups = 0;
+		}
+		
+		fpsText = "FPS:" + fps;
+		upsText = "UPS:" + ups;
 
 		n = fpsText.length() > upsText.length() ? fpsText.length() : upsText.length();
-
-		fps = -1;// NotchLoop.fps;
-		ups = -1;// NotchLoop.ups;
 
 		if (fps >= 60)
 		{
@@ -72,7 +94,7 @@ public class FpsUpsCounter extends EntityBasicAI
 			fpsColor = Color.RED;
 		}
 
-		double idealUps = -1;// NotchLoop.updatesPerSecond;
+		double idealUps = 25;
 
 		if (ups > idealUps + 2)
 		{
@@ -103,7 +125,19 @@ public class FpsUpsCounter extends EntityBasicAI
 			upsColor = Color.RED;
 		}
 
-		setSize((n + 1) * dy, 4 * dy);
+		setSize((n + 2) * dy, 4 * dy);
 	}
+
+	public int getFps()
+	{
+		return fps;
+	}
+
+	public int getUps()
+	{
+		return ups;
+	}
+	
+	
 
 }
