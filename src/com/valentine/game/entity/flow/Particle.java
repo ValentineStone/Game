@@ -11,13 +11,13 @@ public class Particle extends EntityBasicAI
 	private Trail trail;
 
 	Circle circle;
-	private double u0 = 1;
+	protected double u0 = 1;
 
-	private double r = 0;
-	private double a = 0;
+	protected double r = 0;
+	protected double a = 0;
 
-	private double dr = 0;
-	private double da = 0;
+	protected double dr = 0;
+	protected double da = 0;
 
 	public Particle(Container _container, Circle _circle, double _u0, double _r, double _a)
 	{

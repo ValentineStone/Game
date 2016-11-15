@@ -77,6 +77,11 @@ public class MathExt
 		}
 		return _rotation;
 	}
+	
+	public static double rotationMake(double _x1, double _y1, double _x2, double _y2)
+	{
+		return rotationMake(_x2 - _x1, _y2 - _y1);
+	}
 
 	public static double rotationMake(double _x, double _y)
 	{

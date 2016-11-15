@@ -55,19 +55,22 @@ public class FlowGame extends Container implements KeyListener
 
 		sliders = new ContainerWindow(this, 10, 70, 90, 350);
 
-		radiusSlider = new BoxedSlider(sliders, 10, 40, 30, 300);
-		speedSlider = new BoxedSlider(sliders, 50, 40, 30, 300);
+		radiusSlider = new BoxedSlider(sliders, 10, 10, 30, 300);
+		speedSlider = new BoxedSlider(sliders, 50, 10, 30, 300);
 
 		radiusSlider.setValue(1);
 		speedSlider.setValue(1);
 
 		// new DragHandler(this, circle);
 		
-		
+		/*
 		ContainerWindow gameWin = new ContainerWindow(this, 200, 70, 840, 650);
 		Entity game = new DeadSpace(new Dimension(840,620));
 		game.setY(30);
 		gameWin.moveIn(game);
+		*/
+		
+		new MouseParticle(this, circle, 0.01);
 	}
 
 	public void update()
@@ -80,6 +83,7 @@ public class FlowGame extends Container implements KeyListener
 		{
 			setUpdatable(keepUpdating);
 		}
+		
 		super.update();
 
 		if (isUpdatable())
@@ -92,8 +96,8 @@ public class FlowGame extends Container implements KeyListener
 				// " + (getWidth() - p) + " | " + (getCenterY() +
 				// getCenterY()/10));
 
-				double d = MathExt.distanceMake(getCenterX(), getCenterY(), getWidth() - p, getHeight());
-				double a = MathExt.rotationMake(getCenterX() - p, getCenterY());
+				double d = MathExt.distanceMake(getCenterX(), getCenterY(), getWidth() - p, 3 * getHeight() / 4);
+				double a = MathExt.rotationMake(getCenterX() - p, getHeight() / 4);
 
 				if (md < 0)
 				{

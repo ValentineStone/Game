@@ -12,7 +12,7 @@ import com.valentine.game.utils.*;
 
 public class FuzzySets extends Container
 {
-	private int count = 3;
+	private int count = 9;
 	
 	private List<EntityBasicAI> dudes = new ArrayList<>(count);
 	
@@ -87,7 +87,7 @@ public class FuzzySets extends Container
 				
 				dudes.set(dude, new Tracker(this, dudes.get(dude)));
 				
-				//new Trail(this, dudes.get(dude), 100, 2);
+				new Trail(this, dudes.get(dude), 200, 3);
 			}
 		}
 		
