@@ -15,8 +15,6 @@ public class FlowGame extends Container implements KeyListener
 {
 	Color fill = new Color(255, 0, 0, 50);
 
-	double md = -1;
-
 	boolean keepUpdating = true;
 	int stepsToTake = 0;
 
@@ -66,7 +64,7 @@ public class FlowGame extends Container implements KeyListener
 		
 
 		radiusSlider.setValue(0.5);
-		speedSlider.setValue(0.01);
+		speedSlider.setValue(1);
 
 		clear = new GButton(sliders, "Clear");
 		clear.setX(2);
@@ -92,17 +90,32 @@ public class FlowGame extends Container implements KeyListener
 
 	public void update()
 	{
-		if (stepsToTake > 0)
+		super.update();
+		
+		/*
+		while (stepsToTake > 0)
 		{
 			stepsToTake--;
-		}
-		else
-		{
-			setUpdatable(keepUpdating);
-		}
+			
+			for (int i = 0; i < getHeight(); i++)
+			{
+				double x;
+				double y;
+				double d;
+				double a;
+				
+				x = getWidth() / 2;
+				y = i;
 
-		super.update();
+				d = MathExt.distanceMake(getCenterX(), getCenterY(), x, y);
+				a = MathExt.rotationMake(getCenterX(), getCenterY(), x, y);
 
+				new Particle(this, circle, speedSlider.getValue(), d, a);
+			}
+			
+		}
+		*/
+		
 		if (isUpdatable())
 		{
 			for (int i = 0; i < 10; i++)
@@ -116,7 +129,7 @@ public class FlowGame extends Container implements KeyListener
 				
 				do
 				{
-					x = MathExt.random(getWidth() / 2);
+					x = MathExt.random(getWidth());
 					y = MathExt.random(getHeight());
 
 					d = MathExt.distanceMake(getCenterX(), getCenterY(), x, y);
@@ -124,18 +137,10 @@ public class FlowGame extends Container implements KeyListener
 				}
 				while (d <= circle.getR());
 
-				if (md < 0)
-				{
-					md = d;
-				}
-				else if (md > d)
-				{
-					md = d;
-				}
-
-				new Particle(this, circle, speedSlider.getValue(), d, a);
+				new Particle(this, circle, 30 * speedSlider.getValue(), d, a);
 			}
 		}
+		
 	}
 
 	public void keyPressed(KeyEvent _evt)
@@ -150,14 +155,7 @@ public class FlowGame extends Container implements KeyListener
 
 	public void keyTyped(KeyEvent _evt)
 	{
-		if (_evt.getKeyChar() == ' ')
-		{
-			keepUpdating = keepUpdating ? false : true;
-		}
-		else
-		{
-			stepsToTake++;
-			setUpdatable(true);
-		}
+		stepsToTake++;
+		System.err.println("KEY");
 	}
 }

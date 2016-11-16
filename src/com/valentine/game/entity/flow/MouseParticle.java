@@ -76,7 +76,7 @@ public class MouseParticle extends Entity implements MouseMotionListener
 		dr = u0.get() * (1 - Math.pow(circle.getR() / r, 2.)) * Math.cos(a);
 		da = -u0.get() * (1 + Math.pow(circle.getR() / r, 2.)) * Math.sin(a);
 
-		fi = u0.get() * (r + Math.pow(circle.getR(), 2.) / r) * Math.cos(a);
+		fi = u0.get() * r * (1 + Math.pow(circle.getR() / 2, 2.)) * Math.cos(a);
 
 		rtext = "R : " + r;
 		drtext = "DR: " + dr;

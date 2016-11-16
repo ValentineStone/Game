@@ -54,28 +54,29 @@ public class Particle extends EntityBasicAI
 
 	public void update()
 	{
-		// System.err.println("(" + getX() + ", " + getY() + ")\n" + "[" + a +
-		// ", " + r + "]\n" + "da: " + da + " dr: " + dr);
-
-		dr = u0 * (1 - Math.pow(circle.getR() / r, 2.)) * Math.cos(a);
-		da = -u0 * (1 + Math.pow(circle.getR() / r, 2.)) * Math.sin(a);
+		double cosa = Math.cos(a);
+		double sina = Math.sin(a);
 		
-		if (r < circle.getR())
-		{
-			kill(circle);
-			return;
-		}
+		dr =  u0 * (1 - Math.pow(circle.getR() / r, 2.)) * cosa;
+		da = -u0 * (1 + Math.pow(circle.getR() / r, 2.)) * sina;
+		
+		double drx = dr * cosa;
+		double dry = dr * sina;
+		double dax = da * sina;
+		double day = da * cosa;
 
-		r += dr;
-		a += da;
+		setX(getX() + drx + dax);
+		setY(getY() + dry + day);
+		
+		r = MathExt.distanceMake(circle.getCenterX(), circle.getCenterY(), getX(), getY());
+		a = MathExt.rotationMake(circle.getCenterX(), circle.getCenterY(), getX(), getY());
 
-		setX(circle.getCenterX() + r * Math.cos(a));
-		setY(circle.getCenterY() + r * Math.sin(a));
-
-		// System.err.println("(" + getX() + ", " + getY() + ")\n" + "[" + a +
-		// ", " + r + "]\n" + "da: " + da + " dr: " + dr + "\n\n");
-
-		if (isOutOfContainer() || Math.abs(da) == 0)
+		if
+		(
+			isOutOfContainer()
+			|| Math.abs(da + dr) == 0
+			|| r < circle.getR()
+		)
 		{
 			kill(getContainer());
 		}
