@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
+import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.flow.*;
 import com.valentine.game.entity.geometry.*;
@@ -22,8 +23,13 @@ public class FlowGame extends Container implements KeyListener
 	ContainerWindow sliders;
 
 	Circle circle;
+	
+	GButton clear;
+	
 	BoxedSlider radiusSlider;
 	BoxedSlider speedSlider;
+	Ref<Double> radiusRef;
+	Ref<Double> speedRef;
 
 	double maxr = 1000;
 	double minr = 10;
@@ -42,7 +48,6 @@ public class FlowGame extends Container implements KeyListener
 
 		circle = new Circle(this, 1)
 		{
-
 			public void update()
 			{
 				setR(radiusSlider.getValue() * (maxr - minr) + minr);
@@ -52,24 +57,37 @@ public class FlowGame extends Container implements KeyListener
 
 		circle.setPositionCentered();
 
-		sliders = new ContainerWindow(this, 10, 70, 90, 350);
+		sliders = new ContainerWindow(this, 10, 70, 90, 390);
 
-		radiusSlider = new BoxedSlider(sliders, 10, 10, 30, 300);
-		speedSlider = new BoxedSlider(sliders, 50, 10, 30, 300);
+		radiusSlider = new BoxedSlider(sliders, 10, 50, 30, 300);
+		speedSlider = new BoxedSlider(sliders, 50, 50, 30, 300);
+		radiusRef = radiusSlider.getRef();
+		speedRef = speedSlider.getRef();
+		
 
-		radiusSlider.setValue(1);
-		speedSlider.setValue(1);
+		radiusSlider.setValue(0.5);
+		speedSlider.setValue(0.01);
 
-		// new DragHandler(this, circle);
+		clear = new GButton(sliders, "Clear");
+		clear.setX(2);
+		clear.setY(2);
+		
+		clear.addListener(new Runnable()
+		{
+			
+			public void run()
+			{
+				for (Entity entity : FlowGame.this)
+				{
+					if (entity instanceof Particle)
+					{
+						entity.kill(FlowGame.this);
+					}
+				}
+			}
+		});
 
-		/*
-		ContainerWindow gameWin = new ContainerWindow(this, 200, 70, 840, 650);
-		Entity game = new DeadSpace(new Dimension(840,620));
-		game.setY(30);
-		gameWin.moveIn(game);
-		*/
-
-		new MouseParticle(this, circle, 0.01);
+		new MouseParticle(this, circle, speedRef);
 	}
 
 	public void update()
@@ -89,14 +107,22 @@ public class FlowGame extends Container implements KeyListener
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int p = (int) MathExt.random(getWidth());
+				//int p = (int) MathExt.random(getHeight());
+				
+				double x;
+				double y;
+				double d;
+				double a;
+				
+				do
+				{
+					x = MathExt.random(getWidth() / 2);
+					y = MathExt.random(getHeight());
 
-				// System.err.println(getCenterX() + " | " + getCenterY() + " |
-				// " + (getWidth() - p) + " | " + (getCenterY() +
-				// getCenterY()/10));
-
-				double d = MathExt.distanceMake(getCenterX(), getCenterY(), getWidth() - p, 3 * getHeight() / 4);
-				double a = MathExt.rotationMake(getCenterX() - p, getHeight() / 4);
+					d = MathExt.distanceMake(getCenterX(), getCenterY(), x, y);
+					a = MathExt.rotationMake(getCenterX(), getCenterY(), x, y);
+				}
+				while (d <= circle.getR());
 
 				if (md < 0)
 				{
@@ -107,7 +133,7 @@ public class FlowGame extends Container implements KeyListener
 					md = d;
 				}
 
-				new Particle(this, circle, speedSlider.getValue() * 0.05 + 0.01, d, a);
+				new Particle(this, circle, speedSlider.getValue(), d, a);
 			}
 		}
 	}

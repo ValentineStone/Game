@@ -3,6 +3,7 @@ package com.valentine.game.entity.ui;
 import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.geometry.*;
+import com.valentine.game.utils.*;
 
 public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 {
@@ -11,7 +12,7 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 		X, Y
 	}
 
-	private Double value;
+	private Ref<Double> value;
 	private Circle slider;
 	private DragHandler dragHandler;
 
@@ -31,7 +32,7 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 
 		slider = new Circle(getContainer(), sliderR);
 		slider.setPosition(getCenterX() - sliderR, getCenterY() - sliderR);
-		value = 0.5;
+		value = new Ref<Double>(.5);
 
 		dragHandler = new DragHandler(_container, slider, orientation == Orientation.X ? DragHandler.Orientation.X : DragHandler.Orientation.Y);
 
@@ -94,18 +95,23 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 		{
 			case X:
 			{
-				value = (slider.getX() - getX()) / (getWidth() - 2 * sliderR);
+				value.set((slider.getX() - getX()) / (getWidth() - 2 * sliderR));
 				break;
 			}
 			case Y:
 			{
-				value = (slider.getY() - getY()) / (getHeight() - 2 * sliderR);
+				value.set((slider.getY() - getY()) / (getHeight() - 2 * sliderR));
 				break;
 			}
 		}
 	}
 
 	public Double getValue()
+	{
+		return value.get();
+	}
+	
+	public Ref<Double> getRef()
 	{
 		return value;
 	}
@@ -123,18 +129,18 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 			return;
 		}
 
-		value = _value;
+		value.set(_value);
 
 		switch (orientation)
 		{
 			case X:
 			{
-				slider.setX(value * (getWidth() - 2 * sliderR) + getX());
+				slider.setX(value.get() * (getWidth() - 2 * sliderR) + getX());
 				break;
 			}
 			case Y:
 			{
-				slider.setY(value * (getHeight() - 2 * sliderR) + getY());
+				slider.setY(value.get() * (getHeight() - 2 * sliderR) + getY());
 				break;
 			}
 		}

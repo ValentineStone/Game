@@ -1,7 +1,10 @@
 package com.valentine.game.entity.flow;
 
+import java.awt.*;
+
 import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.geometry.*;
 import com.valentine.game.entity.vfx.*;
 import com.valentine.game.utils.*;
@@ -30,7 +33,12 @@ public class Particle extends EntityBasicAI
 		u0 = _u0;
 		dr = _u0;
 
-		// trail = new Trail(getContainer(),this,10);
+		setX(circle.getCenterX() + r * Math.cos(a));
+		setY(circle.getCenterY() + r * Math.sin(a));
+
+		trail = new Trail(getContainer(),this,10);
+		trail.setDrawColor(new Color(20,20,40));
+		trail.update();
 
 		// setDrawColor(trail.getDrawColor());
 
@@ -41,7 +49,7 @@ public class Particle extends EntityBasicAI
 	{
 		_screen.setColor(getDrawColor());
 		// Screen.drawRect(getX(), getY(), 2, 2);
-		_screen.drawLine(getX(), getY(), getX(), getY());
+		_screen.drawOval(getX() -1, getY() -1, 2, 2);
 	}
 
 	public void update()
@@ -49,11 +57,16 @@ public class Particle extends EntityBasicAI
 		// System.err.println("(" + getX() + ", " + getY() + ")\n" + "[" + a +
 		// ", " + r + "]\n" + "da: " + da + " dr: " + dr);
 
-		dr = (-u0 / 2.) * Math.pow(circle.getR() / r, 3.) * Math.sin(a) - u0 * Math.sin(a);
-		da = u0 * Math.pow(circle.getR() / r, 3.) * Math.cos(a) - u0 * Math.cos(a);
+		dr = u0 * (1 - Math.pow(circle.getR() / r, 2.)) * Math.cos(a);
+		da = -u0 * (1 + Math.pow(circle.getR() / r, 2.)) * Math.sin(a);
+		
+		if (r < circle.getR())
+		{
+			kill(circle);
+			return;
+		}
 
 		r += dr;
-		r = r < circle.getR() ? circle.getR() : r;
 		a += da;
 
 		setX(circle.getCenterX() + r * Math.cos(a));
@@ -64,8 +77,6 @@ public class Particle extends EntityBasicAI
 
 		if (isOutOfContainer() || Math.abs(da) == 0)
 		{
-			// trail.scheduleKill();
-			// new Explosion(getContainer(), getX(), getY(), true, 1);
 			kill(getContainer());
 		}
 	}
@@ -115,6 +126,12 @@ public class Particle extends EntityBasicAI
 		setDr(MathExt.random(-3, 3));
 		setDa(MathExt.random(-0.1, 0.1));
 		return this;
+	}
+	
+	public boolean kill(Entity _killer)
+	{
+		trail.scheduleKill();
+		return super.kill(_killer);
 	}
 
 }

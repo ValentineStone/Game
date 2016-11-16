@@ -8,14 +8,24 @@ import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.geometry.*;
 import com.valentine.game.utils.*;
 
-public class MouseParticle extends Particle implements MouseMotionListener
+public class MouseParticle extends Entity implements MouseMotionListener
 {
 	private int mousex;
 	private int mousey;
 
 	private double dy;
 
+	Circle circle;
+
+	protected double r = 0;
+	protected double a = 0;
+
+	protected double dr = 0;
+	protected double da = 0;
+
+	
 	private double fi;
+	private Ref<Double> u0;
 
 	private String u0text = "";
 	private String rtext = "";
@@ -24,11 +34,13 @@ public class MouseParticle extends Particle implements MouseMotionListener
 	private String datext = "";
 	private String fitext = "";
 
-	public MouseParticle(Container _container, Circle _circle, double _u0)
+	public MouseParticle(Container _container, Circle _circle, Ref<Double> _u0)
 	{
-		super(_container, _circle, _u0, 0, 0);
-
-		u0text = "U0: " + _u0;
+		super(_container);
+		
+		circle = _circle;
+		
+		u0 = _u0;
 
 		Input.addMouseMotionListener(this);
 	}
@@ -61,16 +73,17 @@ public class MouseParticle extends Particle implements MouseMotionListener
 			return;
 		}
 
-		dr = (-u0 / 2.) * Math.pow(circle.getR() / r, 3.) * Math.sin(a) - u0 * Math.sin(a);
-		da = u0 * Math.pow(circle.getR() / r, 3.) * Math.cos(a) - u0 * Math.cos(a);
+		dr = u0.get() * (1 - Math.pow(circle.getR() / r, 2.)) * Math.cos(a);
+		da = -u0.get() * (1 + Math.pow(circle.getR() / r, 2.)) * Math.sin(a);
 
-		fi = (0.5 * u0 * Math.pow(circle.getR(), 3.) / Math.pow(r, 3.)) * Math.cos(a) + u0 * r * Math.cos(a);
+		fi = u0.get() * (r + Math.pow(circle.getR(), 2.) / r) * Math.cos(a);
 
 		rtext = "R : " + r;
 		drtext = "DR: " + dr;
 		atext = "A : " + a;
 		datext = "DA: " + da;
 		fitext = "FI: " + fi;
+		u0text = "U0: " + u0;
 	}
 
 	public boolean kill(Entity _killer)
