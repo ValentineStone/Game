@@ -44,21 +44,18 @@ public class Clock extends EntityBasicAI
 		_screen.setColor(getDrawColor());
 		_screen.drawOval(getX(), getY(), getWidth(), getHeight());
 		_screen.setStroke(hourStroke);
-		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(hourRotation),
-				getCenterY() + getInnerR() * Math.sin(hourRotation));
+		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(hourRotation), getCenterY() + getInnerR() * Math.sin(hourRotation));
 		_screen.setStroke(minStroke);
-		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(minRotation),
-				getCenterY() + getInnerR() * Math.sin(minRotation));
+		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(minRotation), getCenterY() + getInnerR() * Math.sin(minRotation));
 		_screen.setStroke(secStroke);
-		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(secRotation),
-				getCenterY() + getInnerR() * Math.sin(secRotation));
+		_screen.drawLine(getCenterX(), getCenterY(), getCenterX() + getInnerR() * Math.cos(secRotation), getCenterY() + getInnerR() * Math.sin(secRotation));
 
 		_screen.fillOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2 * cntrDotRad, 2 * cntrDotRad);
 		_screen.setColor(getFillColor());
 		_screen.fillOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2 * cntrDotRad, 2 * cntrDotRad);
 		_screen.setColor(getDrawColor());
 		_screen.drawOval(getX() + getR() - cntrDotRad, getY() + getR() - cntrDotRad, 2 * cntrDotRad, 2 * cntrDotRad);
-		
+
 		_screen.resetStroke();
 	}
 

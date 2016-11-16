@@ -21,11 +21,7 @@ public class HelloWorld extends EntityBasicAI
 		setVelocityMax((Math.random()) + 1);
 		text = "Hello world!";
 
-		setDrawColor(Math.random() > 0.05
-				? new Color(((int) (Math.random() * 55) + 0), ((int) (Math.random() * 55) + 0),
-						((int) (Math.random() * 55) + 0))
-				: new Color(((int) (Math.random() * 255) + 0), ((int) (Math.random() * 255) + 0),
-						((int) (Math.random() * 255) + 0)));
+		setDrawColor(Math.random() > 0.05 ? new Color(((int) (Math.random() * 55) + 0), ((int) (Math.random() * 55) + 0), ((int) (Math.random() * 55) + 0)) : new Color(((int) (Math.random() * 255) + 0), ((int) (Math.random() * 255) + 0), ((int) (Math.random() * 255) + 0)));
 	}
 
 	public void update()

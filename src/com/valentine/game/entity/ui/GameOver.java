@@ -27,7 +27,7 @@ public class GameOver extends Entity
 		{
 			font = new Font(_screen.getFont().getFontName(), Font.ITALIC, 60);
 		}
-		
+
 		_screen.setColor(getFillColor());
 		_screen.fillRect(0, 0, getContainer().getWidth(), getContainer().getHeight());
 

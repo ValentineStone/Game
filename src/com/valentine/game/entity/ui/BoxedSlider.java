@@ -33,8 +33,7 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 		slider.setPosition(getCenterX() - sliderR, getCenterY() - sliderR);
 		value = 0.5;
 
-		dragHandler = new DragHandler(_container, slider,
-				orientation == Orientation.X ? DragHandler.Orientation.X : DragHandler.Orientation.Y);
+		dragHandler = new DragHandler(_container, slider, orientation == Orientation.X ? DragHandler.Orientation.X : DragHandler.Orientation.Y);
 
 		dragHandler.setUpdatable(false);
 

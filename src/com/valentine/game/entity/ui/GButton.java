@@ -16,30 +16,27 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 {
 	private enum State
 	{
-		DEFAULT,
-		DEFAULT_HOVER,
-		PRESSED,
-		PRESSED_HOVER
+		DEFAULT, DEFAULT_HOVER, PRESSED, PRESSED_HOVER
 	};
-	
+
 	private List<Runnable> listeners = new ArrayList<>();
-	
+
 	private int bufferedClicks = 0;
-	
+
 	private int charHeight;
-	
+
 	private Stroke hoverStroke;
 	private Stroke pressStroke;
-	
+
 	private State state = State.DEFAULT;
-	
+
 	private String text;
-	
+
 	public GButton(Container _container, String _text)
 	{
 		super(_container);
 		setText(_text);
-		
+
 		Input.addMouseListener(this);
 		Input.addMouseMotionListener(this);
 	}
@@ -51,15 +48,15 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 			charHeight = _screen.getGraphics().getFontMetrics().getHeight();
 			setText(getText());
 			// ^ reset size according to font
-			
+
 			hoverStroke = new BasicStroke(2);
 			pressStroke = new BasicStroke(3);
 		}
-		
+
 		_screen.setColor(getFillColor());
 		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
 		_screen.setColor(getDrawColor());
-		
+
 		switch (state)
 		{
 			case PRESSED:
@@ -69,16 +66,16 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 			case DEFAULT_HOVER:
 				_screen.setStroke(hoverStroke);
 		}
-		
+
 		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
-		
+
 		_screen.resetStroke();
-		
-		_screen.drawString(getText(), getX() + charHeight, getY() + charHeight*2);
+
+		_screen.drawString(getText(), getX() + charHeight, getY() + charHeight * 2);
 	}
 
 	public void update()
-	{	
+	{
 		while (bufferedClicks > 0)
 		{
 			bufferedClicks--;
@@ -88,11 +85,6 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 			}
 		}
 	}
-	
-	
-	
-	
-	
 
 	public String getText()
 	{
@@ -102,52 +94,40 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 	public void setText(String _text)
 	{
 		text = _text;
-		
+
 		double width = charHeight * (getText().length() + 2);
 		double height = charHeight * 3;
-		
+
 		setWidth(width);
 		setHeight(height);
 	}
-	
-	
-	
-	
+
 	public boolean addListener(Runnable _listener)
 	{
 		return listeners.add(_listener);
 	}
-	
+
 	public boolean removeListener(Runnable _listener)
 	{
 		return listeners.remove(_listener);
 	}
 
-	
-	
-	
 	public boolean kill(Entity _killer)
 	{
 		Input.removeMouseListener(this);
 		Input.removeMouseMotionListener(this);
-		
+
 		return super.kill(_killer);
 	}
-	
-	
-	
-	
-	
-	
+
 	public void mouseClicked(MouseEvent _mouseEvent)
 	{
-		
+
 	}
 
 	public void mousePressed(MouseEvent _mouseEvent)
 	{
-		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(),
-				_mouseEvent.getY() - getContainer().getTrueY()))
+		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = State.PRESSED_HOVER;
 			bufferedClicks++;
@@ -156,8 +136,7 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 
 	public void mouseReleased(MouseEvent _mouseEvent)
 	{
-		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(),
-				_mouseEvent.getY() - getContainer().getTrueY()))
+		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = State.DEFAULT_HOVER;
 		}
@@ -176,8 +155,7 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 
 	public void mouseMoved(MouseEvent _mouseEvent)
 	{
-		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(),
-				_mouseEvent.getY() - getContainer().getTrueY()))
+		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = state == State.PRESSED ? State.PRESSED_HOVER : State.DEFAULT_HOVER;
 		}

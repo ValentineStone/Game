@@ -76,8 +76,7 @@ public class BeepingCircle extends EntityBasicAI
 		{
 			if (entity instanceof BeepingCircle && !entity.equals(this))
 			{
-				if (MathExt.distanceMake(getCenterX(), getCenterY(), entity.getCenterX(), entity.getCenterY()) < getR()
-						+ ((BeepingCircle) entity).getR())
+				if (MathExt.distanceMake(getCenterX(), getCenterY(), entity.getCenterX(), entity.getCenterY()) < getR() + ((BeepingCircle) entity).getR())
 				{
 					isTouchingFriend = true;
 					break;

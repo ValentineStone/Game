@@ -89,8 +89,7 @@ public class Collider extends EntityBasicAI implements Explodable
 
 	private boolean isColliding(Collider _collider)
 	{
-		if ((Math.abs(getCenterX() - _collider.getCenterX()) < (getWidth() + _collider.getWidth()) / 2)
-				&& (Math.abs(getCenterY() - _collider.getCenterY()) < (getHeight() + _collider.getHeight()) / 2))
+		if ((Math.abs(getCenterX() - _collider.getCenterX()) < (getWidth() + _collider.getWidth()) / 2) && (Math.abs(getCenterY() - _collider.getCenterY()) < (getHeight() + _collider.getHeight()) / 2))
 		{
 			return true;
 		}

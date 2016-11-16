@@ -42,8 +42,7 @@ public class TestChamber extends GameContainer implements KeyListener
 		for (int i = 0; i < 10; i++)
 		{
 			Collider collider = new Collider(colliderAquarium);
-			EntityInfoBox infobox = new EntityInfoBox(colliderAquarium, 6 * getWidth() / 7 - EntityInfoBox.WIDTH - 1,
-					getHeight() / 2 + i * (EntityInfoBox.HEIGHT + 1), collider);
+			EntityInfoBox infobox = new EntityInfoBox(colliderAquarium, 6 * getWidth() / 7 - EntityInfoBox.WIDTH - 1, getHeight() / 2 + i * (EntityInfoBox.HEIGHT + 1), collider);
 			Link link = new Link(infobox, collider);
 		}
 

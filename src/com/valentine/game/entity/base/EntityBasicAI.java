@@ -110,8 +110,7 @@ public abstract class EntityBasicAI extends Entity
 
 	public boolean isTouchingEdge()
 	{
-		if ((getX() + getWidth() >= getContainer().getWidth()) || (getX() <= 0)
-				|| (getY() + getHeight() >= getContainer().getHeight()) || (getY() <= 0))
+		if ((getX() + getWidth() >= getContainer().getWidth()) || (getX() <= 0) || (getY() + getHeight() >= getContainer().getHeight()) || (getY() <= 0))
 		{
 			return true;
 		}
@@ -121,8 +120,7 @@ public abstract class EntityBasicAI extends Entity
 
 	public boolean isOutOfContainer()
 	{
-		if ((getX() > getContainer().getWidth()) || (getX() + getWidth() < 0) || (getY() > getContainer().getHeight())
-				|| (getY() + getHeight() < 0))
+		if ((getX() > getContainer().getWidth()) || (getX() + getWidth() < 0) || (getY() > getContainer().getHeight()) || (getY() + getHeight() < 0))
 		{
 			return true;
 		}

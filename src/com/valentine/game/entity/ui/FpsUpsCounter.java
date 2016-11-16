@@ -35,7 +35,7 @@ public class FpsUpsCounter extends EntityBasicAI
 	public void paint(Screen _screen)
 	{
 		_fps++;
-		
+
 		if (dy == 0)
 		{
 			dy = _screen.getGraphics().getFontMetrics().getHeight() + 1;
@@ -48,7 +48,7 @@ public class FpsUpsCounter extends EntityBasicAI
 		_screen.drawString(fpsText, getX() + dy, getY() + 2 * dy);
 		_screen.setColor(upsColor);
 		_screen.drawString(upsText, getX() + dy, getY() + 3 * dy);
-		
+
 		_screen.setColor(getDrawColor());
 		_screen.drawString("FPS:", getX() + dy, getY() + 2 * dy);
 		_screen.drawString("UPS:", getX() + dy, getY() + 3 * dy);
@@ -60,7 +60,7 @@ public class FpsUpsCounter extends EntityBasicAI
 		{
 			second = System.currentTimeMillis();
 		}
-		
+
 		_ups++;
 
 		if (System.currentTimeMillis() - second > 1000)
@@ -71,7 +71,7 @@ public class FpsUpsCounter extends EntityBasicAI
 			ups = _ups;
 			_ups = 0;
 		}
-		
+
 		fpsText = "FPS:" + fps;
 		upsText = "UPS:" + ups;
 
@@ -137,7 +137,5 @@ public class FpsUpsCounter extends EntityBasicAI
 	{
 		return ups;
 	}
-	
-	
 
 }

@@ -20,8 +20,7 @@ public class ValueDisplayer extends Rect
 	{
 		super.paint(_screen);
 
-		_screen.drawString(value.toString(), getX() + _screen.getGraphics().getFontMetrics().getHeight(),
-				getY() + 2 * _screen.getGraphics().getFontMetrics().getHeight());
+		_screen.drawString(value.toString(), getX() + _screen.getGraphics().getFontMetrics().getHeight(), getY() + 2 * _screen.getGraphics().getFontMetrics().getHeight());
 	}
 
 	public void update()

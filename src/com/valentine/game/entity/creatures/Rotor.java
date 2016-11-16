@@ -80,8 +80,7 @@ public class Rotor extends EntityBasicAI implements Explodable
 
 	public void paint(Screen _screen)
 	{
-		double polatedInnerRotation = innerRotation
-				+ Interpolation.make((getVelocity() / getVelocityMax()) * INNER_ROTATION_ACCELERATION);
+		double polatedInnerRotation = innerRotation + Interpolation.make((getVelocity() / getVelocityMax()) * INNER_ROTATION_ACCELERATION);
 
 		x1 = getCenterX() + r * Math.cos(polatedInnerRotation);
 		y1 = getCenterY() + r * Math.sin(polatedInnerRotation);
@@ -101,9 +100,7 @@ public class Rotor extends EntityBasicAI implements Explodable
 		_screen.drawLine(getCenterX(), getCenterY(), x1, y1);
 		_screen.drawLine(getCenterX(), getCenterY(), x2, y2);
 		_screen.drawLine(getCenterX(), getCenterY(), x3, y3);
-		_screen.drawLine(getCenterX() + Math.cos(getRotation()) * r, getCenterY() + Math.sin(getRotation()) * r,
-				getCenterX() + Math.cos(getRotation()) * r + 2 * getVelocityX(),
-				getCenterY() + Math.sin(getRotation()) * r + 2 * getVelocityY());
+		_screen.drawLine(getCenterX() + Math.cos(getRotation()) * r, getCenterY() + Math.sin(getRotation()) * r, getCenterX() + Math.cos(getRotation()) * r + 2 * getVelocityX(), getCenterY() + Math.sin(getRotation()) * r + 2 * getVelocityY());
 		_screen.drawString(getId() + "", getX() + getWidth() + 3, getY() - 3);
 		_screen.delocalize(Interpolation.make(getVelocityX()), Interpolation.make(getVelocityY()));
 	}

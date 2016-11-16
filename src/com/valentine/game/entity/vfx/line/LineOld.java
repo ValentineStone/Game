@@ -57,8 +57,7 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 
 		for (int i = 0; i < _amountOfDots; i++)
 		{
-			addDot(MathExt.random(getContainer().getWidth() / _amountOfDots) + i * getContainer().getWidth() / _amountOfDots,
-					MathExt.random(getContainer().getHeight()));
+			addDot(MathExt.random(getContainer().getWidth() / _amountOfDots) + i * getContainer().getWidth() / _amountOfDots, MathExt.random(getContainer().getHeight()));
 		}
 	}
 
@@ -247,8 +246,7 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 
 		for (int i = 0; i < size(); i++)
 		{
-			_screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius),
-					(dotRadius + dotRadius));
+			_screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius), (dotRadius + dotRadius));
 		}
 	}
 
@@ -329,8 +327,7 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 	{
 		for (int i = 0; i < dots.size(); i++)
 		{
-			_screen.drawOval(getDot(i).x - getDotRadius(), getDot(i).y - getDotRadius(), 2 * getDotRadius(),
-					2 * getDotRadius());
+			_screen.drawOval(getDot(i).x - getDotRadius(), getDot(i).y - getDotRadius(), 2 * getDotRadius(), 2 * getDotRadius());
 			_screen.drawString(i + "", getDot(i).x + getDotRadius(), getDot(i).y - getDotRadius());
 		}
 	}

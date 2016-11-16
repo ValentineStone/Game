@@ -88,8 +88,7 @@ public class DragHandler extends Entity implements MouseListener, MouseMotionLis
 
 	public void mousePressed(MouseEvent _mouseEvent)
 	{
-		if (entity.isGettingHit(_mouseEvent.getX() - entity.getContainer().getTrueX(),
-				_mouseEvent.getY() - entity.getContainer().getTrueY()))
+		if (entity.isGettingHit(_mouseEvent.getX() - entity.getContainer().getTrueX(), _mouseEvent.getY() - entity.getContainer().getTrueY()))
 		{
 			selected = true;
 			offsetX = _mouseEvent.getX() - entity.getTrueX();

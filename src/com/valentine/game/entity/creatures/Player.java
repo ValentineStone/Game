@@ -64,8 +64,7 @@ public class Player extends EntityBasicAI implements Explodable, KeyListener
 	{
 		if (isMoving() && !isTouchingEdge())
 		{
-			_screen.drawImage(image, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()),
-					null);
+			_screen.drawImage(image, getX() + Interpolation.make(getVelocityX()), getY() + Interpolation.make(getVelocityY()), null);
 		}
 		else
 		{

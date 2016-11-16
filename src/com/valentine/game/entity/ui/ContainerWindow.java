@@ -1,24 +1,22 @@
 package com.valentine.game.entity.ui;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.geometry.*;
-import com.valentine.game.utils.ColorExt;
+import com.valentine.game.utils.*;
 
 public class ContainerWindow extends Container
 {
 	private Rect dragger;
 	private DragHandler dragHandler;
 	private Container innards;
-	
+
 	private enum Mode
 	{
-		CRAFTING,
-		CRAFTED
+		CRAFTING, CRAFTED
 	};
-	
+
 	private Mode mode = Mode.CRAFTING;
 
 	public ContainerWindow(Container _container, double _x, double _y, double _width, double _height)
@@ -31,11 +29,11 @@ public class ContainerWindow extends Container
 
 		dragHandler = new DragHandler(this, dragger);
 		dragHandler.setUpdatable(false);
-		
+
 		innards = new Container(this, 0, 30, getWidth(), getHeight() - 30);
 		innards.setDrawColor(ColorExt.TRANSPARENT);
 		innards.setFillColor(ColorExt.TRANSPARENT);
-		
+
 		mode = Mode.CRAFTED;
 	}
 

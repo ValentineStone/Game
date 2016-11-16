@@ -10,8 +10,7 @@ public class ColorExt
 
 	public static Color randomColor(int _min, int _max)
 	{
-		return new Color(((int) (Math.random() * (_max - _min)) + _min), ((int) (Math.random() * (_max - _min)) + _min),
-				((int) (Math.random() * (_max - _min)) + _min));
+		return new Color(((int) (Math.random() * (_max - _min)) + _min), ((int) (Math.random() * (_max - _min)) + _min), ((int) (Math.random() * (_max - _min)) + _min));
 	}
 
 	public static Color makeTransparent(Color _color, int _transparency)
@@ -26,12 +25,6 @@ public class ColorExt
 
 	public static Color fadeto(Color _src, Color _dest)
 	{
-		return new Color(
-				_src.getRed() > _dest.getRed() ? _src.getRed() - 1
-						: (_src.getRed() < _dest.getRed() ? _src.getRed() + 1 : _src.getRed()),
-				_src.getGreen() > _dest.getGreen() ? _src.getGreen() - 1
-						: (_src.getGreen() < _dest.getGreen() ? _src.getGreen() + 1 : _src.getGreen()),
-				_src.getBlue() > _dest.getBlue() ? _src.getBlue() - 1
-						: (_src.getBlue() < _dest.getBlue() ? _src.getBlue() + 1 : _src.getBlue()));
+		return new Color(_src.getRed() > _dest.getRed() ? _src.getRed() - 1 : (_src.getRed() < _dest.getRed() ? _src.getRed() + 1 : _src.getRed()), _src.getGreen() > _dest.getGreen() ? _src.getGreen() - 1 : (_src.getGreen() < _dest.getGreen() ? _src.getGreen() + 1 : _src.getGreen()), _src.getBlue() > _dest.getBlue() ? _src.getBlue() - 1 : (_src.getBlue() < _dest.getBlue() ? _src.getBlue() + 1 : _src.getBlue()));
 	}
 }

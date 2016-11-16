@@ -16,7 +16,7 @@ public class SwingScreen implements Screen
 	private Font defaultFont;
 
 	private RigidSwingWindow window;
-	
+
 	private Stroke defaultStroke = new BasicStroke(1);
 
 	public SwingScreen()
@@ -31,8 +31,7 @@ public class SwingScreen implements Screen
 
 		try
 		{
-			GraphicsEnvironment.getLocalGraphicsEnvironment()
-					.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
+			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
 
 			defaultFont = new Font("Press Start 2P", Font.PLAIN, 12);
 			System.err.println("Success.");
@@ -50,8 +49,6 @@ public class SwingScreen implements Screen
 
 		resetFont();
 		resetStroke();
-		
-		
 
 		/*
 		 * graphics.setRenderingHint ( RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -84,8 +81,7 @@ public class SwingScreen implements Screen
 
 	public void copyArea(double _x, double _y, double _width, double _height, double _dx, double _dy)
 	{
-		graphics.copyArea((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height),
-				(int) Math.round(_dx), (int) Math.round(_dy));
+		graphics.copyArea((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height), (int) Math.round(_dx), (int) Math.round(_dy));
 	}
 
 	public void dispose()
@@ -95,8 +91,7 @@ public class SwingScreen implements Screen
 
 	public void drawArc(double _x, double _y, double _width, double _height, double _startAngle, double _arcAngle)
 	{
-		graphics.drawArc((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height),
-				(int) Math.round(_startAngle), (int) Math.round(_arcAngle));
+		graphics.drawArc((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height), (int) Math.round(_startAngle), (int) Math.round(_arcAngle));
 	}
 
 	public boolean drawImage(Image _img, double _x, double _y, ImageObserver _observer)
@@ -111,31 +106,22 @@ public class SwingScreen implements Screen
 
 	public boolean drawImage(Image _img, double _x, double _y, double _width, double _height, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width),
-				(int) Math.round(_height), _observer);
+		return graphics.drawImage(_img, (int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height), _observer);
 	}
 
-	public boolean drawImage(Image _img, double _x, double _y, double _width, double _height, Color _bgcolor,
-			ImageObserver _observer)
+	public boolean drawImage(Image _img, double _x, double _y, double _width, double _height, Color _bgcolor, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width),
-				(int) Math.round(_height), _bgcolor, _observer);
+		return graphics.drawImage(_img, (int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height), _bgcolor, _observer);
 	}
 
-	public boolean drawImage(Image _img, double _dx1, double _dy1, double _dx2, double _dy2, double _sx1, double _sy1,
-			double _sx2, double _sy2, ImageObserver _observer)
+	public boolean drawImage(Image _img, double _dx1, double _dy1, double _dx2, double _dy2, double _sx1, double _sy1, double _sx2, double _sy2, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int) Math.round(_dx1), (int) Math.round(_dy1), (int) Math.round(_dx2),
-				(int) Math.round(_dy2), (int) Math.round(_sx1), (int) Math.round(_sy1), (int) Math.round(_sx2),
-				(int) Math.round(_sy2), _observer);
+		return graphics.drawImage(_img, (int) Math.round(_dx1), (int) Math.round(_dy1), (int) Math.round(_dx2), (int) Math.round(_dy2), (int) Math.round(_sx1), (int) Math.round(_sy1), (int) Math.round(_sx2), (int) Math.round(_sy2), _observer);
 	}
 
-	public boolean drawImage(Image _img, double _dx1, double _dy1, double _dx2, double _dy2, double _sx1, double _sy1,
-			double _sx2, double _sy2, Color _bgcolor, ImageObserver _observer)
+	public boolean drawImage(Image _img, double _dx1, double _dy1, double _dx2, double _dy2, double _sx1, double _sy1, double _sx2, double _sy2, Color _bgcolor, ImageObserver _observer)
 	{
-		return graphics.drawImage(_img, (int) Math.round(_dx1), (int) Math.round(_dy1), (int) Math.round(_dx2),
-				(int) Math.round(_dy2), (int) Math.round(_sx1), (int) Math.round(_sy1), (int) Math.round(_sx2),
-				(int) Math.round(_sy2), _bgcolor, _observer);
+		return graphics.drawImage(_img, (int) Math.round(_dx1), (int) Math.round(_dy1), (int) Math.round(_dx2), (int) Math.round(_dy2), (int) Math.round(_sx1), (int) Math.round(_sy1), (int) Math.round(_sx2), (int) Math.round(_sy2), _bgcolor, _observer);
 	}
 
 	public void drawLine(double _x1, double _y1, double _x2, double _y2)
@@ -155,8 +141,7 @@ public class SwingScreen implements Screen
 
 	public void drawRoundRect(double _x, double _y, double _width, double _height, double _arcWidth, double _arcHeight)
 	{
-		graphics.drawRoundRect((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height),
-				(int) Math.round(_arcWidth), (int) Math.round(_arcHeight));
+		graphics.drawRoundRect((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height), (int) Math.round(_arcWidth), (int) Math.round(_arcHeight));
 	}
 
 	public void drawRect(double _x, double _y, double _width, double _height)
@@ -176,8 +161,7 @@ public class SwingScreen implements Screen
 
 	public void fillArc(double _x, double _y, double _width, double _height, double _startAngle, double _arcAngle)
 	{
-		graphics.fillArc((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height),
-				(int) Math.round(_startAngle), (int) Math.round(_arcAngle));
+		graphics.fillArc((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height), (int) Math.round(_startAngle), (int) Math.round(_arcAngle));
 	}
 
 	public void fillOval(double _x, double _y, double _width, double _height)
@@ -192,8 +176,7 @@ public class SwingScreen implements Screen
 
 	public void fillRoundRect(double _x, double _y, double _width, double _height, double _arcWidth, double _arcHeight)
 	{
-		graphics.fillRoundRect((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height),
-				(int) Math.round(_arcWidth), (int) Math.round(_arcHeight));
+		graphics.fillRoundRect((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height), (int) Math.round(_arcWidth), (int) Math.round(_arcHeight));
 	}
 
 	public Shape getClip()
@@ -270,7 +253,7 @@ public class SwingScreen implements Screen
 	{
 		graphics.setStroke(_stroke);
 	}
-	
+
 	public void resetStroke()
 	{
 		graphics.setStroke(defaultStroke);
@@ -355,7 +338,7 @@ class RigidSwingWindow
 			jframe.setUndecorated(true);
 			jframe.setExtendedState(Frame.MAXIMIZED_BOTH);
 			jframe.setSize(getFullScreenSize());
-			//GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jframe);
+			// GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(jframe);
 		}
 		else
 		{

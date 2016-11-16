@@ -77,7 +77,7 @@ public class MathExt
 		}
 		return _rotation;
 	}
-	
+
 	public static double rotationMake(double _x1, double _y1, double _x2, double _y2)
 	{
 		return rotationMake(_x2 - _x1, _y2 - _y1);
@@ -140,8 +140,7 @@ public class MathExt
 
 	public static enum DIRECTION
 	{
-		EAST(0), NORTHEAST(PI_1_4), NORTH(PI_1_2), NORTHWEST(PI_3_4), WEST(PI_1_1), SOUTHWEST(PI_5_4), SOUTH(PI_3_2), SOUTHEAST(
-				PI_7_4);
+		EAST(0), NORTHEAST(PI_1_4), NORTH(PI_1_2), NORTHWEST(PI_3_4), WEST(PI_1_1), SOUTHWEST(PI_5_4), SOUTH(PI_3_2), SOUTHEAST(PI_7_4);
 
 		private final double rotation;
 

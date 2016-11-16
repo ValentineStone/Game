@@ -58,8 +58,7 @@ public class CatchyCat extends EntityBasicAI
 		}
 		_screen.drawString("Caught: " + miceCaught, getX(), getY() + getHeight() + 30 + extraCoord);
 		_screen.drawString("Escaped: " + miceGotAway, getX(), getY() + getHeight() + 50 + extraCoord);
-		_screen.drawString("Efficiency: " + String.format("%.2f", efficiency) + '%', getX(),
-				getY() + getHeight() + 70 + extraCoord);
+		_screen.drawString("Efficiency: " + String.format("%.2f", efficiency) + '%', getX(), getY() + getHeight() + 70 + extraCoord);
 
 		// cat aggro radius
 		_screen.setColor(Color.RED);

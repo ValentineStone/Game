@@ -39,8 +39,8 @@ public class DeadSpace extends Container implements KeyListener
 
 		Input.addKeyListener(this);
 
-		setFillColor(new Color(0,0,255,10));
-		//setFillColor(Color.BLACK);
+		setFillColor(new Color(0, 0, 255, 10));
+		// setFillColor(Color.BLACK);
 		setDrawColor(Color.WHITE);
 
 		for (int i = 0; i < 5; i++)

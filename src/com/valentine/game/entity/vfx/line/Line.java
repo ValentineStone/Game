@@ -47,8 +47,7 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 
 		for (int i = 0; i < _amountOfDots; i++)
 		{
-			addDot(MathExt.random(getContainer().getWidth() / _amountOfDots) + i * getContainer().getWidth() / _amountOfDots,
-					MathExt.random(getContainer().getHeight()));
+			addDot(MathExt.random(getContainer().getWidth() / _amountOfDots) + i * getContainer().getWidth() / _amountOfDots, MathExt.random(getContainer().getHeight()));
 		}
 	}
 
@@ -157,8 +156,7 @@ public class Line extends Entity implements MouseListener, MouseMotionListener, 
 
 		for (int i = 0; i < size(); i++)
 		{
-			_screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius),
-					(dotRadius + dotRadius));
+			_screen.drawOval((getDot(i).x - dotRadius), (getDot(i).y - dotRadius), (dotRadius + dotRadius), (dotRadius + dotRadius));
 		}
 	}
 

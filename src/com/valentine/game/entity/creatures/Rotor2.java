@@ -78,8 +78,7 @@ public class Rotor2 extends EntityBasicAI implements Explodable
 
 	public boolean collide(Rotor2 _rotor)
 	{
-		if (Math.pow(Math.pow(Math.abs(getCenterX() - _rotor.getCenterX()), 2.)
-				+ Math.pow(Math.abs(getCenterY() - _rotor.getCenterY()), 2.), .5) < (r + _rotor.r))
+		if (Math.pow(Math.pow(Math.abs(getCenterX() - _rotor.getCenterX()), 2.) + Math.pow(Math.abs(getCenterY() - _rotor.getCenterY()), 2.), .5) < (r + _rotor.r))
 
 		{
 			setRotation(MathExt.rotationMake(getCenterX() - _rotor.getCenterX(), getCenterY() - _rotor.getCenterY()));
