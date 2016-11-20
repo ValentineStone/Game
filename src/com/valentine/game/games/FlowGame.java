@@ -15,14 +15,15 @@ public class FlowGame extends Container implements KeyListener
 {
 	Color fill = new Color(255, 0, 0, 50);
 
-	boolean keepUpdating = true;
+	boolean showGuides = false;
 	int stepsToTake = 0;
 
 	ContainerWindow sliders;
 
 	Circle circle;
-	
+
 	GButton clear;
+	GButton guides;
 	
 	BoxedSlider radiusSlider;
 	BoxedSlider speedSlider;
@@ -30,7 +31,7 @@ public class FlowGame extends Container implements KeyListener
 	Ref<Double> speedRef;
 
 	double maxr = 1000;
-	double minr = 10;
+	double minr = 0;
 
 	public FlowGame(Dimension _dimension)
 	{
@@ -55,10 +56,10 @@ public class FlowGame extends Container implements KeyListener
 
 		circle.setPositionCentered();
 
-		sliders = new ContainerWindow(this, 10, 70, 90, 390);
+		sliders = new ContainerWindow(this, 10, 70, 90, 425);
 
-		radiusSlider = new BoxedSlider(sliders, 10, 50, 30, 300);
-		speedSlider = new BoxedSlider(sliders, 50, 50, 30, 300);
+		radiusSlider = new BoxedSlider(sliders, 10, 82, 30, 300);
+		speedSlider = new BoxedSlider(sliders, 50, 82, 30, 300);
 		radiusRef = radiusSlider.getRef();
 		speedRef = speedSlider.getRef();
 		
@@ -72,75 +73,71 @@ public class FlowGame extends Container implements KeyListener
 		
 		clear.addListener(new Runnable()
 		{
-			
 			public void run()
 			{
 				for (Entity entity : FlowGame.this)
 				{
-					if (entity instanceof Particle)
+					if (entity instanceof Particle && !(entity instanceof MouseParticle))
 					{
 						entity.kill(FlowGame.this);
 					}
 				}
 			}
 		});
+		
+		guides = new GButton(sliders, "Guide");
+		guides.setX(2);
+		guides.setY(34);
+		
+		guides.addListener
+		(
+			new Runnable()
+			{
+				public void run()
+				{
+					showGuides = !showGuides;
+					
+					for (Entity entity : FlowGame.this)
+					{
+						if (entity instanceof Particle)
+						{
+							((Particle)entity)
+								.setShowGuides(showGuides);;
+						}
+					}
+				}
+			}
+		);
 
-		new MouseParticle(this, circle, speedRef);
+		// new MouseParticle(this, circle, speedRef);
 	}
 
 	public void update()
 	{
 		super.update();
 		
-		/*
+		
 		while (stepsToTake > 0)
 		{
 			stepsToTake--;
 			
-			for (int i = 0; i < getHeight(); i++)
-			{
-				double x;
-				double y;
-				double d;
-				double a;
-				
-				x = getWidth() / 2;
-				y = i;
+			double x = MathExt.random(getWidth()/2);
+			double y = MathExt.random(getHeight());
 
-				d = MathExt.distanceMake(getCenterX(), getCenterY(), x, y);
-				a = MathExt.rotationMake(getCenterX(), getCenterY(), x, y);
-
-				new Particle(this, circle, speedSlider.getValue(), d, a);
-			}
+			Particle particle = new Particle(this, circle, 30 * speedSlider.getValue(), x, y);
+			particle.setShowGuides(showGuides);
 			
 		}
-		*/
 		
-		if (isUpdatable())
+		for (int i = 0; i < 10; i++)
 		{
-			for (int i = 0; i < 10; i++)
-			{
-				//int p = (int) MathExt.random(getHeight());
-				
-				double x;
-				double y;
-				double d;
-				double a;
-				
-				do
-				{
-					x = MathExt.random(getWidth());
-					y = MathExt.random(getHeight());
+			double x = MathExt.random(getWidth()/2);
+			double y = MathExt.random(getHeight());
 
-					d = MathExt.distanceMake(getCenterX(), getCenterY(), x, y);
-					a = MathExt.rotationMake(getCenterX(), getCenterY(), x, y);
-				}
-				while (d <= circle.getR());
-
-				new Particle(this, circle, 30 * speedSlider.getValue(), d, a);
-			}
+			Particle particle = new Particle(this, circle, 30 * speedSlider.getValue(), x, y);
+			particle.setShowGuides(showGuides);
+			
 		}
-		
 	}
 
 	public void keyPressed(KeyEvent _evt)
@@ -156,6 +153,5 @@ public class FlowGame extends Container implements KeyListener
 	public void keyTyped(KeyEvent _evt)
 	{
 		stepsToTake++;
-		System.err.println("KEY");
 	}
 }

@@ -1,6 +1,6 @@
 package com.valentine.game.entity.flow;
 
-import java.awt.*;
+import java.awt.Color;
 
 import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
@@ -13,7 +13,7 @@ public class Particle extends EntityBasicAI
 {
 	private Trail trail;
 
-	Circle circle;
+	protected Circle circle;
 	protected double u0 = 1;
 
 	protected double r = 0;
@@ -21,26 +21,25 @@ public class Particle extends EntityBasicAI
 
 	protected double dr = 0;
 	protected double da = 0;
+	
+	double drx;
+	double dry;
+	double dax;
+	double day;
+	
+	private boolean showGuides = false;
 
-	public Particle(Container _container, Circle _circle, double _u0, double _r, double _a)
+	public Particle(Container _container, Circle _circle, double _u0, double _x, double _y)
 	{
 		super(_container);
+
+		setPosition(_x, _y);
+		u0 = _u0;
 		circle = _circle;
 
-		r = _r;
-		a = _a;
-
-		u0 = _u0;
-		dr = _u0;
-
-		setX(circle.getCenterX() + r * Math.cos(a));
-		setY(circle.getCenterY() + r * Math.sin(a));
-
-		trail = new Trail(getContainer(),this,10);
-		trail.setDrawColor(new Color(20,20,40));
-		trail.update();
-
-		// setDrawColor(trail.getDrawColor());
+		//trail = new Trail(getContainer(),this,10);
+		//trail.setDrawColor(new Color(20,20,40));
+		//trail.update();
 
 		setDrawColor(ColorExt.randomColor(30, 255));
 	}
@@ -48,32 +47,49 @@ public class Particle extends EntityBasicAI
 	public void paint(Screen _screen)
 	{
 		_screen.setColor(getDrawColor());
-		// Screen.drawRect(getX(), getY(), 2, 2);
-		_screen.drawOval(getX() -1, getY() -1, 2, 2);
+		_screen.drawRect(getX() -1, getY() -1, 2, 2);
+		
+		if (showGuides)
+		{
+			_screen.setColor(Color.RED);
+			_screen.drawLine(getX(), getY(), getX() + drx, getY() + dry);
+			
+			_screen.setColor(Color.BLUE);
+			_screen.drawLine(getX(), getY(), getX() + dax, getY() + day);
+		}
 	}
 
 	public void update()
 	{
-		double cosa = Math.cos(a);
+		calculate();
+		move();
+	}
+	
+	protected void calculate()
+	{
+		r = MathExt.distanceMake(circle.getCenterX(), circle.getCenterY(), getX(), getY());
+		a = MathExt.rotationMake(circle.getCenterX(), circle.getCenterY(), getX(), getY());
+		
+		double cosa =  Math.cos(a);
 		double sina = Math.sin(a);
 		
 		dr =  u0 * (1 - Math.pow(circle.getR() / r, 2.)) * cosa;
 		da = -u0 * (1 + Math.pow(circle.getR() / r, 2.)) * sina;
 		
-		double drx = dr * cosa;
-		double dry = dr * sina;
-		double dax = da * sina;
-		double day = da * cosa;
-
+		drx = dr *  cosa;
+		dry = dr *  sina; // cause the screen is actualy reverced Y
+		dax = da * -sina;
+		day = da *  cosa;
+	}
+	
+	protected void move()
+	{
 		setX(getX() + drx + dax);
 		setY(getY() + dry + day);
-		
-		r = MathExt.distanceMake(circle.getCenterX(), circle.getCenterY(), getX(), getY());
-		a = MathExt.rotationMake(circle.getCenterX(), circle.getCenterY(), getX(), getY());
 
 		if
 		(
-			isOutOfContainer()
+			getX() > getContainer().getWidth()
 			|| Math.abs(da + dr) == 0
 			|| r < circle.getR()
 		)
@@ -81,58 +97,20 @@ public class Particle extends EntityBasicAI
 			kill(getContainer());
 		}
 	}
-
-	public double getR()
-	{
-		return r;
-	}
-
-	public void setR(double _r)
-	{
-		r = _r;
-	}
-
-	public double getA()
-	{
-		return a;
-	}
-
-	public void setA(double _a)
-	{
-		a = _a;
-	}
-
-	public double getDr()
-	{
-		return dr;
-	}
-
-	public void setDr(double _dr)
-	{
-		dr = _dr;
-	}
-
-	public double getDa()
-	{
-		return da;
-	}
-
-	public void setDa(double _da)
-	{
-		da = _da;
-	}
-
-	public Particle randomSpeed()
-	{
-		setDr(MathExt.random(-3, 3));
-		setDa(MathExt.random(-0.1, 0.1));
-		return this;
-	}
 	
 	public boolean kill(Entity _killer)
 	{
-		trail.scheduleKill();
+		//trail.scheduleKill();
 		return super.kill(_killer);
 	}
 
+	public boolean isShowGuides()
+	{
+		return showGuides;
+	}
+
+	public void setShowGuides(boolean _showGuides)
+	{
+		showGuides = _showGuides;
+	}
 }

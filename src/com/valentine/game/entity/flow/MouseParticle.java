@@ -8,21 +8,12 @@ import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.geometry.*;
 import com.valentine.game.utils.*;
 
-public class MouseParticle extends Entity implements MouseMotionListener
+public class MouseParticle extends Particle implements MouseMotionListener
 {
 	private int mousex;
 	private int mousey;
-
+	
 	private double dy;
-
-	Circle circle;
-
-	protected double r = 0;
-	protected double a = 0;
-
-	protected double dr = 0;
-	protected double da = 0;
-
 	
 	private double fi;
 	private Ref<Double> u0;
@@ -36,7 +27,7 @@ public class MouseParticle extends Entity implements MouseMotionListener
 
 	public MouseParticle(Container _container, Circle _circle, Ref<Double> _u0)
 	{
-		super(_container);
+		super(_container, _circle, _u0.get(), 0, 0);
 		
 		circle = _circle;
 		
@@ -54,27 +45,22 @@ public class MouseParticle extends Entity implements MouseMotionListener
 
 		_screen.setColor(getDrawColor());
 
-		_screen.drawString(u0text, mousex, mousey - dy * 0);
-		_screen.drawString(rtext, mousex, mousey - dy * 1);
-		_screen.drawString(drtext, mousex, mousey - dy * 2);
-		_screen.drawString(atext, mousex, mousey - dy * 3);
-		_screen.drawString(datext, mousex, mousey - dy * 4);
-		_screen.drawString(fitext, mousex, mousey - dy * 5);
+		_screen.drawString(u0text, mousex, mousey - dy * 1);
+		_screen.drawString(rtext,  mousex, mousey - dy * 2);
+		_screen.drawString(drtext, mousex, mousey - dy * 3);
+		_screen.drawString(atext,  mousex, mousey - dy * 4);
+		_screen.drawString(datext, mousex, mousey - dy * 5);
+		_screen.drawString(fitext, mousex, mousey - dy * 6);
+		
+		super.paint(_screen);
 	}
 
 	public void update()
 	{
-		r = MathExt.distanceMake(circle.getTrueCenterX(), circle.getTrueCenterY(), mousex, mousey);
-		a = MathExt.rotationMake(circle.getTrueCenterX(), circle.getTrueCenterY(), mousex, mousey);
-
-		if (r == 0)
-		{
-			rtext = "Radius equals zero.";
-			return;
-		}
-
-		dr = u0.get() * (1 - Math.pow(circle.getR() / r, 2.)) * Math.cos(a);
-		da = -u0.get() * (1 + Math.pow(circle.getR() / r, 2.)) * Math.sin(a);
+		setPosition(mousex, mousey);
+		super.u0 = 100 * u0.get();
+		
+		super.calculate();
 
 		fi = u0.get() * r * (1 + Math.pow(circle.getR() / 2, 2.)) * Math.cos(a);
 
