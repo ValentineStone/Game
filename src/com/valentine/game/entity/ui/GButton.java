@@ -23,18 +23,33 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 
 	private int bufferedClicks = 0;
 
-	private int charHeight;
+	private int charHeight = 0;
 
-	private Stroke hoverStroke;
-	private Stroke pressStroke;
+	private Stroke hoverStroke = new BasicStroke(2);
+	private Stroke pressStroke = new BasicStroke(3);
 
 	private State state = State.DEFAULT;
 
 	private String text;
+	
+	private double textx;
+	private double texty;
 
+	@Deprecated
 	public GButton(Container _container, String _text)
 	{
 		super(_container);
+		setText(_text);
+
+		Input.addMouseListener(this);
+		Input.addMouseMotionListener(this);
+	}
+	
+	public GButton(Container _container, String _text, double _x, double _y, double _width, double _height)
+	{
+		super(_container);
+		setPosition(_x, _y);
+		setSize(_width, _height);
 		setText(_text);
 
 		Input.addMouseListener(this);
@@ -46,16 +61,17 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 		if (charHeight == 0)
 		{
 			charHeight = _screen.getGraphics().getFontMetrics().getHeight();
-			setText(getText());
-			// ^ reset size according to font
-
-			hoverStroke = new BasicStroke(2);
-			pressStroke = new BasicStroke(3);
+			calcTextPos();
 		}
 
 		_screen.setColor(getFillColor());
 		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
+		
 		_screen.setColor(getDrawColor());
+		
+		_screen.setClip(getX(), getY(), getWidth(), getHeight());
+		_screen.drawString(getText(), textx, texty);
+		_screen.setClip(null);
 
 		switch (state)
 		{
@@ -69,9 +85,7 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 
 		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
 
-		_screen.resetStroke();
-
-		_screen.drawString(getText(), getX() + charHeight, getY() + charHeight * 2);
+		_screen.resetStroke();		
 	}
 
 	public void update()
@@ -94,12 +108,13 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 	public void setText(String _text)
 	{
 		text = _text;
-
-		double width = charHeight * (getText().length() + 2);
-		double height = charHeight * 3;
-
-		setWidth(width);
-		setHeight(height);
+		calcTextPos();
+	}
+	
+	private void calcTextPos()
+	{
+		textx = getCenterX() - (charHeight * getText().length()) / 2.;
+		texty = getCenterY() + charHeight / 2.;
 	}
 
 	public boolean addListener(Runnable _listener)

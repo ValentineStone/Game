@@ -91,4 +91,11 @@ public class CatchyCat extends EntityBasicAI
 		miceGotAway++;
 	}
 
+	public double getEfficiency()
+	{
+		return efficiency;
+	}
+
+	
+	
 }

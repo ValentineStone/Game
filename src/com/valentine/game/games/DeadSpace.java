@@ -39,9 +39,9 @@ public class DeadSpace extends Container implements KeyListener
 
 		Input.addKeyListener(this);
 
-		setFillColor(new Color(0, 0, 255, 10));
-		// setFillColor(Color.BLACK);
-		setDrawColor(Color.WHITE);
+		//setFillColor(new Color(0, 0, 255, 200));
+		//setFillColor(Color.BLUE);
+		//setDrawColor(Color.WHITE);
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -57,7 +57,7 @@ public class DeadSpace extends Container implements KeyListener
 		}
 
 		Player player = new PlayerSpacecraft(this);
-		new Trail(this, player, 5);
+		new Trail(this, player, 200);
 
 		new OnPointInfo(this, 10, 10);
 		/*

@@ -110,6 +110,16 @@ public abstract class Entity implements BasicEntity
 	{
 		return getY() + getHeight() / 2;
 	}
+	
+	public double getCornerX()
+	{
+		return getX() + getWidth();
+	}
+
+	public double getCornerY()
+	{
+		return getY() + getHeight();
+	}
 
 	public void setPosition(double _x, double _y)
 	{

@@ -5,23 +5,22 @@ import java.util.*;
 import java.util.List;
 
 import com.valentine.game.entity.base.*;
-import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.entity.vfx.*;
 import com.valentine.game.utils.*;
 
-public class FuzzySets extends Container
+public class ChaseGame extends RootContainer
 {
-	private int count = 10;
+	private int count = 3;
 
 	private List<EntityBasicAI> dudes = new ArrayList<>(count);
 
 	private FpsUpsCounter counter;
 
-	public FuzzySets(Dimension _dimension)
+	public ChaseGame(Dimension _dimension)
 	{
-		super(null, 0, 0, _dimension.getWidth(), _dimension.getHeight());
+		super(_dimension);
 
 		/*
 		ContainerWindow funwin = new ContainerWindow(this, 10, 10, 200, 200);
@@ -43,6 +42,8 @@ public class FuzzySets extends Container
 			dudes.add(new Collider(this));
 			((Collider) dudes.get(i)).setRotationVelocity(MathExt.randomSigned(0.009, 0.01));
 		}
+		//dudes.add(new PlayerSpacecraft(this));
+		
 
 		/*
 
@@ -88,7 +89,7 @@ public class FuzzySets extends Container
 
 				dudes.set(dude, new Tracker(this, dudes.get(dude)));
 
-				new Trail(this, dudes.get(dude), 100, 2);
+				new Trail(this, dudes.get(dude), 300, 2);
 			}
 		}
 
