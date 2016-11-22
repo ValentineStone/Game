@@ -13,7 +13,7 @@ import com.valentine.game.utils.*;
 
 public class BeepingCircle extends EntityBasicAI
 {
-	private static final File soundFile = new File("C:/Users/Kostya/Desktop/alien_beep.wav");
+	private static final File soundFile = new File("res/alien_beep.wav");
 
 	private boolean isTouchingFriend = false;
 	private double dr = 0.09;

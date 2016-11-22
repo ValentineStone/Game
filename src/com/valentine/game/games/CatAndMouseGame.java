@@ -1,17 +1,31 @@
 package com.valentine.game.games;
 
 import com.valentine.game.entity.creatures.*;
+import com.valentine.game.entity.fuzzyset.FuzzySetGraph;
 import com.valentine.game.entity.ui.*;
 
-public class CatAndMouseGame extends GameContainer
+import java.awt.Color;
+import java.awt.Dimension;
+
+import com.valentine.game.entity.base.*;
+
+public class CatAndMouseGame extends RootContainer
 {
 	int updateCounter = 0;
 
 	CatchyCat cat;
-
-	public void assemble()
+	
+	FuzzySetGraph graph;
+	
+	int ticknumber = 0;
+	
+	public CatAndMouseGame(Dimension _dimension)
 	{
-		super.assemble();
+		super(_dimension);
+		
+		graph = new FuzzySetGraph(this, 10, 10, getWidth() - 20, getHeight() - 20);
+		graph.setDotr(2);
+		graph.setDrawColor(new Color(20,20,50));
 
 		cat = new CatchyCat(this, getHeight() / 2);
 
@@ -32,6 +46,8 @@ public class CatAndMouseGame extends GameContainer
 		{
 			new FlyingMouse(this, cat);
 			updateCounter = 0;
+			
+			graph.getSetRef().get().add(ticknumber++, cat.getEfficiency() / 100);
 		}
 
 	}

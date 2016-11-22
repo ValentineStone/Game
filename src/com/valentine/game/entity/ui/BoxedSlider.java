@@ -12,7 +12,7 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 		X, Y
 	}
 
-	private Ref<Double> value;
+	private RefNotifying<Double> value;
 	private Circle slider;
 	private DragHandler dragHandler;
 
@@ -32,7 +32,7 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 
 		slider = new Circle(getContainer(), sliderR);
 		slider.setPosition(getCenterX() - sliderR, getCenterY() - sliderR);
-		value = new Ref<Double>(.5);
+		value = new RefNotifying<Double>(.5);
 
 		dragHandler = new DragHandler(_container, slider, orientation == Orientation.X ? DragHandler.Orientation.X : DragHandler.Orientation.Y);
 
@@ -111,7 +111,7 @@ public class BoxedSlider extends EntityBasicAI implements Valuable<Double>
 		return value.get();
 	}
 	
-	public Ref<Double> getRef()
+	public RefNotifying<Double> getRef()
 	{
 		return value;
 	}

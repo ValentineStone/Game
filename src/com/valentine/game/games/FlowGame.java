@@ -26,11 +26,11 @@ public class FlowGame extends Container implements KeyListener
 	
 	BoxedSlider radiusSlider;
 	BoxedSlider speedSlider;
-	Ref<Double> radiusRef;
-	Ref<Double> speedRef;
+	RefNotifying<Double> radiusRef;
+	RefNotifying<Double> speedRef;
 
 	double maxr = 1000;
-	double minr = 10;
+	double minr = 0;
 
 	public FlowGame(Dimension _dimension)
 	{
@@ -77,7 +77,7 @@ public class FlowGame extends Container implements KeyListener
 			{
 				for (Entity entity : FlowGame.this)
 				{
-					if (entity instanceof Particle)
+					if (entity.getClass().equals(Particle.class))
 					{
 						entity.kill(FlowGame.this);
 					}
@@ -92,7 +92,7 @@ public class FlowGame extends Container implements KeyListener
 	{
 		super.update();
 		
-		/*
+		
 		while (stepsToTake > 0)
 		{
 			stepsToTake--;
@@ -104,17 +104,17 @@ public class FlowGame extends Container implements KeyListener
 				double d;
 				double a;
 				
-				x = getWidth() / 2;
+				x = 0;
 				y = i;
 
 				d = MathExt.distanceMake(getCenterX(), getCenterY(), x, y);
 				a = MathExt.rotationMake(getCenterX(), getCenterY(), x, y);
 
-				new Particle(this, circle, speedSlider.getValue(), d, a);
+				new Particle(this, circle, 30* speedSlider.getValue(), d, a);
 			}
 			
 		}
-		*/
+		
 		
 		if (isUpdatable())
 		{
@@ -141,6 +141,7 @@ public class FlowGame extends Container implements KeyListener
 			}
 		}
 		
+		
 	}
 
 	public void keyPressed(KeyEvent _evt)
@@ -156,6 +157,5 @@ public class FlowGame extends Container implements KeyListener
 	public void keyTyped(KeyEvent _evt)
 	{
 		stepsToTake++;
-		System.err.println("KEY");
 	}
 }

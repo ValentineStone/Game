@@ -1,5 +1,6 @@
 package com.valentine.game.entity.flow;
 
+import java.awt.Color;
 import java.awt.event.*;
 
 import com.valentine.game.core.*;
@@ -8,37 +9,24 @@ import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.geometry.*;
 import com.valentine.game.utils.*;
 
-public class MouseParticle extends Entity implements MouseMotionListener
+public class MouseParticle extends Particle implements MouseMotionListener
 {
 	private int mousex;
 	private int mousey;
-
-	private double dy;
-
-	Circle circle;
-
-	protected double r = 0;
-	protected double a = 0;
-
-	protected double dr = 0;
-	protected double da = 0;
-
 	
-	private double fi;
-	private Ref<Double> u0;
+	private double dy = 0;
+	
+	private RefNotifying<Double> u0;
 
 	private String u0text = "";
 	private String rtext = "";
 	private String drtext = "";
 	private String atext = "";
 	private String datext = "";
-	private String fitext = "";
 
-	public MouseParticle(Container _container, Circle _circle, Ref<Double> _u0)
+	public MouseParticle(Container _container, Circle _circle, RefNotifying<Double> _u0)
 	{
-		super(_container);
-		
-		circle = _circle;
+		super(_container, _circle, 0, 0, 0);
 		
 		u0 = _u0;
 
@@ -54,36 +42,37 @@ public class MouseParticle extends Entity implements MouseMotionListener
 
 		_screen.setColor(getDrawColor());
 
-		_screen.drawString(u0text, mousex, mousey - dy * 0);
-		_screen.drawString(rtext, mousex, mousey - dy * 1);
-		_screen.drawString(drtext, mousex, mousey - dy * 2);
-		_screen.drawString(atext, mousex, mousey - dy * 3);
-		_screen.drawString(datext, mousex, mousey - dy * 4);
-		_screen.drawString(fitext, mousex, mousey - dy * 5);
+		_screen.drawString(u0text, mousex, mousey - dy * 2);
+		_screen.drawString(rtext, mousex, mousey - dy * 3);
+		_screen.drawString(drtext, mousex, mousey - dy * 4);
+		_screen.drawString(atext, mousex, mousey - dy * 5);
+		_screen.drawString(datext, mousex, mousey - dy * 6);
+		
+		super.paint(_screen);
 	}
 
 	public void update()
 	{
+		setPosition(mousex, mousey);
+		
+		super.u0 = 30 * u0.get();
+		
 		r = MathExt.distanceMake(circle.getTrueCenterX(), circle.getTrueCenterY(), mousex, mousey);
 		a = MathExt.rotationMake(circle.getTrueCenterX(), circle.getTrueCenterY(), mousex, mousey);
-
+		
+		calculate();
+		
 		if (r == 0)
 		{
 			rtext = "Radius equals zero.";
 			return;
 		}
 
-		dr = u0.get() * (1 - Math.pow(circle.getR() / r, 2.)) * Math.cos(a);
-		da = -u0.get() * (1 + Math.pow(circle.getR() / r, 2.)) * Math.sin(a);
-
-		fi = u0.get() * r * (1 + Math.pow(circle.getR() / 2, 2.)) * Math.cos(a);
-
 		rtext = "R : " + r;
 		drtext = "DR: " + dr;
 		atext = "A : " + a;
 		datext = "DA: " + da;
-		fitext = "FI: " + fi;
-		u0text = "U0: " + u0;
+		u0text = "U0: " + 30 * u0.get();
 	}
 
 	public boolean kill(Entity _killer)
