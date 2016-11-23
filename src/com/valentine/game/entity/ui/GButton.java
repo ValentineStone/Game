@@ -116,6 +116,11 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 		textx = getCenterX() - (charHeight * getText().length()) / 2.;
 		texty = getCenterY() + charHeight / 2.;
 	}
+	
+	public void press()
+	{
+		bufferedClicks++;
+	}
 
 	public boolean addListener(Runnable _listener)
 	{
@@ -145,7 +150,7 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = State.PRESSED_HOVER;
-			bufferedClicks++;
+			press();
 		}
 	}
 

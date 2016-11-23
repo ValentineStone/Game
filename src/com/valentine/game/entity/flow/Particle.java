@@ -73,6 +73,10 @@ public class Particle extends EntityBasicAI
 		double cosa =  Math.cos(a);
 		double sina = Math.sin(a);
 		
+		// Original evaluations, undoublechecked
+		// dr = -u0 * sina * ( Math.pow(circle.getR() / r, 3) / 2 + 1);
+		// da = -u0 * cosa * (-Math.pow(circle.getR() / r, 3)     + 1);
+		
 		dr =  u0 * (1 - Math.pow(circle.getR() / r, 2.)) * cosa;
 		da = -u0 * (1 + Math.pow(circle.getR() / r, 2.)) * sina;
 		

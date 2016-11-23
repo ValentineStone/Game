@@ -2,6 +2,23 @@ package com.valentine.game.utils;
 
 public abstract class Integral
 {
+	public static class Range
+	{
+		public double min;
+		public double max;
+		public double n;
+		public double step;
+		
+		public Range(double _min, double _max, double _n)
+		{
+			min = _min;
+			max = _max;
+			n = _n;
+			step = (max - min) / n;
+		}
+	}
+	
+	
 	
 	public static Double evaluateTrap1(MathFunction _function, Range _range)
 	{
@@ -20,7 +37,7 @@ public abstract class Integral
 		Double _summ = 0.;
 		
 		for (double x = _rangex.min, i = 0; i < _rangex.n; x += _rangex.step, i++)
-		for (double y = _rangex.min, j = 0; j < _rangey.n; y += _rangey.step, j++)
+		for (double y = _rangey.min, j = 0; j < _rangey.n; y += _rangey.step, j++)
 		{
 			_summ +=
 				_rangex.step
@@ -33,38 +50,25 @@ public abstract class Integral
 	
 	public static void main(String... _args)
 	{
-		double parab = 
+		MathFunction parabFunc =
+		new MathFunction()
+		{
+			public Double evaluate(Double... _params)
+			{
+				return _params[0]*_params[0] - _params[1]*_params[1];
+			}
+		};
+		
+		double parabIntegral = 
 		Integral.evaluateTrap2
 		(
-			new MathFunction()
-			{
-				public Double evaluate(Double... _params)
-				{
-					return 1.;
-				}
-			},
-			new Range(0, 1, 3),
-			new Range(0, 1, 3)
+			parabFunc,
+			new Range(0, 1, 1),
+			new Range(-1, 1, 2)
 		);
 		
-		System.err.println(parab);
-	}
-}
-
-
-
-class Range
-{
-	public double min;
-	public double max;
-	public double n;
-	public double step;
-	
-	public Range(double _min, double _max, double _n)
-	{
-		min = _min;
-		max = _max;
-		n = _n;
-		step = (max - min) / n;
+		System.err.println(parabFunc.evaluate(0.,0.));
+		
+		System.err.println(parabIntegral);
 	}
 }
