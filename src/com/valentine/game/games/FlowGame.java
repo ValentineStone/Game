@@ -67,9 +67,7 @@ public class FlowGame extends Container implements KeyListener
 		radiusSlider.setValue(0.5);
 		speedSlider.setValue(1);
 
-		clear = new GButton(sliders, "Clear");
-		clear.setX(2);
-		clear.setY(2);
+		clear = new GButton(sliders, "Clear", 5, 5, 80, 38);
 		
 		clear.addListener(new Runnable()
 		{
@@ -85,9 +83,7 @@ public class FlowGame extends Container implements KeyListener
 			}
 		});
 		
-		guides = new GButton(sliders, "Guide");
-		guides.setX(2);
-		guides.setY(34);
+		guides = new GButton(sliders, "Guide", 5, 48, 80, 25);
 		
 		guides.addListener
 		(

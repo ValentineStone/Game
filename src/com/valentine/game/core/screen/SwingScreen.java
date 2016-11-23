@@ -19,10 +19,10 @@ public class SwingScreen implements Screen
 
 	private Stroke defaultStroke = new BasicStroke(1);
 
-	public SwingScreen()
+	public SwingScreen(Dimension _dimension, boolean _fullscreen)
 	{
 		loadFont();
-		window = new RigidSwingWindow(new Dimension(960, 720), true);
+		window = new RigidSwingWindow(_dimension, _fullscreen);
 	}
 
 	public void loadFont()

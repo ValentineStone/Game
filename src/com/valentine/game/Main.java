@@ -1,5 +1,7 @@
 package com.valentine.game;
 
+import java.awt.Dimension;
+
 import com.valentine.game.core.*;
 import com.valentine.game.core.screen.*;
 import com.valentine.game.core.terminal.*;
@@ -9,9 +11,9 @@ public abstract class Main
 {
 	public static void main(String[] _args)
 	{
-		Screen screen = new SwingScreen();
+		Screen screen = new SwingScreen(new Dimension(960, 720), false);
 
-		Cassette cassete = new Cassette(new CatAndMouseGame(screen.getScreenSize()));
+		Cassette cassete = new Cassette(new FlowGame(screen.getScreenSize()));
 
 		Terminal terminal = new NotchTerminal();
 
