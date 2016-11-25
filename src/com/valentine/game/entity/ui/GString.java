@@ -11,6 +11,7 @@ public class GString extends EntityBasicAI
 	
 	protected double textx;
 	protected double texty;
+	protected double textwidth;
 	
 	private boolean backgroundVisible = true;
 	private boolean borderVisible = true;
@@ -68,7 +69,8 @@ public class GString extends EntityBasicAI
 	
 	protected void calcTextPos()
 	{
-		textx = getCenterX() - (charHeight * getText().length()) / 2.;
+		textwidth = charHeight * getText().length();
+		textx = getCenterX() - textwidth / 2.;
 		texty = getCenterY() + charHeight / 2.;
 	}
 

@@ -7,6 +7,8 @@ import com.valentine.game.entity.base.*;
 
 public class GScrollString extends GString implements MouseWheelListener
 {
+	private double scrollSpeed = 2;
+	
 	public GScrollString(Container _container, String _text, double _x, double _y, double _width, double _height)
 	{
 		super(_container, _text, _x, _y, _width, _height);
@@ -17,8 +19,18 @@ public class GScrollString extends GString implements MouseWheelListener
 	{
 		if (isGettingHit(_evt.getX() - getContainer().getTrueX(), _evt.getY() - getContainer().getTrueY()))
 		{
-			textx -= _evt.getUnitsToScroll();
+			textx -= _evt.getUnitsToScroll() * scrollSpeed;
 		}
+	}
+	
+	protected void calcTextPos()
+	{
+		textx = getCenterX() - (charHeight * getText().length()) / 2.;
+		
+		if (textx < charHeight + getX())
+			textx = charHeight + getX();
+		
+		texty = getCenterY() + charHeight / 2.;
 	}
 	
 	public boolean kill(Entity _killer)
@@ -26,5 +38,17 @@ public class GScrollString extends GString implements MouseWheelListener
 		Input.removeMouseWheelListener(this);
 		return super.kill(_killer);
 	}
+
+	public double getScrollSpeed()
+	{
+		return scrollSpeed;
+	}
+
+	public void setScrollSpeed(double _scrollSpeed)
+	{
+		scrollSpeed = _scrollSpeed;
+	}
+	
+	
 
 }

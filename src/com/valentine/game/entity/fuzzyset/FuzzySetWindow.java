@@ -6,10 +6,9 @@ import javax.swing.JOptionPane;
 
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.ui.*;
-import com.valentine.game.utils.ColorExt;
-import com.valentine.game.utils.Ref;
+import com.valentine.game.utils.*;
 
-public class FuzzySetsWindow extends ContainerWindow
+public class FuzzySetWindow extends Container
 {
 	private final static int WIDTH       = 300;
 	private final static int HEIGHT      = 600;
@@ -23,7 +22,7 @@ public class FuzzySetsWindow extends ContainerWindow
 	
 	private final GButton addBtn;
 	private final FuzzySetGraph graph;
-	private final Ref<FuzzySet> setRef;
+	private final FuzzySet set;
 	
 	private final GString nameStr;
 	
@@ -37,11 +36,11 @@ public class FuzzySetsWindow extends ContainerWindow
 	
 	private boolean editingEnabled = false;
 	
-	public FuzzySetsWindow(Container _container, String _name, double _x, double _y)
+	public FuzzySetWindow(Container _container, String _name, FuzzySet _set, double _x, double _y)
 	{
 		super(_container, _x, _y, WIDTH, HEIGHT);
 		name = _name;
-		
+		set = _set;
 		
 		int POSY = PAD;
 		
@@ -49,17 +48,15 @@ public class FuzzySetsWindow extends ContainerWindow
 		addBtn = new GButton(this, "+", PAD, POSY, BTN_W, BTN_H);
 		POSY += BTN_H + PAD;
 		
-		graph = new FuzzySetGraph(this, PAD, POSY, WIDTH_PADED, GRAPH_H);
+		graph = new FuzzySetGraph(this, set, PAD, POSY, WIDTH_PADED, GRAPH_H);
 		POSY += GRAPH_H + PAD;
 		graph.setDrawColor(ColorExt.randomColor(100, 255));
 		graph.setFillColor(new Color(0,0,30));
-		
-		setRef = graph.getSetRef();
 
 		addBtn.addListener(() ->
 		{
 			String str = JOptionPane.showInputDialog("Enter elements to add:", "el1 prox1 el2 prox2 ...");
-			setRef.get().add(str);
+			addToSet(str);
 		});
 		
 		nameStr = new GString(this, "Name:" + name, PAD, POSY, WIDTH_PADED, BTN_H);
@@ -69,14 +66,14 @@ public class FuzzySetsWindow extends ContainerWindow
 		POSY += BTN_H + PAD;
 		universumLabel.setBorderVisible(false);
 		
-		universumStr = new GScrollString(this, "0, 0.1, 1, 0.5, 0.7", PAD, POSY, WIDTH_PADED, BTN_H);
+		universumStr = new GScrollString(this, "", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
 		
 		carrierLabel = new GString(this, "Carrier:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
 		carrierLabel.setBorderVisible(false);
 		
-		carrierStr = new GScrollString(this, "1, 0.5, 0.7", PAD, POSY, WIDTH_PADED, BTN_H);
+		carrierStr = new GScrollString(this, "", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
 	}
 	
@@ -86,12 +83,17 @@ public class FuzzySetsWindow extends ContainerWindow
 		
 		addBtn.setEnabled(editingEnabled);
 	}
-
-	public Ref<FuzzySet> getSetRef()
+	
+	public void addToSet(String _elements)
 	{
-		return setRef;
+		set.add(_elements);
+		onSetChange();
 	}
 	
-	
+	public void onSetChange()
+	{
+		universumStr.setText(set.getUniversum().toString());
+		carrierStr.setText(set.generateCarrier().keySet().toString());
+	}
 
 }

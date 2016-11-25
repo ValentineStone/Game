@@ -1,17 +1,14 @@
 package com.valentine.game.entity.fuzzyset;
 
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.Map.*;
+import java.util.*;
 
-import com.valentine.game.core.screen.Screen;
-import com.valentine.game.entity.base.Container;
-import com.valentine.game.entity.base.EntityBasicAI;
-import com.valentine.game.utils.Ref;
+import com.valentine.game.core.screen.*;
+import com.valentine.game.entity.base.*;
 
 public class FuzzySetGraph extends EntityBasicAI
 {
-	private Ref<FuzzySet> setRef;
+	private FuzzySet set;
 	private SortedMap<Double, Double> paintset = new TreeMap<>();
 	
 	public enum State
@@ -26,19 +23,20 @@ public class FuzzySetGraph extends EntityBasicAI
 	
 	private State state;
 	
+	@Deprecated
 	public FuzzySetGraph(Container _container, double _x, double _y, double _width, double _height)
 	{
-		this(_container, new Ref<FuzzySet>(new FuzzySet()), _x, _y, _width, _height);
+		this(_container, new FuzzySet(), _x, _y, _width, _height);
 	}
 	
-	public FuzzySetGraph(Container _container, Ref<FuzzySet> _setRef, double _x, double _y, double _width, double _height)
+	public FuzzySetGraph(Container _container, FuzzySet _set, double _x, double _y, double _width, double _height)
 	{
 		super(_container);
 		
 		setPosition(_x, _y);
 		setSize(_width, _height);
 		
-		setRef = _setRef;
+		set = _set;
 	}
 
 	public void paint(Screen _screen)
@@ -54,7 +52,7 @@ public class FuzzySetGraph extends EntityBasicAI
 				break;
 			case SINGLE_ELEMENT:
 			{
-				_screen.drawOval(getX() + setRef.get().getMin(), getCornerY() - setRef.get().getSet().get(setRef.get().getMin()) - 1, 2, 2);
+				_screen.drawOval(getX() + set.getMin(), getCornerY() - set.getSet().get(set.getMin()) - 1, 2, 2);
 				
 				break;
 			}
@@ -95,11 +93,11 @@ public class FuzzySetGraph extends EntityBasicAI
 
 	public void update()
 	{
-		if (setRef.get().isEmpty())
+		if (set == null || set.isEmpty())
 		{
 			state = State.EMPTY;
 		}
-		else if (setRef.get().size() == 1)
+		else if (set.size() == 1)
 		{
 			paintset.clear();
 			
@@ -110,13 +108,13 @@ public class FuzzySetGraph extends EntityBasicAI
 		{
 			state = State.MULTIPLE_ELEMENTS;
 			
-			double min = setRef.get().getMin();
-			double max = setRef.get().getMax();
+			double min = set.getMin();
+			double max = set.getMax();
 			double distance = max - min;
 			
 			paintset.clear();
 			
-			for (Entry<Double, Double> entry : setRef.get())
+			for (Entry<Double, Double> entry : set)
 			{
 				paintset.put
 				(
@@ -127,9 +125,14 @@ public class FuzzySetGraph extends EntityBasicAI
 		}
 	}
 	
-	public Ref<FuzzySet> getSetRef()
+	public FuzzySet getSet()
 	{
-		return setRef;
+		return set;
+	}
+	
+	public void setSet(FuzzySet _set)
+	{
+		set = _set;
 	}
 	
 	

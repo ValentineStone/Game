@@ -1,13 +1,11 @@
 package com.valentine.game.entity.fuzzyset;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.Map.*;
 
 public class FuzzySet implements Iterable<Entry<Double, Double>>
 {
-	private SortedMap<Double, Double> set = new TreeMap<>();
+	private final SortedMap<Double, Double> set = new TreeMap<>();
 	
 	public void add(double _element, double _proximity)
 	{
@@ -69,5 +67,51 @@ public class FuzzySet implements Iterable<Entry<Double, Double>>
 	public int size()
 	{
 		return set.size();
+	}
+	
+	public Set<Double> getUniversum()
+	{
+		return set.keySet();
+	}
+	
+	public Map<Double, Double> generateCarrier()
+	{
+		return generateSubset(0, false, 1, true);
+	}
+	
+	public Set<Double> generateBreakpoints()
+	{
+		return generateSubset(0.5, true, 0.5, true).keySet();
+	}
+	
+	public Set<Double> generateCore()
+	{
+		return generateSubset(1, true, 1, true).keySet();
+	}
+	
+	public Map<Double, Double> generateSubset(double _low, boolean _lowIncluded, double _high, boolean _highIncluded)
+	{
+		SortedMap<Double, Double> carrier = new TreeMap<>();
+		
+		for (Entry<Double, Double> entry : this)
+		{
+			if
+			(
+				(
+					_lowIncluded
+					? entry.getValue() >= _low
+					: entry.getValue() >  _low
+				)
+				&&
+				(
+					_highIncluded
+					? entry.getValue() <= _high
+					: entry.getValue() < _high
+				)
+			)
+				carrier.put(entry.getKey(), entry.getValue());
+		}
+		
+		return carrier;
 	}
 }
