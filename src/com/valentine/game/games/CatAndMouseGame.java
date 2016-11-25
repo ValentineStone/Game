@@ -1,7 +1,7 @@
 package com.valentine.game.games;
 
 import com.valentine.game.entity.creatures.*;
-import com.valentine.game.entity.fuzzyset.FuzzySetGraph;
+import com.valentine.game.entity.fuzzyset.*;
 import com.valentine.game.entity.ui.*;
 
 import java.awt.Color;
@@ -15,6 +15,7 @@ public class CatAndMouseGame extends RootContainer
 
 	CatchyCat cat;
 	
+	FuzzySet set;
 	FuzzySetGraph graph;
 	
 	int ticknumber = 0;
@@ -23,7 +24,8 @@ public class CatAndMouseGame extends RootContainer
 	{
 		super(_dimension);
 		
-		graph = new FuzzySetGraph(this, 10, 10, getWidth() - 20, getHeight() - 20);
+		set = new FuzzySet();
+		graph = new FuzzySetGraph(this, set, 10, 10, getWidth() - 20, getHeight() - 20);
 		graph.setDotr(2);
 		graph.setDrawColor(new Color(20,20,50));
 
@@ -47,7 +49,7 @@ public class CatAndMouseGame extends RootContainer
 			new FlyingMouse(this, cat);
 			updateCounter = 0;
 			
-			graph.getSetRef().get().add(ticknumber++, cat.getEfficiency() / 100);
+			graph.getSet().add(ticknumber++, cat.getEfficiency() / 100);
 		}
 
 	}

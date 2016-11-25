@@ -42,7 +42,7 @@ public class GString extends EntityBasicAI
 		
 		
 		_screen.setClip(getX(), getY(), getWidth(), getHeight());
-		_screen.drawString(getText(), textx, texty);
+		_screen.drawString(getText(), getX() + textx, getY() + texty);
 		_screen.setClip(null);
 		
 		if (borderVisible)
@@ -53,7 +53,7 @@ public class GString extends EntityBasicAI
 
 	public void update()
 	{
-		
+		setUpdatable(false);
 	}
 
 	public String getText()
@@ -70,8 +70,8 @@ public class GString extends EntityBasicAI
 	protected void calcTextPos()
 	{
 		textwidth = charHeight * getText().length();
-		textx = getCenterX() - textwidth / 2.;
-		texty = getCenterY() + charHeight / 2.;
+		textx = (getWidth()  - textwidth)  / 2;
+		texty = (getHeight() + charHeight) / 2;
 	}
 
 	public boolean isBackgroundVisible()
@@ -92,7 +92,5 @@ public class GString extends EntityBasicAI
 	public void setBorderVisible(boolean _borderVisible)
 	{
 		borderVisible = _borderVisible;
-	}
-	
-	
+	}	
 }

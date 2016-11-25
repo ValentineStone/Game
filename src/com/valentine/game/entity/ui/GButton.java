@@ -12,7 +12,7 @@ import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
 
-public class GButton extends EntityBasicAI implements MouseInputListener
+public class GButton extends GString implements MouseInputListener
 {
 	private enum State
 	{
@@ -23,33 +23,16 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 
 	private int bufferedClicks = 0;
 
-	private int charHeight = 0;
-
 	private Stroke hoverStroke = new BasicStroke(2);
 	private Stroke pressStroke = new BasicStroke(3);
 
 	private State state = State.DEFAULT;
-
-	private String text;
-	
-	private double textx;
-	private double texty;
 	
 	private boolean enabled = true;
-
-	@Deprecated
-	public GButton(Container _container, String _text)
-	{
-		super(_container);
-		setText(_text);
-
-		Input.addMouseListener(this);
-		Input.addMouseMotionListener(this);
-	}
 	
 	public GButton(Container _container, String _text, double _x, double _y, double _width, double _height)
 	{
-		super(_container);
+		super(_container, _text, _height, _height, _height, _height);
 		setPosition(_x, _y);
 		setSize(_width, _height);
 		setText(_text);
@@ -58,22 +41,10 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 		Input.addMouseMotionListener(this);
 	}
 
+	
 	public void paint(Screen _screen)
 	{
-		if (charHeight == 0)
-		{
-			charHeight = _screen.getGraphics().getFontMetrics().getHeight();
-			calcTextPos();
-		}
-
-		_screen.setColor(getFillColor());
-		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
-		
-		_screen.setColor(getDrawColor());
-		
-		_screen.setClip(getX(), getY(), getWidth(), getHeight());
-		_screen.drawString(getText(), textx, texty);
-		_screen.setClip(null);
+		super.paint(_screen);
 
 		switch (state)
 		{
@@ -100,23 +71,6 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 				listener.run();
 			}
 		}
-	}
-
-	public String getText()
-	{
-		return text;
-	}
-
-	public void setText(String _text)
-	{
-		text = _text;
-		calcTextPos();
-	}
-	
-	private void calcTextPos()
-	{
-		textx = getCenterX() - (charHeight * getText().length()) / 2.;
-		texty = getCenterY() + charHeight / 2.;
 	}
 	
 	public void press()

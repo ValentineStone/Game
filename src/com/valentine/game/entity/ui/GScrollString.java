@@ -25,12 +25,10 @@ public class GScrollString extends GString implements MouseWheelListener
 	
 	protected void calcTextPos()
 	{
-		textx = getCenterX() - (charHeight * getText().length()) / 2.;
+		super.calcTextPos();
 		
-		if (textx < charHeight + getX())
-			textx = charHeight + getX();
-		
-		texty = getCenterY() + charHeight / 2.;
+		if (textx < charHeight)
+			textx = charHeight;
 	}
 	
 	public boolean kill(Entity _killer)

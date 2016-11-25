@@ -3,12 +3,11 @@ package com.valentine.game.entity.ui;
 import java.util.*;
 
 import com.valentine.game.entity.base.*;
-import com.valentine.game.entity.geometry.*;
 import com.valentine.game.utils.*;
 
 public class ContainerWindow extends Container
 {
-	private Rect dragger;
+	private GButton dragger;
 	private DragHandler dragHandler;
 	private Container innards;
 
@@ -21,11 +20,21 @@ public class ContainerWindow extends Container
 
 	public ContainerWindow(Container _container, double _x, double _y, double _width, double _height)
 	{
+		this(_container, "", _x, _y, _width, _height);
+	}
+	
+	public ContainerWindow(Container _container, String _title, double _x, double _y, double _width, double _height)
+	{
 		super(_container, _x, _y, _width, _height);
 
-		dragger = new Rect(getContainer());
-		dragger.setSize(getWidth() - 1, 30);
-		dragger.setPosition(getX(), getY());
+		dragger = new GButton(getContainer(), _title, getX(), getY(), getWidth() - 1, 30);
+		dragger.addListener
+		(
+			() ->
+			{
+				this.setPaintable(!this.isPaintable());
+			}
+		);
 
 		dragHandler = new DragHandler(this, dragger);
 		dragHandler.setUpdatable(false);
@@ -43,6 +52,27 @@ public class ContainerWindow extends Container
 		setPosition(dragger.getX(), dragger.getY());
 		super.update();
 	}
+	
+	
+	
+	public void toggleShown()
+	{
+		dragger.press();
+	}
+	
+	
+	public void setTitle(String _title)
+	{
+		dragger.setText(_title);
+	}
+	
+	public String getTitle()
+	{
+		return dragger.getText();
+	}
+	
+	
+	
 
 	public int size()
 	{

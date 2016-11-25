@@ -29,7 +29,6 @@ public class FpsUpsCounter extends EntityBasicAI
 	{
 		super(_container);
 		setPosition(_x, _y);
-		setDrawColor(Color.WHITE);
 	}
 
 	public void paint(Screen _screen)
@@ -40,6 +39,9 @@ public class FpsUpsCounter extends EntityBasicAI
 		{
 			dy = _screen.getGraphics().getFontMetrics().getHeight() + 1;
 		}
+		
+		_screen.setColor(getFillColor());
+		_screen.fillRect(getX(), getY(), getWidth(), getHeight());
 
 		_screen.setColor(getDrawColor());
 		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
