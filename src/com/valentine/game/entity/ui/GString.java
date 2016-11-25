@@ -5,12 +5,12 @@ import com.valentine.game.entity.base.*;
 
 public class GString extends EntityBasicAI
 {
-	private int charHeight = 0;
+	protected int charHeight = 0;
 
-	private String text;
+	protected String text;
 	
-	private double textx;
-	private double texty;
+	protected double textx;
+	protected double texty;
 	
 	private boolean backgroundVisible = true;
 	private boolean borderVisible = true;
@@ -66,9 +66,31 @@ public class GString extends EntityBasicAI
 		calcTextPos();
 	}
 	
-	private void calcTextPos()
+	protected void calcTextPos()
 	{
 		textx = getCenterX() - (charHeight * getText().length()) / 2.;
 		texty = getCenterY() + charHeight / 2.;
 	}
+
+	public boolean isBackgroundVisible()
+	{
+		return backgroundVisible;
+	}
+
+	public void setBackgroundVisible(boolean _backgroundVisible)
+	{
+		backgroundVisible = _backgroundVisible;
+	}
+
+	public boolean isBorderVisible()
+	{
+		return borderVisible;
+	}
+
+	public void setBorderVisible(boolean _borderVisible)
+	{
+		borderVisible = _borderVisible;
+	}
+	
+	
 }

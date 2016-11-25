@@ -34,6 +34,8 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 	
 	private double textx;
 	private double texty;
+	
+	private boolean enabled = true;
 
 	@Deprecated
 	public GButton(Container _container, String _text)
@@ -119,7 +121,7 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 	
 	public void press()
 	{
-		bufferedClicks++;
+		if (enabled) bufferedClicks++;
 	}
 
 	public boolean addListener(Runnable _listener)
@@ -131,6 +133,26 @@ public class GButton extends EntityBasicAI implements MouseInputListener
 	{
 		return listeners.remove(_listener);
 	}
+	
+	
+	
+	public void setEnabled(boolean _enabled)
+	{
+		enabled = _enabled;
+		
+		if (enabled)
+		{
+			setDrawColor(Color.WHITE);
+			setUpdatable(true);
+		}
+		else
+		{
+			setDrawColor(Color.GRAY);
+			setUpdatable(false);
+		}
+	}
+	
+	
 
 	public boolean kill(Entity _killer)
 	{

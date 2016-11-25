@@ -13,7 +13,7 @@ public abstract class Main
 	{
 		Screen screen = new SwingScreen(new Dimension(960, 720), false);
 
-		Cassette cassete = new Cassette(new FlowGame(screen.getScreenSize()));
+		Cassette cassete = new Cassette(new FuzzySetsGame(screen.getScreenSize()));
 
 		Terminal terminal = new NotchTerminal();
 
