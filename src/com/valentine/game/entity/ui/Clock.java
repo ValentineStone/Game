@@ -70,7 +70,7 @@ public class Clock extends EntityBasicAI
 
 		secRotation = MathExt.PI_2_1 * sec / 60 - MathExt.PI_1_2;
 		minRotation = MathExt.PI_2_1 * min / 60 - MathExt.PI_1_2;
-		hourRotation = MathExt.PI_2_1 * hour / 60 - MathExt.PI_1_2;
+		hourRotation = MathExt.PI_2_1 * hour / 12 - MathExt.PI_1_2;
 	}
 
 	double getR()

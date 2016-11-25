@@ -7,12 +7,11 @@ import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.entity.vfx.*;
 
-public class WormHeaven extends GameContainer
+public class WormHeaven extends RootContainer
 {
-
-	public void assemble()
+	public WormHeaven(Dimension _dimension)
 	{
-		super.assemble();
+		super(_dimension);
 
 		ScrollContainer scrollContainer = new ScrollContainer(this, 100, 100, getWidth() - 200, getHeight() - 200);
 		scrollContainer.setDrawColor(Color.YELLOW);

@@ -29,7 +29,7 @@ public class ScrollContainer extends Container implements MouseWheelListener
 		{
 			if (entity.isPaintable())
 			{
-				entity.paint(null);
+				entity.paint(_screen);
 			}
 		}
 

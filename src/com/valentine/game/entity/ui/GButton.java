@@ -118,7 +118,10 @@ public class GButton extends GString implements MouseInputListener
 
 	public void mouseClicked(MouseEvent _mouseEvent)
 	{
-
+		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
+		{
+			press();
+		}
 	}
 
 	public void mousePressed(MouseEvent _mouseEvent)
@@ -126,7 +129,6 @@ public class GButton extends GString implements MouseInputListener
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = State.PRESSED_HOVER;
-			press();
 		}
 	}
 

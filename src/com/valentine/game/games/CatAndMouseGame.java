@@ -27,15 +27,13 @@ public class CatAndMouseGame extends RootContainer
 		set = new FuzzySet();
 		graph = new FuzzySetGraph(this, set, 10, 10, getWidth() - 20, getHeight() - 20);
 		graph.setDotr(2);
-		graph.setDrawColor(new Color(20,20,50));
+		graph.setDrawColor(new Color(80,80,130));
 
 		cat = new CatchyCat(this, getHeight() / 2);
 
-		new OnPointInfo(this, 10, 10);
+		new FpsUpsCounter(this, 20, 20);
 
-		new FpsUpsCounter(this, 10, 130);
-
-		new EntityCounter(this, FlyingMouse.class, 10, 200);
+		new EntityCounter(this, FlyingMouse.class, 20, 80);
 	}
 
 	public void update()

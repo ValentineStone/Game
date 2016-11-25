@@ -30,7 +30,38 @@ public class FuzzySet implements Iterable<Entry<Double, Double>>
 				element = Double.valueOf(listBits[i]);
 				proximity = Double.valueOf(listBits[i+1]);
 				
-				add(element, proximity);
+				if (proximity <= 1 && proximity >= 0)
+					add(element, proximity);
+			}
+			catch (Exception _exc)
+			{
+				return;
+			}
+		}
+	}
+	
+	public void remove(double _element)
+	{
+		set.remove(_element);
+	}
+	
+	public void remove(String _list)
+	{
+		if (_list == null)    return;
+		if (_list.equals("")) return;
+		
+		
+		String[] listBits = _list.split(" ");
+		
+		double element;
+		
+		for (int i = 0; i < listBits.length; i++)
+		{
+			try
+			{
+				element = Double.valueOf(listBits[i]);
+				
+				remove(element);
 			}
 			catch (Exception _exc)
 			{
@@ -69,9 +100,64 @@ public class FuzzySet implements Iterable<Entry<Double, Double>>
 		return set.size();
 	}
 	
+	public boolean normalize()
+	{
+		Entry<Double, Integer> modality = generateModality();
+		
+		if (modality.getKey() == 1)
+			return false;
+		
+		for (Entry<Double, Double> entry : this)
+		{
+			entry.setValue(entry.getValue() / modality.getKey());
+		}
+		
+		return true;
+	}
+	
 	public Set<Double> getUniversum()
 	{
 		return set.keySet();
+	}
+	
+	public Entry<Double, Integer> generateModality()
+	{
+		double max = 0;
+		int maxcount = 0;
+		
+		for (Entry<Double, Double> entry : this)
+		{
+			if (entry.getValue() > max)
+			{
+				max = entry.getValue();
+				maxcount = 1;
+			}
+			else if (entry.getValue() == max)
+			{
+				maxcount++;
+			}
+		}
+		
+		final double maxRet = max;
+		final int maxcountRet = maxcount;
+		
+		return new Entry<Double, Integer>()
+		{
+			public Integer setValue(Integer _value)
+			{
+				return null;
+			}
+			
+			public Integer getValue()
+			{
+				return maxcountRet;
+			}
+			
+			public Double getKey()
+			{
+				return maxRet;
+			}
+		};
 	}
 	
 	public Map<Double, Double> generateCarrier()
@@ -87,6 +173,11 @@ public class FuzzySet implements Iterable<Entry<Double, Double>>
 	public Set<Double> generateCore()
 	{
 		return generateSubset(1, true, 1, true).keySet();
+	}
+	
+	public Set<Double> generateBorders()
+	{
+		return generateSubset(0, false, 1, false).keySet();
 	}
 	
 	public Map<Double, Double> generateSubset(double _low, boolean _lowIncluded, double _high, boolean _highIncluded)

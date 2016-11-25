@@ -98,17 +98,9 @@ public class FpsUpsCounter extends EntityBasicAI
 
 		double idealUps = 25;
 
-		if (ups > idealUps + 2)
+		if (ups > idealUps)
 		{
-			upsColor = Color.RED;
-		}
-		else if (ups == idealUps + 2)
-		{
-			upsColor = ColorExt.ORANGE;
-		}
-		else if (ups == idealUps + 1)
-		{
-			upsColor = Color.YELLOW;
+			upsColor = ColorExt.LIGHT_BLUE;
 		}
 		else if (ups == idealUps)
 		{

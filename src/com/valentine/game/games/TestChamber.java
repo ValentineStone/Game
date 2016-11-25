@@ -5,15 +5,17 @@ import java.awt.event.*;
 
 import com.valentine.game.core.*;
 import com.valentine.game.entity.ambient.*;
+import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
 
-public class TestChamber extends GameContainer implements KeyListener
+public class TestChamber extends RootContainer implements KeyListener
 {
-
-	public void assemble()
+	public TestChamber(Dimension _dimension)
 	{
+		super(_dimension);
+		
 		Input.addKeyListener(this);
 
 		setFillColor(new Color(0, 0, 20));

@@ -1,17 +1,19 @@
 package com.valentine.game.games;
 
+import java.awt.*;
+
 import com.valentine.game.entity.ambient.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.vfx.line.*;
 import com.valentine.game.utils.*;
 
-public class Night extends GameContainer
+public class Night extends RootContainer
 {
 
-	public void assemble()
+	public Night(Dimension _dimension)
 	{
-		super.assemble();
+		super(_dimension);
 
 		PhasedMoon phasedMoon = new PhasedMoon(this, 100);
 
