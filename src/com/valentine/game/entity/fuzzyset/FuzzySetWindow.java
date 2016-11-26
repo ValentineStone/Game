@@ -17,12 +17,13 @@ public class FuzzySetWindow extends ContainerWindow
 	public final static int PAD         = 10;
 	public final static int WIDTH_PADED = 300 - 2*PAD;
 	public final static int BTN_W       = 20;
-	public final static int BTN_H       = 20;
+	public final static int BTN_H       = 25;
 	public final static int GRAPH_H     = 200;
 	
 	private final GButton addBtn;
 	private final GButton remBtn;
 	private final GButton normBtn;
+	private final GButton updateBtn;
 	
 	private final FuzzySetGraph graph;
 	private final FuzzySet set;
@@ -48,8 +49,9 @@ public class FuzzySetWindow extends ContainerWindow
 	private final GString unimodalStr;
 	private final GString normalityStr;
 	
-	private final GString heightStr;
+
 	private final GString heightLabel;
+	private final GScrollString heightStr;
 	
 	
 	
@@ -61,6 +63,9 @@ public class FuzzySetWindow extends ContainerWindow
 		set = _set;
 		
 		int POSY = PAD;
+		
+		
+		Color frameColor = ColorExt.randomColor(100, 255);
 		
 
 		addBtn = new GButton(this, "+", 1*PAD + 0*BTN_W, POSY, BTN_W, BTN_H);
@@ -90,11 +95,19 @@ public class FuzzySetWindow extends ContainerWindow
 				onSetChange();
 			}
 		);
+		updateBtn = new GButton(this, "U", 4*PAD + 3*BTN_W, POSY, BTN_W, BTN_H);
+		updateBtn.addListener
+		(
+			() ->
+			{
+				onSetChange();
+			}
+		);
 		POSY += BTN_H + PAD;
 		
 		graph = new FuzzySetGraph(this, set, PAD, POSY, WIDTH_PADED, GRAPH_H);
 		POSY += GRAPH_H + PAD;
-		graph.setDrawColor(ColorExt.randomColor(100, 255));
+		graph.setDrawColor(frameColor);
 		graph.setFillColor(new Color(0,0,30));
 		
 		setLabel = new GString(this, "Set:", PAD, POSY, WIDTH_PADED, BTN_H);
@@ -103,6 +116,7 @@ public class FuzzySetWindow extends ContainerWindow
 		
 		setStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
+		setStr.setDrawColor(frameColor);
 		
 		universumLabel = new GString(this, "Universum:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
@@ -110,6 +124,7 @@ public class FuzzySetWindow extends ContainerWindow
 		
 		universumStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
+		universumStr.setDrawColor(frameColor);
 		
 		carrierLabel = new GString(this, "Carrier:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
@@ -117,6 +132,7 @@ public class FuzzySetWindow extends ContainerWindow
 		
 		carrierStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
+		carrierStr.setDrawColor(frameColor);
 		
 		breakpointsLabel = new GString(this, "Break points:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
@@ -124,6 +140,7 @@ public class FuzzySetWindow extends ContainerWindow
 		
 		breakpointsStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
+		breakpointsStr.setDrawColor(frameColor);
 		
 		bordersLabel = new GString(this, "Borders:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
@@ -131,6 +148,7 @@ public class FuzzySetWindow extends ContainerWindow
 		
 		bordersStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
+		bordersStr.setDrawColor(frameColor);
 		
 		coreLabel = new GString(this, "Core:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
@@ -138,16 +156,20 @@ public class FuzzySetWindow extends ContainerWindow
 		
 		coreStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
+		coreStr.setDrawColor(frameColor);
 		
 		unimodalStr = new GString(this, "-", PAD, POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
 		normalityStr = new GString(this, "-", (WIDTH + PAD) / 2., POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
 		POSY += BTN_H + PAD;
+		unimodalStr.setDrawColor(frameColor);
+		normalityStr.setDrawColor(frameColor);
 		
 		heightLabel = new GString(this, "Height:", PAD, POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
 		heightLabel.setBorderVisible(false);
 		
-		heightStr = new GString(this, "-", (WIDTH + PAD) / 2., POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
+		heightStr = new GScrollString(this, "-", (WIDTH + PAD) / 2., POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
 		POSY += BTN_H + PAD;
+		heightStr.setDrawColor(frameColor);
 		
 		
 		

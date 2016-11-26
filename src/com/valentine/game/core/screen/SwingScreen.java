@@ -31,15 +31,19 @@ public class SwingScreen implements Screen
 
 		try
 		{
-			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
-
+			GraphicsEnvironment
+				.getLocalGraphicsEnvironment()
+				.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
+			
 			defaultFont = new Font("Press Start 2P", Font.PLAIN, 12);
-			System.err.println("Success.");
+			System.err.println("Success:");
+			System.err.println(defaultFont.toString());
 		}
 		catch (Exception _exception)
 		{
 			defaultFont = new Font("Monospace", Font.PLAIN, 12);
-			System.err.println("Unsuccessfull.");
+			System.err.println("Unsuccessfull:");
+			System.err.println(_exception.getMessage());
 		}
 	}
 
