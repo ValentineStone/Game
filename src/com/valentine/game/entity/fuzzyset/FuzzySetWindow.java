@@ -15,7 +15,7 @@ public class FuzzySetWindow extends ContainerWindow
 	public final static int WIDTH       = 300;
 	public final static int HEIGHT      = 900;
 	public final static int PAD         = 10;
-	public final static int WIDTH_PADED = 300 - 2*PAD;
+	public final static int WIDTH_PADED = WIDTH - 2*PAD;
 	public final static int BTN_W       = 20;
 	public final static int BTN_H       = 25;
 	public final static int GRAPH_H     = 200;
@@ -24,9 +24,24 @@ public class FuzzySetWindow extends ContainerWindow
 	private final GButton remBtn;
 	private final GButton normBtn;
 	private final GButton updateBtn;
+	private final GButton powBtn;
+	private final GButton conBtn;
+	private final GButton dilBtn;
+	private final GButton clearBtn;
+	
+
+	private FuzzySet set;
 	
 	private final FuzzySetGraph graph;
-	private final FuzzySet set;
+	private final FuzzySetGraph graphCon;
+	private final FuzzySetGraph graphDil;
+	
+	private final GButton conShowBtn;
+	private final GButton dilShowBtn;
+	private boolean conShown = false;
+	private boolean dilShown = false;
+	private final Color conColor = Color.GREEN;
+	private final Color dilColor = Color.RED;
 	
 	private final GString setLabel;
 	private final GScrollString setStr;
@@ -52,6 +67,12 @@ public class FuzzySetWindow extends ContainerWindow
 
 	private final GString heightLabel;
 	private final GScrollString heightStr;
+	
+	private final GString linearLabel;
+	private final GScrollString linearStr;
+	
+	private final GString quadLabel;
+	private final GScrollString quadStr;
 	
 	
 	
@@ -103,12 +124,94 @@ public class FuzzySetWindow extends ContainerWindow
 				onSetChange();
 			}
 		);
+		powBtn = new GButton(this, "^", 5*PAD + 4*BTN_W, POSY, BTN_W, BTN_H);
+		powBtn.addListener
+		(
+			() ->
+			{
+				try
+				{
+					set.pow(Double.valueOf(JOptionPane.showInputDialog("Enter power:", "pow")));
+				}
+				catch (Exception _exc)
+				{}
+				
+				onSetChange();
+			}
+		);
+		conBtn = new GButton(this, "c", 6*PAD + 5*BTN_W, POSY, BTN_W, BTN_H);
+		conBtn.addListener
+		(
+			() ->
+			{
+				set.con();
+				onSetChange();
+			}
+		);
+		dilBtn = new GButton(this, "d", 7*PAD + 6*BTN_W, POSY, BTN_W, BTN_H);
+		dilBtn.addListener
+		(
+			() ->
+			{
+				set.dil();
+				onSetChange();
+			}
+		);
+		clearBtn = new GButton(this, "~", 8*PAD + 7*BTN_W, POSY, BTN_W, BTN_H);
+		clearBtn.addListener
+		(
+			() ->
+			{
+				set.clear();
+				onSetChange();
+			}
+		);
 		POSY += BTN_H + PAD;
 		
+		
+		
+		graphCon = new FuzzySetGraph(this, set.clone(), PAD, POSY, WIDTH_PADED, GRAPH_H);
+		graphCon.getSet().con();
+		graphCon.setFillColor(ColorExt.TRANSPARENT);
+		graphCon.setDrawColor(conColor);
+		graphCon.setPaintable(false);
+		
+		graphDil = new FuzzySetGraph(this, set.clone(), PAD, POSY, WIDTH_PADED, GRAPH_H);
+		graphDil.getSet().dil();
+		graphDil.setFillColor(ColorExt.TRANSPARENT);
+		graphDil.setDrawColor(dilColor);
+		graphDil.setPaintable(false);
+		
 		graph = new FuzzySetGraph(this, set, PAD, POSY, WIDTH_PADED, GRAPH_H);
-		POSY += GRAPH_H + PAD;
+		graph.setFillColor(ColorExt.TRANSPARENT);
 		graph.setDrawColor(frameColor);
-		graph.setFillColor(new Color(0,0,30));
+		
+		POSY += GRAPH_H + PAD;
+		
+		
+		
+		conShowBtn = new GButton(this, "CON", 1*PAD + 0*BTN_W, POSY, 3*BTN_W, BTN_H);
+		conShowBtn.addListener
+		(
+			() ->
+			{
+				graphCon.setPaintable(!graphCon.isPaintable());
+				conShowBtn.setDrawColor(conShowBtn.getDrawColor().equals(conColor) ? Color.WHITE : conColor);
+			}
+		);
+		dilShowBtn = new GButton(this, "DIL", 2*PAD + 3*BTN_W, POSY, 3*BTN_W, BTN_H);
+		dilShowBtn.addListener
+		(
+			() ->
+			{
+				graphDil.setPaintable(!graphDil.isPaintable());
+				dilShowBtn.setDrawColor(dilShowBtn.getDrawColor().equals(dilColor) ? Color.WHITE : dilColor);
+			}
+		);
+		
+		POSY += BTN_H + PAD;
+		
+		
 		
 		setLabel = new GString(this, "Set:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
@@ -171,6 +274,20 @@ public class FuzzySetWindow extends ContainerWindow
 		POSY += BTN_H + PAD;
 		heightStr.setDrawColor(frameColor);
 		
+		linearLabel = new GString(this, "Lin. Fuzz:", PAD, POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
+		linearLabel.setBorderVisible(false);
+		
+		linearStr = new GScrollString(this, "-", (WIDTH + PAD) / 2., POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
+		POSY += BTN_H + PAD;
+		linearStr.setDrawColor(frameColor);
+		
+		quadLabel = new GString(this, "Quad Fuzz:", PAD, POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
+		quadLabel.setBorderVisible(false);
+		
+		quadStr = new GScrollString(this, "-", (WIDTH + PAD) / 2., POSY, WIDTH / 2. - 3 * PAD / 2., BTN_H);
+		POSY += BTN_H + PAD;
+		quadStr.setDrawColor(frameColor);
+		
 		
 		
 		onSetChange();
@@ -185,15 +302,24 @@ public class FuzzySetWindow extends ContainerWindow
 		normBtn.setEnabled(editingEnabled);
 	}
 	
-	public void addToSet(String _elements)
+	
+	
+	public FuzzySet getSet()
 	{
-		set.add(_elements);
+		return set;
+	}
+
+	public void setSet(FuzzySet _set)
+	{
+		set = _set;
 		onSetChange();
 	}
+
+	
 	
 	public void onSetChange()
 	{
-		setStr.setText(set.getSet().toString());
+		setStr.setText(set.getMap().toString());
 		universumStr.setText(set.getUniversum().toString());
 		carrierStr.setText(set.generateCarrier().keySet().toString());
 		breakpointsStr.setText(set.generateBreakpoints().toString());
@@ -216,6 +342,13 @@ public class FuzzySetWindow extends ContainerWindow
 		normalityStr.setText(core.size() == 0 ? "Subnorm." : "Normal");
 		
 		heightStr.setText(modality.getKey().toString());
+		linearStr.setText(String.valueOf(set.evalLinearFuzzyness()));
+		quadStr.setText(String.valueOf(set.evalQuadraticFuzzyness()));
+		
+		graphCon.setSet(set.clone());
+		graphCon.getSet().con();
+		graphDil.setSet(set.clone());
+		graphDil.getSet().dil();
 	}
 
 }

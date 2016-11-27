@@ -52,7 +52,7 @@ public class FuzzySetGraph extends EntityBasicAI
 				break;
 			case SINGLE_ELEMENT:
 			{
-				_screen.drawOval(getX() + set.getMin(), getCornerY() - set.getSet().get(set.getMin()) - 1, 2, 2);
+				_screen.drawOval(getX() + set.getMin(), getCornerY() - set.getMap().get(set.getMin()) - 1, 2, 2);
 				
 				break;
 			}

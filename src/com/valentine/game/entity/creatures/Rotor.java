@@ -126,4 +126,15 @@ public class Rotor extends EntityBasicAI implements Explodable
 
 		return false;
 	}
+
+	public double getR()
+	{
+		return r;
+	}
+
+	public void setR(double _r)
+	{
+		r = _r;
+		setSize(2*r, 2*r);
+	}
 }

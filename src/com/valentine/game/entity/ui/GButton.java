@@ -46,14 +46,17 @@ public class GButton extends GString implements MouseInputListener
 	{
 		super.paint(_screen);
 
-		switch (state)
+		if (enabled)
 		{
-			case PRESSED:
-			case PRESSED_HOVER:
-				_screen.setStroke(pressStroke);
-				break;
-			case DEFAULT_HOVER:
-				_screen.setStroke(hoverStroke);
+			switch (state)
+			{
+				case PRESSED:
+				case PRESSED_HOVER:
+					_screen.setStroke(pressStroke);
+					break;
+				case DEFAULT_HOVER:
+					_screen.setStroke(hoverStroke);
+			}
 		}
 
 		_screen.drawRect(getX(), getY(), getWidth(), getHeight());
@@ -95,15 +98,9 @@ public class GButton extends GString implements MouseInputListener
 		enabled = _enabled;
 		
 		if (enabled)
-		{
-			setDrawColor(Color.WHITE);
 			setUpdatable(true);
-		}
 		else
-		{
-			setDrawColor(Color.GRAY);
 			setUpdatable(false);
-		}
 	}
 	
 	
@@ -121,6 +118,7 @@ public class GButton extends GString implements MouseInputListener
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			press();
+			_mouseEvent.consume();
 		}
 	}
 
@@ -129,6 +127,7 @@ public class GButton extends GString implements MouseInputListener
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = State.PRESSED_HOVER;
+			_mouseEvent.consume();
 		}
 	}
 
@@ -137,6 +136,7 @@ public class GButton extends GString implements MouseInputListener
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = State.DEFAULT_HOVER;
+			_mouseEvent.consume();
 		}
 	}
 
@@ -156,6 +156,7 @@ public class GButton extends GString implements MouseInputListener
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = state == State.PRESSED ? State.PRESSED_HOVER : State.DEFAULT_HOVER;
+			_mouseEvent.consume();
 		}
 		else
 		{
