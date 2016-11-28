@@ -38,8 +38,7 @@ public class FuzzySetWindow extends ContainerWindow
 	
 	private final GButton conShowBtn;
 	private final GButton dilShowBtn;
-	private boolean conShown = false;
-	private boolean dilShown = false;
+	
 	private final Color conColor = Color.GREEN;
 	private final Color dilColor = Color.RED;
 	
