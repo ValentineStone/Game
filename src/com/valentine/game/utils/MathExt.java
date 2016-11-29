@@ -137,6 +137,9 @@ public class MathExt
 		}
 		return factorial;
 	}
+	
+	
+	
 
 	public static enum DIRECTION
 	{
@@ -153,7 +156,6 @@ public class MathExt
 		{
 			return rotation;
 		}
-
 	}
 
 }
