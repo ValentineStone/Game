@@ -16,7 +16,7 @@ public class Line
 		double _lineDY
 	)
 	{
-		if ()
+		//if ()
 		
 		return false;
 	}

@@ -346,6 +346,7 @@ class RigidSwingWindow
 		}
 		else
 		{
+			//jframe.setUndecorated(true);
 			canvas.setPreferredSize(defaultDimension);
 			jframe.pack();
 		}

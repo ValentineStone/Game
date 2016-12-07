@@ -11,9 +11,9 @@ public abstract class Main
 {
 	public static void main(String[] _args)
 	{
-		Screen screen = new SwingScreen(new Dimension(960, 720), true);
+		Screen screen = new SwingScreen(new Dimension(400, 400), false);
 
-		Cassette cassete = new Cassette(new FuzzySetsGame(screen.getScreenSize()));
+		Cassette cassete = new Cassette(new WinterGame(screen.getScreenSize()));
 
 		Terminal terminal = new NotchTerminal();
 
