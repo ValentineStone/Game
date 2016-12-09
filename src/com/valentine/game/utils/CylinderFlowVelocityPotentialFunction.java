@@ -1,5 +1,7 @@
 package com.valentine.game.utils;
 
+import com.valentine.game.utils.math.*;
+
 public class CylinderFlowVelocityPotentialFunction extends MathFunction
 {
 	public Double evaluate(Double... _params)

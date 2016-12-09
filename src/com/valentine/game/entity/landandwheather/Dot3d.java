@@ -1,15 +1,12 @@
 package com.valentine.game.entity.landandwheather;
 
-public class Dot3d
+public class Dot3d extends Dot2d
 {
-	public double x = 0;
-	public double y = 0;
 	public double z = 0;
 	
 	public Dot3d(double _x, double _y, double _z)
 	{
-		x = _x;
-		y = _y;
+		super(_x, _y);
 		z = _z;
 	}
 	
@@ -17,7 +14,7 @@ public class Dot3d
 	{
 		return
 			new StringBuilder()
-				.append("DOT[")
+				.append("Dot3d[")
 				.append(x)
 				.append(", ")
 				.append(y)

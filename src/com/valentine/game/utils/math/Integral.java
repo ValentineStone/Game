@@ -1,4 +1,4 @@
-package com.valentine.game.utils;
+package com.valentine.game.utils.math;
 
 public abstract class Integral
 {

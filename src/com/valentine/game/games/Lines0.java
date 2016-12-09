@@ -12,6 +12,8 @@ public class Lines0 extends RootContainer
 	{
 		super(_dimension);
 
-		new PolynomLine(this, 4, 30);
+		//new PolynomLine(this, 4, 30);
+		
+		new LineBezier1d(this, 5, 4);
 	}
 }

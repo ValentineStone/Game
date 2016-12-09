@@ -5,6 +5,7 @@ import java.awt.*;
 import com.valentine.game.core.interfaces.*;
 import com.valentine.game.core.screen.*;
 import com.valentine.game.utils.*;
+import com.valentine.game.utils.math.*;
 
 public abstract class Entity implements BasicEntity
 {

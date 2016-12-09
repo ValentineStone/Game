@@ -9,6 +9,7 @@ import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.entity.vfx.*;
 import com.valentine.game.utils.*;
+import com.valentine.game.utils.math.*;
 
 public class ChaseGame extends RootContainer
 {

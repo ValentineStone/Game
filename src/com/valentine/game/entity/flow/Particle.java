@@ -8,6 +8,7 @@ import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.geometry.*;
 import com.valentine.game.entity.vfx.*;
 import com.valentine.game.utils.*;
+import com.valentine.game.utils.math.*;
 
 public class Particle extends EntityBasicAI
 {

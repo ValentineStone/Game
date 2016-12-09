@@ -37,7 +37,7 @@ public class PolynomLine extends Line
 			}
 		}
 
-		debugLine();
+		//debugLine();
 
 		for (int i = 0; i < A.length; i++)
 		{
@@ -77,7 +77,7 @@ public class PolynomLine extends Line
 			}
 		}
 
-		debugLine();
+		//debugLine();
 	}
 
 	public void paint(Screen _screen)

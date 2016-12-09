@@ -7,6 +7,7 @@ import com.valentine.game.core.*;
 import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.utils.*;
+import com.valentine.game.utils.math.*;
 
 public class LineOld extends Entity implements MouseListener, MouseMotionListener, KeyListener
 {
@@ -85,7 +86,16 @@ public class LineOld extends Entity implements MouseListener, MouseMotionListene
 				int n = dots.size();
 				for (int i = 0; i < n; i++)
 				{
-					getDot(i).t = MathExt.factorial(n - 1) / (double) (MathExt.factorial(i) * MathExt.factorial(n - 1 - i));
+					int max = Math.max(n - 1 - i, i);
+					int min = Math.min(n - 1 - i, i);
+					//getDot(i).t = MathExt.factorial(n - 1) / (double) (MathExt.factorial(i) * MathExt.factorial(n - 1 - i));
+					getDot(i).t = MathExt.factorial(max, n - 1) / (double) (MathExt.factorial(min));
+					/*
+					System.err.println("["+i+"]----------------");
+					System.err.println("!(" + (n - 1)+") / !(" + i + ") * !(" + (n - 1 - i) + ")");
+					System.err.println(MathExt.factorial(n - 1) / (double) (MathExt.factorial(i) * MathExt.factorial(n - 1 - i)));
+					System.err.println(MathExt.factorial(n - 1 - i, n - 1) / (double) (MathExt.factorial(i)));
+					*/
 				}
 				break;
 			}

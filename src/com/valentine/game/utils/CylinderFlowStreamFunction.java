@@ -1,5 +1,7 @@
 package com.valentine.game.utils;
 
+import com.valentine.game.utils.math.*;
+
 public class CylinderFlowStreamFunction extends MathFunction
 {
 	private final static CylinderFlowStreamFunction inst = new CylinderFlowStreamFunction();

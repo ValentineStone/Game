@@ -8,6 +8,7 @@ import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.entity.winter.*;
 import com.valentine.game.utils.*;
+import com.valentine.game.utils.math.*;
 
 public class WinterGame extends RootContainer
 {
@@ -15,8 +16,6 @@ public class WinterGame extends RootContainer
 	private final SnowHeapManager snowMgr2;
 	
 	private final FpsUpsCounter fpser;
-	
-	private Color frameColor = new Color(170,170,75);
 	
 	private double boardW;
 	private double boardH;
@@ -32,6 +31,9 @@ public class WinterGame extends RootContainer
 	public WinterGame(Dimension _dimension)
 	{
 		super(_dimension);
+		
+		setDrawColor(new Color(170,170,75));
+		new ColorGrader(this, this, true, false);
 		
 		snowMgr1 = new SnowHeapManager((int) getWidth());
 		snowMgr2 = new SnowHeapManager((int) getWidth());
@@ -52,6 +54,8 @@ public class WinterGame extends RootContainer
 		
 		PhasedMoon phasedMoon = new PhasedMoon(this, 50);
 		phasedMoon.setPosition(boardW + 10, boardH + 10);
+		// phasedMoon.setFillColor(ColorExt.randomColor(0, 255));
+		// new ColorGrader(this, phasedMoon, false, true);
 		
 		for (int i = 0; i < 100; i++)
 			new BlinkingStar(this);
@@ -78,7 +82,7 @@ public class WinterGame extends RootContainer
 	
 	public void paintFrame(Screen _screen)
 	{
-		_screen.setColor(frameColor);
+		_screen.setColor(getDrawColor());
 		
 		_screen.fillRect(board1X, board1Y, getWidth(), boardH);
 		_screen.fillRect(board1X, board2Y, getWidth(), boardH);

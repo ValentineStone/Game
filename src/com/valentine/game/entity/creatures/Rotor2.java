@@ -8,6 +8,7 @@ import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.objects.*;
 import com.valentine.game.utils.*;
+import com.valentine.game.utils.math.*;
 
 public class Rotor2 extends EntityBasicAI implements Explodable
 {

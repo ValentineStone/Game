@@ -1,4 +1,6 @@
-package com.valentine.game.utils;
+package com.valentine.game.utils.math;
+
+import com.valentine.game.entity.landandwheather.*;
 
 public class MathExt
 {
@@ -126,15 +128,31 @@ public class MathExt
 	{
 		return distanceMake(_x2 - _x1, _y2 - _y1);
 	}
+	
+	public static double distanceMake(Dot2d _a, Dot2d _b)
+	{
+		return distanceMake(_a.x, _a.y, _b.x, _b.y);
+	}
 
 	@Deprecated
 	public static long factorial(int _n)
 	{
+		return factorial(1, _n);
+	}
+	
+	@Deprecated
+	public static long factorial(int _begindex, int _endindex)
+	{
+		if (_begindex < 0)
+			return 0;
+		
+		if (_begindex == _endindex)
+			return 1;
+		
 		long factorial = 1;
-		for (int i = 2; i <= _n; i++)
-		{
+		for (int i = _begindex+1; i <= _endindex; i++)
 			factorial *= i;
-		}
+		
 		return factorial;
 	}
 	
