@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.*;
 
 import com.valentine.game.core.screen.*;
+import com.valentine.game.entity.geometry.*;
 import com.valentine.game.utils.*;
 import com.valentine.game.utils.math.*;
 

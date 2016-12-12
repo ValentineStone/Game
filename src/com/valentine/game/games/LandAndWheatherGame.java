@@ -7,6 +7,7 @@ import com.valentine.game.core.*;
 import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.creatures.*;
+import com.valentine.game.entity.geometry.*;
 import com.valentine.game.entity.landandwheather.*;
 import com.valentine.game.entity.ui.*;
 

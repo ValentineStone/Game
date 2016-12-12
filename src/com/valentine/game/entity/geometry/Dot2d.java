@@ -1,4 +1,4 @@
-package com.valentine.game.entity.landandwheather;
+package com.valentine.game.entity.geometry;
 
 public class Dot2d
 {
