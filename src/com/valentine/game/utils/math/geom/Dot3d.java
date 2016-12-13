@@ -1,4 +1,4 @@
-package com.valentine.game.entity.geometry;
+package com.valentine.game.utils.math.geom;
 
 public class Dot3d extends Dot2d
 {

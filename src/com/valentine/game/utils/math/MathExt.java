@@ -2,6 +2,7 @@ package com.valentine.game.utils.math;
 
 import com.valentine.game.entity.geometry.*;
 import com.valentine.game.entity.landandwheather.*;
+import com.valentine.game.utils.math.geom.*;
 
 public class MathExt
 {

@@ -10,6 +10,7 @@ import com.valentine.game.entity.creatures.*;
 import com.valentine.game.entity.geometry.*;
 import com.valentine.game.entity.landandwheather.*;
 import com.valentine.game.entity.ui.*;
+import com.valentine.game.utils.math.geom.*;
 
 public class LandAndWheatherGame extends RootContainer implements MouseListener
 {
