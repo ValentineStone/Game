@@ -28,9 +28,9 @@ public class Tri2d
 	
 	public static Circle2d getCircumcircle(Tri2d _tri)
 	{
-		Line2d ab = Line2d.toLine(_tri.a, _tri.b);
-		Line2d ac = Line2d.toLine(_tri.a, _tri.c);
-		Dot2d circumcircleDot = Line2d.intersect(ab, ac);
+		LineFunc2d ab = LineFunc2d.toLine(_tri.a, _tri.b);
+		LineFunc2d ac = LineFunc2d.toLine(_tri.a, _tri.c);
+		Dot2d circumcircleDot = LineFunc2d.intersect(ab, ac);
 		
 		return null;
 	}
@@ -47,10 +47,10 @@ public class Tri2d
 		Seg2d ab = new Seg2d(a, b);
 		Seg2d ac = new Seg2d(a, c);
 		
-		Line2d abP = Line2d.perpAtX(Line2d.toLine(ab), ab.centerX());
-		Line2d acP = Line2d.perpAtX(Line2d.toLine(ac), ac.centerX());
+		LineFunc2d abP = LineFunc2d.perpAtX(LineFunc2d.toLine(ab), ab.centerX());
+		LineFunc2d acP = LineFunc2d.perpAtX(LineFunc2d.toLine(ac), ac.centerX());
 		
-		Dot2d circumcircleDot = Line2d.intersect(abP, acP);
+		Dot2d circumcircleDot = LineFunc2d.intersect(abP, acP);
 		
 		System.err.println(a);
 		System.err.println(b);
