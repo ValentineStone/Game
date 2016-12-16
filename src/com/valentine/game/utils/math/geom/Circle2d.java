@@ -2,7 +2,7 @@ package com.valentine.game.utils.math.geom;
 
 public class Circle2d extends Dot2d
 {
-	public double r = 0;
+	public final double r;
 
 	public Circle2d(Dot2d _center, double _r)
 	{
@@ -14,6 +14,16 @@ public class Circle2d extends Dot2d
 	{
 		super(_x, _y);
 		r = _r;
+	}
+	
+	public Circle2d(Circle2d _c)
+	{
+		this(_c.x, _c.y, _c.r);
+	}
+	
+	public Circle2d clone()
+	{
+		return new Circle2d(this);
 	}
 	
 	public String toString()
