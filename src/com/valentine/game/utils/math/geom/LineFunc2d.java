@@ -58,7 +58,7 @@ public class LineFunc2d
 	
 	public static LineFunc2d toLine(Seg2d _s)
 	{
-		return toLine(_s.a, _s.b);
+		return toLine(_s.d1, _s.d2);
 	}
 	
 	public static LineFunc2d perpAtX(LineFunc2d _l, double _x)

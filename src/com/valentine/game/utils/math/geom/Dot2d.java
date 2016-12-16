@@ -11,6 +11,11 @@ public class Dot2d
 		y = _y;
 	}
 	
+	public boolean equals(Dot2d _d)
+	{
+		return x == _d.x && y == _d.y;
+	}
+	
 	public String toString()
 	{
 		return

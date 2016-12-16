@@ -74,7 +74,9 @@ public class Mesh3d implements SurfaceScan
 			}
 			
 			_tri = new Tri2d(a, b, c);
-			_triDot = new Dot3d(_dot.x, _dot.y, _tri.valueAt(_dot.x, _dot.y));
+			
+			// tri is no longer a surface scan
+			//_triDot = new Dot3d(_dot.x, _dot.y, _tri.valueAt(_dot.x, _dot.y));
 		}
 	}
 	

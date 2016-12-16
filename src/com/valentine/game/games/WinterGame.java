@@ -7,7 +7,6 @@ import com.valentine.game.entity.ambient.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.entity.winter.*;
-import com.valentine.game.utils.*;
 import com.valentine.game.utils.math.*;
 
 public class WinterGame extends RootContainer
@@ -53,7 +52,7 @@ public class WinterGame extends RootContainer
 		snowMgr2.rase(boardH);
 		
 		PhasedMoon phasedMoon = new PhasedMoon(this, 50);
-		phasedMoon.setPosition(boardW + 10, boardH + 10);
+		phasedMoon.setPosition(2 * boardW, 2 * boardH);
 		// phasedMoon.setFillColor(ColorExt.randomColor(0, 255));
 		// new ColorGrader(this, phasedMoon, false, true);
 		
