@@ -11,7 +11,7 @@ public abstract class Main
 {
 	public static void main(String[] _args)
 	{
-		Screen screen = new SwingScreen(new Dimension(800, 800), false);
+		Screen screen = new SwingScreen(new Dimension(600, 600), false);
 
 		Cassette cassete = new Cassette(new WinterGame(screen.getScreenSize()));
 

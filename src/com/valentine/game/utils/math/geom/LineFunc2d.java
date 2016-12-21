@@ -2,8 +2,8 @@ package com.valentine.game.utils.math.geom;
 
 public class LineFunc2d
 {
-	public double k = 0;
-	public double b = 0;
+	public final double k;
+	public final double b;
 	
 	public LineFunc2d(double _k, double _b)
 	{
