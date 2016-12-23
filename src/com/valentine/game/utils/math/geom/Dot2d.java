@@ -1,9 +1,9 @@
 package com.valentine.game.utils.math.geom;
 
-public class Dot2d implements Cloneable
+public class Dot2d implements Geometry
 {
-	public final double x;
-	public final double y;
+	public double x;
+	public double y;
 	
 	public Dot2d(double _x, double _y)
 	{
@@ -14,11 +14,6 @@ public class Dot2d implements Cloneable
 	public Dot2d(Dot2d _d)
 	{
 		this(_d.x, _d.y);
-	}
-	
-	public Dot2d clone()
-	{
-		return new Dot2d(this);
 	}
 	
 	public boolean equals(Dot2d _d)

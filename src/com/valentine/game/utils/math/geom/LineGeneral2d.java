@@ -1,6 +1,6 @@
 package com.valentine.game.utils.math.geom;
 
-public class LineGeneral2d
+public class LineGeneral2d implements Line2dInterface
 {
 	public double A = 0;
 	public double B = 0;
@@ -53,6 +53,31 @@ public class LineGeneral2d
 			return null;
 		
 		return new LineGeneral2d(0,0,0);
+	}
+
+	public boolean isHorizontal()
+	{
+		return false;
+	}
+
+	public double getA()
+	{
+		return 0;
+	}
+
+	public double getB()
+	{
+		return 0;
+	}
+
+	public double getC()
+	{
+		return 0;
+	}
+
+	public double evalEquasion(Dot2d _d)
+	{
+		return 0;
 	}
 
 }

@@ -13,7 +13,7 @@ public abstract class Main
 	{
 		Screen screen = new SwingScreen(new Dimension(600, 600), false);
 
-		Cassette cassete = new Cassette(new WinterGame(screen.getScreenSize()));
+		Cassette cassete = new Cassette(new GeometryTest(screen.getScreenSize()));
 
 		Terminal terminal = new NotchTerminal();
 

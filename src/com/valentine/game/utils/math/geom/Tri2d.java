@@ -2,7 +2,7 @@ package com.valentine.game.utils.math.geom;
 
 import com.valentine.game.utils.math.*;
 
-public class Tri2d
+public class Tri2d implements Geometry
 {
 	public Dot2d a;
 	public Dot2d b;

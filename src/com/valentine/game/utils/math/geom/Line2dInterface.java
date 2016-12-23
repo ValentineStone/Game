@@ -1,6 +1,6 @@
 package com.valentine.game.utils.math.geom;
 
-public interface Line2dInterface
+public interface Line2dInterface extends Geometry
 {
 	public boolean isVertical();
 	public boolean isHorizontal();

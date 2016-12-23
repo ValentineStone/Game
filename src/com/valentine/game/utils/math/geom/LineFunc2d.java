@@ -1,9 +1,9 @@
 package com.valentine.game.utils.math.geom;
 
-public class LineFunc2d
+public class LineFunc2d implements Geometry
 {
-	public final double k;
-	public final double b;
+	public double k;
+	public double b;
 	
 	public LineFunc2d(double _k, double _b)
 	{

@@ -40,12 +40,12 @@ public class Seg2d implements Line2dInterface
 
 	public boolean isVertical()
 	{
-		return false;
+		return getA() == 0;
 	}
 
 	public boolean isHorizontal()
 	{
-		return false;
+		return getB() == 0;
 	}
 	
 	public double xFromY(double _y)
@@ -71,6 +71,11 @@ public class Seg2d implements Line2dInterface
 	public double getC()
 	{
 		return d1.x * (d1.y - d2.y) + d1.y * (d2.x - d1.x);
+	}
+	
+	public LineGeneral2d getLine()
+	{
+		return new LineGeneral2d(getA(), getB(), getC());
 	}
 
 	public double evalEquasion(Dot2d _d)
