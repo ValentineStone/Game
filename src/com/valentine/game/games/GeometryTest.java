@@ -16,8 +16,12 @@ public class GeometryTest extends RootContainer
 		
 		geomCont = new GeometryContainer(this, 0, 0, getWidth(), getHeight());
 		
+		
 		geomCont.add(new Dot2d(10, 10));
 		geomCont.add(new Seg2d(new Dot2d(50, 50), new Dot2d(30, 20)));
 		geomCont.add(new Circle2d(new Dot2d(100, 100),  30));
+		
+		
+		geomCont.add(new LineCommon2d(4, 1, 60));
 	}
 }

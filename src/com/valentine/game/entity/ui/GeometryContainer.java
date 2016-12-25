@@ -1,14 +1,17 @@
 package com.valentine.game.entity.ui;
 
+import java.awt.Color;
 import java.util.*;
+import java.util.Map.*;
 
 import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.utils.*;
 import com.valentine.game.utils.math.geom.*;
 
 public class GeometryContainer extends EntityBasicAI
 {
-	protected List<Geometry> items = new ArrayList<>();
+	protected Map<Geometry, Color> items = new HashMap<>();
 	protected List<Geometry> additions = new ArrayList<>();
 	protected List<Geometry> deletions = new ArrayList<>();
 
@@ -31,6 +34,8 @@ public class GeometryContainer extends EntityBasicAI
 			paintGeometry(_screen, (Seg2d)_geometry);
 		else if (_geometry instanceof Dot2d)
 			paintGeometry(_screen, (Dot2d)_geometry);
+		else if (_geometry instanceof LineCommon2d)
+			paintGeometry(_screen, (LineCommon2d)_geometry);
 		else
 			System.err.println("Unknown geometry: " + _geometry.getClass());
 	}
@@ -44,7 +49,7 @@ public class GeometryContainer extends EntityBasicAI
 	{
 		_screen.drawLine(_seg.d1.x, _seg.d1.y, _seg.d2.x, _seg.d2.y);
 		Dot2d center = _seg.center();
-		LineGeneral2d.perpendicular(_seg.getLine());
+		LineCommon2d.perpendicular(_seg.getLine());
 	}
 	
 	public void paintGeometry(Screen _screen, Dot2d _dot)
@@ -52,10 +57,29 @@ public class GeometryContainer extends EntityBasicAI
 		_screen.drawDot(_dot.x, _dot.y);
 	}
 	
-	
-	
-	
-	
+	public void paintGeometry(Screen _screen, LineCommon2d _line)
+	{
+		double w = getWidth() / 2;
+		double h = getHeight() / 2;
+		
+		double xUp = _line.xFromY(h);
+		double yUp = _line.yFromX(w);
+		
+		double xLo = _line.xFromY(-h);
+		double yLo = _line.yFromX(-w);
+		
+		if (Math.abs(xUp) < Math.abs(yUp))
+			yUp = h;
+		else
+			xUp = w;
+		
+		if (Math.abs(xLo) < Math.abs(yLo))
+			yLo = -h;
+		else
+			xLo = -w;
+		
+		_screen.drawLine(xUp, yUp, xLo, yLo);
+	}
 	
 	
 	
@@ -76,14 +100,13 @@ public class GeometryContainer extends EntityBasicAI
 		_screen.drawLine(0, getCenterY(), getWidth(), getCenterY());
 
 		_screen.localize(getCenterX(), getCenterY());
-		_screen.invertY();
 		
-		for (Geometry geometry : items)
+		for (Entry<Geometry, Color> entry : items.entrySet())
 		{
-			paintGeometry(_screen, geometry.getClass().cast(geometry));
+			_screen.setColor(entry.getValue());
+			paintGeometry(_screen, entry.getKey());
 		}
 
-		_screen.invertY();
 		_screen.delocalize(getCenterX(), getCenterY());
 
 		_screen.setClip(null);
@@ -97,13 +120,14 @@ public class GeometryContainer extends EntityBasicAI
 	{
 		if (deletions.size() > 0)
 		{
-			items.removeAll(deletions);
+			items.keySet().removeAll(deletions);
 			deletions.clear();
 		}
 
 		if (additions.size() > 0)
 		{
-			items.addAll(additions);
+			for (Geometry geometry : additions)
+				items.put(geometry, ColorExt.randomColor(20, 255));
 			additions.clear();
 		}
 	}
@@ -115,7 +139,7 @@ public class GeometryContainer extends EntityBasicAI
 
 	public void add(Geometry _geometry)
 	{
-		if (!items.contains(_geometry))
+		if (items.get(_geometry) == null)
 			additions.add(_geometry);
 	}
 
@@ -126,10 +150,10 @@ public class GeometryContainer extends EntityBasicAI
 
 	public Iterator<Geometry> iterator()
 	{
-		return items.iterator();
+		return items.keySet().iterator();
 	}
 
-	public List<Geometry> getItems()
+	public Map<Geometry, Color> getItems()
 	{
 		return items;
 	}

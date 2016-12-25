@@ -73,9 +73,9 @@ public class Seg2d implements Line2dInterface
 		return d1.x * (d1.y - d2.y) + d1.y * (d2.x - d1.x);
 	}
 	
-	public LineGeneral2d getLine()
+	public LineCommon2d getLine()
 	{
-		return new LineGeneral2d(getA(), getB(), getC());
+		return new LineCommon2d(getA(), getB(), getC());
 	}
 
 	public double evalEquasion(Dot2d _d)
