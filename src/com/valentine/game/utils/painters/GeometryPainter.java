@@ -19,12 +19,18 @@ public final class GeometryPainter
 			paint(_screen, (Circle2d)_geometry);
 		else if (_geometry instanceof Seg2d)
 			paint(_screen, (Seg2d)_geometry);
+		else if (_geometry instanceof Dot3d)
+			paint(_screen, (Dot3d)_geometry);
 		else if (_geometry instanceof Dot2d)
 			paint(_screen, (Dot2d)_geometry);
 		else if (_geometry instanceof Line2d)
 			paint(_screen, (Line2d)_geometry, _e);
 		else if (_geometry instanceof Tri2d)
 			paint(_screen, (Tri2d)_geometry);
+		else if (_geometry instanceof Mesh3d)
+			paint(_screen, (Mesh3d)_geometry);
+		else if (_geometry instanceof Mesh2d)
+			paint(_screen, (Mesh2d)_geometry);
 		else
 			System.err.println("Unknown geometry: " + _geometry.getClass());
 	}
@@ -43,8 +49,20 @@ public final class GeometryPainter
 	public static void paint(Screen _screen, Dot2d _dot)
 	{
 		double r = 5;
-		_screen.drawRect(_dot.x - r, _dot.y - r, 2*r, 2*r);
+		paint(_screen, _dot, r);
+	}
+	
+	public static void paint(Screen _screen, Dot2d _dot, double _r)
+	{
+		_screen.drawRect(_dot.x - _r, _dot.y - _r, 2*_r, 2*_r);
 		_screen.drawDot(_dot.x, _dot.y);
+	}
+	
+	public static void paint(Screen _screen, Dot3d _dot)
+	{
+		double r = 5;
+		paint(_screen, _dot, r);
+		StringPainter.paint(_screen, _dot.z, 2, _dot.x + r, _dot.y - r);
 	}
 	
 	public static void paint(Screen _screen, Line2d _line, Entity _e)
@@ -76,11 +94,17 @@ public final class GeometryPainter
 		_screen.drawLine(_tri.getAx(), _tri.getAy(), _tri.getBx(), _tri.getBy());
 		_screen.drawLine(_tri.getAx(), _tri.getAy(), _tri.getCx(), _tri.getCy());
 		_screen.drawLine(_tri.getBx(), _tri.getBy(), _tri.getCx(), _tri.getCy());
-		
-		Circle2d c = Tri2d.getCircumcircle(_tri);
-		
-		if (c != null)
-			paint(_screen, Tri2d.getCircumcircle(_tri));
+	}
+	
+	public static void paint(Screen _screen, Mesh2d _mesh)
+	{
+		for (Dot2d dot : _mesh.iterable2d())
+			paint(_screen, dot);
+	}
+	public static void paint(Screen _screen, Mesh3d _mesh)
+	{
+		for (Dot3d dot : _mesh.iterable3d())
+			paint(_screen, dot);
 	}
 	
 }

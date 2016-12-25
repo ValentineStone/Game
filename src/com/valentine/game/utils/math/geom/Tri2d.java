@@ -4,15 +4,20 @@ import com.valentine.game.utils.math.*;
 
 public class Tri2d implements Geometry
 {
-	private Dot2d a;
-	private Dot2d b;
-	private Dot2d c;
+	protected Dot2d a;
+	protected Dot2d b;
+	protected Dot2d c;
 	
 	public Tri2d(Dot2d _a, Dot2d _b, Dot2d _c)
 	{
 		a = new Dot2d(_a);
 		b = new Dot2d(_b);
 		c = new Dot2d(_c);
+	}
+	
+	public Tri2d(Tri2d _t)
+	{
+		this(_t.a, _t.b, _t.c);
 	}
 
 	
@@ -70,6 +75,19 @@ public class Tri2d implements Geometry
 	public void setC(Dot2d _c)
 	{
 		c = _c;
+	}
+	
+	
+	
+	public boolean equals(Object _o)
+	{
+		if (_o instanceof Tri2d)
+		{
+			Tri2d _t = (Tri2d) _o;
+			return a.equals(_t.a) && b.equals(_t.b) && c.equals(_t.c);
+		}
+		else
+			return false;
 	}
 
 

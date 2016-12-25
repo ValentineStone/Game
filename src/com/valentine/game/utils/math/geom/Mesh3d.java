@@ -2,110 +2,67 @@ package com.valentine.game.utils.math.geom;
 
 import java.util.*;
 
-import com.valentine.game.entity.landandwheather.*;
-import com.valentine.game.utils.math.*;
-
-public class Mesh3d implements SurfaceScan
+public class Mesh3d extends Mesh2d
 {
-	private final List<Dot3d> dots = new ArrayList<>();
-	//private Tri2d _tri;
-	private Dot3d _triDot;
-	
 	public Mesh3d(Dot3d _a, Dot3d _b, Dot3d _c, Dot3d ... _dots)
 	{
-		dots.add(_a);
-		dots.add(_b);
-		dots.add(_c);
+		super();
 		
-		for (Dot3d dot : _dots)
-			add(dot);
+		add(_a);
+		add(_b);
+		add(_c);
+		
+		if (_dots != null)
+			for (Dot3d dot : _dots)
+				add(new Dot3d(dot));
 	}
 	
 	public boolean add(Dot3d _dot)
 	{
-		return dots.add(_dot);
+		if (dots.contains(_dot)) return false;
+		return dots.add(new Dot3d(_dot));
 	}
 	
-	public boolean remove(Dot3d _dot)
+	public boolean add(Dot2d _dot)
+	{
+		return false;
+	}
+	
+	public boolean remove(Dot2d _dot)
 	{
 		if (dots.size() > 3)
 			return dots.remove(_dot);
 		else
 			return false;
 	}
+	
+	public int size()
+	{
+		return dots.size();
+	}
 
-	public Double valueAt(double _x, double _y)
+	public Iterable<Dot3d> iterable3d()
 	{
-		evalTri(new Dot2d(_x, _y));
-		return _triDot.z;
-	}
-	
-	private void evalTri(Dot2d _dot)
-	{
-		Dot3d a = dots.get(0);
-		Dot3d b = dots.get(1);
-		Dot3d c = dots.get(2);
-		
-		double dista = MathExt.distanceMake(a, _dot);
-		double distb = MathExt.distanceMake(b, _dot);
-		double distc = MathExt.distanceMake(c, _dot);
-		
-		for (int i = 3; i < dots.size(); i++)
+		return new Iterable<Dot3d>()
 		{
-			double dist = MathExt.distanceMake(dots.get(i), _dot);
-			
-			if (dist < dista)
+			public Iterator<Dot3d> iterator()
 			{
-				a = dots.get(i);
-				dista = dist;
-			}
-			else if (dist < distb)
-			{
-				b = dots.get(i);
-				distb = dist;
-			}
-			else if (dist < distc)
-			{
-				c = dots.get(i);
-				distc = dist;
-			}
-			
-			//_tri = new Tri2d(a, b, c);
-			
-			// tri is no longer a surface scan
-			//_triDot = new Dot3d(_dot.x, _dot.y, _tri.valueAt(_dot.x, _dot.y));
-		}
-	}
-	
-	/*
-	public void paint(Screen _screen)
-	{
-		_screen.setColor(Color.WHITE);
-		for (Dot3d dot : dots)
-		{
-			_screen.drawOval(dot.x - 2, dot.y - 2, 4, 4);
-			_screen.drawString(String.valueOf(dot.z), dot.x+2, dot.y+2);
-		}
-		
-		if (_tri != null)
-		{
-			_screen.drawLine(_tri.a.x, _tri.a.y, _tri.b.x, _tri.b.y);
-			_screen.drawLine(_tri.b.x, _tri.b.y, _tri.c.x, _tri.c.y);
-			_screen.drawLine(_tri.c.x, _tri.c.y, _tri.a.x, _tri.a.y);
-		}
-		
-		if (_triDot != null)
-		{
-			_screen.drawString(String.valueOf(_triDot.z), _triDot.x, _triDot.y);
-		}
-	}
-	
-	*/
+				return new Iterator<Dot3d>()
+				{
+					private Iterator<Dot2d> iterator = dots.iterator();
+					
+					public boolean hasNext()
+					{
+						return iterator.hasNext();
+					}
 
-	
-	public static void main(String[] _args)
-	{
-		new Mesh3d(new Dot3d(0,0,1), new Dot3d(0,1,1), new Dot3d(1,0,1), new Dot3d(1,1,1));
+					public Dot3d next()
+					{
+						return new Dot3d((Dot3d) iterator.next());
+					}
+				};
+			}
+		};
 	}
 	
 }

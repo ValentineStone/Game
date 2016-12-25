@@ -1,5 +1,7 @@
 package com.valentine.game.utils.math.geom;
 
+import com.valentine.game.utils.math.*;
+
 public class Circle2d extends Dot2d
 {
 	public double r;
@@ -33,5 +35,18 @@ public class Circle2d extends Dot2d
 				.append(r)
 				.append(']')
 			.toString();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static boolean contains(Circle2d _c, Dot2d _d)
+	{
+		return MathExt.distanceMake(_c, _d) <= _c.r;
 	}
 }

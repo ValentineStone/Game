@@ -13,7 +13,7 @@ public abstract class Main
 	{
 		Screen screen = new SwingScreen(new Dimension(600, 600), true);
 
-		Cassette cassete = new Cassette(new GeometryTest(screen.getScreenSize()));
+		Cassette cassete = new Cassette(new MeshTest(screen.getScreenSize()));
 
 		Terminal terminal = new NotchTerminal();
 

@@ -10,7 +10,7 @@ import com.valentine.game.utils.math.*;
 import com.valentine.game.utils.math.geom.*;
 import com.valentine.game.utils.painters.*;
 
-public class GeometryTest extends RootContainer
+public class RotorCircumcircleGame extends RootContainer
 {
 	public final GeometryContainer geomCont;
 	
@@ -19,8 +19,9 @@ public class GeometryTest extends RootContainer
 	public final Entity r3;
 	
 	public final Tri2d entityTri;
+	public Circle2d entityCurcumcircle;
 	
-	public GeometryTest(Dimension _dimension)
+	public RotorCircumcircleGame(Dimension _dimension)
 	{
 		super(_dimension);
 		
@@ -67,6 +68,7 @@ public class GeometryTest extends RootContainer
 		r3 = new Rotor(this);
 		
 		entityTri = new Tri2d(r1.getCenterDot(), r2.getCenterDot(), r3.getCenterDot());
+		entityCurcumcircle = Tri2d.getCircumcircle(entityTri);
 		
 		new FpsUpsCounter(this, 10, 10);
 	}
@@ -78,12 +80,16 @@ public class GeometryTest extends RootContainer
 		entityTri.setA(r1.getCenterDot());
 		entityTri.setB(r2.getCenterDot());
 		entityTri.setC(r3.getCenterDot());
+		
+		entityCurcumcircle = Tri2d.getCircumcircle(entityTri);
 	}
 	
 	public void paint(Screen _screen)
 	{
 		super.paint(_screen);
 		_screen.setColor(Color.WHITE);
-		GeometryPainter.paint(_screen, entityTri);
+		//GeometryPainter.paint(_screen, entityTri);
+		if (entityCurcumcircle != null)
+			GeometryPainter.paint(_screen, entityCurcumcircle);
 	}
 }
