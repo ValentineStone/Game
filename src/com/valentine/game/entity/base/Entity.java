@@ -4,8 +4,8 @@ import java.awt.*;
 
 import com.valentine.game.core.interfaces.*;
 import com.valentine.game.core.screen.*;
-import com.valentine.game.utils.*;
 import com.valentine.game.utils.math.*;
+import com.valentine.game.utils.math.geom.*;
 
 public abstract class Entity implements BasicEntity
 {
@@ -283,6 +283,28 @@ public abstract class Entity implements BasicEntity
 		setFillColor(_fillColor);
 		setDrawColor(_drawColor);
 	}
+	
+	
+	
+	
+	
+	public Dot2d getCenterDot()
+	{
+		return new Dot2d(getCenterX(), getCenterY());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public boolean kill(Entity _killer)
 	{

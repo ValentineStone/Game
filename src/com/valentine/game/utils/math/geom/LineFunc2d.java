@@ -58,7 +58,7 @@ public class LineFunc2d implements Geometry
 	
 	public static LineFunc2d toLine(Seg2d _s)
 	{
-		return toLine(_s.d1, _s.d2);
+		return toLine(_s.getD1(), _s.getD2());
 	}
 	
 	public static LineFunc2d perpAtX(LineFunc2d _l, double _x)

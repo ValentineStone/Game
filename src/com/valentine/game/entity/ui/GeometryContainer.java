@@ -1,13 +1,16 @@
 package com.valentine.game.entity.ui;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.Map.*;
 
 import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.base.Container;
 import com.valentine.game.utils.*;
 import com.valentine.game.utils.math.geom.*;
+import com.valentine.game.utils.painters.*;
 
 public class GeometryContainer extends EntityBasicAI
 {
@@ -23,66 +26,6 @@ public class GeometryContainer extends EntityBasicAI
 		setWidth(_width);
 		setHeight(_height);
 	}
-	
-	
-	
-	public void paintGeometry(Screen _screen, Geometry _geometry)
-	{
-		if      (_geometry instanceof Circle2d)
-			paintGeometry(_screen, (Circle2d)_geometry);
-		else if (_geometry instanceof Seg2d)
-			paintGeometry(_screen, (Seg2d)_geometry);
-		else if (_geometry instanceof Dot2d)
-			paintGeometry(_screen, (Dot2d)_geometry);
-		else if (_geometry instanceof LineCommon2d)
-			paintGeometry(_screen, (LineCommon2d)_geometry);
-		else
-			System.err.println("Unknown geometry: " + _geometry.getClass());
-	}
-	
-	public void paintGeometry(Screen _screen, Circle2d _circle)
-	{
-		_screen.drawOval(_circle.x - _circle.r, _circle.y - _circle.r, 2*_circle.r, 2*_circle.r);
-	}
-	
-	public void paintGeometry(Screen _screen, Seg2d _seg)
-	{
-		_screen.drawLine(_seg.d1.x, _seg.d1.y, _seg.d2.x, _seg.d2.y);
-		Dot2d center = _seg.center();
-		LineCommon2d.perpendicular(_seg.getLine());
-	}
-	
-	public void paintGeometry(Screen _screen, Dot2d _dot)
-	{
-		_screen.drawDot(_dot.x, _dot.y);
-	}
-	
-	public void paintGeometry(Screen _screen, LineCommon2d _line)
-	{
-		double w = getWidth() / 2;
-		double h = getHeight() / 2;
-		
-		double xUp = _line.xFromY(h);
-		double yUp = _line.yFromX(w);
-		
-		double xLo = _line.xFromY(-h);
-		double yLo = _line.yFromX(-w);
-		
-		if (Math.abs(xUp) < Math.abs(yUp))
-			yUp = h;
-		else
-			xUp = w;
-		
-		if (Math.abs(xLo) < Math.abs(yLo))
-			yLo = -h;
-		else
-			xLo = -w;
-		
-		_screen.drawLine(xUp, yUp, xLo, yLo);
-	}
-	
-	
-	
 	
 	
 
@@ -104,7 +47,7 @@ public class GeometryContainer extends EntityBasicAI
 		for (Entry<Geometry, Color> entry : items.entrySet())
 		{
 			_screen.setColor(entry.getValue());
-			paintGeometry(_screen, entry.getKey());
+			GeometryPainter.paint(_screen, entry.getKey(), this);
 		}
 
 		_screen.delocalize(getCenterX(), getCenterY());

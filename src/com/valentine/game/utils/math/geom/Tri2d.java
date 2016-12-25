@@ -4,70 +4,111 @@ import com.valentine.game.utils.math.*;
 
 public class Tri2d implements Geometry
 {
-	public Dot2d a;
-	public Dot2d b;
-	public Dot2d c;
+	private Dot2d a;
+	private Dot2d b;
+	private Dot2d c;
 	
 	public Tri2d(Dot2d _a, Dot2d _b, Dot2d _c)
 	{
+		a = new Dot2d(_a);
+		b = new Dot2d(_b);
+		c = new Dot2d(_c);
+	}
+
+	
+	
+	public double getAx()
+	{
+		return a.x;
+	}
+	public double getAy()
+	{
+		return a.y;
+	}
+	public double getBx()
+	{
+		return b.x;
+	}
+	public double getBy()
+	{
+		return b.y;
+	}
+	public double getCx()
+	{
+		return c.x;
+	}
+	public double getCy()
+	{
+		return c.y;
+	}
+
+	
+	
+	public Dot2d getA()
+	{
+		return new Dot2d(a);
+	}
+	public Dot2d getB()
+	{
+		return new Dot2d(b);
+	}
+	public Dot2d getC()
+	{
+		return new Dot2d(c);
+	}
+	
+	
+	
+	public void setA(Dot2d _a)
+	{
 		a = _a;
+	}
+	public void setB(Dot2d _b)
+	{
 		b = _b;
+	}
+	public void setC(Dot2d _c)
+	{
 		c = _c;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
 	public static Circle2d getCircumcircle(Tri2d _tri)
 	{
-		LineFunc2d ab = LineFunc2d.toLine(_tri.a, _tri.b);
-		LineFunc2d ac = LineFunc2d.toLine(_tri.a, _tri.c);
-		Dot2d circumcircleDot = LineFunc2d.intersect(ab, ac);
+		Seg2d ab = new Seg2d(_tri.a, _tri.b);
+		Seg2d ac = new Seg2d(_tri.a, _tri.c);
 		
-		return null;
+		Dot2d abCenter = ab.getCenter();
+		Dot2d acCenter = ac.getCenter();
+		
+		Line2d abPerp = LineCommon2d.perpendicularAt(ab, abCenter);
+		Line2d acPerp = LineCommon2d.perpendicularAt(ac, acCenter);
+		
+		Dot2d circumcircleDot = Line2d.intersect(abPerp, acPerp);
+		
+		if (circumcircleDot == null)
+			return null;
+		
+		double r = MathExt.distanceMake(_tri.a, circumcircleDot);
+		
+		return new Circle2d(circumcircleDot, r);
 	}
 	
 	
 	
 	
-	public static void main(String ... _args)
+	public String toString()
 	{
-		Dot2d a = new Dot2d(0.8432, -1.7123);
-		Dot2d b = new Dot2d(1.52362, 1.73234);
-		Dot2d c = new Dot2d(-1.78896, 1.1243);
-		
-		Seg2d ab = new Seg2d(a, b);
-		Seg2d ac = new Seg2d(a, c);
-		
-		LineFunc2d abP = LineFunc2d.perpAtX(LineFunc2d.toLine(ab), ab.centerX());
-		LineFunc2d acP = LineFunc2d.perpAtX(LineFunc2d.toLine(ac), ac.centerX());
-		
-		Dot2d circumcircleDot = LineFunc2d.intersect(abP, acP);
-		
-		System.err.println(a);
-		System.err.println(b);
-		System.err.println(c);
-		
-		System.err.println(ab);
-		System.err.println(ac);
-		
-		System.err.println(abP);
-		System.err.println(acP);
-		
-		System.err.println(circumcircleDot);
-		
-		Circle2d circumcircle = new Circle2d(circumcircleDot, MathExt.distanceMake(circumcircleDot, a));
-		
-		System.err.println(circumcircle);
-		System.err.println(MathExt.distanceMake(circumcircle, b));
-		System.err.println(MathExt.distanceMake(circumcircle, c));
+		return
+			new StringBuilder()
+				.append("Tri2d[a:")
+				.append(a)
+				.append(", b:")
+				.append(b)
+				.append(", c:")
+				.append(c)
+				.append(']')
+			.toString();
 	}
 }

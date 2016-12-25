@@ -16,11 +16,6 @@ public class Dot2d implements Geometry
 		this(_d.x, _d.y);
 	}
 	
-	public boolean equals(Dot2d _d)
-	{
-		return x == _d.x && y == _d.y;
-	}
-	
 	public String toString()
 	{
 		return

@@ -1,17 +1,14 @@
 package com.valentine.game.utils.math.geom;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
-import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.landandwheather.*;
 import com.valentine.game.utils.math.*;
 
 public class Mesh3d implements SurfaceScan
 {
 	private final List<Dot3d> dots = new ArrayList<>();
-	private Tri2d _tri;
+	//private Tri2d _tri;
 	private Dot3d _triDot;
 	
 	public Mesh3d(Dot3d _a, Dot3d _b, Dot3d _c, Dot3d ... _dots)
@@ -73,14 +70,14 @@ public class Mesh3d implements SurfaceScan
 				distc = dist;
 			}
 			
-			_tri = new Tri2d(a, b, c);
+			//_tri = new Tri2d(a, b, c);
 			
 			// tri is no longer a surface scan
 			//_triDot = new Dot3d(_dot.x, _dot.y, _tri.valueAt(_dot.x, _dot.y));
 		}
 	}
 	
-	
+	/*
 	public void paint(Screen _screen)
 	{
 		_screen.setColor(Color.WHITE);
@@ -103,7 +100,7 @@ public class Mesh3d implements SurfaceScan
 		}
 	}
 	
-	
+	*/
 
 	
 	public static void main(String[] _args)

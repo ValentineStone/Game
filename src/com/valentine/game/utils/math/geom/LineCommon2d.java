@@ -1,6 +1,6 @@
 package com.valentine.game.utils.math.geom;
 
-public class LineCommon2d implements Line2dInterface
+public class LineCommon2d extends Line2d
 {
 	public double A = 0;
 	public double B = 0;
@@ -12,40 +12,28 @@ public class LineCommon2d implements Line2dInterface
 		B = _B;
 		C = _C;
 	}
+
+
 	
-	public boolean isHorisontal()
+	
+	
+	
+	public double getA()
 	{
-		return A == 0;
+		return A;
+	}
+
+	public double getB()
+	{
+		return B;
+	}
+
+	public double getC()
+	{
+		return C;
 	}
 	
-	public boolean isVertical()
-	{
-		return B == 0;
-	}
 	
-	public double yFromX(double _x)
-	{
-		return - (A * _x + C) / B;
-	}
-	
-	public double xFromY(double _y)
-	{
-		return - (B * _y + C) / A;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static LineCommon2d perpendicular(LineCommon2d _l)
-	{
-		return new LineCommon2d(-_l.B, _l.A, _l.C);
-	}
 	
 	public static LineCommon2d toLine(Dot2d _d1, Dot2d _d2)
 	{
@@ -54,30 +42,21 @@ public class LineCommon2d implements Line2dInterface
 		
 		return new LineCommon2d(0,0,0);
 	}
-
-	public boolean isHorizontal()
+	
+	
+	
+	public static LineCommon2d perpendicular(Line2d _l)
 	{
-		return false;
+		return new LineCommon2d(-_l.getB(), _l.getA(), _l.getC());
 	}
-
-	public double getA()
+	
+	public static LineCommon2d perpendicularAt(Line2d _l, Dot2d _dot)
 	{
-		return 0;
-	}
-
-	public double getB()
-	{
-		return 0;
-	}
-
-	public double getC()
-	{
-		return 0;
-	}
-
-	public double evalEquasion(Dot2d _d)
-	{
-		return 0;
+		double A = -_l.getB();
+		double B =  _l.getA();
+		double C = -(A * _dot.x + B * _dot.y);
+		
+		return new LineCommon2d(A, B, C);
 	}
 
 }

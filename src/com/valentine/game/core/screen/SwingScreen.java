@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
 import java.text.*;
+import java.util.*;
 
 import javax.swing.*;
 
@@ -28,23 +29,41 @@ public class SwingScreen implements Screen
 	public void loadFont()
 	{
 		System.err.println("Loadnig font...");
-
-		try
-		{
-			GraphicsEnvironment
+		
+		if
+		(
+			Arrays.asList
+			(
+				GraphicsEnvironment
 				.getLocalGraphicsEnvironment()
-				.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
-			
-			defaultFont = new Font("Press Start 2P", Font.PLAIN, 12);
-			System.err.println("Success:");
-			System.err.println(defaultFont.toString());
-		}
-		catch (Exception _exception)
+				.getAvailableFontFamilyNames()
+			)
+			.contains("Press Start 2P")
+		)
 		{
-			defaultFont = new Font("Monospace", Font.PLAIN, 12);
-			System.err.println("Unsuccessfull:");
-			System.err.println(_exception.getMessage());
+			System.err.println("Already registered:");
 		}
+		else
+		{
+			try
+			{
+				System.err.println("Regestering...");
+				GraphicsEnvironment
+					.getLocalGraphicsEnvironment()
+					.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/PressStart2P.ttf")));
+				System.err.println("Success:");
+			}
+			catch (Exception _exception)
+			{
+				defaultFont = new Font("Monospace", Font.PLAIN, 12);
+				System.err.println("Unsuccessfull:");
+				System.err.println(_exception.getMessage());
+				System.err.println("Using system font:");
+			}
+		}
+		
+		defaultFont = new Font("Press Start 2P", Font.PLAIN, 12);
+		System.err.println(defaultFont.toString());
 	}
 
 	public void setGraphics(Graphics2D _graphics)
