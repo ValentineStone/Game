@@ -13,10 +13,10 @@ import com.valentine.game.utils.painters.*;
 
 public class MeshTest extends RootContainer
 {
-	int count = 30;
+	int count = 100;
 	
 	Dot2d[] dots = new Dot2d[count];
-	Rotor[] rotors = new Rotor[count];
+	Entity[] entities = new Entity[count];
 	
 	Entity entity;
 	
@@ -26,14 +26,16 @@ public class MeshTest extends RootContainer
 	{
 		super(_dimension);
 		
-		for (int i = 0; i < count; i++)
-			rotors[i] = new Rotor(this);
+		for (int i = 1; i < count; i++)
+			entities[i] = new Rotor(this);
 		
-		//mesh = new Mesh3d(dots[0], dots[1], dots[2], dots);
+		entity = new Player(this);
+		entities[0] = entity;
 		
-		entity = new PlayerSpacecraft(this);
+		new DragHandler(this, (EntityBasicAI) entity);
 		
-		new FpsUpsCounter(this, 10, 10);
+		new FpsUpsCounter(this, 10, 10)
+			.setFillColor(getFillColor());
 	}
 	
 	public void paint(Screen _screen)
@@ -44,13 +46,6 @@ public class MeshTest extends RootContainer
 		{
 			_screen.setColor(Color.WHITE);
 			GeometryPainter.paint(_screen, tri);
-			Circle2d circumcircle = Tri2d.getCircumcircle(tri);
-			if (Circle2d.contains(circumcircle, entity.getCenterDot()))
-			{
-				_screen.setColor(Color.YELLOW);
-				//GeometryPainter.paint(_screen, circumcircle);
-				GeometryPainter.paint(_screen, tri);
-			}
 		}
 	}
 	
@@ -59,7 +54,7 @@ public class MeshTest extends RootContainer
 		super.update();
 		
 		for (int i = 0; i < count; i++)
-			dots[i] = rotors[i].getCenterDot();
+			dots[i] = entities[i].getCenterDot();
 		
 		tris = Triangulation.triangulate(Arrays.asList(dots));
 	}

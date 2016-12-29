@@ -11,7 +11,7 @@ public abstract class Main
 {
 	public static void main(String[] _args)
 	{
-		Screen screen = new SwingScreen(new Dimension(600, 600), true);
+		Screen screen = new SwingScreen(new Dimension(1280, 720), true);
 
 		Cassette cassete = new Cassette(new MeshTest(screen.getScreenSize()));
 
