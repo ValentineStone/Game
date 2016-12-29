@@ -4,6 +4,9 @@ import java.util.*;
 
 public class Mesh3d extends Mesh2d
 {
+	public Mesh3d()
+	{}
+	
 	public Mesh3d(Dot3d _a, Dot3d _b, Dot3d _c, Dot3d ... _dots)
 	{
 		super();

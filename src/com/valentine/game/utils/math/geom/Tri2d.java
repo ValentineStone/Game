@@ -8,6 +8,9 @@ public class Tri2d implements Geometry
 	protected Dot2d b;
 	protected Dot2d c;
 	
+	protected Tri2d()
+	{}
+	
 	public Tri2d(Dot2d _a, Dot2d _b, Dot2d _c)
 	{
 		a = new Dot2d(_a);
@@ -66,15 +69,15 @@ public class Tri2d implements Geometry
 	
 	public void setA(Dot2d _a)
 	{
-		a = _a;
+		a = new Dot2d(_a);
 	}
 	public void setB(Dot2d _b)
 	{
-		b = _b;
+		b = new Dot2d(_b);
 	}
 	public void setC(Dot2d _c)
 	{
-		c = _c;
+		c = new Dot2d(_c);
 	}
 	
 	
@@ -89,8 +92,44 @@ public class Tri2d implements Geometry
 		else
 			return false;
 	}
+	
+	
+	public boolean contains(Dot2d _d)
+	{
+		double min = MathExt.rotationMake(_d, a);
+		double mid = MathExt.rotationMake(_d, b);
+		double max = MathExt.rotationMake(_d, c);
+		
+		double swap;
+		
+		if (min > mid)
+		{
+			swap = min;
+			min = mid;
+			mid = swap;
+		}
+		if (mid > max)
+		{
 
-
+			swap = mid;
+			mid = max;
+			max = swap;
+		}
+		if (min > mid)
+		{
+			swap = min;
+			min = mid;
+			mid = swap;
+		}
+		
+		if (max - min < MathExt.PI_1_1)
+			return false;
+		
+		if (mid <= MathExt.PI_1_1 + min && mid >= max - MathExt.PI_1_1)
+			return true;
+		else
+			return false;
+	}
 
 	public static Circle2d getCircumcircle(Tri2d _tri)
 	{
