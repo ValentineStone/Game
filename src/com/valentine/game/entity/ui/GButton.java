@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
+import javax.swing.*;
 import javax.swing.event.*;
 
 import com.valentine.game.core.*;
@@ -115,6 +116,9 @@ public class GButton extends GString implements MouseInputListener
 
 	public void mouseClicked(MouseEvent _mouseEvent)
 	{
+		if (!SwingUtilities.isLeftMouseButton(_mouseEvent))
+			return;
+		
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			press();
@@ -124,6 +128,9 @@ public class GButton extends GString implements MouseInputListener
 
 	public void mousePressed(MouseEvent _mouseEvent)
 	{
+		if (!SwingUtilities.isLeftMouseButton(_mouseEvent))
+			return;
+		
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = State.PRESSED_HOVER;
@@ -133,6 +140,9 @@ public class GButton extends GString implements MouseInputListener
 
 	public void mouseReleased(MouseEvent _mouseEvent)
 	{
+		if (!SwingUtilities.isLeftMouseButton(_mouseEvent))
+			return;
+		
 		if (isGettingHit(_mouseEvent.getX() - getContainer().getTrueX(), _mouseEvent.getY() - getContainer().getTrueY()))
 		{
 			state = State.DEFAULT_HOVER;

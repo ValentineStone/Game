@@ -12,6 +12,7 @@ import com.valentine.game.core.screen.*;
 import com.valentine.game.entity.base.*;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.utils.*;
+import com.valentine.game.utils.math.*;
 import com.valentine.game.utils.math.geom.*;
 import com.valentine.game.utils.painters.*;
 
@@ -24,7 +25,10 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 	Dot3d scanDot = new Dot3d(0, 0, 0.34);
 	boolean outOfScope = true;
 	
+	GButton addBtn;
+	
 	List<Dot3d> additions = new ArrayList<>();
+	List<Dot2d> deletions = new ArrayList<>();
 	
 	public LandAndWheatherGame(Dimension _dimension)
 	{
@@ -33,8 +37,8 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 		Input.addMouseMotionListener(this);
 		Input.addMouseListener(this);
 		
-		new GButton(this, "Add dots", 10, 10, 120, 30)
-			.addListener(additionsDialogue);
+		addBtn = new GButton(this, "Add dots", 10, 10, 120, 30);
+		addBtn.addListener(additionsDialogue);
 	}
 	
 	
@@ -55,9 +59,16 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 		
 		GeometryPainter.paint(_screen, mesh);
 		if (outOfScope)
-			_screen.drawString("Out of scope", scanDot.x, scanDot.y);
+		{
+			_screen.setColor(Color.RED);
+			GeometryPainter.paint(_screen, (Dot2d)scanDot);
+			_screen.drawString("Out of scope", scanDot.x + 5, scanDot.y - 5);
+		}
 		else
+		{
+			_screen.setColor(Color.GREEN);
 			GeometryPainter.paint(_screen, scanDot);
+		}
 		
 	}
 	
@@ -65,14 +76,28 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 	{
 		super.update();
 		
-		boolean added = additions.size() > 0;
+		boolean changed = additions.size() > 0;
 		
 		for (Dot3d dot : additions)
 			mesh.add(dot);
 		
+		for (Dot2d delDot : deletions)
+		{
+			for (Dot2d dot : mesh.iterable2d())
+			{
+				if (MathExt.distanceMake(dot, delDot) < 5)
+				{
+					mesh.remove(dot);
+					changed = true;
+					break;
+				}
+			}
+		}
+		
+		deletions.clear();
 		additions.clear();
 		
-		if (added && mesh.size() >= 3)
+		if (changed)
 			tris = Triangulation.triangulate(mesh.iterable3d(), true);
 		
 		outOfScope = true;
@@ -149,9 +174,12 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 
 	public void mousePressed(MouseEvent _e)
 	{
-
-		if (SwingUtilities.isRightMouseButton(_e))
+		if (SwingUtilities.isLeftMouseButton(_e))
 		{
+			if (addBtn.isGettingHit(_e.getX() - getTrueX(), _e.getY() - getTrueY()))
+				return;
+			
+			
 			if (_e.isShiftDown())
 				additionsDialogue.run();
 			else
@@ -171,6 +199,17 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 				{
 					return;
 				}
+		}
+		else if (SwingUtilities.isRightMouseButton(_e))
+		{
+			deletions.add
+			(
+				new Dot2d
+				(
+					_e.getX() - getTrueX(),
+					_e.getY() - getTrueY()
+				)
+			);
 		}
 	}
 	public void mouseClicked(MouseEvent _e)

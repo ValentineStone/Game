@@ -33,10 +33,7 @@ public class Mesh3d extends Mesh2d
 	
 	public boolean remove(Dot2d _dot)
 	{
-		if (dots.size() > 3)
-			return dots.remove(_dot);
-		else
-			return false;
+		return dots.remove(_dot);
 	}
 	
 	public int size()
