@@ -1,5 +1,7 @@
 package com.valentine.game.utils.math;
 
+import java.util.*;
+
 public class Matrix
 {
 	public static double determinant(double[][] _matrix)
@@ -38,23 +40,138 @@ public class Matrix
 		return(sum); //returns determinant value. once stack is finished, returns final determinant.
 	}
 	
+	public static double[][] solve(double[][] _slau, boolean _copy)
+	{
+		double[][] slau = pipe(_slau, _copy);
+		
+		if (slau.length < 1 || slau[0].length < 2)
+			return null;
+		
+		int rows = slau.length;
+		int cols = slau[0].length;
+		
+		for (int row = 0; row < rows; row++)
+		{
+			//System.err.println("----------------------------------------------------------");
+			//System.err.println(Arrays.toString(slau[row]) + " / " + slau[row][row] + " =");
+			divide(slau[row], slau[row][row], false);
+			//System.err.println(Arrays.toString(slau[row]));
+			
+			for (int row2 = 0; row2 < rows; row2++)
+			{
+				if (row2 == row)
+					continue;
+				
+				add(slau[row2], multiply(slau[row], -slau[row2][row], true), false);
+				
+				//System.err.println(row + " " + row2);
+				//System.err.println(toString(slau));
+			}
+		}
+		
+		return slau;
+	}
+	
+	public static double[] extract(double[][] _matrix, int _col)
+	{
+		double[] col = new double[_matrix.length];
+		for (int i = 0; i < _matrix.length; i++)
+			col[i] = _matrix[i][_col];
+		return col;
+	}
+	
+	public static double[] extractLast(double[][] _matrix)
+	{
+		return extract(_matrix, _matrix[0].length - 1);
+	}
+	
+	public static double[] copy(double[] _row)
+	{
+		return Arrays.copyOf(_row,_row.length);
+	}
+	
+	public static double[] pipe(double[] _row, boolean _copy)
+	{
+		if (_copy)
+			return copy(_row);
+		else
+			return _row;
+	}
+	
+	public static double[][] copy(double[][] _matrix)
+	{
+		double[][] matrix = new double[_matrix.length][];
+		for (int i = 0; i < matrix.length; i++)
+			matrix[i] = Arrays.copyOf(_matrix[i],_matrix[i].length);
+		return matrix;
+	}
+	
+	public static double[][] pipe(double[][] _matrix, boolean _copy)
+	{
+		if (_copy)
+			return copy(_matrix);
+		else
+			return _matrix;
+	}
+	
+	public static double[] multiply(double[] _row, double _mult, boolean _copy)
+	{
+		double[] row = pipe(_row, _copy);
+		
+		for (int i = 0; i < row.length; i++)
+			row[i] *= _mult;
+		
+		return row;
+	}
+	
+	public static double[] divide(double[] _row, double _div, boolean _copy)
+	{
+		double[] row = pipe(_row, _copy);
+		
+		for (int i = 0; i < row.length; i++)
+			row[i] /= _div;
+		
+		return row;
+	}
+	
+	public static double[] add(double[] _row1, double[] _row2, boolean _copy)
+	{
+		double[] row1 = pipe(_row1, _copy);
+		
+		for (int i = 0; i < row1.length; i++)
+			row1[i] += _row2[i];
+		
+		return row1;
+	}
+	
+	public static String toString(double[][] _matrix)
+	{
+		StringBuilder stringBuilder = new StringBuilder();
+		for (double[] row : _matrix)
+			stringBuilder
+				.append(Arrays.toString(row))
+				.append('\n');
+		
+		return stringBuilder.toString();
+	}
+	
 	public static void main(String ... _args)
 	{
 		double[][] m = new double[][]
 		{
-			{1  , 5  , 6  , 2.2},
-			{3.3, 9  , 10 , 1  },
-			{7  , 9  , 3.2, 5.1},
-			{5  , 8  , 6.3, 2  }
+			{1  , 5  , 6  , 2.2, 3},
+			{3.3, 9  , 10 , 1  , 4},
+			{7  , 9  , 3.2, 5.1, 5},
+			{5  , 8  , 6.3, 2  , 6}
 		};
 		
-		double[][] m2 = new double[][]
-		{
-			{1, 2},
-			{3, 4}
-		};
+		System.err.println(toString(m));
 		
-		System.err.println(determinant(m2));
+		solve(m, false);
+		
+		System.err.println(toString(m));
+		
+		System.err.println(Arrays.toString(extractLast(m)));
 
 	}
 }
