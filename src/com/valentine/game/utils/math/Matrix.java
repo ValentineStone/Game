@@ -144,6 +144,32 @@ public class Matrix
 		return row1;
 	}
 	
+	public static double[] multiply(double[] _row1, double[] _row2, boolean _copy)
+	{
+		double[] row1 = pipe(_row1, _copy);
+		
+		for (int i = 0; i < row1.length; i++)
+			row1[i] *= _row2[i];
+		
+		return row1;
+	}
+	
+	public static double summRow(double[][] _matrix, int _row)
+	{
+		double summ = 0;
+		for (int i = 0; i < _matrix.length; i++)
+			summ += _matrix[_row][i];
+		return summ;
+	}
+	
+	public static double summCol(double[][] _matrix, int _col)
+	{
+		double summ = 0;
+		for (int i = 0; i < _matrix.length; i++)
+			summ += _matrix[i][_col];
+		return summ;
+	}
+	
 	public static String toString(double[][] _matrix)
 	{
 		StringBuilder stringBuilder = new StringBuilder();

@@ -162,6 +162,17 @@ public class MathExt
 	}
 	
 	
+	public static double[] getPowers(double _x, int _k)
+	{
+		double[] powers = new double[_k + 1];
+		
+		powers[0] = 1;
+		
+		for (int i = 1; i < powers.length; i++)
+			powers[i] = powers[i-1] * _x;
+		
+		return powers;
+	}
 	
 
 	public static enum DIRECTION
