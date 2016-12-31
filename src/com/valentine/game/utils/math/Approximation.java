@@ -9,20 +9,27 @@ public final class Approximation
 	
 	public static Function2d approximate(double[] _x, double[] _y, int _power)
 	{
-		double[][] xpowers = new double[2*_power][];
-		
+		double[][] xpowers = new double[2*_power+1][];
 		for (int i = 0; i < xpowers.length; i++)
 			xpowers[i] = MathExt.getPowers(_x[i], 2*_power);
 		
-		double[] xpowersumms = new double[_x.length];
-		
+		double[] xpowersumms = new double[_power];
 		for (int pow = 0; pow < xpowersumms.length; pow++)
 			xpowersumms[pow] = Matrix.summCol(xpowers, pow);
 		
-		double[][] ypowers = new double[_power][];
-		
+		double[][] ypowers = new double[_y.length][];
 		for (int i = 0; i < ypowers.length; i++)
-			ypowers[i] = Matrix.multiply(MathExt.getPowers(_x[i], 2*_power), _y, true);
+		{
+			ypowers[i] = new double[_power];
+			Arrays.fill(ypowers[i], _y[i]);
+			Matrix.multiply(ypowers[i], xpowers[i], false);
+		}
+		
+		double[] ypowersumms = new double[_power];
+		for (int pow = 0; pow < ypowersumms.length; pow++)
+			ypowersumms[pow] = Matrix.summCol(ypowers, pow);
+			
+			//Matrix.multiply(MathExt.getPowers(_x[i], 2*_power), _y, true);
 		
 		System.err.println(Matrix.toString(xpowers));
 		System.err.println(Matrix.toString(ypowers));
