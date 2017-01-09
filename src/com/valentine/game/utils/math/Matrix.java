@@ -48,7 +48,7 @@ public class Matrix
 			return null;
 		
 		int rows = slau.length;
-		int cols = slau[0].length;
+		//int cols = slau[0].length;
 		
 		for (int row = 0; row < rows; row++)
 		{
@@ -172,32 +172,12 @@ public class Matrix
 	
 	public static String toString(double[][] _matrix)
 	{
-		StringBuilder stringBuilder = new StringBuilder();
-		for (double[] row : _matrix)
+		StringBuilder stringBuilder = new StringBuilder(Arrays.toString(_matrix[0]));
+		for (int i = 1; i < _matrix.length; i++)
 			stringBuilder
-				.append(Arrays.toString(row))
-				.append('\n');
+				.append('\n')
+				.append(Arrays.toString(_matrix[i]));
 		
 		return stringBuilder.toString();
-	}
-	
-	public static void main(String ... _args)
-	{
-		double[][] m = new double[][]
-		{
-			{1  , 5  , 6  , 2.2, 3},
-			{3.3, 9  , 10 , 1  , 4},
-			{7  , 9  , 3.2, 5.1, 5},
-			{5  , 8  , 6.3, 2  , 6}
-		};
-		
-		System.err.println(toString(m));
-		
-		solve(m, false);
-		
-		System.err.println(toString(m));
-		
-		System.err.println(Arrays.toString(extractLast(m)));
-
 	}
 }

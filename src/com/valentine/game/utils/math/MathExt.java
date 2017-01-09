@@ -82,7 +82,7 @@ public class MathExt
 	
 	public static double rotationMake(Dot2d _a, Dot2d _b)
 	{
-		return rotationMake(_a.x, _a.y, _b.x, _b.y);
+		return rotationMake(_a.getX(), _a.getY(), _b.getX(), _b.getY());
 	}
 
 	public static double rotationMake(double _x1, double _y1, double _x2, double _y2)
@@ -136,7 +136,7 @@ public class MathExt
 	
 	public static double distanceMake(Dot2d _a, Dot2d _b)
 	{
-		return distanceMake(_a.x, _a.y, _b.x, _b.y);
+		return distanceMake(_a.getX(), _a.getY(), _b.getX(), _b.getY());
 	}
 
 	@Deprecated

@@ -1,6 +1,6 @@
 package com.valentine.game;
 
-import java.awt.Dimension;
+import java.awt.*;
 
 import com.valentine.game.core.*;
 import com.valentine.game.core.screen.*;
@@ -11,9 +11,9 @@ public abstract class Main
 {
 	public static void main(String[] _args)
 	{
-		Screen screen = new SwingScreen(new Dimension(1280, 720), false);
+		Screen screen = new SwingScreen(new Dimension(1280, 720), true);
 
-		Cassette cassete = new Cassette(new LandAndWheatherGame(screen.getScreenSize()));
+		Cassette cassete = new Cassette(new FuzzyNumbersGame(screen.getScreenSize()));
 
 		Terminal terminal = new NotchTerminal();
 

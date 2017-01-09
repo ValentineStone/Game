@@ -37,7 +37,7 @@ public final class GeometryPainter
 	
 	public static void paint(Screen _screen, Circle2d _circle)
 	{
-		_screen.drawOval(_circle.x - _circle.r, _circle.y - _circle.r, 2*_circle.r, 2*_circle.r);
+		_screen.drawOval(_circle.getX() - _circle.getR(), _circle.getY() - _circle.getR(), 2*_circle.getR(), 2*_circle.getR());
 		paint(_screen, (Dot2d)_circle);
 	}
 	
@@ -54,15 +54,15 @@ public final class GeometryPainter
 	
 	public static void paint(Screen _screen, Dot2d _dot, double _r)
 	{
-		_screen.drawRect(_dot.x - _r, _dot.y - _r, 2*_r, 2*_r);
-		_screen.drawDot(_dot.x, _dot.y);
+		_screen.drawRect(_dot.getX() - _r, _dot.getY() - _r, 2*_r, 2*_r);
+		_screen.drawDot(_dot.getX(), _dot.getY());
 	}
 	
 	public static void paint(Screen _screen, Dot3d _dot)
 	{
 		double r = 5;
 		paint(_screen, _dot, r);
-		StringPainter.paint(_screen, _dot.z, 2, _dot.x + r, _dot.y - r);
+		StringPainter.paint(_screen, _dot.getZ(), 2, _dot.getX() + r, _dot.getY() - r);
 	}
 	
 	public static void paint(Screen _screen, Line2d _line, Entity _e)

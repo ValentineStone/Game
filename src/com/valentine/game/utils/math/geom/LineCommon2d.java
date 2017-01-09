@@ -2,25 +2,25 @@ package com.valentine.game.utils.math.geom;
 
 public class LineCommon2d extends Line2d
 {
-	public double A = 0;
-	public double B = 0;
-	public double C = 0;
+	private double A = 0;
+	private double B = 0;
+	private double C = 0;
 	
 	public LineCommon2d(double _A, double _B, double _C)
 	{
-		A = _A;
-		B = _B;
-		C = _C;
+		setA(_A);
+		setB(_B);
+		setC(_C);
 	}
-
-
-	
-	
-	
 	
 	public double getA()
 	{
 		return A;
+	}
+
+	public void setA(double _a)
+	{
+		A = _a;
 	}
 
 	public double getB()
@@ -28,13 +28,23 @@ public class LineCommon2d extends Line2d
 		return B;
 	}
 
+	public void setB(double _b)
+	{
+		B = _b;
+	}
+	
 	public double getC()
 	{
 		return C;
 	}
 	
+	public void setC(double _c)
+	{
+		C = _c;
+	}
 	
 	
+
 	public static LineCommon2d toLine(Dot2d _d1, Dot2d _d2)
 	{
 		if (_d1 == null || _d2 == null || _d1.equals(_d2))
@@ -54,7 +64,7 @@ public class LineCommon2d extends Line2d
 	{
 		double A = -_l.getB();
 		double B =  _l.getA();
-		double C = -(A * _dot.x + B * _dot.y);
+		double C = -(A * _dot.getX() + B * _dot.getY());
 		
 		return new LineCommon2d(A, B, C);
 	}

@@ -18,12 +18,12 @@ public class Seg2d extends Line2d
 	
 	public double getCenterX()
 	{
-		return d1.x + (d2.x - d1.x) / 2;
+		return d1.getX() + (d2.getX() - d1.getX()) / 2;
 	}
 	
 	public double getCenterY()
 	{
-		return d1.y + (d2.y - d1.y) / 2;
+		return d1.getY() + (d2.getY() - d1.getY()) / 2;
 	}
 	
 	
@@ -32,17 +32,17 @@ public class Seg2d extends Line2d
 
 	public double getA()
 	{
-		return d2.y - d1.y;
+		return d2.getY() - d1.getY();
 	}
 
 	public double getB()
 	{
-		return d1.x - d2.x;
+		return d1.getX() - d2.getX();
 	}
 
 	public double getC()
 	{
-		return d1.x * (d1.y - d2.y) + d1.y * (d2.x - d1.x);
+		return d1.getX() * (d1.getY() - d2.getY()) + d1.getY() * (d2.getX() - d1.getX());
 	}
 	
 	
@@ -50,19 +50,19 @@ public class Seg2d extends Line2d
 
 	public double getD1X()
 	{
-		return d1.x;
+		return d1.getX();
 	}
 	public double getD1Y()
 	{
-		return d1.y;
+		return d1.getY();
 	}
 	public double getD2X()
 	{
-		return d2.x;
+		return d2.getX();
 	}
 	public double getD2Y()
 	{
-		return d2.y;
+		return d2.getY();
 	}
 	
 	

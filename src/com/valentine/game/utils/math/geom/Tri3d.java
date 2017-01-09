@@ -4,9 +4,9 @@ public class Tri3d extends Tri2d
 {
 	public Tri3d(Dot3d _a, Dot3d _b, Dot3d _c)
 	{
-		a = new Dot3d(_a);
-		b = new Dot3d(_b);
-		c = new Dot3d(_c);
+		setA(new Dot3d(_a));
+		setB(new Dot3d(_b));
+		setC(new Dot3d(_c));
 	}
 	
 	public Tri3d(Tri3d _t)
@@ -18,69 +18,69 @@ public class Tri3d extends Tri2d
 	
 	public double getAx()
 	{
-		return a.x;
+		return getA().getX();
 	}
 	public double getAy()
 	{
-		return a.y;
+		return getA().getY();
 	}
 	public double getAz()
 	{
-		return getA().z;
+		return getA().getZ();
 	}
 	public double getBx()
 	{
-		return b.x;
+		return getB().getX();
 	}
 	public double getBy()
 	{
-		return b.y;
+		return getB().getY();
 	}
 	public double getBz()
 	{
-		return getB().z;
+		return getB().getZ();
 	}
 	public double getCx()
 	{
-		return c.x;
+		return getC().getX();
 	}
 	public double getCy()
 	{
-		return c.y;
+		return getC().getY();
 	}
 	public double getCz()
 	{
-		return getC().z;
+		return getC().getZ();
 	}
 
 	
 	
 	public Dot3d getA()
 	{
-		return new Dot3d((Dot3d)a);
+		return new Dot3d((Dot3d)super.getA());
 	}
 	public Dot3d getB()
 	{
-		return new Dot3d((Dot3d)b);
+		return new Dot3d((Dot3d)super.getB());
 	}
 	public Dot3d getC()
 	{
-		return new Dot3d((Dot3d)c);
+		return new Dot3d((Dot3d)super.getC());
 	}
 	
 	
 	
 	public void setA(Dot3d _a)
 	{
-		a = new Dot3d(_a);
+		super.setA(new Dot3d(_a));
 	}
 	public void setB(Dot3d _b)
 	{
-		b = new Dot3d(_b);
+		super.setB(new Dot3d(_b));
 	}
 	public void setC(Dot3d _c)
 	{
-		c = new Dot3d(_c);
+		super.setC(new Dot3d(_c));
 	}
 	
 	
@@ -90,7 +90,7 @@ public class Tri3d extends Tri2d
 		if (_o instanceof Tri3d)
 		{
 			Tri3d _t = (Tri3d) _o;
-			return a.equals(_t.a) && b.equals(_t.b) && c.equals(_t.c);
+			return getA().equals(_t.getA()) && getB().equals(_t.getB()) && getC().equals(_t.getC());
 		}
 		else
 			return false;
@@ -101,11 +101,11 @@ public class Tri3d extends Tri2d
 		return
 			new StringBuilder()
 				.append("Tri3d[a:")
-				.append(a)
+				.append(getA())
 				.append(", b:")
-				.append(b)
+				.append(getB())
 				.append(", c:")
-				.append(c)
+				.append(getC())
 				.append(']')
 			.toString();
 	}

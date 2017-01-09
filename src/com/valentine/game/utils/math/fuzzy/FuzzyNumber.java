@@ -1,22 +1,12 @@
 package com.valentine.game.utils.math.fuzzy;
 
-import java.util.*;
-import java.util.Map.*;
+import java.util.function.*;
 
-import com.valentine.game.utils.math.*;
-
-public class FuzzyNumber extends Function2d
+public class FuzzyNumber implements DoubleFunction<Double>
 {
-	private TreeMap<Range,Function2d> bits = new TreeMap<>();
-	
-	public FuzzyNumber()
-	{}
 
-	public double evaluate(double _x)
+	public Double apply(double _value)
 	{
-		for (Entry<Range, Function2d> entry : bits.entrySet())
-			if (entry.getKey().contains(_x))
-				return entry.getValue().evaluate(_x);
-		return 0;
+		return null;
 	}
 }

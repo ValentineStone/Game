@@ -2,18 +2,35 @@ package com.valentine.game.utils.math;
 
 import java.util.*;
 
+import com.valentine.game.utils.math.geom.*;
+
 public final class Approximation
 {
 	private Approximation()
 	{}
 	
-	public static Function2d approximate(double[] _x, double[] _y, int _power)
+	@Deprecated
+	public static Polinom approximate(Dot2d[] _dots, int _power)
 	{
-		double[][] xpowers = new double[2*_power+1][];
+		double[] x = new double[_dots.length];
+		double[] y = new double[_dots.length];
+		
+		for (int i = 0; i < _dots.length; i++)
+		{
+			x[i] = _dots[i].getX();
+			y[i] = _dots[i].getY();
+		}
+		
+		return approximate(x, y, _power);
+	}
+	
+	public static Polinom approximate(double[] _x, double[] _y, int _power)
+	{
+		double[][] xpowers = new double[_x.length][];
 		for (int i = 0; i < xpowers.length; i++)
 			xpowers[i] = MathExt.getPowers(_x[i], 2*_power);
 		
-		double[] xpowersumms = new double[_power];
+		double[] xpowersumms = new double[2*_power];
 		for (int pow = 0; pow < xpowersumms.length; pow++)
 			xpowersumms[pow] = Matrix.summCol(xpowers, pow);
 		
@@ -28,13 +45,6 @@ public final class Approximation
 		double[] ypowersumms = new double[_power];
 		for (int pow = 0; pow < ypowersumms.length; pow++)
 			ypowersumms[pow] = Matrix.summCol(ypowers, pow);
-			
-			//Matrix.multiply(MathExt.getPowers(_x[i], 2*_power), _y, true);
-		
-		System.err.println(Matrix.toString(xpowers));
-		System.err.println(Matrix.toString(ypowers));
-		
-		System.err.println(Arrays.toString(xpowersumms));
 		
 		double[][] matrix = new double[_power][_power + 1];
 		
@@ -42,22 +52,13 @@ public final class Approximation
 		{
 			for (int col = 0; col < _power; col++)
 			{
-				System.err.print("(x^" + row*col + ")");
 				matrix[row][col] = xpowersumms[row+col];
 			}
-			System.err.println();
+			matrix[row][_power] = ypowersumms[row];
 		}
 		
-		System.err.println(Matrix.toString(matrix));
+		Matrix.solve(matrix, false);
 		
-		return null;
-	}
-	
-	public static void main(String[] _args)
-	{
-		double[] x = new double[]{1,  2,  3,  4,  5,  6,  7};
-		double[] y = new double[]{1, -1,  1, -1,  1, -1,  1};
-		
-		approximate(x, y, 3);
+		return new Polinom(Matrix.extractLast(matrix));
 	}
 }

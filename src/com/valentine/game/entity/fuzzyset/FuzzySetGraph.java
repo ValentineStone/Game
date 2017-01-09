@@ -18,7 +18,9 @@ public class FuzzySetGraph extends EntityBasicAI
 		MULTIPLE_ELEMENTS,
 	};
 	
-	private double paddings = 10;
+	public static final double DEFAULT_PADDINGS = 10;
+	
+	private double paddings = DEFAULT_PADDINGS;
 	private double dotr = 3;
 	
 	private State state;

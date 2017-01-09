@@ -22,7 +22,7 @@ public abstract class Plane3d implements Geometry
 
 	public double evalEquasion(Dot3d _d)
 	{
-		return getA() * _d.x + getB() * _d.y + getC() * _d.z + getD();
+		return getA() * _d.getX() + getB() * _d.getY() + getC() * _d.getZ() + getD();
 	}
 	
 	public String toString()

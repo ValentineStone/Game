@@ -1,29 +1,54 @@
 package com.valentine.game.utils.math.geom;
 
+import java.util.Map.*;
+
 public class Dot2d implements Geometry
 {
-	public double x;
-	public double y;
+	private double x;
+	private double y;
 	
 	public Dot2d(double _x, double _y)
 	{
-		x = _x;
-		y = _y;
+		setX(_x);
+		setY(_y);
 	}
 	
 	public Dot2d(Dot2d _d)
 	{
-		this(_d.x, _d.y);
+		this(_d.getX(), _d.getY());
 	}
 	
+	public Dot2d(Entry<Double, Double> _entry)
+	{
+		this(_entry.getKey(), _entry.getValue());
+	}
 
+	public double getX()
+	{
+		return x;
+	}
+
+	public double getY()
+	{
+		return y;
+	}
+
+	public void setY(double _y)
+	{
+		y = _y;
+	}
+
+	public void setX(double _x)
+	{
+		x = _x;
+	}
 
 	public boolean equals(Object _o)
 	{
 		if (_o instanceof Dot2d)
 		{
 			Dot2d d = (Dot2d) _o;
-			return x == d.x && y == d.y;
+			return getX() == d.getX() && getY() == d.getY();
 		}
 		else
 			return false;
@@ -36,9 +61,9 @@ public class Dot2d implements Geometry
 		return
 			new StringBuilder()
 				.append("Dot2d[")
-				.append(x)
+				.append(getX())
 				.append(", ")
-				.append(y)
+				.append(getY())
 				.append(']')
 			.toString();
 	}

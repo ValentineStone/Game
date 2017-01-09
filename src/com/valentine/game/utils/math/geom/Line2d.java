@@ -28,7 +28,7 @@ public abstract class Line2d implements Geometry
 
 	public double evalEquasion(Dot2d _d)
 	{
-		return getA() * _d.x + getB() * _d.y + getC();
+		return getA() * _d.getX() + getB() * _d.getY() + getC();
 	}
 	
 	

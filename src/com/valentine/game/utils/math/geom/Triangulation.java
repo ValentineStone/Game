@@ -16,9 +16,9 @@ public class Triangulation
 		public Tri2dExt(Dot2d _a, Dot2d _b, Dot2d _c)
 		{
 			super(_a, _b, _c);
-			ab = new Seg2d(a, b);
-			bc = new Seg2d(b, a);
-			ca = new Seg2d(c, a);
+			ab = new Seg2d(getA(), getB());
+			bc = new Seg2d(getB(), getA());
+			ca = new Seg2d(getC(), getA());
 			circumcircle = getCircumcircle(this);
 			
 			if (circumcircle == null) throw new RuntimeException("What is dat tri!: " + toString());
@@ -26,12 +26,12 @@ public class Triangulation
 		
 		public Tri2dExt(Tri2d _t)
 		{
-			this(_t.a, _t.b, _t.c);
+			this(_t.getA(), _t.getB(), _t.getC());
 		}
 		
 		public boolean contains(Dot2d _dot)
 		{
-			return a.equals(_dot) || b.equals(_dot) || c.equals(_dot);
+			return getA().equals(_dot) || getB().equals(_dot) || getC().equals(_dot);
 		}
 	}
 	
@@ -55,24 +55,24 @@ public class Triangulation
 			if (firstTime)
 			{
 				firstTime = false;
-				maxx = dot.x;
-				maxy = dot.y;
-				minx = dot.x;
-				miny = dot.y;
+				maxx = dot.getX();
+				maxy = dot.getY();
+				minx = dot.getX();
+				miny = dot.getY();
 				
 			}
 			
-			if (dot.x > maxx)
-				maxx = dot.x;
+			if (dot.getX() > maxx)
+				maxx = dot.getX();
 			else 
-			if (dot.x < minx)
-				minx = dot.x;
+			if (dot.getX() < minx)
+				minx = dot.getX();
 			
-			if (dot.y > maxy)
-				maxy = dot.y;
+			if (dot.getY() > maxy)
+				maxy = dot.getY();
 			else
-			if (dot.y < miny)
-				miny = dot.y;
+			if (dot.getY() < miny)
+				miny = dot.getY();
 		}
 		
 		/*
@@ -148,12 +148,12 @@ public class Triangulation
 		
 		for (Tri2dExt tri : affectedTris)
 		{
-			if (!affectedDots.contains(tri.a))
-				affectedDots.add(tri.a);
-			if (!affectedDots.contains(tri.b))
-				affectedDots.add(tri.b);
-			if (!affectedDots.contains(tri.c))
-				affectedDots.add(tri.c);
+			if (!affectedDots.contains(tri.getA()))
+				affectedDots.add(tri.getA());
+			if (!affectedDots.contains(tri.getB()))
+				affectedDots.add(tri.getB());
+			if (!affectedDots.contains(tri.getC()))
+				affectedDots.add(tri.getC());
 		}
 		
 		_trisExt.removeAll(affectedTris);
@@ -223,9 +223,9 @@ public class Triangulation
 		public Tri3dExt(Dot3d _a, Dot3d _b, Dot3d _c)
 		{
 			super(_a, _b, _c);
-			ab = new Seg2d(a, b);
-			bc = new Seg2d(b, a);
-			ca = new Seg2d(c, a);
+			ab = new Seg2d(getA(), getB());
+			bc = new Seg2d(getB(), getA());
+			ca = new Seg2d(getC(), getA());
 			circumcircle = getCircumcircle(this);
 			
 			if (circumcircle == null) throw new RuntimeException("What is dat tri!: " + toString());
@@ -238,7 +238,7 @@ public class Triangulation
 		
 		public boolean contains(Dot3d _dot)
 		{
-			return a.equals(_dot) || b.equals(_dot) || c.equals(_dot);
+			return getA().equals(_dot) || getB().equals(_dot) || getC().equals(_dot);
 		}
 	}
 	
@@ -262,24 +262,24 @@ public class Triangulation
 			if (firstTime)
 			{
 				firstTime = false;
-				maxx = dot.x;
-				maxy = dot.y;
-				minx = dot.x;
-				miny = dot.y;
+				maxx = dot.getX();
+				maxy = dot.getY();
+				minx = dot.getX();
+				miny = dot.getY();
 				
 			}
 			
-			if (dot.x > maxx)
-				maxx = dot.x;
+			if (dot.getX() > maxx)
+				maxx = dot.getX();
 			else 
-			if (dot.x < minx)
-				minx = dot.x;
+			if (dot.getX() < minx)
+				minx = dot.getX();
 			
-			if (dot.y > maxy)
-				maxy = dot.y;
+			if (dot.getY() > maxy)
+				maxy = dot.getY();
 			else
-			if (dot.y < miny)
-				miny = dot.y;
+			if (dot.getY() < miny)
+				miny = dot.getY();
 		}
 		
 		/*

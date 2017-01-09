@@ -1,24 +1,31 @@
 package com.valentine.game.entity.fuzzyset;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.*;
 import java.util.Map.*;
+import java.util.function.*;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
-import com.valentine.game.entity.base.*;
+import com.valentine.game.entity.base.Container;
 import com.valentine.game.entity.ui.*;
 import com.valentine.game.utils.*;
+import com.valentine.game.utils.math.*;
+import com.valentine.game.utils.math.geom.*;
 
 public class FuzzySetWindow extends ContainerWindow
 {
-	public final static int WIDTH       = 300;
-	public final static int HEIGHT      = 900;
-	public final static int PAD         = 10;
-	public final static int WIDTH_PADED = WIDTH - 2*PAD;
-	public final static int BTN_W       = 20;
-	public final static int BTN_H       = 25;
-	public final static int GRAPH_H     = 200;
+	public final static int WIDTH              = 300;
+	public final static int HEIGHT             = 960;
+	public final static int PAD                = 10;
+	public final static int WIDTH_PADED        = WIDTH - 2*PAD;
+	public final static int BTN_W              = 20;
+	public final static int BTN_H              = 25;
+	public final static int GRAPH_H            = 200;
+	public final static int DEFAULT_APRX_LEVEL = 5;
+	
+	private int aprxPower = DEFAULT_APRX_LEVEL;
+	private Polinom approximation;
 	
 	private final GButton addBtn;
 	private final GButton remBtn;
@@ -29,21 +36,26 @@ public class FuzzySetWindow extends ContainerWindow
 	private final GButton dilBtn;
 	private final GButton clearBtn;
 	
-
 	private FuzzySet set;
 	
 	private final FuzzySetGraph graph;
 	private final FuzzySetGraph graphCon;
 	private final FuzzySetGraph graphDil;
+	private final GFunctionBox  graphAprx;
 	
 	private final GButton conShowBtn;
 	private final GButton dilShowBtn;
+	private final GButton aprxShowBtn;
 	
-	private final Color conColor = Color.GREEN;
-	private final Color dilColor = Color.RED;
+	private final Color conColor  = Color.GREEN;
+	private final Color dilColor  = Color.RED;
+	private final Color aprxColor = ColorExt.LIGHT_BLUE;
 	
 	private final GString setLabel;
 	private final GScrollString setStr;
+	
+	private final GString aprxLabel;
+	private final GScrollString aprxStr;
 	
 	private final GString universumLabel;
 	private final GScrollString universumStr;
@@ -167,8 +179,6 @@ public class FuzzySetWindow extends ContainerWindow
 		);
 		POSY += BTN_H + PAD;
 		
-		
-		
 		graphCon = new FuzzySetGraph(this, set.clone(), PAD, POSY, WIDTH_PADED, GRAPH_H);
 		graphCon.getSet().con();
 		graphCon.setFillColor(ColorExt.TRANSPARENT);
@@ -184,6 +194,19 @@ public class FuzzySetWindow extends ContainerWindow
 		graph = new FuzzySetGraph(this, set, PAD, POSY, WIDTH_PADED, GRAPH_H);
 		graph.setFillColor(ColorExt.TRANSPARENT);
 		graph.setDrawColor(frameColor);
+		
+		graphAprx = new GFunctionBox
+		(
+			this,
+			PAD  +            FuzzySetGraph.DEFAULT_PADDINGS,
+			POSY +            FuzzySetGraph.DEFAULT_PADDINGS,
+			WIDTH_PADED - 2 * FuzzySetGraph.DEFAULT_PADDINGS,
+			GRAPH_H     - 2 * FuzzySetGraph.DEFAULT_PADDINGS
+		);
+		graphAprx.setFillColor(ColorExt.TRANSPARENT);
+		graphAprx.setDrawColor(aprxColor);
+		graphAprx.setPaintable(false);
+		graphAprx.setDrawFunctionOnly(true);
 		
 		POSY += GRAPH_H + PAD;
 		
@@ -207,6 +230,38 @@ public class FuzzySetWindow extends ContainerWindow
 				dilShowBtn.setDrawColor(dilShowBtn.getDrawColor().equals(dilColor) ? Color.WHITE : dilColor);
 			}
 		);
+		aprxShowBtn = new GButton(this, "APRX", 3*PAD + 6*BTN_W, POSY, 3*BTN_W, BTN_H);
+		aprxShowBtn.addListener
+		(
+			() ->
+			{
+				if (!graphAprx.isPaintable())
+				{
+					String powerString = JOptionPane.showInputDialog("Enter aproximation's max power:", "1 - linear, 2 - qadratic, 3 - cubic...");
+					int power;
+					try
+					{
+						power = Integer.valueOf(powerString) + 1;
+						
+						if (power < 1)
+							return;
+					}
+					catch (Exception _exc)
+					{
+						return;
+					}
+					
+					if (aprxPower != power)
+					{
+						aprxPower = power;
+						reAproximate();
+					}
+				}
+				
+				graphAprx.setPaintable(!graphAprx.isPaintable());
+				aprxShowBtn.setDrawColor(aprxShowBtn.getDrawColor().equals(aprxColor) ? Color.WHITE : aprxColor);
+			}
+		);
 		
 		POSY += BTN_H + PAD;
 		
@@ -219,6 +274,14 @@ public class FuzzySetWindow extends ContainerWindow
 		setStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
 		setStr.setDrawColor(frameColor);
+		
+		aprxLabel = new GString(this, "Approximation:", PAD, POSY, WIDTH_PADED, BTN_H);
+		POSY += BTN_H + PAD;
+		setLabel.setBorderVisible(false);
+		
+		aprxStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
+		POSY += BTN_H + PAD;
+		aprxStr.setDrawColor(frameColor);
 		
 		universumLabel = new GString(this, "Universum:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
@@ -348,6 +411,18 @@ public class FuzzySetWindow extends ContainerWindow
 		graphCon.getSet().con();
 		graphDil.setSet(set.clone());
 		graphDil.getSet().dil();
+		
+		reAproximate();
 	}
-
+	
+	public void reAproximate()
+	{
+		ArrayList<Dot2d> dots = IterableExt.asArrayList(IterableExt.asIterable(set));
+		
+		approximation = Approximation.approximate(dots.toArray(new Dot2d[dots.size()]), aprxPower);
+		
+		graphAprx.set((x) -> approximation.applyAsDouble(x), set.getMin(), set.getMax(), 0.1, graphAprx.getHeight(), graphAprx.getHeight());
+		
+		aprxStr.setText(Arrays.toString(approximation.getCoefficients()));
+	}
 }

@@ -62,7 +62,7 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 		{
 			_screen.setColor(Color.RED);
 			GeometryPainter.paint(_screen, (Dot2d)scanDot);
-			_screen.drawString("Out of scope", scanDot.x + 5, scanDot.y - 5);
+			_screen.drawString("Out of scope", scanDot.getX() + 5, scanDot.getY() - 5);
 		}
 		else
 		{
@@ -106,7 +106,7 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 			for (Tri3d tri : tris)
 				if (tri.contains(scanDot))
 				{
-					scanDot.z = PlaneCommon3d.toPlane(tri).evalZ(scanDot.x, scanDot.y);
+					scanDot.setZ(PlaneCommon3d.toPlane(tri).evalZ(scanDot.getX(), scanDot.getY()));
 					outOfScope = false;
 					break;
 				}
@@ -167,8 +167,8 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 
 	public void mouseMoved(MouseEvent _e)
 	{
-		scanDot.x = _e.getX() - getTrueX();
-		scanDot.y = _e.getY() - getTrueY();
+		scanDot.setX(_e.getX() - getTrueX());
+		scanDot.setY(_e.getY() - getTrueY());
 	}
 
 

@@ -2,17 +2,17 @@ package com.valentine.game.utils.math.geom;
 
 public class PlaneCommon3d extends Plane3d
 {
-	public double A = 0;
-	public double B = 0;
-	public double C = 0;
-	public double D = 0;
+	private double A = 0;
+	private double B = 0;
+	private double C = 0;
+	private double D = 0;
 	
 	public PlaneCommon3d(double _A, double _B, double _C, double _D)
 	{
-		A = _A;
-		B = _B;
-		C = _C;
-		D = _D;
+		setA(_A);
+		setB(_B);
+		setC(_C);
+		setD(_D);
 	}
 
 
@@ -25,15 +25,45 @@ public class PlaneCommon3d extends Plane3d
 		return A;
 	}
 
+	public void setA(double _a)
+	{
+		A = _a;
+	}
+
+
+
+
+
+
 	public double getB()
 	{
 		return B;
 	}
 
+	public void setB(double _b)
+	{
+		B = _b;
+	}
+
+
+
+
+
+
 	public double getC()
 	{
 		return C;
 	}
+
+	public void setC(double _c)
+	{
+		C = _c;
+	}
+
+
+
+
+
 
 	public double getD()
 	{
@@ -42,6 +72,16 @@ public class PlaneCommon3d extends Plane3d
 	
 	
 	
+	public void setD(double _d)
+	{
+		D = _d;
+	}
+
+
+
+
+
+
 	public static PlaneCommon3d toPlane(Dot3d _a, Dot3d _b, Dot3d _c)
 	{
 		return toPlane(new Tri3d(_a, _b, _c));
@@ -63,10 +103,10 @@ public class PlaneCommon3d extends Plane3d
 		double y3 = _t.getCy() - y1;
 		double z3 = _t.getCz() - z1;
 		
-		plane.A = y2*z3 - z2*y3;
-		plane.B = z2*x3 - x2*z3;
-		plane.C = x2*y3 - y2*x3;
-		plane.D = - (plane.A * x1 + plane.B * y1 + plane.C * z1);
+		plane.setA(y2*z3 - z2*y3);
+		plane.setB(z2*x3 - x2*z3);
+		plane.setC(x2*y3 - y2*x3);
+		plane.setD(- (plane.getA() * x1 + plane.getB() * y1 + plane.getC() * z1));
 		
 		return plane;
 	}

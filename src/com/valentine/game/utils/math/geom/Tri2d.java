@@ -4,50 +4,50 @@ import com.valentine.game.utils.math.*;
 
 public class Tri2d implements Geometry
 {
-	protected Dot2d a;
-	protected Dot2d b;
-	protected Dot2d c;
+	private Dot2d a;
+	private Dot2d b;
+	private Dot2d c;
 	
 	protected Tri2d()
 	{}
 	
 	public Tri2d(Dot2d _a, Dot2d _b, Dot2d _c)
 	{
-		a = new Dot2d(_a);
-		b = new Dot2d(_b);
-		c = new Dot2d(_c);
+		setA(new Dot2d(_a));
+		setB(new Dot2d(_b));
+		setC(new Dot2d(_c));
 	}
 	
 	public Tri2d(Tri2d _t)
 	{
-		this(_t.a, _t.b, _t.c);
+		this(_t.getA(), _t.getB(), _t.getC());
 	}
 
 	
 	
 	public double getAx()
 	{
-		return a.x;
+		return getA().getX();
 	}
 	public double getAy()
 	{
-		return a.y;
+		return getA().getY();
 	}
 	public double getBx()
 	{
-		return b.x;
+		return getB().getX();
 	}
 	public double getBy()
 	{
-		return b.y;
+		return getB().getY();
 	}
 	public double getCx()
 	{
-		return c.x;
+		return getC().getX();
 	}
 	public double getCy()
 	{
-		return c.y;
+		return getC().getY();
 	}
 
 	
@@ -87,7 +87,7 @@ public class Tri2d implements Geometry
 		if (_o instanceof Tri2d)
 		{
 			Tri2d _t = (Tri2d) _o;
-			return a.equals(_t.a) && b.equals(_t.b) && c.equals(_t.c);
+			return getA().equals(_t.getA()) && getB().equals(_t.getB()) && getC().equals(_t.getC());
 		}
 		else
 			return false;
@@ -96,9 +96,9 @@ public class Tri2d implements Geometry
 	
 	public boolean contains(Dot2d _d)
 	{
-		double min = MathExt.rotationMake(_d, a);
-		double mid = MathExt.rotationMake(_d, b);
-		double max = MathExt.rotationMake(_d, c);
+		double min = MathExt.rotationMake(_d, getA());
+		double mid = MathExt.rotationMake(_d, getB());
+		double max = MathExt.rotationMake(_d, getC());
 		
 		double swap;
 		
@@ -133,8 +133,8 @@ public class Tri2d implements Geometry
 
 	public static Circle2d getCircumcircle(Tri2d _tri)
 	{
-		Seg2d ab = new Seg2d(_tri.a, _tri.b);
-		Seg2d ac = new Seg2d(_tri.a, _tri.c);
+		Seg2d ab = new Seg2d(_tri.getA(), _tri.getB());
+		Seg2d ac = new Seg2d(_tri.getA(), _tri.getC());
 		
 		Dot2d abCenter = ab.getCenter();
 		Dot2d acCenter = ac.getCenter();
@@ -147,7 +147,7 @@ public class Tri2d implements Geometry
 		if (circumcircleDot == null)
 			return null;
 		
-		double r = MathExt.distanceMake(_tri.a, circumcircleDot);
+		double r = MathExt.distanceMake(_tri.getA(), circumcircleDot);
 		
 		return new Circle2d(circumcircleDot, r);
 	}
@@ -160,11 +160,11 @@ public class Tri2d implements Geometry
 		return
 			new StringBuilder()
 				.append("Tri2d[a:")
-				.append(a)
+				.append(getA())
 				.append(", b:")
-				.append(b)
+				.append(getB())
 				.append(", c:")
-				.append(c)
+				.append(getC())
 				.append(']')
 			.toString();
 	}
