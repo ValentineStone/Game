@@ -1,6 +1,7 @@
 package com.valentine.game.core.screen;
 
 import java.awt.*;
+import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
 import java.text.*;
@@ -202,9 +203,12 @@ public class SwingScreen implements Screen
 		graphics.fillRoundRect((int) Math.round(_x), (int) Math.round(_y), (int) Math.round(_width), (int) Math.round(_height), (int) Math.round(_arcWidth), (int) Math.round(_arcHeight));
 	}
 
-	public Shape getClip()
+	public Rectangle2D.Double getClip()
 	{
-		return graphics.getClip();
+		return
+			graphics.getClip() instanceof Rectangle2D.Double
+			? (Rectangle2D.Double)graphics.getClip()
+			: null;
 	}
 
 	public Rectangle getClipBounds()
@@ -227,9 +231,9 @@ public class SwingScreen implements Screen
 		return graphics.getFontMetrics(_f);
 	}
 
-	public void setClip(Shape _clip)
+	public void setClip(Rectangle2D.Double _rect)
 	{
-		graphics.setClip(_clip);
+		graphics.setClip(_rect);
 	}
 
 	public void setClip(double _x, double _y, double _width, double _height)

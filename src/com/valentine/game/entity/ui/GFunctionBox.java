@@ -164,6 +164,39 @@ public class GFunctionBox extends EntityBasicAI
 		generateDots();
 	}
 
+	public double getXstep()
+	{
+		return xstep;
+	}
+
+	public void setXstep(double _xstep)
+	{
+		xstep = _xstep;
+		generateDots();
+	}
+
+	public double getYmultiplyer()
+	{
+		return ymultiplyer;
+	}
+
+	public void setYmultiplyer(double _ymultiplyer)
+	{
+		ymultiplyer = _ymultiplyer;
+		generateDots();
+	}
+
+	public double getXzeroline()
+	{
+		return xzeroline;
+	}
+
+	public void setXzeroline(double _xzeroline)
+	{
+		xzeroline = _xzeroline;
+		generateDots();
+	}
+
 	public double getYzeroline()
 	{
 		return yzeroline;

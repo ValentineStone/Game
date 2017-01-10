@@ -13,7 +13,7 @@ public abstract class Main
 	{
 		Screen screen = new SwingScreen(new Dimension(1280, 720), true);
 
-		Cassette cassete = new Cassette(new FuzzyNumbersGame(screen.getScreenSize()));
+		Cassette cassete = new Cassette(new ApproximationTest(screen.getScreenSize()));
 
 		Terminal terminal = new NotchTerminal();
 

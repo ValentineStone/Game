@@ -61,4 +61,18 @@ public class ColorGrader extends Entity
 		}
 	}
 
+	public void forceRandom()
+	{
+		if (doForeground)
+		{
+			entity.setDrawColor(ColorExt.randomColor(30, 155));
+			targetForegroundColor = ColorExt.randomColor(30, 155);
+		}
+
+		if (doBackground)
+		{
+			entity.setFillColor(ColorExt.randomColor(30, 155));
+			targetBackgroundColor = ColorExt.randomColor(30, 155);
+		}
+	}
 }

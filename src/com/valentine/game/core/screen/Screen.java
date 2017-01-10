@@ -1,6 +1,7 @@
 package com.valentine.game.core.screen;
 
 import java.awt.*;
+import java.awt.geom.*;
 import java.awt.image.*;
 import java.text.*;
 
@@ -56,7 +57,7 @@ public interface Screen
 
 	void fillRoundRect(double _x, double _y, double _width, double _height, double _arcWidth, double _arcHeight);
 
-	Shape getClip();
+	Rectangle2D.Double getClip();
 
 	Rectangle getClipBounds();
 
@@ -66,7 +67,7 @@ public interface Screen
 
 	FontMetrics getFontMetrics(Font _f);
 
-	void setClip(Shape _clip);
+	void setClip(Rectangle2D.Double _rect);
 
 	void setClip(double _x, double _y, double _width, double _height);
 

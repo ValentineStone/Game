@@ -1,6 +1,7 @@
 package com.valentine.game.core.screen.javafx;
 
 import java.awt.*;
+import java.awt.geom.*;
 import java.awt.image.*;
 import java.text.*;
 
@@ -131,7 +132,7 @@ public class JavaFXScreen implements Screen
 	public void fillRoundRect(double _x, double _y, double _width, double _height, double _arcWidth, double _arcHeight)
 	{}
 
-	public Shape getClip()
+	public Rectangle2D.Double getClip()
 	{
 		return null;
 	}
@@ -156,7 +157,7 @@ public class JavaFXScreen implements Screen
 		return null;
 	}
 
-	public void setClip(Shape _clip)
+	public void setClip(Rectangle2D.Double _rect)
 	{}
 
 	public void setClip(double _x, double _y, double _width, double _height)
