@@ -23,7 +23,7 @@ public class Vertex
 		return ins;
 	}
 	
-	public Iterable<Edge> getouts()
+	public Iterable<Edge> getOuts()
 	{
 		return outs;
 	}

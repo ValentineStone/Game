@@ -16,16 +16,26 @@ public class Edge
 		weight = _weight;
 	}
 	
-	public Vertex getTo()
+	public Vertex to()
 	{
 		return graph.vertices.get(to);
 	}
 	
-	public Vertex getFrom()
+	public Vertex from()
 	{
 		return graph.vertices.get(from);
 	}
+
+	public int getTo()
+	{
+		return to;
+	}
 	
+	public int getFrom()
+	{
+		return from;
+	}
+
 	public boolean isLoop()
 	{
 		return from == to;
