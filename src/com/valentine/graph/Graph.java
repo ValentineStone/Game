@@ -35,9 +35,14 @@ public class Graph implements Iterable<Vertex>
 		return _index < vertices.size();
 	}
 	
+	public int vertexCount()
+	{
+		return vertices.size();
+	}
+	
 	public boolean addVertex(double _weight)
 	{
-		return vertices.add(new Vertex(this, _weight));
+		return vertices.add(new Vertex(this, vertices.size(), _weight));
 	}
 
 	public Iterator<Vertex> iterator()
@@ -65,13 +70,13 @@ public class Graph implements Iterable<Vertex>
 		try
 		{
 			reader = new FileReader(_jsonFile);
-			GraphJsonData data = gson.fromJson(reader, GraphJsonData.class);
+			VertexJsonData[] data = gson.fromJson(reader, VertexJsonData[].class);
 			
-			for (int i = 0; i < data.v.size(); i++)
-				addVertex(data.v.get(i).w);
+			for (int i = 0; i < data.length; i++)
+				addVertex(data[i].w);
 			
-			for (int i = 0; i < data.v.size(); i++)
-				for (Entry<Integer, Double> es : data.v.get(i).e.entrySet())
+			for (int i = 0; i < data.length; i++)
+				for (Entry<Integer, Double> es : data[i].e.entrySet())
 					addEdge(i, es.getKey(), es.getValue());
 		}
 		catch (FileNotFoundException _e)
@@ -80,60 +85,9 @@ public class Graph implements Iterable<Vertex>
 		}
 	}
 	
-	private static class GraphJsonData
+	private static class VertexJsonData
 	{
-		int s;
-		List<VertexJsonData> v;
-		
-		private static class VertexJsonData
-		{
-			double w;
-			Map<Integer, Double> e;
-			
-			public String toString()
-			{
-				StringBuilder stringBuilder
-					= new StringBuilder();
-				
-				stringBuilder
-					.append("VertexJsonData(w:")
-					.append(w)
-					.append(")[");
-				
-				for (Entry<Integer, Double> ed : e.entrySet())
-					stringBuilder
-						.append("{to:")
-						.append(ed.getKey())
-						.append(", w:")
-						.append(ed.getValue())
-						.append('}');
-				
-				stringBuilder
-					.append(']');
-				
-				return stringBuilder.toString();
-			}
-		}
-
-		public String toString()
-		{
-			StringBuilder stringBuilder
-				= new StringBuilder();
-			
-			stringBuilder
-				.append("GraphJsonData($")
-				.append(s)
-				.append(")[\n");
-			
-			for (int i = 0; i < v.size(); i++)
-				stringBuilder
-					.append('\t')
-					.append(i)
-					.append(" : ")
-					.append(v.get(i))
-					.append('\n');
-			
-			return stringBuilder.toString();
-		}
+		double w;
+		Map<Integer, Double> e;
 	}
 }

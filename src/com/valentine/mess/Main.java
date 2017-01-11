@@ -12,11 +12,11 @@ public class Main
 		
 		for (Vertex v : g)
 		{
-			System.err.print(v.getWeight() + " ");
-			
-			for (Edge e : v.getOuts())
-				System.err.print("{" + e.getTo() + ":" + e.getWeight() + "} ");
-			System.err.println();
+			System.err.println(v);
 		}
+		
+		System.err.println("Greedy cover:");
+		
+		GraphRuller.greedyCover(g, 1);
 	}
 }
