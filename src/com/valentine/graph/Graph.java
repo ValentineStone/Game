@@ -8,20 +8,6 @@ import com.google.gson.*;
 
 public class Graph implements Iterable<Vertex>
 {
-	public static void main(String[] _args)
-	{
-		Graph g = new Graph(new File("res/graph.json"));
-		
-		for (Vertex v : g)
-		{
-			System.err.print(v.weight + " ");
-			
-			for (Edge e : v.getOuts())
-				System.err.print("{" + e.getTo() + ":" + e.getWeight() + "} ");
-			System.err.println();
-		}
-	}
-	
 	List<Vertex> vertices = new ArrayList<>();
 	
 	public Graph()
