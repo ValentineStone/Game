@@ -48,6 +48,77 @@ public class GraphRuller
 		boolean[]   covered  = new boolean[distances.length];
 		int[]       covering = new int[distances.length];
 		
+		for (int from = 0; from < _graph.vertexCount(); from++)
+		for (int to   = 0; to   < _graph.vertexCount(); to++  )
+			if (distances[from][to] <= _maxDist)
+			{
+				coverage[from][to] = true;
+				covering[from]++;
+			}
+		
+		int maxCovering = 0;
+		int maxCoveringIndex = -1;
+		
+		do
+		{
+			if (maxCoveringIndex != -1)
+				coverage[maxCoveringIndex] = new boolean[0];
+			
+			maxCovering      = 0;
+			maxCoveringIndex = -1;
+			
+			for (int i = 0; i < coverage.length; i++)
+			{
+				covering[i] = _usefulCoveringCount(covered, coverage[i]);
+				if (maxCovering < covering[i])
+				{
+					maxCovering      = covering[i];
+					maxCoveringIndex = i;
+				}
+			}
+			
+			vertices.add(_graph.get(maxCoveringIndex));
+		}
+		while (_addAndCheck(covered, coverage[maxCoveringIndex]));
+		
+		for (Vertex v : vertices)
+			System.err.println(v);
+		
+		return vertices;
+	}
+	
+	private static int _usefulCoveringCount(boolean[] _covered, boolean[] _covering)
+	{
+		int count = 0;
+		for (int i = 0; i < _covering.length; i++)
+			if (_covering[i] && !_covered[i]) count++;
+		return count;
+	}
+	
+	private static boolean _addAndCheck(boolean[] _covered, boolean[] _covering)
+	{
+		boolean isAllCovered = true;
+		for (int i = 0; i < _covering.length; i++)
+		{
+			if (_covering[i])
+				_covered[i] = true;
+			
+			isAllCovered &= _covered[i];
+		}
+		return !isAllCovered;
+	}
+	
+	@Deprecated
+	public static List<Vertex> greedyCoverDirty(Graph _graph, double _maxDist)
+	{
+		List<Vertex> vertices = new ArrayList<>();
+		
+		double[][] distances = measureDistances(_graph);
+		
+		boolean[][] coverage = new boolean[distances.length][distances.length];
+		boolean[]   covered  = new boolean[distances.length];
+		int[]       covering = new int[distances.length];
+		
 		int maxCovering      = 0;
 		int maxCoveringIndex = 0;
 		
@@ -69,12 +140,10 @@ public class GraphRuller
 			}
 		}
 		
-		//for (int i = 0; i < coverage.length; i++) { System.err.print(covering[i] + " : "); System.err.print(_toString(coverage[i])); System.err.println(" for " + i); } System.err.println();
-		
 		currentMaxCovering      = maxCovering;
 		currentMaxCoveringIndex = maxCoveringIndex;
 
-		_add(covered, coverage[currentMaxCoveringIndex]);
+		_addAndCount(covered, coverage[currentMaxCoveringIndex]);
 		vertices.add(_graph.get(currentMaxCoveringIndex));
 		
 		while (!_isAllTrue(covered))
@@ -92,18 +161,8 @@ public class GraphRuller
 					}
 				if (isTheCoverer) continue;
 				
-				/*
-				System.err.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-				System.err.println(_toString(coverage[from]) + " as " + from);
-				System.err.println('-');
-				System.err.println(_toString(coverage[currentMaxCoveringIndex]) + " as " + currentMaxCoveringIndex);
-				System.err.println('=');
-				*/
 				covering[from] -= _sub(coverage[from], coverage[currentMaxCoveringIndex]);
-				/*
-				System.err.println(_toString(coverage[from]));
-				System.err.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-				*/
+				
 				for (int i = 0; i < coverage.length; i++)
 					if (maxCovering < covering[from])
 					{
@@ -115,10 +174,8 @@ public class GraphRuller
 			currentMaxCovering      = maxCovering;
 			currentMaxCoveringIndex = maxCoveringIndex;
 			
-			_add(covered, coverage[currentMaxCoveringIndex]);
+			_addAndCount(covered, coverage[currentMaxCoveringIndex]);
 			vertices.add(_graph.get(currentMaxCoveringIndex));
-			
-			//for (int i = 0; i < coverage.length; i++) { System.err.print(covering[i] + " : "); System.err.print(_toString(coverage[i])); System.err.println(" for " + i); } System.err.println();
 		}
 		
 		for (Vertex v : vertices)
@@ -139,7 +196,7 @@ public class GraphRuller
 		return count;
 	}
 	
-	private static int _add(boolean[] _to, boolean[] _what)
+	private static int _addAndCount(boolean[] _to, boolean[] _what)
 	{
 		int count = 0;
 		for (int i = 0; i < _to.length; i++)

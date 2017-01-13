@@ -3,7 +3,6 @@ package com.valentine.game.entity.fuzzyset;
 import java.awt.*;
 import java.util.*;
 import java.util.Map.*;
-import java.util.function.*;
 
 import javax.swing.*;
 
@@ -277,7 +276,7 @@ public class FuzzySetWindow extends ContainerWindow
 		
 		aprxLabel = new GString(this, "Approximation:", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;
-		setLabel.setBorderVisible(false);
+		aprxLabel.setBorderVisible(false);
 		
 		aprxStr = new GScrollString(this, "-", PAD, POSY, WIDTH_PADED, BTN_H);
 		POSY += BTN_H + PAD;

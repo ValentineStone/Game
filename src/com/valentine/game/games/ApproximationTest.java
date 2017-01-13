@@ -14,7 +14,7 @@ public class ApproximationTest extends RootContainer
 	private final EntityBasicAI[] entities = new EntityBasicAI[30];
 	private final Dot2d[] dots = new Dot2d[entities.length];
 	
-	private final GFunctionBox[] gfboxs = new GFunctionBox[4];
+	private final GFunctionBox[] gfboxs = new GFunctionBox[5];
 	
 	public ApproximationTest(Dimension _dimension)
 	{

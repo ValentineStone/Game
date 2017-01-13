@@ -32,4 +32,9 @@ public class ComplexFunction implements DoublePredicate, DoubleFunction<Double>,
 	{
 		return Collections.unmodifiableSet(functions.entrySet()).iterator();
 	}
+	
+	public Iterator<DoublePredicate> conditions()
+	{
+		return Collections.unmodifiableSet(functions.keySet()).iterator();
+	}
 }
