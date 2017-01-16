@@ -1,11 +1,8 @@
 package com.valentine.game.utils.math.fuzzy;
 
-import java.util.function.*;
+import com.valentine.game.utils.math.function.*;
 
-public class FuzzyNumber implements DoubleFunction<Double>
+public class FuzzyNumber extends RangedComplexFunction
 {
-	public Double apply(double _value)
-	{
-		return null;
-	}
+	
 }

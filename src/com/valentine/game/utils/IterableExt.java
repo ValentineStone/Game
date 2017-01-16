@@ -5,7 +5,9 @@ import java.util.Map.*;
 import java.util.function.*;
 
 import com.valentine.game.entity.fuzzyset.*;
+import com.valentine.game.utils.math.function.*;
 import com.valentine.game.utils.math.geom.*;
+import com.valentine.game.utils.math.range.*;
 
 public class IterableExt
 {
@@ -15,6 +17,43 @@ public class IterableExt
 		for (T t : _itr)
 			list.add(t);
 		return list;
+	}
+	
+	public static Iterable<Dot2d> asIterable(RangedComplexFunction _function, double _xstep)
+	{
+		return () -> new Iterator<Dot2d>()
+		{
+			Iterator<Entry<SegmentRange, DoubleFunction<Double>>> pile = _function.iterator();
+			Iterator<Dot2d> current = null;
+			
+			boolean needsNull = false;
+			
+			public boolean hasNext()
+			{
+				if ((current == null || !current.hasNext()) && pile.hasNext())
+				{
+					if (current != null)
+						needsNull = true;
+					
+					Entry<SegmentRange, DoubleFunction<Double>> entry = pile.next();
+					current = asIterable(entry.getValue(), entry.getKey().getLow(), entry.getKey().getHigh(), _xstep).iterator();
+				}
+				
+				return (current != null && current.hasNext()) || pile.hasNext();
+			}
+
+			public Dot2d next()
+			{
+				if (needsNull)
+				{
+					needsNull = false;
+					return null;
+				}
+				else
+					return current.next();
+			}
+			
+		};
 	}
 	
 	public static Iterable<Dot2d> asIterable(DoubleFunction<Double> _function, double _xmin, double _xmax, double _xstep)

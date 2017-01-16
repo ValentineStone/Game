@@ -2,7 +2,7 @@ package com.valentine.game.utils.math.range;
 
 import java.util.*;
 
-public class SegmentRange implements Range
+public class SegmentRange implements Range, Comparable<SegmentRange>
 {
 	private double low  = 0;
 	private double high = 0;
@@ -108,5 +108,10 @@ public class SegmentRange implements Range
 	public String toString()
 	{
 		return "SegmentRange[" + low + ", " + high + "]";
+	}
+
+	public int compareTo(SegmentRange _o)
+	{
+		return Double.compare(getLow(), _o.getLow());
 	}
 }
