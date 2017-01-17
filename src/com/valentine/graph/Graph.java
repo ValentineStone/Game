@@ -50,6 +50,23 @@ public class Graph implements Iterable<Vertex>
 		return vertices.iterator();
 	}
 	
+	public String toJson()
+	{
+		StringBuilder stringBuilder =
+			new StringBuilder();
+		
+		stringBuilder.append("[");
+		
+		for (int i= 0; i < vertexCount(); i++)
+			stringBuilder
+				.append(i == 0 ? "\n\t" : ",\n\t")
+				.append(get(i).toJson());
+		
+		stringBuilder.append("\n]");
+		
+		return stringBuilder.toString();
+	}
+	
 	
 	
 	
@@ -89,5 +106,102 @@ public class Graph implements Iterable<Vertex>
 	{
 		double w;
 		Map<Integer, Double> e;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static Graph makeBadExample(int _power, boolean _connection)
+	{
+		Graph g = new Graph();
+		
+		if (_power <= 0)
+			return g;
+		
+		g.addVertex(1);
+		g.addVertex(1);
+		
+		if (_connection)
+		{
+			g.addEdge(0, 1, 1);
+			g.addEdge(1, 0, 1);
+		}
+		
+		if (_power == 1)
+			return g;
+		
+		int index = 2;
+		int power = 2;
+		int count = 0;
+		
+		while (power <= _power)
+		{
+			count = (int) Math.pow(2, power);
+			
+			for (int i = 0; i < count; i++)
+			{
+				g.addVertex(1);
+				g.addEdge(index + i, i % 2, 2);
+				g.addEdge(i % 2, index + i, 1);
+			}
+			
+			for (int from = 0; from < count; from++)
+			for (int to   = 0; to   < count; to++  )
+				if (from != to)
+					g.addEdge(index + from, index + to, 1);
+			
+			index += count;
+			power++;
+		}
+		
+		return g;
+	}
+	
+	public static Graph makeRealBadExample(int _count, boolean _extraBad)
+	{
+		Graph g = new Graph();
+		
+		if (_extraBad)
+			g.addVertex(100);
+		else
+			g.addVertex(1);
+		
+		g.addVertex(1);
+		g.addVertex(1);
+		
+		g.addEdge(1, 0, 1);
+		g.addEdge(2, 0, 1);
+		g.addEdge(0, 1, 1);
+		g.addEdge(0, 2, 1);
+		
+		g.addVertex(1);
+		g.addVertex(1);
+		
+		g.addEdge(1, 3, 1);
+		g.addEdge(2, 4, 1);
+		
+		for (int i = 0; i < _count; i++)
+		{
+			g.addVertex(1);
+			
+			g.addEdge(1, 5+2*i, 1);
+			g.addEdge(0, 5+2*i, 1);
+			
+			g.addVertex(1);
+			
+			g.addEdge(2, 6+2*i, 1);
+			g.addEdge(0, 6+2*i, 1);
+		}
+		
+		return g;
 	}
 }

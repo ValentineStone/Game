@@ -65,4 +65,28 @@ public class Vertex
 		
 		return stringBuilder.toString();
 	}
+	
+	public String toJson()
+	{
+		StringBuilder stringBuilder =
+				new StringBuilder();
+			
+			stringBuilder
+				.append("{ i:")
+				.append(index)
+				.append(", w:")
+				.append(weight)
+				.append(", e:{");
+			
+			for (int i = 0; i < outs.size(); i++)
+			{
+				stringBuilder
+					.append(i == 0 ? "" : ", ")
+					.append(outs.get(i).toJson());
+			}
+			
+			stringBuilder.append("} }");
+			
+			return stringBuilder.toString();
+	}
 }

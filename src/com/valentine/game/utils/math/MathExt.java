@@ -21,6 +21,15 @@ public class MathExt
 	public static final double PI_7_4 = 7 * Math.PI / 4;
 
 	public static final double PI_1_12 = 1 * Math.PI / 12;
+	
+	
+	
+	public static double flip(double _a)
+	{
+		return 1 / _a;
+	}
+	
+	
 
 	public static double random(double _min, double _max)
 	{

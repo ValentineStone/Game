@@ -45,4 +45,9 @@ public class Edge
 	{
 		return weight;
 	}
+	
+	public String toJson()
+	{
+		return to + ":" + weight;
+	}
 }
