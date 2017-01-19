@@ -44,6 +44,12 @@ public class Graph implements Iterable<Vertex>
 	{
 		return vertices.add(new Vertex(this, vertices.size(), _weight));
 	}
+	
+	public void addVertices(int _count, double _weight)
+	{
+		for (int i = 0; i < _count; i++)
+			addVertex(_weight);
+	}
 
 	public Iterator<Vertex> iterator()
 	{
@@ -166,15 +172,25 @@ public class Graph implements Iterable<Vertex>
 		return g;
 	}
 	
-	public static Graph makeRealBadExample(int _count, boolean _extraBad)
+	public static Graph makeRealBadExample(int _count)
 	{
 		Graph g = new Graph();
 		
-		if (_extraBad)
-			g.addVertex(100);
-		else
-			g.addVertex(1);
+		g.addVertex(1);
 		
+		g.addVertices(3 * _count, 1);
+		
+		for (int i = 1; i <= _count; i++)
+		{
+			g.addEdge(i, 0, 1);
+			g.addEdge(0, i, 1);
+			
+			g.addEdge(i, _count + i, 1);
+			g.addEdge(0, _count + i, 1);
+			
+			g.addEdge(i, 2 * _count + i, 1);
+		}
+		/*
 		g.addVertex(1);
 		g.addVertex(1);
 		
@@ -201,7 +217,7 @@ public class Graph implements Iterable<Vertex>
 			g.addEdge(2, 6+2*i, 1);
 			g.addEdge(0, 6+2*i, 1);
 		}
-		
+		*/
 		return g;
 	}
 }

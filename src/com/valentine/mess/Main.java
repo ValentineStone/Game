@@ -16,7 +16,7 @@ public class Main
 		
 		//Graph g = new Graph(jsonFile);
 		
-		Graph g = Graph.makeRealBadExample(1, true);
+		Graph g = Graph.makeRealBadExample(4);
 		
 		/*
 		g.addVertex(1);
@@ -32,13 +32,6 @@ public class Main
 		System.err.println("|  Graph ");// + jsonFile.getName() + " :");
 		System.err.println("\\-----------------------------------------------------------------------------/");
 		
-		/*
-		for (Vertex v : g)
-		{
-			System.err.println(v);
-		}
-		*/
-		
 		System.err.println(g.toJson());
 		
 		double distance = Double.valueOf(JOptionPane.showInputDialog("Distance", "1"));
@@ -47,7 +40,7 @@ public class Main
 		System.err.println("|  Greedy cover with distance " + distance + " :");
 		System.err.println("\\-----------------------------------------------------------------------------/");
 		
-		SupplierRunnable<List<Vertex>> supp = new SupplierRunnable<List<Vertex>>(() -> GraphRuller.greedyCoverPenetrating(g, distance, 10)); // Length of maximum path in graph
+		SupplierRunnable<List<Vertex>> supp = new SupplierRunnable<List<Vertex>>(() -> GraphRuller.greedyCoverPenetrating(g, distance, 3)); // Length of maximum path in graph
 		
 		System.err.println("Took " + (ProcExt.measureExecutionTimeNanos(supp) / 1000000.) + " miliseconds:");
 		

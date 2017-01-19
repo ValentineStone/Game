@@ -275,7 +275,8 @@ public class GraphRuller
 	private static double[] _generateCoverValue(boolean[][] coverage, int _times, Graph _graph)
 	{
 		double[] coverValueEstablished = new double[coverage.length];
-		Arrays.fill(coverValueEstablished, 1);
+		for (int i = 0; i < coverValueEstablished.length; i++)
+			coverValueEstablished[i] = _graph.get(i).getWeight();
 		
 		double[] coverValueCurrent = new double[coverage.length];
 		Arrays.fill(coverValueCurrent, 1);
