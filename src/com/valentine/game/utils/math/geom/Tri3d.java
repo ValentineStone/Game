@@ -57,30 +57,30 @@ public class Tri3d extends Tri2d
 	
 	public Dot3d getA()
 	{
-		return new Dot3d((Dot3d)super.getA());
+		return new Dot3d((Dot3d)a);
 	}
 	public Dot3d getB()
 	{
-		return new Dot3d((Dot3d)super.getB());
+		return new Dot3d((Dot3d)b);
 	}
 	public Dot3d getC()
 	{
-		return new Dot3d((Dot3d)super.getC());
+		return new Dot3d((Dot3d)c);
 	}
 	
 	
 	
 	public void setA(Dot3d _a)
 	{
-		super.setA(new Dot3d(_a));
+		a = new Dot3d(_a);
 	}
 	public void setB(Dot3d _b)
 	{
-		super.setB(new Dot3d(_b));
+		b = new Dot3d(_b);
 	}
 	public void setC(Dot3d _c)
 	{
-		super.setC(new Dot3d(_c));
+		c = new Dot3d(_c);
 	}
 	
 	

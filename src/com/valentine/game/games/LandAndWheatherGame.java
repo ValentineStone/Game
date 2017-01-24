@@ -22,7 +22,7 @@ public class LandAndWheatherGame extends RootContainer implements MouseMotionLis
 	
 	List<Tri3d> tris;
 	
-	Dot3d scanDot = new Dot3d(0, 0, 0.34);
+	Dot3d scanDot = new Dot3d(0, 0, 0);
 	boolean outOfScope = true;
 	
 	GButton addBtn;

@@ -9,7 +9,8 @@ public class Main
 {
 	public static void main(String[] _args) throws InterruptedException
 	{
-		planarGravitatedMovementsTest(1, 10, 3);
+		//planarGravitatedMovementsTest(1, 10, 3);
+		holeyJarTest();
 	}
 		
 	

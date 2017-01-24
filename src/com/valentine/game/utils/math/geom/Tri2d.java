@@ -4,9 +4,9 @@ import com.valentine.game.utils.math.*;
 
 public class Tri2d implements Geometry
 {
-	private Dot2d a;
-	private Dot2d b;
-	private Dot2d c;
+	protected Dot2d a;
+	protected Dot2d b;
+	protected Dot2d c;
 	
 	protected Tri2d()
 	{}

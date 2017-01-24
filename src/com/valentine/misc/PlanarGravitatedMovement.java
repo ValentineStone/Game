@@ -75,6 +75,11 @@ public class PlanarGravitatedMovement
 	{
 		return new Dot2d(speed);
 	}
+
+	public Dot2d getGravityCenter()
+	{
+		return new Dot2d(gravityCenter);
+	}
 	
 	
 	
