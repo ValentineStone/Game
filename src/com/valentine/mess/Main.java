@@ -16,7 +16,7 @@ public class Main
 		
 		//Graph g = new Graph(jsonFile);
 		
-		Graph g = Graph.makeRealBadExample(4);
+		Graph g = Graph.makeRealBadExample(2);
 		
 		/*
 		g.addVertex(1);
