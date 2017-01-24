@@ -53,6 +53,11 @@ public class Dot2d implements Geometry
 		else
 			return false;
 	}
+
+	public boolean isZero()
+	{
+		return getX() == 0 && getY() == 0;
+	}
 	
 	
 	

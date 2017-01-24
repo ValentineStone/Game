@@ -183,6 +183,19 @@ public class MathExt
 		return powers;
 	}
 	
+	
+	public static Dot2d makeVectorTowards(Dot2d _source, Dot2d _dest, double _radius)
+	{
+		double rotation = rotationMake(_source, _dest); 
+		
+		return makeVectorTowards(rotation, _radius);
+	}
+	
+	public static Dot2d makeVectorTowards(double _rotation, double _radius)
+	{
+		return new Dot2d(rotationMakeX(_rotation) * _radius, rotationMakeY(_rotation) * _radius);
+	}
+	
 
 	public static enum DIRECTION
 	{
