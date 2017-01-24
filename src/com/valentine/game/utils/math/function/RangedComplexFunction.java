@@ -14,6 +14,16 @@ public class RangedComplexFunction implements DoublePredicate, DoubleFunction<Do
 	{
 		functions.put(_condition, _function);
 	}
+	
+	public double getMaxX()
+	{
+		return functions.lastKey().getHigh();
+	}
+	
+	public double getMinX()
+	{
+		return functions.firstKey().getLow();
+	}
 
 	public Double apply(double _value)
 	{

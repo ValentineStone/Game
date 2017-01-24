@@ -97,10 +97,29 @@ public interface Screen
 			drawDot(_d.getX(), _d.getY());
 	}
 	
+	default void drawDot(Dot2d _d, double _r)
+	{
+		if (_d != null)
+			drawOval(_d.getX() - _r, _d.getY() - _r, 2 * _r, 2 * _r);
+	}
+	
 	default void drawLine(Dot2d _d1, Dot2d _d2)
 	{
 		if (_d1 != null && _d2 != null)
 			drawLine(_d1.getX(), _d1.getY(), _d2.getX(), _d2.getY());
+	}
+	
+	default void drawLineOrDot(Dot2d _d1, Dot2d _d2, double _r)
+	{
+		if (_d1 != null)
+		{
+			if (_d2 != null)
+				drawLine(_d1.getX(), _d1.getY(), _d2.getX(), _d2.getY());
+			else
+				drawDot(_d1, _r);
+		}
+		else if (_d2 != null)
+			drawDot(_d2, _r);
 	}
 	
 	default void drawLines(Iterable<Dot2d> _itr)
@@ -126,5 +145,18 @@ public interface Screen
 				d1 = d2;
 			}
 		}
+	}
+	
+	default void drawLinesAndDots(Iterable<Dot2d> _itr, double _r)
+	{
+		Dot2d d1 = null;
+		
+		for (Dot2d d2 : _itr)
+		{
+			drawLineOrDot(d1, d2, _r);
+			d1 = d2;
+		}
+		
+		drawDot(d1, _r);
 	}
 }
